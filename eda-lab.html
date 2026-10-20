@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EDA Cloud Lab | ASIC-Skill</title>
+  <link rel="stylesheet" href="course-admin.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+  <link rel="stylesheet" href="eda-lab.css?v=37.0.53"><link rel="stylesheet" href="logic-simulation.css?v=37.0.40"><link rel="stylesheet" href="code-editor.css?v=37.0.42">
+</head>
+<body class="eda-page">
+<header class="topbar">
+  <a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a>
+  <div class="top-actions"><a id="back-course" href="index.html">← Back to Home</a><a id="signin-link" href="signin.html">Sign In</a></div>
+</header>
+<main class="eda-shell">
+  <section class="eda-hero">
+    <div><div class="eyebrow">ASIC-SKILL EDA CLOUD LAB</div><h1 id="lab-title">RTL → FPGA / Microcontroller → Timing → Layout</h1><p id="lab-meta">Explore RTL, circuit simulation, timing analysis, FPGA development, physical design and IC layout in one learning workspace.</p></div>
+    <div class="hero-badges"><span class="status-dot"></span><span id="api-badge" class="chip">CONNECTING</span></div>
+  </section>
+
+  <section class="tool-status" id="tool-status" aria-label="Tool readiness for the selected stage">
+    <div data-status-category="frontend"><b>RTL Verification Studio</b><span id="status-cocotb">Checking…</span></div>
+    <div data-status-category="physical" hidden><b>OpenROAD</b><span id="status-openroad">Checking…</span></div>
+    <div data-status-category="synthesis" hidden><b>Yosys</b><span id="status-yosys">Checking…</span></div>
+    <div data-status-category="physical" hidden><b>OpenSTA</b><span id="status-opensta">Checking…</span></div>
+    <div data-status-category="fpga" hidden><b>nextpnr iCE40</b><span id="status-nextpnr">Checking…</span></div>
+    <div data-status-category="physical" hidden><b>KLayout</b><span id="status-klayout">Checking…</span></div>
+    <div data-status-category="analog" hidden><b>ngspice</b><span id="status-ngspice">Checking…</span></div>
+    <div data-status-category="frontend"><b>RTL Performance</b><span id="status-verilator">Checking…</span></div>
+    <div data-status-category="frontend"><b>GHDL</b><span id="status-ghdl">Checking…</span></div>
+    <div data-status-category="linux" hidden><b>Tcl Workshop</b><span id="status-tcl-workshop">Checking…</span></div>
+    <div data-status-category="synthesis" hidden><b>DFT Workshop</b><span id="status-dft-workshop">Checking…</span></div>
+    <div data-status-category="frontend"><b>RISC-V</b><span id="status-riscv-workshop">Checking…</span></div>
+
+    <div data-status-category="frontend"><b>pyuvm</b><span id="status-pyuvm">Checking…</span></div>
+    <div data-status-category="linux" hidden><b>Perl</b><span id="status-perl-workshop">Checking…</span></div>
+  </section>
+
+  <section class="session-bar">
+    <div><strong>Lab session</strong><span id="session-label">Not started</span></div>
+    <button id="start-session" class="primary" type="button">▶ Start EDA Session</button>
+    <button id="end-session" class="secondary" type="button" hidden>End Session</button>
+  </section>
+
+  <div class="eda-navigation" aria-label="EDA Lab navigation">
+    <div class="eda-nav-heading"><div><strong>Choose a design stage</strong><span id="eda-nav-description">RTL design, verification and processor programming</span></div><div class="eda-nav-quick" aria-label="Workspace shortcuts">
+      <button class="tool-tab active" data-tool="flow" type="button">Integrated Flow</button>
+    </div></div>
+    <div class="eda-category-tabs eda-lab-categories" role="tablist" aria-label="EDA design stages">
+      <button type="button" class="eda-category-tab active" role="tab" data-eda-category-tab="frontend" aria-selected="true">Front-End<span class="eda-category-tab-count">8</span></button>
+      <button type="button" class="eda-category-tab" role="tab" data-eda-category-tab="synthesis" aria-selected="false">Synthesis<span class="eda-category-tab-count">2</span></button>
+      <button type="button" class="eda-category-tab" role="tab" data-eda-category-tab="physical" aria-selected="false">Physical Design / STA<span class="eda-category-tab-count">6</span></button>
+      <button type="button" class="eda-category-tab" role="tab" data-eda-category-tab="fpga" aria-selected="false">FPGA / Microcontroller<span class="eda-category-tab-count">3</span></button>
+      <button type="button" class="eda-category-tab" role="tab" data-eda-category-tab="linux" aria-selected="false">Linux / Scripting<span class="eda-category-tab-count">3</span></button>
+      <button type="button" class="eda-category-tab" role="tab" data-eda-category-tab="analog" aria-selected="false">Analog / CMOS<span class="eda-category-tab-count">3</span></button>
+    </div>
+    <nav class="tool-tabs" aria-label="Tools in selected EDA stage">
+      <button class="tool-tab" type="button" data-tool="logic-simulation" data-eda-category="frontend">Logic Simulation</button>
+      <button class="tool-tab" type="button" data-tool="cocotb" data-eda-category="frontend">RTL Verification Studio</button>
+      <button class="tool-tab" type="button" data-tool="verilator" data-eda-category="frontend">RTL Performance</button>
+      <button class="tool-tab" type="button" data-tool="ghdl" data-eda-category="frontend">GHDL</button>
+      <button class="tool-tab" type="button" data-tool="ngspice" data-eda-category="analog" hidden>ngspice</button>
+      <button class="tool-tab" type="button" data-tool="cmos-workshop" data-eda-category="analog" hidden>CMOS Workshop</button>
+      <button class="tool-tab" type="button" data-tool="riscv-workshop" data-eda-category="frontend">RISC-V Workshop</button>
+      <button class="tool-tab" type="button" data-tool="tcl-workshop" data-eda-category="linux" hidden>Tcl Workshop</button>
+      <button class="tool-tab" type="button" data-tool="yosys" data-eda-category="synthesis" hidden>Yosys</button>
+      <button class="tool-tab" type="button" data-tool="dft-workshop" data-eda-category="synthesis" hidden>DFT Workshop</button>
+      <button class="tool-tab" type="button" data-tool="opensta" data-eda-category="physical" hidden>OpenSTA</button>
+      <button class="tool-tab" type="button" data-tool="sta-workshop" data-eda-category="physical" hidden>STA Workshop</button>
+      <button class="tool-tab" type="button" data-tool="openroad" data-eda-category="physical" hidden>OpenROAD</button>
+      <button class="tool-tab" type="button" data-tool="pd-workshop" data-eda-category="physical" hidden>PD Workshop</button>
+      <button class="tool-tab" type="button" data-tool="openlane-workshop" data-eda-category="physical" hidden>OpenLane</button>
+      <button class="tool-tab" type="button" data-tool="klayout" data-eda-category="physical" hidden>KLayout</button>
+      <button class="tool-tab" type="button" data-tool="design-roadmap" data-eda-category="frontend">Design Flow</button>
+      <button class="tool-tab" type="button" data-tool="nextpnr" data-eda-category="fpga" hidden>nextpnr FPGA</button>
+      <button class="tool-tab" type="button" data-tool="microcontroller-studio" data-eda-category="fpga" hidden>Microcontroller Studio</button>
+      <button class="tool-tab" type="button" data-tool="analog-circuit-studio" data-eda-category="analog" hidden>Analog Circuit Studio</button>
+      <button class="tool-tab" type="button" data-tool="pyuvm" data-eda-category="frontend">pyuvm</button>
+      <button class="tool-tab" type="button" data-tool="terminal" data-eda-category="linux" hidden>Linux Terminal</button>
+      <button class="tool-tab" type="button" data-tool="perl-workshop" data-eda-category="linux" hidden>Perl Workshop</button>
+    </nav>
+  </div>
+
+
+  <section class="tool-panel embedded-tool-panel" data-panel="microcontroller-studio" id="microcontroller-studio-root">
+    <div class="section-head"><div><div class="eyebrow">FPGA / MICROCONTROLLER · EMBEDDED BOARDS</div><h2>Microcontroller Studio</h2></div><span class="chip">Optional self-hosted service</span></div>
+    <p class="mini-note">Connect a separately running embedded-board emulator. The complete application requires its own Docker service; the ASIC-Skill Python EDA backend does not emulate CPUs.</p>
+    <div class="embedded-lab-toolbar"><label>Local emulator address <input id="microcontroller-studio-url" type="url" value="http://127.0.0.1:3080" placeholder="http://127.0.0.1:3080" autocomplete="off" spellcheck="false"></label><button type="button" data-connect-embedded="microcontroller-studio">Connect emulator</button><button type="button" data-open-embedded="microcontroller-studio">Open in new tab ↗</button><button type="button" id="force-microcontroller-studio" hidden>Try iframe anyway</button></div>
+    <p id="microcontroller-studio-notice" class="mini-note" role="status">Not connected. The emulator runs in a separate Docker container; it does not start with ASIC-Skill.</p>
+    <div class="embedded-lab-frame"><div class="embedded-frame-placeholder" id="microcontroller-studio-empty"><div><strong>Emulator service not connected</strong><p>Start the emulator Docker container, then click Connect emulator.</p><p>On Windows/WSL, verify: <code>curl http://127.0.0.1:3080/health</code></p><p>If the embedded view is blocked, choose Open in new tab.</p></div></div><iframe title="Microcontroller Studio" id="microcontroller-studio-frame" loading="lazy" referrerpolicy="no-referrer" allow="fullscreen" hidden></iframe></div>
+  </section>
+  <section class="tool-panel embedded-tool-panel" data-panel="analog-circuit-studio" id="analog-circuit-studio-root">
+    <div class="section-head"><div><div class="eyebrow">ANALOG / CMOS · SPICE SCHEMATICS</div><h2>Analog Circuit Studio</h2></div><span class="chip">Optional self-hosted service</span></div>
+    <p class="mini-note">Connect a separately deployed visual analog schematic simulator. For a lab that works immediately with your current EDA Docker backend, use the ngspice tab.</p>
+    <div class="embedded-lab-toolbar"><label>Local circuit-editor address <input id="analog-circuit-studio-url" type="url" value="http://127.0.0.1:3081" placeholder="http://127.0.0.1:3081" autocomplete="off" spellcheck="false"></label><button type="button" data-connect-embedded="analog-circuit-studio">Connect schematic editor</button><button type="button" data-open-embedded="analog-circuit-studio">Open in new tab ↗</button><button type="button" id="force-analog-circuit-studio" hidden>Try iframe anyway</button><button type="button" id="analog-studio-open-ngspice">Use built-in ngspice</button></div>
+    <p id="analog-circuit-studio-notice" class="mini-note" role="status">Not connected. The optional visual schematic service must be deployed separately; use built-in ngspice in the meantime.</p>
+    <div class="embedded-lab-frame"><div class="embedded-frame-placeholder" id="analog-circuit-studio-empty"><div><strong>Visual schematic service not connected</strong><p>This editor is not provided by the main EDA Docker backend. Port 3081 requires a separate deployment.</p><p>Use built-in ngspice to run circuit simulations now, or follow the deployment README to install the visual editor.</p></div></div><iframe title="Analog Circuit Studio" id="analog-circuit-studio-frame" loading="lazy" referrerpolicy="no-referrer" allow="fullscreen" hidden></iframe></div>
+  </section>
+  <section class="tool-panel" data-panel="logic-simulation" id="logic-simulation-root" aria-label="Logic Simulation workspace">
+    <div class="logic-lab">
+      <div class="logic-top"><div><div class="eyebrow">FRONT-END · DIGITAL LOGIC</div><h2>Logic Simulation</h2><p class="mini-note">Build combinational circuits, connect gates, toggle inputs, and inspect the live truth table. Runs entirely in this browser.</p></div>
+        <label for="logic-example">Start with
+          <select id="logic-example">
+            <optgroup label="Student workspace"><option value="custom">My New Project · Blank Canvas</option></optgroup>
+            <optgroup label="Logic gates">
+              <option value="all-gates">All Logic Gates</option><option value="and">AND Gate</option><option value="or">OR Gate</option><option value="not">NOT Gate</option><option value="nand">NAND Gate</option><option value="nor">NOR Gate</option><option value="xor">XOR Gate</option><option value="xnor">XNOR Gate</option>
+            </optgroup>
+            <optgroup label="Adders and arithmetic">
+              <option value="half-adder" selected>Half Adder</option><option value="full-adder">Full Adder</option><option value="alu1">1-bit ALU (AND / XOR)</option><option value="majority3">3-input Majority</option>
+            </optgroup>
+            <optgroup label="Code conversion and checking">
+              <option value="binary-gray">2-bit Binary to Gray</option><option value="gray-binary">2-bit Gray to Binary</option><option value="even-parity4">4-bit Even Parity</option><option value="odd-parity4">4-bit Odd Parity</option><option value="comparator1">1-bit Comparator</option>
+            </optgroup>
+            <optgroup label="Selection and coding">
+              <option value="mux">2:1 Multiplexer</option><option value="mux4">4:1 Multiplexer</option><option value="demux1x4">1:4 Demultiplexer</option><option value="decoder2x4">2:4 Decoder + Enable</option><option value="encoder4x2">4:2 One-hot Encoder</option>
+            </optgroup>
+          </select>
+        </label>
+      </div>
+      <p id="logic-example-description" class="logic-meta"></p>
+      <div class="logic-toolbar" aria-label="Circuit actions">
+        <button type="button" id="logic-new-project" class="logic-new-project">+ New Project</button><button type="button" id="logic-reset">Reset example / clear canvas</button><button type="button" id="logic-save">Save in browser</button><button type="button" id="logic-load">Restore saved circuit</button>
+        <label class="logic-project-label" for="logic-project-name">Project name <input id="logic-project-name" type="text" maxlength="60" value="My Logic Project" disabled aria-label="Current circuit project name"></label>
+        <span id="logic-count" class="logic-meta" aria-live="polite"></span>
+        <span id="logic-saved-state" class="logic-meta">No saved circuit</span>
+        <span id="logic-action-feedback" class="logic-action-feedback" role="status" aria-live="polite"></span>
+      </div>
+      <div class="logic-grid">
+        <div class="logic-board"><svg id="logic-canvas" viewBox="0 0 1200 700" role="img" aria-label="Interactive logic gate circuit canvas"></svg><span class="logic-board-status">Drag from the palette or click to add · connect output to input · toggle switches</span></div>
+        <aside class="logic-sidebar">
+          <h3>Component palette</h3><p class="logic-palette-help">Drag a component onto the canvas. You can also click a component to add it, then drag it to position.</p>
+          <div class="logic-palette" aria-label="Add circuit components">
+            <button type="button" data-add-gate="INPUT" draggable="true" title="Drag onto the canvas, or click to add">Input</button><button type="button" data-add-gate="OUTPUT" draggable="true" title="Drag onto the canvas, or click to add">Output</button><button type="button" data-add-gate="NOT" draggable="true" title="Drag onto the canvas, or click to add">NOT</button>
+            <button type="button" data-add-gate="AND" draggable="true" title="Drag onto the canvas, or click to add">AND</button><button type="button" data-add-gate="OR" draggable="true" title="Drag onto the canvas, or click to add">OR</button><button type="button" data-add-gate="XOR" draggable="true" title="Drag onto the canvas, or click to add">XOR</button>
+            <button type="button" data-add-gate="NAND" draggable="true" title="Drag onto the canvas, or click to add">NAND</button><button type="button" data-add-gate="NOR" draggable="true" title="Drag onto the canvas, or click to add">NOR</button><button type="button" data-add-gate="XNOR" draggable="true" title="Drag onto the canvas, or click to add">XNOR</button>
+          </div>
+          <h3 style="margin-top:18px">Input switches</h3><div id="logic-input-controls" class="logic-values"></div>
+          <h3 style="margin-top:15px">Output probes</h3><div id="logic-output-values" class="logic-status" aria-live="polite"></div>
+          <h3 style="margin-top:15px">Selected component</h3><div id="logic-selection"></div>
+        </aside>
+      </div>
+      <div id="logic-status" class="logic-status" role="status" aria-live="polite"></div>
+      <section class="logic-table-area" aria-label="Circuit truth table"><strong>Live truth table</strong><span class="logic-meta"> · Recomputed from the actual wiring, up to 8 inputs</span><div id="logic-truth"></div></section>
+      <p class="logic-hint">This is an educational, single-bit combinational simulator. Examples are connected, educational one-bit combinational gate networks. Flip-flops, propagation delays, multibit buses and HDL cosimulation are not available in this engine; use GHDL or cocotb native HDL verification for those exercises.</p>
+    </div>
+  </section>
+
+  <section class="tool-panel active" data-panel="flow">
+    <div class="section-head"><div><div class="eyebrow">LEARNING WORKFLOW</div><h2>Explore ASIC and FPGA design workflows</h2></div><p>Use isolated simulation, synthesis, timing, FPGA, and layout tools. nextpnr is an FPGA flow; OpenROAD is for ASIC physical design.</p></div>
+    <div class="flow-cards">
+      <article><span>01</span><h3>Verify RTL</h3><p>Run Python cocotb tests using Icarus Verilog.</p><button data-jump="cocotb">Open cocotb</button></article>
+      <article><span>02</span><h3>Write RTL</h3><p>Edit the sample Verilog design in the Yosys tab.</p><button data-jump="yosys">Open RTL + Yosys</button></article>
+      <article><span>03</span><h3>Synthesize</h3><p>Run real Yosys synthesis and inspect cell statistics.</p><button data-preset="yosys_synth">Run Yosys Synthesis</button></article>
+      <article><span>04</span><h3>Analyze Timing</h3><p>Run a real standalone OpenSTA timing example.</p><button data-preset="opensta_sample">Run OpenSTA Example</button></article>
+      <article><span>05</span><h3>Physical Design</h3><p>Use ORFS/OpenROAD for synthesis and floorplanning.</p><button data-jump="openroad">Open OpenROAD</button></article>
+      <article><span>06</span><h3>FPGA implementation</h3><p>Synthesize to iCE40 with Yosys; place, route, and export a bitstream using nextpnr.</p><button data-jump="nextpnr">Open nextpnr</button></article>
+      <article><span>07</span><h3>IC layout</h3><p>View and edit GDSII layouts with a KLayout remote desktop.</p><button data-jump="klayout">Open KLayout</button></article>
+      <article><span>08</span><h3>Circuit simulation</h3><p>Simulate SPICE netlists and examine waveforms in ngspice.</p><button data-jump="ngspice">Open ngspice</button></article>
+      <article><span>09</span><h3>RTL quality and coverage</h3><p>Run lint checks, high-speed tests and coverage analysis.</p><button data-jump="verilator">Open Verification</button></article>
+      <article><span>10</span><h3>VHDL</h3><p>Compile and simulate VHDL testbenches with GHDL.</p><button data-jump="ghdl">Open GHDL</button></article>
+      <article><span>11</span><h3>RTL Testbench Verification</h3><p>Practice Verilog/SystemVerilog with Python cocotb or native HDL testbenches and inspect simulator waveforms.</p><button data-jump="cocotb">Open RTL Verification</button></article>
+      <article><span>12</span><h3>VLSI Design Flow</h3><p>Explore a guided sequence from specification to silicon.</p><button data-jump="design-roadmap">Explore Flow</button></article>
+      <article><span>13</span><h3>Physical Design Workshop</h3><p>Practice OpenROAD floorplanning and PD milestones.</p><button data-jump="pd-workshop">Open PD Workshop</button></article>
+      <article><span>14</span><h3>DFT Readiness</h3><p>Synthesize an FSM and inspect sequential cells before scan planning.</p><button data-jump="dft-workshop">Open DFT Workshop</button></article>
+      <article><span>15</span><h3>EDA Tcl Scripting</h3><p>Practice procs, loops, arrays and reports in a safe Tcl interpreter.</p><button data-jump="tcl-workshop">Open Tcl Workshop</button></article>
+      <article><span>16</span><h3>OpenLane Preparation</h3><p>Prepare an OpenLane 2 design config for an external PDK-enabled run.</p><button data-jump="openlane-workshop">Open OpenLane</button></article>
+      <article><span>17</span><h3>CMOS Design</h3><p>Simulate a generic CMOS inverter with ngspice.</p><button data-jump="cmos-workshop">Open CMOS Lab</button></article>
+      <article><span>18</span><h3>STA Workshop</h3><p>Run setup and hold timing experiments. Compare transition, derate and slack.</p><button data-jump="sta-workshop">Open STA Workshop</button></article>
+      <article><span>19</span><h3>RISC-V Workshop</h3><p>Compile and run RV64 C code in QEMU, then inspect disassembly.</p><button data-jump="riscv-workshop">Open RISC-V Lab</button></article>
+      <article><span>20</span><h3>Python UVM</h3><p>Run pyuvm test classes using cocotb and Icarus.</p><button data-jump="pyuvm">Open pyuvm</button></article>
+      <article><span>21</span><h3>Linux scripting</h3><p>Use the guided Linux terminal, Tcl and Perl to explore automation.</p><button data-jump="perl-workshop">Open Perl Lab</button></article>
+    </div>
+    <div class="output-card"><div class="output-head"><strong>Integrated Lab Output</strong><button class="clear-output">Clear</button></div><pre id="flow-output">Start an EDA session to begin.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="cocotb">
+    <div class="section-head"><div><div class="eyebrow">PYTHON RTL VERIFICATION</div><h2>RTL Verification Studio</h2></div><p>Edit Verilog/SystemVerilog source and run Python or HDL testbenches in an isolated verification environment.</p></div>
+    <div class="playground-toolbar" aria-label="Simulator configuration">
+      <label>Example section<select id="cocotb-example-set"><option value="verilog">.v Examples</option><option value="systemverilog">.sv Examples</option></select></label>
+      <label>Testbench language<select id="cocotb-test-mode"><option value="python">Python Testbench (.py)</option><option value="hdl">Native HDL (.v/.sv)</option></select></label>
+      <label id="cocotb-v-examples">.v Examples<select id="playground-example"><option value="counter">4-bit Counter</option><option value="adder">8-bit Adder</option></select></label><label id="cocotb-sv-examples" hidden>.sv Examples<select id="cocotb-sv-example"><option value="counter">4-bit Counter</option></select></label>
+      <div class="playground-actions"><button id="cocotb-custom" type="button">✎ Write Your Own Verilog</button><button id="playground-save" type="button">Save Project</button><button id="playground-import" type="button">Open Project</button><input type="file" id="playground-file" accept="application/json,.json" hidden></div>
+    </div>
+    <label class="cocotb-theme-control">Editor colors <select id="cocotb-main-theme"><option value="desert">Desert · Dark</option><option value="gray">Gray · Light</option></select></label>
+    <div class="cocotb-grid">
+      <article class="editor-card"><div class="card-head"><div><div class="eyebrow" id="cocotb-design-label">VERILOG DESIGN</div><h2 id="cocotb-design-name">counter.v</h2></div><button type="button" id="cocotb-pop-rtl">Open in new tab ↗</button></div><textarea id="cocotb-rtl" data-code-editor data-editor-toolbar="expanded-only" data-language="verilog" data-filename="counter.v" aria-label="Verilog RTL editor" spellcheck="false">module counter(input wire clk, input wire rst_n, input wire en, output reg [3:0] q);
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) q <= 4'b0000;
+    else if (en) q <= q + 1'b1;
+  end
+endmodule
+</textarea></article>
+      <article class="editor-card"><div class="card-head"><div><div class="eyebrow" id="cocotb-test-label">PYTHON TESTBENCH</div><h2 id="cocotb-test-name">test_dut.py</h2></div><button type="button" id="cocotb-pop-test">Open in new tab ↗</button></div><textarea id="cocotb-test" data-code-editor data-editor-toolbar="expanded-only" data-language="python" data-filename="test_dut.py" aria-label="Python verification test editor" spellcheck="false">import cocotb
+from cocotb.clock import Clock
+from cocotb.triggers import Timer, RisingEdge
+
+@cocotb.test()
+async def test_counter(dut):
+    dut.rst_n.value = 0
+    dut.en.value = 0
+    dut.clk.value = 0
+    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    await Timer(2, units="ns")
+    dut.rst_n.value = 1
+    for expected in range(1, 6):
+        dut.en.value = 1
+        await RisingEdge(dut.clk)
+        await Timer(1, units="ns")
+        assert int(dut.q.value) == expected, f"Expected {expected}, got {dut.q.value}"
+</textarea></article>
+    </div>
+    <div class="cocotb-actions"><label for="cocotb-top">Design top <input id="cocotb-top" value="counter" autocomplete="off" spellcheck="false"></label><label id="cocotb-test-top-field" hidden>Testbench top <input id="cocotb-test-top" value="tb_counter" spellcheck="false"></label><button id="run-cocotb" class="primary" type="button">▶ Run Simulation</button><button id="reset-cocotb" type="button">Restore Demo</button><label class="capture-label"><input id="cocotb-capture" type="checkbox" checked> Capture waveforms</label><span id="cocotb-note" role="status" aria-live="polite">Example: 5 counter increments checked in Python.</span></div>
+    <div id="cocotb-results" class="playground-results">
+      <div class="sim-results-nav" aria-label="RTL verification results"><button class="sim-result-tab active" data-sim-tab="log" type="button">Simulation Log</button><button class="sim-result-tab" data-sim-tab="wave" type="button">Waveform Viewer <span id="wave-indicator">○</span></button><button class="sim-result-tab" data-sim-tab="schematic" type="button">Circuit Schematic</button><button class="sim-result-tab" data-sim-tab="truth" type="button">Truth / State Table</button><span id="sim-run-status" class="sim-status idle" role="status" aria-live="polite">Not run</span><button id="cocotb-focus" type="button" aria-label="Expand RTL verification results viewer" aria-pressed="false" aria-controls="cocotb-results">Expand Viewer</button></div>
+      <section id="sim-log-panel" class="sim-result-panel active" aria-label="Simulation console"><div id="cocotb-summary" class="cocotb-summary" aria-live="polite">Run a test to see Python assertions, simulator stages, and test results.</div>
+        <div class="output-card"><div class="output-head"><strong>RTL Simulation Output</strong><button class="clear-output" type="button">Clear</button></div><pre id="cocotb-output">Start an EDA session and run the example to see simulator output and PASS/FAIL.</pre></div>
+      </section>
+      <section id="sim-wave-panel" class="sim-result-panel" aria-label="Simulation waveform viewer">
+        <div class="wave-toolbar"><strong>VCD Signal Viewer</strong><span id="wave-status">No waveform loaded</span><div class="wave-controls"><button id="wave-zoom-out" type="button" aria-label="Zoom out">−</button><span id="wave-zoom-value">1.0×</span><button id="wave-zoom-in" type="button" aria-label="Zoom in">+</button><button id="wave-fit" type="button">Fit</button><button id="wave-gtkw-open" type="button" disabled>Open Detailed Waveforms ↗</button><button id="wave-gtkw-export" type="button" disabled>Waveform ZIP</button><button id="wave-download" type="button" disabled>Download VCD</button></div></div>
+        <div class="wave-body"><aside class="wave-sidebar"><label for="wave-search">Signals</label><input type="search" id="wave-search" placeholder="Filter signals…"><div id="wave-signal-list"></div></aside><div class="asic-wave-resizer" role="separator" tabindex="0" aria-label="Resize waveform signals panel" aria-orientation="vertical"></div><div class="wave-main"><div id="wave-cursor">Move over waveform to inspect time</div><div id="wave-scroll"><canvas id="wave-canvas" aria-label="Simulation signal timing diagram" tabindex="0"></canvas><p id="wave-empty">Run a test to generate an interactive waveform.</p></div></div></div>
+      </section>
+      <section id="sim-schematic-panel" class="sim-result-panel" aria-label="Circuit schematic">
+        <div class="cocotb-reference-note">Circuit Schematic: inspect an interactive circuit diagram, an automatically arranged diagram, or the connection view. Diagrams reflect the generated circuit; verification PASS/FAIL is determined by the testbench.</div>
+        <div id="cocotb-schematic-status" role="status" class="cocotb-schematic-status">Run a simulation to inspect schematic availability.</div><div id="cocotb-schematic" class="cocotb-diagram">Run a simulation to display the selected circuit.</div>
+      </section>
+      <section id="sim-truth-panel" class="sim-result-panel" aria-label="Truth or state reference table">
+        <div class="cocotb-reference-note">Clocked designs show active clock/reset/enable events measured from the VCD when available; the reference section remains educational, not proof of correctness for edited RTL.</div>
+        <div id="cocotb-truth" class="cocotb-truth">Choose an exercise to see its reference behavior.</div>
+      </section>
+    </div>
+  </section>
+
+
+  <section class="tool-panel" data-panel="yosys">
+    <div class="split-grid">
+      <div class="editor-card"><div class="card-head"><div><div class="eyebrow">RTL EDITOR</div><h2>Verilog design</h2></div><button id="save-rtl">Save RTL</button></div><textarea id="rtl-editor" data-code-editor data-language="verilog" data-filename="design.v" spellcheck="false">module gcd(
+  input  wire        clk,
+  input  wire        rst_n,
+  input  wire [7:0]  a,
+  input  wire [7:0]  b,
+  output reg  [7:0]  y
+);
+  reg [7:0] x, z;
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin x <= 0; z <= 0; y <= 0; end
+    else if (x == 0) begin x <= a; z <= b; end
+    else if (z == 0) begin y <= x; x <= 0; end
+    else if (x > z) x <= x - z;
+    else z <= z - x;
+  end
+endmodule
+</textarea></div>
+      <div class="action-card"><div class="eyebrow">REAL YOSYS</div><h2>Synthesis controls</h2><p>Runs inside the isolated ORFS container.</p><div class="button-stack"><button data-preset="yosys_version">Yosys Version</button><button data-preset="yosys_synth">Read RTL + Synth + Stat</button><button data-preset="yosys_show_files">List Workspace Files</button></div><div class="mini-note">The backend blocks shell escapes and runs approved commands only by default.</div></div>
+    </div>
+    <div class="output-card"><div class="output-head"><strong>Yosys Output</strong><button class="clear-output">Clear</button></div><pre id="yosys-output">No Yosys command has run yet.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="opensta">
+    <div class="section-head"><div><div class="eyebrow">STATIC TIMING</div><h2>OpenSTA Lab</h2></div><p>Standalone OpenSTA runs in its own locked-down Docker image.</p></div>
+    <div class="quick-actions"><button data-preset="opensta_version">OpenSTA Version</button><button data-preset="opensta_sample">Run Detailed Timing Analysis</button><button data-preset="opensta_files">Show Timing Files</button><button type="button" onclick="location.href='opensta-lab.html'">Open Full OpenSTA Web Lab</button></div>
+    <div class="output-card"><div class="output-head"><strong>OpenSTA Output</strong><button class="clear-output">Clear</button></div><pre id="opensta-output">Run the detailed timing example to see clocks, constrained paths, slew, capacitance, slack, WNS and TNS.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="sta-workshop">
+    <div class="section-head"><div><div class="eyebrow">GUIDED STATIC TIMING EXPERIMENTS</div><h2>OpenSTA Timing Workshop</h2></div><p>Use the existing OpenSTA engine to compare setup and hold paths under different SDC transition and derate settings.</p></div>
+    <div class="new-workshop-banner">The built-in demo uses a <strong>generic teaching Liberty library</strong>, not SKY130. For a SKY130 timing corner, import a compatible gate-level netlist and SKY130 Liberty file in the full OpenSTA lab. These reports are educational, not foundry signoff.</div>
+    <div class="artifact-actions"><label class="tool-field">Design top <input id="sta-workshop-top" value="top" spellcheck="false" autocomplete="off"></label><button class="primary" id="sta-workshop-run" type="button">▶ Run Edited STA</button><button id="sta-workshop-baseline" type="button">Run Baseline (A)</button><button id="sta-workshop-derated" type="button">Run Derated (B)</button><button id="sta-workshop-reset" type="button">Restore Examples</button><button id="sta-workshop-download" type="button" disabled>Download STA Reports</button><button id="sta-workshop-advanced" type="button">Full Timing Lab</button><span id="sta-workshop-state" role="status">Not run</span></div>
+    <div class="cocotb-grid">
+      <article class="editor-card"><div class="card-head"><div class="eyebrow">GATE LEVEL NETLIST</div><h2>design.v</h2></div><textarea id="sta-workshop-netlist" data-code-editor data-language="verilog" data-filename="design.v" spellcheck="false" aria-label="STA gate-level netlist"></textarea></article>
+      <article class="editor-card"><div class="card-head"><div class="eyebrow">SDC CONSTRAINTS</div><h2>design.sdc</h2></div><textarea id="sta-workshop-sdc" data-code-editor data-language="tcl" data-filename="design.sdc" spellcheck="false" aria-label="STA SDC constraints"></textarea></article>
+    </div>
+    <details class="sta-lib-details"><summary>View/edit timing library (Liberty)</summary><article class="editor-card"><div class="card-head"><div class="eyebrow">CELL TIMING MODELS</div><h2>design.lib</h2></div><textarea id="sta-workshop-liberty" data-code-editor data-language="liberty" data-filename="design.lib" spellcheck="false" aria-label="STA timing library"></textarea></article></details>
+    <div class="output-card"><div class="output-head"><strong>Setup / Hold comparison</strong></div><pre id="sta-workshop-comparison">Run A and B to compare actual path slack, transition and derate settings.</pre></div>
+    <div class="output-card"><div class="output-head"><strong>OpenSTA execution and selected timing report</strong></div><pre id="sta-workshop-output">Start an EDA session and run a timing experiment.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="riscv-workshop">
+    <div class="section-head"><div><div class="eyebrow">RISC-V CROSS-COMPILATION AND EXECUTION</div><h2>RISC-V Programming Workshop</h2></div><p>Edit C code, compile it into an RV64GC Linux ELF, execute in QEMU and inspect the generated RISC-V assembly.</p></div>
+    <div class="new-workshop-banner">Uses a <strong>RISC-V Linux cross-GCC + QEMU user-mode</strong> container. This is not Spike / proxy-kernel, an RTL CPU simulation, or a bare-metal board emulator. Student code runs within an isolated resource-limited Docker job.</div>
+    <div class="artifact-actions"><label class="tool-field">Example<select id="riscv-example"><option value="sum">Sum 1 to 9</option><option value="fib">Fibonacci</option><option value="bit">Bit operations</option></select></label><button id="riscv-load" type="button">Load Example</button><button class="primary" id="riscv-run" type="button">▶ Compile + Execute</button><button id="riscv-download-asm" type="button" disabled>Download Disassembly</button><button id="riscv-download-src" type="button">Download C</button><span id="riscv-state" role="status">Not run</span></div>
+    <div class="cocotb-grid">
+      <article class="editor-card"><div class="card-head"><div class="eyebrow">C PROGRAM</div><h2>main.c</h2></div><textarea id="riscv-source" data-code-editor data-language="c" data-filename="main.c" spellcheck="false" aria-label="RISC-V C source"></textarea></article>
+      <div class="output-card riscv-run-output"><div class="output-head"><strong>Compiler + QEMU console</strong></div><pre id="riscv-output">Start an EDA session and run the sample.</pre></div>
+    </div>
+    <div class="output-card"><div class="output-head"><strong>RV64 assembly: main()</strong></div><pre id="riscv-assembly">Compile and run to inspect instruction-level disassembly.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="openroad">
+    <div class="section-head"><div><div class="eyebrow">PHYSICAL DESIGN</div><h2>OpenROAD / ORFS</h2></div><p>Use the existing guided floorplanning lab or execute approved ORFS targets here.</p></div>
+    <div class="quick-actions"><button data-preset="openroad_version">OpenROAD Version</button><button data-preset="openroad_floorplan">Run GCD Floorplan</button><button id="open-guided-lab">Open Guided Visual Lab</button></div>
+    <div class="output-card"><div class="output-head"><strong>OpenROAD Output</strong><button class="clear-output">Clear</button></div><pre id="openroad-output">No OpenROAD command has run yet.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="nextpnr">
+    <div class="section-head"><div><div class="eyebrow">FPGA · iCE40 PLACE & ROUTE</div><h2>nextpnr + Yosys FPGA Lab</h2></div><p>Build a Lattice iCE40 bitstream using the nextpnr toolchain. No physical board is required.</p></div>
+    <p class="playground-hint">This is an <strong>FPGA</strong> flow (Yosys synth_ice40 → nextpnr-ice40 → icepack), separate from the OpenROAD ASIC flow. Requires the optional nextpnr Docker image; the demonstration does not constrain hardware pins.</p>
+    <div class="fpga-controls">
+      <label>Top module <input id="nextpnr-top" value="blinky" spellcheck="false" autocomplete="off" aria-label="FPGA top module"></label>
+      <label>Device / package <select id="nextpnr-device"><option value="hx1k">iCE40 HX1K / TQ144</option><option value="hx8k">iCE40 HX8K / CT256</option></select></label>
+      <label>Target clock (MHz) <input id="nextpnr-freq" type="number" min="1" max="100" step="1" value="12"></label>
+      <button type="button" id="nextpnr-example">Restore FPGA Example</button>
+      <button type="button" id="nextpnr-run" class="primary">▶ Synthesize + Place & Route</button>
+    </div>
+    <article class="editor-card"><div class="card-head"><div><div class="eyebrow">RTL INPUT</div><h2>fpga_design.v</h2></div></div><textarea id="nextpnr-rtl" data-code-editor data-language="verilog" data-filename="fpga_design.v" aria-label="nextpnr Verilog design" spellcheck="false">module blinky(input wire clk, output reg led);
+  reg [23:0] counter = 24'd0;
+  always @(posedge clk) begin
+    counter <= counter + 24'd1;
+    led <= counter[23];
+  end
+endmodule</textarea></article>
+    <div class="output-card"><div class="output-head"><strong>Yosys + nextpnr Execution Log</strong><span id="nextpnr-state" role="status">Not run</span><button type="button" class="clear-output">Clear</button></div><pre id="nextpnr-output">Start an EDA session, then run synthesis and FPGA place-and-route.</pre></div>
+    <div class="artifact-actions"><button type="button" id="nextpnr-asc" disabled>Download routed ASCII (.asc)</button><button type="button" id="nextpnr-bin" disabled>Download iCE40 bitstream (.bin)</button><span>Board programming requires correct physical pin constraints and an external board programmer.</span></div>
+  </section>
+
+  <section class="tool-panel" data-panel="klayout">
+    <div class="section-head"><div><div class="eyebrow">GDSII / OASIS LAYOUT EDITOR</div><h2>KLayout IC Layout Lab</h2></div><p>Start a browser-accessible layout desktop to inspect layers, edit polygons and explore a sample GDSII cell. The viewer uses a local Docker display.</p></div>
+    <div class="tool-callout">For local Windows/WSL use: the desktop opens through a loopback-only port. A hosted multi-user deployment needs an authenticated reverse proxy before this feature is exposed publicly.</div>
+    <div class="artifact-actions"><button id="klayout-start" class="primary" type="button">▶ Open KLayout desktop</button><button id="klayout-demo" type="button">Download demo GDSII</button><label class="file-upload">Import GDSII / OASIS <input type="file" id="klayout-file" accept=".gds,.gdsii,.oas"></label><span id="klayout-state" role="status">Start an EDA session first.</span></div>
+    <div class="layout-guide"><strong>Learning exercise</strong><p>Open <code>/workspace/asic_skill_demo.gds</code> → toggle layers → zoom to cell → measure shapes. Uploaded designs are saved as <code>/workspace/student_layout.gds</code> or <code>.oas</code> and can be opened through File → Open.</p></div>
+    <div class="output-card"><div class="output-head"><strong>KLayout desktop status</strong><button class="clear-output" type="button">Clear</button></div><pre id="klayout-output">This is a real KLayout GUI streamed by noVNC, not a static mockup.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="ngspice">
+    <div class="section-head"><div><div class="eyebrow">ANALOG / SPICE CIRCUITS</div><h2>ngspice Circuit Simulator</h2></div><p>Run DC/transient circuit simulations with SPICE netlists and inspect numerical results.</p></div>
+    <div class="artifact-actions"><button id="ngspice-run" class="primary" type="button">▶ Run ngspice</button><button id="ngspice-reset" type="button">Restore RC circuit</button><span id="ngspice-state" role="status">Not run</span></div>
+    <article class="editor-card"><div class="card-head"><div><div class="eyebrow">SPICE NETLIST</div><h2>circuit.cir</h2></div></div><textarea id="ngspice-netlist" data-code-editor data-language="spice" data-filename="circuit.cir" spellcheck="false">RC transient response
+V1 in 0 PULSE(0 1.8 0 100p 100p 5n 10n)
+R1 in out 1k
+C1 out 0 2p
+.control
+tran 0.2n 20n
+print v(in) v(out)
+.endc
+.end</textarea></article>
+    <div class="output-card"><div class="output-head"><strong>ngspice execution log</strong><button class="clear-output" type="button">Clear</button></div><pre id="ngspice-output">Run your circuit to see its transient results.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="verilator">
+    <div class="section-head"><div><div class="eyebrow">RTL QUALITY · SIMULATION · COVERAGE</div><h2>RTL Performance Verification</h2></div><p>Check RTL coding issues, execute a self-checking SystemVerilog testbench, and inspect measured coverage and waveforms.</p></div>
+    <div class="artifact-actions verilator-controls">
+      <label class="tool-field">Design top <input id="verilator-top" value="alu" autocomplete="off" spellcheck="false"></label>
+      <label class="tool-field">Testbench top <input id="verilator-test-top" value="tb_alu" autocomplete="off" spellcheck="false"></label>
+      <button id="verilator-run" type="button">Check RTL</button>
+      <button id="verilator-sim-run" class="primary" type="button">▶ Run Simulation</button>
+      <button id="verilator-coverage-run" type="button">◫ Run Coverage</button>
+      <button id="verilator-reset" type="button">Restore Example</button>
+      <span id="verilator-state" role="status" aria-live="polite">Not run</span>
+    </div>
+    <div class="verilator-editor-grid">
+      <article class="editor-card"><div class="card-head"><div><div class="eyebrow">RTL DESIGN</div><h2>design.sv</h2></div></div><textarea id="verilator-rtl" data-code-editor data-language="verilog" data-filename="design.sv" spellcheck="false">module alu(input logic [7:0] a, b,
+           input logic sel, output logic [7:0] y);
+  always_comb begin
+    if (sel) y = a + b;
+    else     y = a ^ b;
+  end
+endmodule</textarea></article>
+      <article class="editor-card"><div class="card-head"><div><div class="eyebrow">SELF-CHECKING TESTBENCH</div><h2>testbench.sv</h2></div></div><textarea id="verilator-testbench" data-code-editor data-language="verilog" data-filename="testbench.sv" spellcheck="false">`timescale 1ns/1ps
+module tb_alu;
+  logic [7:0] a, b;
+  logic sel;
+  wire [7:0] y;
+  alu dut(.a(a), .b(b), .sel(sel), .y(y));
+
+  task automatic check(input logic [7:0] aa, bb, input logic ss);
+    a = aa; b = bb; sel = ss;
+    #10;
+    if (y !== (ss ? (aa + bb) : (aa ^ bb)))
+      $fatal(1, "Mismatch: a=%h b=%h sel=%b y=%h", a, b, sel, y);
+    $display("PASS: a=%h b=%h sel=%b y=%h", a, b, sel, y);
+  endtask
+
+  initial begin
+    $dumpfile("wave.vcd");
+    $dumpvars(0, tb_alu);
+    check(8'h00, 8'h00, 0);
+    check(8'h55, 8'h0f, 0);
+    check(8'h10, 8'h21, 1);
+    check(8'hff, 8'h01, 1);
+    $display("ALL CHECKS PASSED");
+    $finish;
+  end
+endmodule</textarea></article>
+    </div>
+    <p class="verilator-help">Testbench must call <code>$finish</code> on success and <code>$fatal</code> on failure. For waveform viewing use <code>$dumpfile("wave.vcd")</code> and <code>$dumpvars</code>. Coverage measures exercised code, not correctness.</p>
+    <div class="verilator-results-head"><strong>Verification Results</strong><span id="verilator-result-count" aria-live="polite"></span></div>
+    <div class="verilator-coverage-summary" id="verilator-coverage-summary" role="status" aria-live="polite" hidden></div>
+    <div class="output-card"><div class="output-head"><strong>Execution Log</strong><button class="clear-output" type="button">Clear</button></div><pre id="verilator-output">Choose Check RTL, Run Simulation, or Run Coverage above.</pre></div>
+    <section class="verilator-wave-widget" id="verilator-wave-panel" hidden aria-label="Waveform Viewer">
+      <div class="wave-toolbar"><strong>Waveform Viewer</strong><span id="verilator-wave-status">No waveform loaded</span>
+        <div class="wave-controls"><button id="verilator-wave-zoom-out" type="button">−</button><span id="verilator-wave-zoom-value">1.0×</span><button id="verilator-wave-zoom-in" type="button">+</button><button id="verilator-wave-fit" type="button">Fit</button><button id="verilator-wave-download" type="button" disabled>Download VCD</button></div>
+      </div>
+      <div class="wave-body"><aside class="wave-sidebar"><label for="verilator-wave-search">Signals</label><input type="search" id="verilator-wave-search" placeholder="Filter signals…"><div id="verilator-wave-signal-list"></div></aside>
+        <div class="wave-main"><div id="verilator-wave-cursor">Select a time to inspect signals</div><div id="verilator-wave-scroll"><canvas id="verilator-wave-canvas" tabindex="0" aria-label="Verification waveform"></canvas><p id="verilator-wave-empty">Run simulation to generate a waveform.</p></div></div>
+      </div>
+    </section>
+    <div class="artifact-actions verilator-artifact-actions"><button id="verilator-wave-export" type="button" disabled>Download Waveform</button><button id="verilator-coverage-export" type="button" disabled>Download Coverage (LCOV)</button></div>
+  </section>
+
+  <section class="tool-panel" data-panel="ghdl">
+    <div class="section-head"><div><div class="eyebrow">VHDL-2008 · INTERACTIVE SIMULATION &amp; SYNTHESIS</div><h2>GHDL VHDL Design Studio</h2></div><p>Select a VHDL exercise, edit its modeling variants and testbench, run GHDL, and inspect simulation logs, draggable waveforms, functional symbols and reference tables.</p></div>
+    <nav class="ghdl-workflow-nav" role="navigation" aria-label="GHDL lab sections">
+      <button type="button" class="ghdl-workflow-tab active" data-ghdl-workflow="examples">1 · Examples &amp; Setup</button>
+      <button type="button" class="ghdl-workflow-tab" data-ghdl-workflow="editors">2 · VHDL &amp; Testbench</button>
+      <button type="button" class="ghdl-workflow-tab" data-ghdl-workflow="log">3 · Simulation Log</button>
+      <button type="button" class="ghdl-workflow-tab" data-ghdl-workflow="wave">4 · Waveforms</button>
+      <button type="button" class="ghdl-workflow-tab" data-ghdl-workflow="logic">5 · Circuit Schematic</button>
+      <button type="button" class="ghdl-workflow-tab" data-ghdl-workflow="truth">6 · Truth / State Tables</button>
+    </nav>
+    <div class="ghdl-project-bar" id="ghdl-setup">
+      <label class="tool-field">Example <select id="ghdl-example"><option value="logic">All logic gates</option><option value="counter">4-bit counter</option></select></label>
+      <label class="tool-field">Implementation variant <select id="ghdl-variant" aria-label="VHDL implementation variant"></select></label>
+      <button id="ghdl-save-project" type="button">Save Project</button>
+      <button id="ghdl-open-project" type="button">Open Project</button>
+      <input type="file" id="ghdl-project-file" accept="application/json,.json" hidden>
+      <button id="ghdl-custom-project" type="button" class="primary">✎ Write Your Own VHDL</button>
+      <button id="ghdl-jump-editors" type="button">Open Design / Testbench Editors ↓</button>
+      <label class="tool-field">Design entity <input id="ghdl-design-top" value="logic_gates" spellcheck="false"></label>
+      <label class="tool-field">Testbench top <input id="ghdl-top" value="tb_logic_gates" spellcheck="false"></label>
+      <button id="ghdl-run" class="primary" type="button">▶ Simulate + Synthesize</button>
+      <button id="ghdl-reset" type="button">Restore Example</button>
+      <span id="ghdl-state" role="status" aria-live="polite">Ready to run</span>
+      <p id="ghdl-example-description" class="ghdl-example-description" aria-live="polite"></p>
+    </div>
+    <div class="ghdl-models" aria-label="Independent VHDL modeling style editors">
+      <div class="ghdl-model-nav" role="tablist" aria-label="VHDL Modeling Style">
+        <button type="button" class="ghdl-model-tab active" data-ghdl-style="dataflow" role="tab" aria-selected="true">Dataflow modeling</button>
+        <button type="button" class="ghdl-model-tab" data-ghdl-style="behavioral" role="tab" aria-selected="false">Behavioral modeling</button>
+        <button type="button" class="ghdl-model-tab" data-ghdl-style="structural" role="tab" aria-selected="false">Structural modeling</button>
+      <button id="ghdl-model-popout" type="button">Open Model in Window ↗</button></div>
+      <p class="ghdl-style-info" id="ghdl-style-info">Concurrent logic expressions. Editing this model does not change the other modeling styles.</p>
+      <div class="ghdl-model-panel active" data-ghdl-model="dataflow" role="tabpanel">
+        <article class="editor-card"><div class="card-head"><div><div class="eyebrow">DATAFLOW</div><h2>design_dataflow.vhd</h2></div></div><textarea id="ghdl-rtl" data-code-editor data-language="vhdl" data-filename="design_dataflow.vhd" spellcheck="false">library ieee;
+use ieee.std_logic_1164.all;
+entity logic_gates is
+  port (a, b: in std_logic;
+        not_a, not_b, and_out, nand_out, or_out, nor_out, xor_out, xnor_out: out std_logic);
+end logic_gates;
+architecture dataflow of logic_gates is
+begin
+  not_a <= not a; not_b <= not b;
+  and_out <= a and b; nand_out <= a nand b;
+  or_out <= a or b; nor_out <= a nor b;
+  xor_out <= a xor b; xnor_out <= a xnor b;
+end dataflow;</textarea></article>
+      </div>
+      <div class="ghdl-model-panel" data-ghdl-model="behavioral" role="tabpanel" hidden>
+        <article class="editor-card"><div class="card-head"><div><div class="eyebrow">BEHAVIORAL</div><h2>design_behavioral.vhd</h2></div></div><textarea id="ghdl-rtl-behavioral" data-code-editor data-language="vhdl" data-filename="design_behavioral.vhd" spellcheck="false"></textarea></article>
+      </div>
+      <div class="ghdl-model-panel" data-ghdl-model="structural" role="tabpanel" hidden>
+        <article class="editor-card"><div class="card-head"><div><div class="eyebrow">STRUCTURAL</div><h2>design_structural.vhd</h2></div></div><textarea id="ghdl-rtl-structural" data-code-editor data-language="vhdl" data-filename="design_structural.vhd" spellcheck="false"></textarea></article>
+      </div>
+    </div>
+    <article class="editor-card ghdl-testbench-card"><div class="card-head"><div><div class="eyebrow">SHARED VHDL TESTBENCH · APPLIES TO SELECTED STYLE</div><h2>testbench.vhd</h2></div></div><textarea id="ghdl-testbench" data-code-editor data-language="vhdl" data-filename="testbench.vhd" spellcheck="false">library ieee;
+use ieee.std_logic_1164.all;
+entity tb_logic_gates is end tb_logic_gates;
+architecture test of tb_logic_gates is
+  signal a,b: std_logic := '0';
+  signal not_a,not_b,and_out,nand_out,or_out,nor_out,xor_out,xnor_out: std_logic;
+begin
+  dut: entity work.logic_gates port map(a,b,not_a,not_b,and_out,nand_out,or_out,nor_out,xor_out,xnor_out);
+  process
+  begin
+    for i in 0 to 3 loop
+      if i < 2 then a <= '0'; else a <= '1'; end if;
+      if (i mod 2) = 0 then b <= '0'; else b <= '1'; end if;
+      wait for 10 ns;
+      assert and_out = (a and b) and nand_out = (a nand b)
+        and or_out = (a or b) and nor_out = (a nor b)
+        and xor_out = (a xor b) and xnor_out = (a xnor b)
+        and not_a = (not a) and not_b = (not b)
+        report "Gate comparison failed" severity error;
+    end loop;
+    report "All logic gate tests PASSED" severity note;
+    wait;
+  end process;
+end test;</textarea></article>
+    <section class="ghdl-results" id="ghdl-results" aria-label="GHDL results workspace">
+      <div class="ghdl-results-nav" role="tablist" aria-label="GHDL results">
+        <button class="ghdl-result-tab active" type="button" data-ghdl-result="log" role="tab" aria-selected="true">Simulation Log</button>
+        <button class="ghdl-result-tab" type="button" data-ghdl-result="wave" role="tab" aria-selected="false">Waveform Viewer</button>
+        
+        <button class="ghdl-result-tab" type="button" data-ghdl-result="logic" role="tab" aria-selected="false">Circuit Schematic</button>
+        <button class="ghdl-result-tab" type="button" data-ghdl-result="truth" role="tab" aria-selected="false">Truth / State Table</button>
+        <span id="ghdl-result-summary">No results yet</span>
+        <button id="ghdl-focus" type="button" aria-label="Expand results viewer">Expand Viewer</button>
+      </div>
+      <div class="ghdl-result-panel active" data-ghdl-view="log" role="tabpanel">
+        <div class="output-card"><div class="output-head"><strong>GHDL execution stages and simulation output</strong><button class="clear-output" type="button">Clear</button></div><pre id="ghdl-output">Run the selected VHDL modeling style to verify its behavior.</pre></div>
+      </div>
+      <div class="ghdl-result-panel" data-ghdl-view="wave" role="tabpanel" hidden>
+        <div class="wave-toolbar"><strong>VHDL Simulation Waveform</strong><span id="ghdl-wave-status">No waveform loaded</span><div class="wave-controls"><button id="ghdl-wave-zoom-out" type="button">−</button><span id="ghdl-wave-zoom-value">1.0×</span><button id="ghdl-wave-zoom-in" type="button">+</button><button id="ghdl-wave-fit" type="button">Fit</button><button id="ghdl-popup-wave" type="button">Open Waveform Window ↗</button><button id="ghdl-gtkw-open" type="button" disabled>GTKWave View ↗</button><button id="ghdl-gtkw-export" type="button" disabled>GTKWave ZIP</button><button id="ghdl-wave-download" type="button" disabled>Export VCD</button></div></div>
+        <p class="ghdl-view-hint">Click or drag the vertical time cursor with the mouse to inspect signal values. Scroll sideways to navigate a zoomed waveform.</p>
+        <div class="wave-body"><aside class="wave-sidebar"><label for="ghdl-wave-search">Objects · Name / Value</label><input id="ghdl-wave-search" type="search" placeholder="Filter signals…"><div class="ghdl-wave-header"><strong>Object Name</strong><strong>Value</strong></div><div id="ghdl-wave-signal-list"></div></aside><div class="ghdl-pane-grip" role="separator" tabindex="0" aria-label="Resize signal list" aria-orientation="vertical"></div><div class="wave-main"><div id="ghdl-wave-cursor">Run a simulation to view signals</div><div id="ghdl-wave-scroll"><canvas id="ghdl-wave-canvas" aria-label="Interactive GHDL VCD signal waveform" tabindex="0"></canvas><p id="ghdl-wave-empty">Run GHDL to generate a timing waveform.</p></div></div></div>
+      </div>
+      <div class="ghdl-result-panel" data-ghdl-view="schematic" role="tabpanel" hidden aria-hidden="true">
+        <div class="wave-toolbar"><strong>Synthesized circuit schematic</strong><span id="ghdl-schematic-status">No synthesized netlist yet</span><div class="wave-controls"><button id="ghdl-schem-zoom-out" type="button">−</button><span id="ghdl-schem-zoom">100%</span><button id="ghdl-schem-zoom-in" type="button">+</button><button id="ghdl-schem-fit" type="button">Fit</button><button id="ghdl-popup-schematic" type="button">Open Schematic Window ↗</button></div></div>
+        <p class="ghdl-view-hint">Generated from GHDL synthesis and a Yosys connectivity netlist, not a manually drawn logic illustration. Click a cell for its type and connections.</p>
+        <div class="ghdl-schematic-scroll" id="ghdl-schematic-scroll"><svg id="ghdl-schematic-svg" role="img" aria-label="Synthesized VHDL circuit schematic" xmlns="http://www.w3.org/2000/svg"></svg><p id="ghdl-schematic-empty">Run a supported synthesizable VHDL design to see the schematic. Schematic support requires the updated GHDL Docker image with Yosys.</p></div>
+        <pre id="ghdl-schematic-details" aria-live="polite">Select a cell to inspect its ports and connected nets.</pre>
+      </div>
+      <div class="ghdl-result-panel" data-ghdl-view="logic" role="tabpanel" hidden>
+        <div class="wave-toolbar"><strong>Circuit Schematic · Connected Functional View</strong><span id="ghdl-logic-description"></span></div>
+        <div class="ghdl-interaction" id="ghdl-interaction">
+          <div class="ghdl-interaction-heading"><strong><span aria-hidden="true">◉</span> Interactive input experiment</strong><span id="ghdl-interaction-status" aria-live="polite">Edit pins to preview; run GHDL for verified outputs.</span></div>
+          <div id="ghdl-input-controls" class="ghdl-input-controls" aria-label="Editable schematic input pins"></div>
+          <div class="ghdl-input-actions"><button id="ghdl-input-run" type="button">▶ Run Inputs in GHDL</button><button id="ghdl-clock-step" type="button" hidden>↻ Clock Step + Run</button><button id="ghdl-input-reset" type="button">Reset Inputs / History</button><span id="ghdl-history-count">0 steps</span></div>
+          <p class="ghdl-interaction-hint">Inputs can be changed after simulation. Green/yellow preview values are educational only; verified outputs are obtained by rerunning the selected VHDL in isolated GHDL. For clocked designs, each step replays the prior clock history. The original testbench editor is never changed.</p>
+        </div>
+        <div id="ghdl-logic-symbol" class="ghdl-reference-stage" aria-label="Circuit schematic with VHDL entity ports"></div>
+        <p class="ghdl-view-hint">Educational functional diagram of the selected circuit; verify its behavior using the waveform and truth table.</p>
+      </div>
+      <div class="ghdl-result-panel" data-ghdl-view="truth" role="tabpanel" hidden>
+        <div class="wave-toolbar"><strong id="ghdl-table-heading">Function / State Table</strong><span id="ghdl-table-status"></span></div>
+        <div id="ghdl-truth-table" class="ghdl-truth-stage" aria-label="Educational truth table or state transition table"></div>
+        <p class="ghdl-view-hint">Reference behavior for learning. VHDL assertion results and waveforms remain the source of observed execution behavior.</p>
+      </div>
+    </section>
+  </section>
+
+  <section class="tool-panel" data-panel="design-roadmap">
+    <div class="section-head"><div><div class="eyebrow">INTERACTIVE DESIGN-TO-PRODUCT ROADMAP</div><h2>From specification to silicon</h2></div><p>Choose each stage to see required inputs, outputs and the relevant ASIC-Skill lab.</p></div>
+    <div class="new-workshop-banner">Educational roadmap, not an automated tape-out pipeline. Each stage opens a real lab where one exists.</div>
+    <div id="vlsi-roadmap" class="workshop-stage-grid"></div>
+    <div class="workshop-focus"><h3 id="vlsi-stage-title">Select a stage</h3><p id="vlsi-stage-note">Inputs, outputs and exercises appear here.</p><button id="vlsi-stage-open" class="primary" type="button">Open related lab</button></div>
+  </section>
+  <section class="tool-panel" data-panel="pd-workshop">
+    <div class="section-head"><div><div class="eyebrow">OPENROAD PHYSICAL DESIGN</div><h2>Physical Design Workshop</h2></div><p>Study floorplan → PDN → placement → CTS → routing → signoff with guided operations.</p></div>
+    <div class="new-workshop-banner">Uses the existing OpenROAD/ORFS backend and installed design examples. This is a guided PD flow; not a separate OpenROAD build.</div>
+    <div class="workshop-stage-grid" id="pd-stage-list"></div>
+    <div class="artifact-actions"><button type="button" id="pd-run-floorplan" class="primary">▶ Run ORFS Floorplan</button><button type="button" id="pd-visual-lab">Open visual OpenROAD lab</button><span id="pd-workshop-state" role="status">Start an EDA session first.</span></div>
+    <div class="output-card"><div class="output-head"><strong>OpenROAD stage output</strong></div><pre id="pd-workshop-output">Select a PD stage and run the floorplan to see a real tool log.</pre></div>
+  </section>
+  <section class="tool-panel" data-panel="dft-workshop">
+    <div class="section-head"><div><div class="eyebrow">DESIGN FOR TESTABILITY</div><h2>DFT Readiness Workshop</h2></div><p>Synthesize an RTL state machine with Yosys and inspect its sequential logic before scan insertion.</p></div>
+    <div class="new-workshop-banner">Functional Yosys synthesis and flop readiness check. Fault scan-chain insertion, JTAG generation and ATPG are <strong>not</strong> installed or executed in this release.</div>
+    <div class="playground-toolbar"><label>Top module<input id="dft-top" value="fsm_controller" spellcheck="false"></label><button id="dft-run" class="primary" type="button">▶ Analyze DFT Readiness</button><button id="dft-netlist" type="button" disabled>Download Synthesized Netlist</button><span id="dft-state" role="status">Not run</span></div>
+    <article class="editor-card"><div class="card-head"><div class="eyebrow">RTL UNDER TEST</div><h2>fsm_controller.v</h2></div><textarea id="dft-rtl" data-code-editor data-language="verilog" data-filename="fsm_controller.v" spellcheck="false">module fsm_controller(input wire clk, input wire rst_n, input wire start, output reg done);
+  reg [1:0] state;
+  localparam IDLE=2'b00, BUSY=2'b01, FINISH=2'b10;
+  always @(posedge clk or negedge rst_n)
+    if (!rst_n) begin state <= IDLE; done <= 0; end
+    else begin
+      done <= 0;
+      case (state)
+        IDLE: if (start) state <= BUSY;
+        BUSY: state <= FINISH;
+        FINISH: begin done <= 1; state <= IDLE; end
+        default: state <= IDLE;
+      endcase
+    end
+endmodule</textarea></article>
+    <div class="output-card"><div class="output-head"><strong>Yosys synthesis / DFT readiness output</strong></div><pre id="dft-output">Run a Yosys synthesis check. Full scan/ATPG requires a separate validated DFT runtime.</pre></div>
+  </section>
+  <section class="tool-panel" data-panel="tcl-workshop">
+    <div class="section-head"><div><div class="eyebrow">TCL LANGUAGE AND EDA AUTOMATION</div><h2>Tcl Scripting Workshop</h2></div><p>Experiment with Tcl syntax, lists, procedures, loops, data structures and QoR-style reporting.</p></div>
+    <div class="new-workshop-banner">Scripts execute in a <strong>safe Tcl interpreter</strong> inside a network-disabled Docker container. Direct filesystem access, shell exec and EDA application commands are not enabled in this exercise.</div>
+    <div class="playground-toolbar"><label>Exercise<select id="tcl-example"><option value="timing">Timing report</option><option value="loops">Loops and procedures</option><option value="constraints">Constraint data</option></select></label><button id="tcl-example-load">Load Exercise</button><button id="tcl-run" class="primary">▶ Run Tcl</button><span id="tcl-state" role="status">Not run</span></div>
+    <article class="editor-card"><div class="card-head"><div class="eyebrow">TCL SOURCE EDITOR</div><h2>lesson.tcl</h2></div><textarea id="tcl-code" data-code-editor data-language="tcl" data-filename="lesson.tcl" spellcheck="false">set paths {{cpu_clk -0.032} {bus_clk 0.011} {periph_clk -0.008}}
+proc classify {slack} {
+  if {$slack < 0} {return VIOLATION}
+  return PASS
+}
+foreach row $paths {
+  lassign $row path slack
+  puts [format "%-14s %7.3f ns   %s" $path $slack [classify $slack]]
+}</textarea></article>
+    <div class="output-card"><div class="output-head"><strong>Tcl console</strong></div><pre id="tcl-output">Run an example to see calculated output.</pre></div>
+  </section>
+  <section class="tool-panel" data-panel="openlane-workshop">
+    <div class="section-head"><div><div class="eyebrow">RTL TO GDSII FLOW PREPARATION</div><h2>OpenLane Configuration Workshop</h2></div><p>Build a design configuration and understand the OpenLane 2 stages and prerequisites.</p></div>
+    <div class="new-workshop-banner">This module builds a real downloadable OpenLane 2 JSON configuration. A full RTL-to-GDSII run requires a separate OpenLane runtime, supported PDK files, libraries and tool images; it is <strong>not</strong> run by this tab.</div>
+    <div class="playground-toolbar"><label>Top module<input id="openlane-top" value="gcd" spellcheck="false"></label><label>Clock period (ns)<input id="openlane-clock" type="number" min="0.1" max="1000" step="0.1" value="10"></label><label>PDK<select id="openlane-pdk"><option value="sky130A">sky130A</option><option value="gf180mcuD">gf180mcuD</option></select></label></div>
+    <div class="artifact-actions"><button id="openlane-config" class="primary">Download OpenLane 2 Config</button><button id="openlane-openroad">Open OpenROAD Lab</button><span id="openlane-state">Prepare your config; add design.v, PDK and libraries on your flow host.</span></div>
+    <div class="output-card"><div class="output-head"><strong>Configuration preview</strong></div><pre id="openlane-output">Select options to generate a validated configuration template.</pre></div>
+  </section>
+  <section class="tool-panel" data-panel="cmos-workshop">
+    <div class="section-head"><div><div class="eyebrow">TRANSISTOR LEVEL CIRCUIT DESIGN</div><h2>CMOS Inverter Workshop</h2></div><p>Run a generic educational CMOS inverter transient analysis with ngspice.</p></div>
+    <div class="new-workshop-banner">Includes generic MOS level-1 models to run without a foundry PDK. SKY130-accurate analysis requires validated device model libraries that are not bundled with this example.</div>
+    <div class="artifact-actions"><button id="cmos-run" class="primary">▶ Simulate CMOS Inverter</button><button id="cmos-load">Restore Example</button><span id="cmos-state" role="status">Not run</span></div>
+    <article class="editor-card"><div class="card-head"><div class="eyebrow">SPICE CIRCUIT</div><h2>cmos_inverter.cir</h2></div><textarea id="cmos-spice" data-code-editor data-language="spice" data-filename="cmos_inverter.cir" spellcheck="false">CMOS inverter -- educational MOS level 1 (NOT a foundry model)
+VDD vdd 0 1.8
+VIN in 0 PULSE(0 1.8 0 0.1n 0.1n 5n 10n)
+MP out in vdd vdd PMOD L=0.18u W=1u
+MN out in 0 0 NMOD L=0.18u W=0.5u
+CL out 0 20f
+.model NMOD NMOS (LEVEL=1 VTO=0.5 KP=120u LAMBDA=0.05)
+.model PMOD PMOS (LEVEL=1 VTO=-0.5 KP=40u LAMBDA=0.05)
+.tran 0.1n 30n
+.measure tran output_at_2n FIND v(out) AT=2n
+.measure tran output_at_7n FIND v(out) AT=7n
+.measure tran output_at_12n FIND v(out) AT=12n
+.end</textarea></article>
+    <div class="output-card"><div class="output-head"><strong>ngspice transient / measurement log</strong></div><pre id="cmos-output">Run a circuit simulation to inspect measured voltage levels.</pre></div>
+  </section>
+
+  <section class="tool-panel" data-panel="pyuvm">
+    <div class="section-head"><div><div class="eyebrow">FRONT-END / PYTHON UVM</div><h2>pyuvm Verification Workshop</h2></div><p>Write a Verilog design and a Python UVM-style test class. Runs through the existing cocotb + Icarus simulator with an optional VCD.</p></div>
+    <div class="new-workshop-banner">pyuvm provides reusable Python UVM components. This guided example exercises a UVM test class, not a complete commercial UVM testbench. Build the updated cocotb image first.</div>
+    <div class="playground-toolbar"><label>Top module<input id="pyuvm-top" value="counter" spellcheck="false"></label><button id="pyuvm-run" class="primary" type="button">▶ Run pyuvm Test</button><button id="pyuvm-reset" type="button">Restore Example</button><label class="capture-toggle"><input type="checkbox" id="pyuvm-capture" checked> Capture VCD</label><span id="pyuvm-state" role="status">Not run</span></div>
+    <div class="cocotb-grid">
+      <article class="editor-card"><div class="card-head"><div class="eyebrow">VERILOG DUT</div><h2>counter.v</h2></div><textarea id="pyuvm-rtl" data-code-editor data-language="verilog" data-filename="counter.v" spellcheck="false">module counter(input wire clk, input wire rst_n, input wire en, output reg [3:0] q);
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) q <= 0;
+    else if (en) q <= q + 1'b1;
+  end
+endmodule</textarea></article>
+      <article class="editor-card"><div class="card-head"><div class="eyebrow">PYTHON UVM TEST</div><h2>test_dut.py</h2></div><textarea id="pyuvm-test" data-code-editor data-language="python" data-filename="test_dut.py" spellcheck="false">import pyuvm
+from pyuvm import uvm_test
+from cocotb.triggers import Timer
+import cocotb
+
+@pyuvm.test()
+class CounterTest(uvm_test):
+    async def run_phase(self):
+        self.raise_objection()
+        dut = cocotb.top
+        dut.clk.value = 0
+        dut.rst_n.value = 0
+        dut.en.value = 0
+        await Timer(2, units="ns")
+        dut.rst_n.value = 1
+        for expected in range(1, 6):
+            dut.clk.value = 0
+            dut.en.value = 1
+            await Timer(5, units="ns")
+            dut.clk.value = 1
+            await Timer(2, units="ns")
+            actual = int(dut.q.value)
+            assert actual == expected, f"expected {expected}, got {actual}"
+            self.logger.info("Counter step %d PASSED", expected)
+            await Timer(5, units="ns")
+        self.drop_objection()</textarea></article>
+    </div>
+    <div class="output-card"><div class="output-head"><strong>pyuvm simulation output</strong></div><pre id="pyuvm-output">Start an EDA session, then run the example to see UVM class logs.</pre></div>
+    <div class="playground-results pyuvm-wave-result">
+      <div class="wave-toolbar"><strong>pyuvm VCD Waveform Viewer</strong><span id="pyuvm-wave-status">No waveform loaded</span><div class="wave-controls"><button id="pyuvm-wave-zoom-out" type="button">−</button><span id="pyuvm-wave-zoom-value">1.0×</span><button id="pyuvm-wave-zoom-in" type="button">+</button><button id="pyuvm-wave-fit" type="button">Fit</button><button type="button" id="pyuvm-wave-download" disabled>Download VCD</button></div></div>
+      <div class="wave-body"><aside class="wave-sidebar"><label for="pyuvm-wave-search">Signals</label><input type="search" id="pyuvm-wave-search" placeholder="Filter signals…"><div id="pyuvm-wave-signal-list"></div></aside><div class="wave-main"><div id="pyuvm-wave-cursor">Move over waveform to inspect time</div><div id="pyuvm-wave-scroll"><canvas id="pyuvm-wave-canvas" aria-label="pyuvm simulation timing diagram"></canvas><p id="pyuvm-wave-empty">Run a test with Capture VCD enabled to view waveforms.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="tool-panel" data-panel="perl-workshop">
+    <div class="section-head"><div><div class="eyebrow">LINUX / SCRIPTING</div><h2>Perl Scripting Workshop</h2></div><p>Practice regex, arrays, hashes and automated analysis of reports using a local, isolated Perl interpreter.</p></div>
+    <div class="new-workshop-banner">User scripts run in a short-lived, read-only, network-disabled Docker container with CPU, memory and output limits. They do not execute on your WSL host.</div>
+    <div class="playground-toolbar"><label>Exercise<select id="perl-example"><option value="timing">Timing slack report</option><option value="regex">Text matching</option></select></label><button id="perl-example-load" type="button">Load Example</button><button id="perl-run" class="primary" type="button">▶ Run Perl Script</button><span id="perl-state" role="status">Not run</span></div>
+    <article class="editor-card"><div class="card-head"><div class="eyebrow">PERL SOURCE EDITOR</div><h2>lesson.pl</h2></div><textarea id="perl-code" data-code-editor data-language="perl" data-filename="lesson.pl" spellcheck="false">use strict;
+use warnings;
+my %slack_ns = (clk_cpu => -0.032, clk_bus => 0.011, clk_io => -0.008);
+for my $path (sort keys %slack_ns) {
+    my $slack = $slack_ns{$path};
+    printf "%-12s %7.3f ns  %s\n", $path, $slack,
+        ($slack < 0 ? "VIOLATION" : "PASS");
+}</textarea></article>
+    <div class="output-card"><div class="output-head"><strong>Perl execution output</strong></div><pre id="perl-output">Run the sample to view a generated timing-report summary.</pre></div>
+  </section>
+  <section class="tool-panel" data-panel="terminal">
+    <div class="section-head"><div><div class="eyebrow">ISOLATED LINUX</div><h2>Student Terminal</h2></div><p>Guided Linux commands run inside the isolated EDA container, never on the Windows/WSL host. This is not the Linux kernel build environment.</p></div>
+    <div class="terminal-toolbar"><button data-terminal-command="pwd">pwd</button><button data-terminal-command="ls -la /workspace">ls workspace</button><button data-terminal-command="yosys -V">yosys -V</button><button data-terminal-command="openroad -version">openroad -version</button><span id="shell-mode">Guided shell</span></div>
+    <div id="xterm" class="xterm-host"></div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+<script src="supabase-config.js"></script>
+<script src="eda-lab-config.js"></script>
+<script src="waveform-viewer.js?v=37.0.50"></script><script src="gtkwave-integration.js?v=37.0.44"></script><script src="logic-simulation.js?v=37.0.40"></script><script src="eda-tool-categories.js?v=37.0.35"></script><script src="cocotb-example-library.js?v=37.0.39"></script><script src="rtl-workshop-example-library.js?v=37.0.41"></script><script src="cocotb-hdl-library.js?v=37.0.43"></script><script src="asic-netlist-schematic.js?v=37.0.51"></script><script src="cocotb-visuals.js?v=37.0.51"></script><script src="eda-lab.js?v=37.0.47"></script><script src="eda-extra.js?v=37.0.53"></script><script src="ghdl-example-library.js?v=37.0.28"></script><script src="ghdl-extra-examples.js?v=37.0.28"></script><script src="ghdl-symbols.js?v=37.0.29"></script><script src="ghdl-schematic-definitions.js?v=37.0.33"></script><script src="ghdl-schematic-renderer.js?v=37.0.34"></script><script src="ghdl-interactive-stimulus.js?v=37.0.34"></script><script src="asic-clock-events.js?v=37.0.45"></script><script src="ghdl-workspace.js?v=37.0.45"></script><script src="ghdl-studio-ux.js?v=37.0.29"></script><script src="ghdl-lab-navigation.js?v=37.0.29"></script><script src="vlsi-workshops.js?v=37.0.18"></script><script src="sta-riscv-workshops.js?v=37.0.19"></script><script src="scripting-verification-labs.js?v=37.0.21"></script><script src="embedded-eda-studios.js?v=37.0.36"></script><script src="code-editor.js?v=37.0.42"></script><script src="rtl-learning-studio.js?v=37.0.45"></script><script src="asic-wave-resize.js?v=37.0.46"></script><script>ASICCodeEditor.init();</script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body>
+</html>

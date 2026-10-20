@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | ASIC-Skill</title>
+  <meta name="description" content="Create your ASIC-Skill account and start learning VLSI, ASIC design and physical design from RTL to GDSII.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.asic-skill.com/signup.html">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="logo.jpeg" alt="ASIC Skill logo">
+        <span>ASIC<span>-Skill</span></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
+      <nav class="nav">
+        <a href="index.html#tracks">Learning Tracks</a>
+        <a href="index.html#courses">Courses</a>
+        <a href="index.html#resources">Resources</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="auth-shell">
+      <section class="auth-card">
+        <div class="auth-kicker">ASIC • VLSI • Semiconductor</div>
+        <h1>Create your account.</h1>
+        <p class="auth-intro">Join ASIC-Skill and prepare for your VLSI and ASIC learning journey — from fundamentals and RTL to physical design, timing and signoff.</p>
+
+        <form class="auth-form" id="signupForm">
+          <label>Full name
+            <input type="text" name="name" autocomplete="name" placeholder="Your name" required>
+          </label>
+          <label>Email address
+            <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+          </label>
+          <label>Password
+            <input type="password" name="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+          </label>
+          <label>Confirm password
+            <input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" placeholder="Re-enter your password" required>
+          </label>
+          <button class="btn btn-primary auth-submit" type="submit">Create Account <span>→</span></button>
+        </form>
+        <div class="auth-success" id="signupSuccess" role="status">Your form was submitted locally. Account creation needs a backend/authentication service before this can create a real account.</div>
+        <p class="auth-note">This is the front-end sign-up page for testing. No password or account data is sent or stored yet.</p>
+        <p class="auth-note">Need help? <a href="mailto:support@asic-skill.com">support@asic-skill.com</a></p>
+        <p class="auth-switch">Already have an account? <a href="signin.html">Sign in</a></p>
+        <a class="auth-back" href="index.html">← Back to ASIC-Skill</a>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const success = document.getElementById('signupSuccess');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const password = form.elements.password.value;
+      const confirm = form.elements.confirmPassword.value;
+      if (password !== confirm) {
+        form.elements.confirmPassword.setCustomValidity('Passwords do not match.');
+        form.elements.confirmPassword.reportValidity();
+        return;
+      }
+      form.elements.confirmPassword.setCustomValidity('');
+      success.style.display = 'block';
+    });
+    form.elements.confirmPassword.addEventListener('input', function () {
+      this.setCustomValidity(this.value && this.value !== form.elements.password.value ? 'Passwords do not match.' : '');
+    });
+
+    const menuButton = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    if (menuButton && nav) {
+      menuButton.addEventListener('click', () => nav.classList.toggle('open'));
+    }
+  </script>
+</body>
+</html>

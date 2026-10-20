@@ -1,0 +1,1142 @@
+[
+  {
+    "example_id": "mux16x1",
+    "display_name": "16:1 MUX",
+    "design_entity": "mux16x1",
+    "testbench_entity": "tb_mux16x1",
+    "modeling_variants": [
+      "case",
+      "if_else",
+      "when_else"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "d",
+        "width": 16
+      },
+      {
+        "name": "sel",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "y",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "mux16x4",
+    "display_name": "16:4 MUX (16 inputs × 4 bits)",
+    "design_entity": "mux16x4",
+    "testbench_entity": "tb_mux16x4",
+    "modeling_variants": [
+      "case",
+      "if_else",
+      "when_else"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "d",
+        "width": 64
+      },
+      {
+        "name": "sel",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "y",
+        "width": 4
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "demux1x8",
+    "display_name": "1:8 DEMUX",
+    "design_entity": "demux1x8",
+    "testbench_entity": "tb_demux1x8",
+    "modeling_variants": [
+      "case",
+      "else_if"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "d",
+        "width": 1
+      },
+      {
+        "name": "sel",
+        "width": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "y",
+        "width": 8
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "decoder3x8",
+    "display_name": "3:8 Decoder",
+    "design_entity": "decoder3x8",
+    "testbench_entity": "tb_decoder3x8",
+    "modeling_variants": [
+      "case_if",
+      "case_signal",
+      "else_if",
+      "else_if_signal",
+      "when_else_signal"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 3
+      },
+      {
+        "name": "en",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "y",
+        "width": 8
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "encoder16x4",
+    "display_name": "16:4 One-Hot Encoder",
+    "design_entity": "encoder16x4",
+    "testbench_entity": "tb_encoder16x4",
+    "modeling_variants": [
+      "case_if",
+      "case_signal",
+      "else_if",
+      "else_if_signal",
+      "when_else_signal"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "d",
+        "width": 16
+      }
+    ],
+    "outputs": [
+      {
+        "name": "code",
+        "width": 4
+      },
+      {
+        "name": "valid",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "even_parity4",
+    "display_name": "4-bit Even Parity Generator",
+    "design_entity": "even_parity4",
+    "testbench_entity": "tb_even_parity4",
+    "modeling_variants": [
+      "dataflow",
+      "for_loop_elseif"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "d",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "parity",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "odd_parity_checker",
+    "display_name": "Odd-Parity Checker",
+    "design_entity": "odd_parity_checker",
+    "testbench_entity": "tb_odd_parity_checker",
+    "modeling_variants": [
+      "dataflow",
+      "for_loop"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "d",
+        "width": 4
+      },
+      {
+        "name": "parity_bit",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "error",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "d_latch",
+    "display_name": "D Latch",
+    "design_entity": "d_latch",
+    "testbench_entity": "tb_d_latch",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "en",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "d",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "jk_latch",
+    "display_name": "JK Latch",
+    "design_entity": "jk_latch",
+    "testbench_entity": "tb_jk_latch",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "en",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "j",
+        "width": 1
+      },
+      {
+        "name": "k",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "sr_latch",
+    "display_name": "SR Latch",
+    "design_entity": "sr_latch",
+    "testbench_entity": "tb_sr_latch",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "en",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "s",
+        "width": 1
+      },
+      {
+        "name": "r",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "t_latch",
+    "display_name": "T Latch",
+    "design_entity": "t_latch",
+    "testbench_entity": "tb_t_latch",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "en",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "t",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "d_ff",
+    "display_name": "D Flip-Flop",
+    "design_entity": "d_ff",
+    "testbench_entity": "tb_d_ff",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "d",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "jk_ff",
+    "display_name": "JK Flip-Flop",
+    "design_entity": "jk_ff",
+    "testbench_entity": "tb_jk_ff",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "j",
+        "width": 1
+      },
+      {
+        "name": "k",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "sr_ff",
+    "display_name": "SR Flip-Flop",
+    "design_entity": "sr_ff",
+    "testbench_entity": "tb_sr_ff",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "s",
+        "width": 1
+      },
+      {
+        "name": "r",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "t_ff",
+    "display_name": "T Flip-Flop",
+    "design_entity": "t_ff",
+    "testbench_entity": "tb_t_ff",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "t",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "jk_master_slave",
+    "display_name": "JK Master-Slave",
+    "design_entity": "jk_master_slave",
+    "testbench_entity": "tb_jk_master_slave",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "j",
+        "width": 1
+      },
+      {
+        "name": "k",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "sr_master_slave",
+    "display_name": "SR Master-Slave",
+    "design_entity": "sr_master_slave",
+    "testbench_entity": "tb_sr_master_slave",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "s",
+        "width": 1
+      },
+      {
+        "name": "r",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "up_down_counter",
+    "display_name": "4-bit Up/Down Counter",
+    "design_entity": "up_down_counter",
+    "testbench_entity": "tb_up_down_counter",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "en",
+        "width": 1
+      },
+      {
+        "name": "up",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 4
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "shift_register",
+    "display_name": "8-bit Shift Register",
+    "design_entity": "shift_register",
+    "testbench_entity": "tb_shift_register",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "en",
+        "width": 1
+      },
+      {
+        "name": "din",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "q",
+        "width": 8
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "detector1101",
+    "display_name": "1101 Sequence Detector (Overlap)",
+    "design_entity": "detector1101",
+    "testbench_entity": "tb_detector1101",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "din",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "detected",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "magnitude_comparator4",
+    "display_name": "4-bit Magnitude Comparator",
+    "design_entity": "magnitude_comparator4",
+    "testbench_entity": "tb_magnitude_comparator4",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral",
+      "structural"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 4
+      },
+      {
+        "name": "b",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "lt",
+        "width": 1
+      },
+      {
+        "name": "eq",
+        "width": 1
+      },
+      {
+        "name": "gt",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "adder4",
+    "display_name": "4-bit Adder (Structural Ripple)",
+    "design_entity": "adder4",
+    "testbench_entity": "tb_adder4",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral",
+      "structural"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 4
+      },
+      {
+        "name": "b",
+        "width": 4
+      },
+      {
+        "name": "cin",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "sum",
+        "width": 4
+      },
+      {
+        "name": "cout",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "alu4",
+    "display_name": "4-bit ALU (8 operations)",
+    "design_entity": "alu4",
+    "testbench_entity": "tb_alu4",
+    "modeling_variants": [
+      "case",
+      "when_else"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 4
+      },
+      {
+        "name": "b",
+        "width": 4
+      },
+      {
+        "name": "op",
+        "width": 3
+      }
+    ],
+    "outputs": [
+      {
+        "name": "result",
+        "width": 4
+      },
+      {
+        "name": "zero",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "fifo4x8",
+    "display_name": "4×8 Synchronous FIFO",
+    "design_entity": "fifo4x8",
+    "testbench_entity": "tb_fifo4x8",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "wr_en",
+        "width": 1
+      },
+      {
+        "name": "rd_en",
+        "width": 1
+      },
+      {
+        "name": "din",
+        "width": 8
+      }
+    ],
+    "outputs": [
+      {
+        "name": "dout",
+        "width": 8
+      },
+      {
+        "name": "full",
+        "width": 1
+      },
+      {
+        "name": "empty",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "unsigned_multiplier4",
+    "display_name": "4×4 Unsigned Multiplier",
+    "design_entity": "unsigned_multiplier4",
+    "testbench_entity": "tb_unsigned_multiplier4",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral",
+      "partial_products"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 4
+      },
+      {
+        "name": "b",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "product",
+        "width": 8
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "fir4",
+    "display_name": "4-tap FIR Filter",
+    "design_entity": "fir4",
+    "testbench_entity": "tb_fir4",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "sample_in",
+        "width": 8
+      }
+    ],
+    "outputs": [
+      {
+        "name": "sample_out",
+        "width": 16
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "half_adder",
+    "display_name": "Half Adder",
+    "design_entity": "half_adder",
+    "testbench_entity": "tb_half_adder",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral"
+    ],
+    "diagram_kind": "gates",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 1
+      },
+      {
+        "name": "b",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "sum",
+        "width": 1
+      },
+      {
+        "name": "carry",
+        "width": 1
+      }
+    ],
+    "claim": "Educational Boolean network · based on the selected example function"
+  },
+  {
+    "example_id": "full_adder",
+    "display_name": "Full Adder",
+    "design_entity": "full_adder",
+    "testbench_entity": "tb_full_adder",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral"
+    ],
+    "diagram_kind": "gates",
+    "inputs": [
+      {
+        "name": "a",
+        "width": 1
+      },
+      {
+        "name": "b",
+        "width": 1
+      },
+      {
+        "name": "cin",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "sum",
+        "width": 1
+      },
+      {
+        "name": "cout",
+        "width": 1
+      }
+    ],
+    "claim": "Educational Boolean network · based on the selected example function"
+  },
+  {
+    "example_id": "binary_gray",
+    "display_name": "Binary ↔ Gray Code Converter",
+    "design_entity": "binary_gray",
+    "testbench_entity": "tb_binary_gray",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "binary_in",
+        "width": 4
+      },
+      {
+        "name": "gray_in",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "gray_out",
+        "width": 4
+      },
+      {
+        "name": "binary_out",
+        "width": 4
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "decoder4x16",
+    "display_name": "4:16 Decoder",
+    "design_entity": "decoder4x16",
+    "testbench_entity": "tb_decoder4x16",
+    "modeling_variants": [
+      "dataflow",
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "sel",
+        "width": 4
+      },
+      {
+        "name": "enable",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "y",
+        "width": 16
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "bcd7seg",
+    "display_name": "BCD to 7-Segment Display",
+    "design_entity": "bcd7seg",
+    "testbench_entity": "tb_bcd7seg",
+    "modeling_variants": [
+      "behavioral",
+      "dataflow"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "bcd",
+        "width": 4
+      }
+    ],
+    "outputs": [
+      {
+        "name": "seg",
+        "width": 7
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "moore101",
+    "display_name": "Moore 101 Sequence Detector",
+    "design_entity": "moore101",
+    "testbench_entity": "tb_moore101",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "din",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "detected",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "mealy101",
+    "display_name": "Mealy 101 Sequence Detector",
+    "design_entity": "mealy101",
+    "testbench_entity": "tb_mealy101",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "din",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "detected",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "traffic_light",
+    "display_name": "Traffic Light Controller",
+    "design_entity": "traffic_light",
+    "testbench_entity": "tb_traffic_light",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "red",
+        "width": 1
+      },
+      {
+        "name": "yellow",
+        "width": 1
+      },
+      {
+        "name": "green",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  },
+  {
+    "example_id": "uart_tx",
+    "display_name": "UART Transmitter (8N1)",
+    "design_entity": "uart_tx",
+    "testbench_entity": "tb_uart_tx",
+    "modeling_variants": [
+      "behavioral"
+    ],
+    "diagram_kind": "block",
+    "inputs": [
+      {
+        "name": "clk",
+        "width": 1
+      },
+      {
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "name": "start",
+        "width": 1
+      },
+      {
+        "name": "data_in",
+        "width": 8
+      }
+    ],
+    "outputs": [
+      {
+        "name": "tx",
+        "width": 1
+      },
+      {
+        "name": "busy",
+        "width": 1
+      }
+    ],
+    "claim": "Port-accurate functional block · internal gates not inferred from VHDL"
+  }
+]

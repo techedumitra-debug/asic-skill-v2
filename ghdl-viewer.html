@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASIC-Skill GHDL Result Viewer</title><link rel="stylesheet" href="ghdl-popup.css?v=37.0.28"></head>
+<body><main class="popup-shell">
+  <header><div><small>ASIC-SKILL · GHDL RESULT VIEWER</small><h1 id="pop-title">Waveform Viewer</h1></div><div class="popup-actions"><button id="pop-refresh" type="button">Refresh from Lab</button><button id="pop-return" type="button">← Return to GHDL Lab</button></div></header>
+  <p id="pop-status" role="status">Reading the active lab results…</p><p class="model-fallback">If the original tab was closed: <a href="eda-lab.html?tool=ghdl&amp;view=wave" id="pop-backup-link">Open GHDL Lab</a></p>
+  <section id="pop-wave-pane" hidden>
+    <div class="wave-toolbar"><strong>VCD signals · draggable time cursor</strong><span id="ghdl-pop-wave-status">No data</span><div class="wave-controls"><button id="ghdl-pop-wave-zoom-out">−</button><span id="ghdl-pop-wave-zoom-value">1.0×</span><button id="ghdl-pop-wave-zoom-in">+</button><button id="ghdl-pop-wave-fit">Fit</button><button id="ghdl-pop-wave-download" disabled>Export VCD</button></div></div>
+    <div class="wave-body"><aside class="wave-sidebar"><label>Objects · Name / Value</label><input id="ghdl-pop-wave-search" type="search" placeholder="Find signal…"><div class="ghdl-wave-header"><strong>Object Name</strong><strong>Value</strong></div><div id="ghdl-pop-wave-signal-list"></div></aside><div class="ghdl-pane-grip" role="separator" tabindex="0" aria-label="Resize signal list"></div><div class="wave-main"><div id="ghdl-pop-wave-cursor">Drag cursor on the waveform to inspect values</div><div id="ghdl-pop-wave-scroll"><canvas id="ghdl-pop-wave-canvas" tabindex="0"></canvas><p id="ghdl-pop-wave-empty">No simulation waveform yet. Run a GHDL simulation first.</p></div></div></div>
+  </section>
+  <section id="pop-schem-pane" hidden>
+    <div class="wave-toolbar"><strong>Actual synthesized module</strong><span id="pop-schem-status">No netlist</span><div class="wave-controls"><button id="pop-schem-zoom-out">−</button><span id="pop-schem-zoom">100%</span><button id="pop-schem-zoom-in">+</button><button id="pop-schem-fit">Fit</button></div></div>
+    <div class="popup-schematic-scroll" id="pop-schem-scroll"><svg id="pop-schem-svg" aria-label="Synthesized schematic" xmlns="http://www.w3.org/2000/svg"></svg><p id="pop-schem-empty">Run GHDL synthesis to produce a schematic.</p></div><pre id="pop-schem-details">Select a cell to inspect connections.</pre>
+  </section>
+</main><script src="waveform-viewer.js?v=37.0.28"></script><script src="ghdl-symbols.js?v=37.0.28"></script><script src="ghdl-popup.js?v=37.0.29"></script><script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

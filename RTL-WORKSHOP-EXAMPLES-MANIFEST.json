@@ -1,0 +1,258 @@
+[
+  {
+    "id": "counter",
+    "day": 0,
+    "name": "Starter: 4-bit Counter",
+    "top": "counter",
+    "test_top": "tb_counter",
+    "category": "Starter"
+  },
+  {
+    "id": "adder",
+    "day": 0,
+    "name": "Starter: 8-bit Adder",
+    "top": "adder",
+    "test_top": "tb_adder",
+    "category": "Starter"
+  },
+  {
+    "id": "day01",
+    "day": 1,
+    "name": "Half Adder & Full Adder",
+    "top": "full_adder",
+    "test_top": "tb_full_adder",
+    "category": "Combinational"
+  },
+  {
+    "id": "day02",
+    "day": 2,
+    "name": "Ripple Carry Adder",
+    "top": "ripple_adder",
+    "test_top": "tb_ripple_adder",
+    "category": "Combinational"
+  },
+  {
+    "id": "day03",
+    "day": 3,
+    "name": "Binary / Gray Code Conversion",
+    "top": "gray_converter",
+    "test_top": "tb_gray_converter",
+    "category": "Combinational"
+  },
+  {
+    "id": "day04",
+    "day": 4,
+    "name": "Multiplexers",
+    "top": "mux4",
+    "test_top": "tb_mux4",
+    "category": "Combinational"
+  },
+  {
+    "id": "day05",
+    "day": 5,
+    "name": "Demultiplexers",
+    "top": "demux4",
+    "test_top": "tb_demux4",
+    "category": "Combinational"
+  },
+  {
+    "id": "day06",
+    "day": 6,
+    "name": "Encoders",
+    "top": "priority_encoder",
+    "test_top": "tb_priority_encoder",
+    "category": "Combinational"
+  },
+  {
+    "id": "day07",
+    "day": 7,
+    "name": "Decoders",
+    "top": "decoder3x8",
+    "test_top": "tb_decoder3x8",
+    "category": "Combinational"
+  },
+  {
+    "id": "day08",
+    "day": 8,
+    "name": "D Latch",
+    "top": "d_latch",
+    "test_top": "tb_d_latch",
+    "category": "Sequential"
+  },
+  {
+    "id": "day09",
+    "day": 9,
+    "name": "D Flip-Flop",
+    "top": "d_flipflop",
+    "test_top": "tb_d_flipflop",
+    "category": "Sequential"
+  },
+  {
+    "id": "day10",
+    "day": 10,
+    "name": "Magnitude Comparators",
+    "top": "comparator4",
+    "test_top": "tb_comparator4",
+    "category": "Combinational"
+  },
+  {
+    "id": "day11",
+    "day": 11,
+    "name": "Shift Register \u2014 Serial",
+    "top": "shift_serial",
+    "test_top": "tb_shift_serial",
+    "category": "Sequential"
+  },
+  {
+    "id": "day12",
+    "day": 12,
+    "name": "Shift Register \u2014 Parallel Load",
+    "top": "shift_parallel",
+    "test_top": "tb_shift_parallel",
+    "category": "Sequential"
+  },
+  {
+    "id": "day13",
+    "day": 13,
+    "name": "Up / Down Counter",
+    "top": "updown_counter",
+    "test_top": "tb_updown_counter",
+    "category": "Sequential"
+  },
+  {
+    "id": "day14",
+    "day": 14,
+    "name": "MOD-N Counter",
+    "top": "mod10_counter",
+    "test_top": "tb_mod10_counter",
+    "category": "Sequential"
+  },
+  {
+    "id": "day15",
+    "day": 15,
+    "name": "Gray Counter",
+    "top": "gray_counter",
+    "test_top": "tb_gray_counter",
+    "category": "Sequential"
+  },
+  {
+    "id": "day16",
+    "day": 16,
+    "name": "Signed Booth Multiplier",
+    "top": "booth_multiplier",
+    "test_top": "tb_booth_multiplier",
+    "category": "Combinational"
+  },
+  {
+    "id": "day17",
+    "day": 17,
+    "name": "1-bit RAM Cell",
+    "top": "ram1",
+    "test_top": "tb_ram1",
+    "category": "Memory"
+  },
+  {
+    "id": "day18",
+    "day": 18,
+    "name": "4/8-bit RAM",
+    "top": "ram8",
+    "test_top": "tb_ram8",
+    "category": "Memory"
+  },
+  {
+    "id": "day19",
+    "day": 19,
+    "name": "1/4/8-bit ROM",
+    "top": "rom8",
+    "test_top": "tb_rom8",
+    "category": "Memory"
+  },
+  {
+    "id": "day20",
+    "day": 20,
+    "name": "8-bit ALU",
+    "top": "alu8",
+    "test_top": "tb_alu8",
+    "category": "Combinational"
+  },
+  {
+    "id": "day21",
+    "day": 21,
+    "name": "1101 Moore Sequence Detector",
+    "top": "moore1101",
+    "test_top": "tb_moore1101",
+    "category": "Sequential"
+  },
+  {
+    "id": "day22",
+    "day": 22,
+    "name": "1010 Mealy Sequence Detector",
+    "top": "mealy1010",
+    "test_top": "tb_mealy1010",
+    "category": "Sequential"
+  },
+  {
+    "id": "day23",
+    "day": 23,
+    "name": "PWM Generator",
+    "top": "pwm4",
+    "test_top": "tb_pwm4",
+    "category": "Sequential"
+  },
+  {
+    "id": "day24",
+    "day": 24,
+    "name": "Fixed Priority Arbiter",
+    "top": "fixed_arbiter",
+    "test_top": "tb_fixed_arbiter",
+    "category": "Combinational"
+  },
+  {
+    "id": "day25",
+    "day": 25,
+    "name": "Round Robin Arbiter",
+    "top": "rr_arbiter",
+    "test_top": "tb_rr_arbiter",
+    "category": "Sequential"
+  },
+  {
+    "id": "day26",
+    "day": 26,
+    "name": "Pseudorandom Number Generator (LFSR)",
+    "top": "lfsr8",
+    "test_top": "tb_lfsr8",
+    "category": "Sequential"
+  },
+  {
+    "id": "day27",
+    "day": 27,
+    "name": "Even Frequency Divider",
+    "top": "freq_div4",
+    "test_top": "tb_freq_div4",
+    "category": "Sequential"
+  },
+  {
+    "id": "day28",
+    "day": 28,
+    "name": "Traffic Light Controller",
+    "top": "traffic_light",
+    "test_top": "tb_traffic_light",
+    "category": "Sequential"
+  },
+  {
+    "id": "day29",
+    "day": 29,
+    "name": "Elevator Controller",
+    "top": "elevator2",
+    "test_top": "tb_elevator2",
+    "category": "Sequential"
+  },
+  {
+    "id": "day30",
+    "day": 30,
+    "name": "Factorial Calculator",
+    "top": "factorial4",
+    "test_top": "tb_factorial4",
+    "category": "Combinational"
+  }
+]

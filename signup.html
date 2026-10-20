@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign Up | ASIC-Skill</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <h1>Create account</h1>
+
+      <form id="signup-form">
+        <label for="full-name">Full name</label>
+        <input id="full-name" type="text" required autocomplete="name">
+
+        <label for="email">Email address</label>
+        <input id="email" type="email" required autocomplete="email">
+
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input id="password" type="password" minlength="8" required autocomplete="new-password">
+          <button type="button" class="password-eye" onclick="togglePassword('password', this)" aria-label="Show password" aria-pressed="false">
+            <span class="eye-show" aria-hidden="true">◉</span>
+          </button>
+        </div>
+
+        <label for="confirm-password">Confirm password</label>
+        <div class="password-wrapper">
+          <input id="confirm-password" type="password" minlength="8" required autocomplete="new-password">
+          <button type="button" class="password-eye" onclick="togglePassword('confirm-password', this)" aria-label="Show password" aria-pressed="false">
+            <span class="eye-show" aria-hidden="true">◉</span>
+          </button>
+        </div>
+
+        <button type="submit">Sign Up →</button>
+      </form>
+
+      <div id="auth-message" class="auth-message" hidden></div>
+
+      <p>Already have an account? <a href="signin.html">Sign in</a></p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", signUp);
+  </script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+:root{--bg:#06111d;--panel:#0c2034;--panel2:#0a1929;--line:#1d4361;--cyan:#35d5ff;--blue:#398bff;--text:#f5f8ff;--muted:#9bb7d3;--green:#54e38e;--amber:#ffd166}
+*{box-sizing:border-box}.eda-page{margin:0;background:radial-gradient(circle at 80% 0,#0c2944 0,transparent 36%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}.eda-page .topbar{position:sticky;top:0;z-index:20;background:#071522eF;border-bottom:1px solid #153650;backdrop-filter:blur(14px)}.eda-shell{width:min(1500px,calc(100% - 28px));margin:24px auto 70px}.eda-hero,.tool-status,.session-bar,.tool-tabs,.tool-panel{border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(15,39,63,.98),rgba(6,18,31,.98));box-shadow:0 18px 55px rgba(0,0,0,.24)}.eda-hero{padding:28px;display:flex;justify-content:space-between;align-items:center}.eyebrow{color:var(--cyan);font-size:.76rem;letter-spacing:.14em;font-weight:800}.eda-hero h1,.section-head h2,.editor-card h2,.action-card h2{margin:.35rem 0}.eda-hero p,.section-head p,.mini-note{color:var(--muted)}.hero-badges{display:flex;align-items:center;gap:9px}.status-dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(84,227,142,.12)}.chip{padding:8px 12px;border-radius:999px;background:#102a44;border:1px solid #28577c;font-size:.78rem;font-weight:800}.tool-status{margin-top:14px;padding:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.tool-status div{padding:12px 14px;border-radius:14px;background:#081725;border:1px solid #183751}.tool-status b{display:block}.tool-status span{display:block;color:var(--muted);font-size:.84rem;margin-top:3px}.tool-status span.ok{color:var(--green)}.tool-status span.warn{color:var(--amber)}.session-bar{margin-top:14px;padding:14px 18px;display:flex;align-items:center;gap:12px}.session-bar div{margin-right:auto}.session-bar span{display:block;color:var(--muted);font-size:.86rem}.eda-page button{border:1px solid #2f6289;background:#102b46;color:#eef7ff;border-radius:11px;padding:10px 14px;font-weight:750;cursor:pointer}.eda-page button:hover:not(:disabled){border-color:#42cfff;transform:translateY(-1px)}.eda-page button:disabled{opacity:.45;cursor:not-allowed}.eda-page button.primary{background:linear-gradient(90deg,#24c5e9,#388cff);color:#03111d;border:0}.eda-page button.secondary{background:#14263a}.tool-tabs{margin-top:14px;padding:8px;display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.tool-tab{background:transparent!important;border-color:transparent!important}.tool-tab.active{background:#174a70!important;border-color:#347da9!important}.tool-panel{display:none;margin-top:14px;padding:22px}.tool-panel.active{display:block}.section-head,.card-head,.output-head{display:flex;justify-content:space-between;align-items:center;gap:18px}.section-head p{max-width:560px}.flow-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}.flow-cards article,.editor-card,.action-card{border:1px solid #20435f;background:#081725;border-radius:17px;padding:18px}.flow-cards article>span{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#0f3d61;color:var(--cyan);font-weight:900}.flow-cards h3{margin:.8rem 0 .4rem}.flow-cards p{color:var(--muted);min-height:66px}.split-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,.8fr);gap:14px}.editor-card textarea{width:100%;min-height:420px;margin-top:14px;padding:16px;background:#020a11;color:#bdf8cf;border:1px solid #1e4966;border-radius:12px;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}.button-stack,.quick-actions,.magic-actions,.terminal-toolbar{display:flex;flex-wrap:wrap;gap:9px}.button-stack{flex-direction:column;margin-top:18px}.output-card{margin-top:14px;border:1px solid #20435f;border-radius:17px;overflow:hidden;background:#020a11}.output-head{padding:11px 15px;background:#0d2237;border-bottom:1px solid #20435f}.output-card pre{margin:0;min-height:260px;max-height:480px;overflow:auto;padding:16px;color:#9dffc6;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}.magic-actions{align-items:center;margin-bottom:12px}.magic-actions span{color:var(--muted)}.magic-frame-wrap{position:relative;height:680px;background:#01070d;border:1px solid #20435f;border-radius:16px;overflow:hidden}.magic-frame-wrap iframe{width:100%;height:100%;border:0;display:none}.magic-frame-wrap iframe.ready{display:block}.magic-frame-wrap #magic-placeholder{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)}.magic-frame-wrap iframe.ready+#magic-placeholder{display:none}.xterm-host{height:620px;background:#02070c;border:1px solid #20435f;border-radius:16px;padding:10px;overflow:hidden}.terminal-toolbar{align-items:center;margin-bottom:10px}.terminal-toolbar span{margin-left:auto;color:var(--muted)}
+@media(max-width:1050px){.flow-cards{grid-template-columns:repeat(2,1fr)}.tool-tabs{grid-template-columns:repeat(3,1fr)}.tool-status{grid-template-columns:repeat(2,1fr)}.split-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.eda-shell{width:min(100% - 14px,1500px)}.eda-hero{align-items:flex-start;gap:18px;flex-direction:column}.tool-tabs,.tool-status,.flow-cards{grid-template-columns:1fr}.session-bar{flex-wrap:wrap}.session-bar div{width:100%}.magic-frame-wrap{height:560px}}
+
+/* v37.0.9: verification panel and expanded tool navigation */
+.tool-tabs{grid-template-columns:repeat(7,minmax(0,1fr))}.tool-status{grid-template-columns:repeat(5,minmax(0,1fr))}.flow-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cocotb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.cocotb-grid .editor-card{min-width:0}.cocotb-grid textarea{min-height:355px;height:355px}
+.cocotb-actions{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin:16px 0}
+.cocotb-actions label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#9bb7d3}
+.cocotb-actions input{background:#051321;color:#d8f4ff;border:1px solid #285b78;border-radius:8px;padding:10px;width:140px}
+.cocotb-actions span{font-size:12px;color:#98c1d7;flex-basis:100%}
+@media(max-width:1050px){.tool-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.tool-status{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.cocotb-grid{grid-template-columns:1fr}.flow-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.tool-tabs,.tool-status,.flow-cards{grid-template-columns:1fr}}
+
+/* v37.0.11 — EDA Playground-like editor + waveform workspace */
+.playground-toolbar{display:flex;gap:12px;align-items:end;flex-wrap:wrap;background:#0d2438;border:1px solid #27516c;border-radius:12px;padding:14px;margin-top:15px}
+.playground-toolbar>label{display:grid;gap:5px;color:#a7c7dc;font-size:12px;min-width:185px}
+.playground-toolbar select{background:#051523;color:#d4efff;border:1px solid #33617e;border-radius:7px;padding:9px;min-height:40px}
+.playground-actions{display:flex;gap:7px;flex-wrap:wrap;margin-left:auto}
+.playground-actions button{white-space:nowrap}
+.playground-hint{font-size:12px;color:#9bb6ca;line-height:1.6;margin:10px 0 4px}
+.capture-label{display:flex!important;flex-direction:row!important;align-items:center;gap:7px;font-size:13px!important;color:#cee8f8!important;padding-bottom:10px}
+.capture-label input{width:auto;accent-color:#2fc7e8}
+.playground-results{margin-top:14px;border:1px solid #284c64;border-radius:15px;overflow:hidden;background:#081928}
+.sim-results-nav{display:flex;gap:6px;padding:9px 12px;background:#10283e;align-items:center;flex-wrap:wrap}
+.sim-results-nav .sim-result-tab{border-color:transparent;border-radius:7px;background:transparent;color:#b4d6e9}
+.sim-results-nav .sim-result-tab.active{background:#1a5275;color:white;border-color:#327fa3}
+#sim-run-status{margin-left:auto;font-size:12px;color:#91d4ec}
+.sim-result-panel{display:none;padding:12px}.sim-result-panel.active{display:block}
+.sim-result-panel>.output-card{margin:0}
+.wave-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;margin-bottom:12px;color:#d5efff}
+#wave-status{font-size:12px;color:#9bb5ce}
+.wave-controls{display:flex;gap:7px;align-items:center;font-size:12px}
+.wave-controls button{padding:7px 12px!important}
+.wave-body{min-height:310px;display:flex;border:1px solid #2b536b;border-radius:8px;background:#061420;overflow:hidden}
+.wave-sidebar{min-width:205px;width:255px;max-width:33%;border-right:1px solid #315670;background:#10283a;padding:10px;display:flex;flex-direction:column;gap:8px}
+.wave-sidebar>label{font-weight:700;font-size:12px}
+#wave-search{width:100%;border:1px solid #37617b;color:#e5f5ff;background:#071925;border-radius:6px;padding:8px}
+#wave-signal-list{overflow:auto;max-height:460px;display:flex;flex-direction:column;gap:4px}
+.wave-signal{display:flex;align-items:center;gap:7px;padding:5px 3px;color:#c6dfef;font:11px Consolas,monospace;cursor:pointer}
+.wave-signal span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wave-signal input{accent-color:#2fc7e8}
+.wave-main{flex:1;min-width:0;position:relative}
+#wave-cursor{font-size:11px;color:#a8d6eb;background:#133047;padding:8px 12px}
+#wave-scroll{overflow:auto;max-height:510px;position:relative;min-height:280px}
+#wave-canvas{display:block}
+#wave-empty{position:absolute;top:65px;left:25px;color:#96b8cd;max-width:80%;font-size:13px;line-height:1.8}
+@media(max-width:810px){.playground-actions{margin-left:0}.wave-sidebar{width:160px;min-width:135px}.wave-controls{width:100%}}
+
+/* v37.0.12 nextpnr and Microwind panels */
+.tool-tabs{grid-template-columns:repeat(8,minmax(0,1fr))}
+.tool-status{grid-template-columns:repeat(6,minmax(0,1fr))}
+.fpga-controls,.artifact-actions{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin:18px 0}
+.fpga-controls label{display:flex;flex-direction:column;gap:6px;color:#a9c8de;font-size:12px;font-weight:700}
+.fpga-controls input,.fpga-controls select{background:#061623;color:#e5f8ff;border:1px solid #315875;border-radius:9px;padding:10px;min-width:130px}
+.fpga-controls input[type=number]{width:132px}
+.fpga-controls select{max-width:235px}
+.artifact-actions span{color:#abc3d4;font-size:12px}
+.microwind-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.microwind-notice{padding:16px;border:1px solid #b88742;border-radius:12px;background:rgba(200,139,46,.09);color:#f8d9a8;line-height:1.65}
+.microwind-steps{color:#c2d8eb;line-height:1.85;padding-left:23px}
+.eda-inline-link{display:inline-flex;padding:11px 14px;background:#102b46;border:1px solid #327ea5;border-radius:9px;color:#c9f5ff;font-weight:750;text-decoration:none}
+@media(max-width:1200px){.tool-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.tool-status{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.microwind-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.tool-tabs,.tool-status{grid-template-columns:1fr}}
+
+/* v37.0.15 layout and SPICE/HDL labs */
+.tool-tabs{grid-template-columns:repeat(6,minmax(0,1fr))}
+.tool-status{grid-template-columns:repeat(5,minmax(0,1fr))}
+.tool-callout{margin:12px 0;border:1px solid #355b79;background:#102a40;border-radius:12px;padding:14px;color:#b6d6e7;line-height:1.6;font-size:13px}
+.layout-guide{background:#0d2236;border:1px solid #275674;border-radius:14px;padding:14px 18px;color:#cdeaff;line-height:1.65}
+.layout-guide p{margin:.5rem 0 0;font-size:13px;color:#acc7d7}
+.file-upload,.tool-field{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#c3dff0;font-weight:650}
+.file-upload input{max-width:240px}
+.tool-field input{border:1px solid #315875;background:#081724;color:#e4f5ff;border-radius:8px;padding:10px}
+@media(max-width:1200px){.tool-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.tool-status{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.tool-tabs,.tool-status{grid-template-columns:1fr}}
+
+/* v37.0.16: independent RTL workshop simulation and waveform tabs */
+.rtl-result-panel{display:none}.rtl-result-panel.active{display:block}
+.rtl-result-tab{background:transparent!important;border-color:transparent!important}
+.rtl-result-tab.active{background:#174a70!important;border-color:#347da9!important}
+.rtl-workshop-editors{margin-top:14px}
+#rtl-workshop-state,#rtl-workshop-wave-note{color:var(--muted)}
+#rtl-workshop-top,#rtl-workshop-test-top{max-width:150px}
+
+/* v37.0.18 hands-on education modules */
+.new-workshop-banner{border:1px solid rgba(86,161,220,.32);padding:12px 16px;border-radius:12px;background:rgba(40,107,147,.14);color:inherit;margin:12px 0 20px;line-height:1.55}
+.workshop-stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}
+.workshop-stage-grid button{border:1px solid rgba(135,157,185,.32);border-radius:12px;background:rgba(38,62,91,.22);color:inherit;text-align:left;padding:16px;min-height:86px;cursor:pointer;line-height:1.45}
+.workshop-stage-grid button:hover,.workshop-stage-grid button.active{border-color:#5da5eb;background:rgba(55,118,179,.22)}
+.workshop-stage-grid button strong{display:block;margin-bottom:6px}
+.workshop-stage-grid button small{display:block;opacity:.75}
+.workshop-focus{padding:20px;border:1px solid rgba(135,157,185,.25);border-radius:14px;margin:12px 0 20px}
+.workshop-focus p{line-height:1.65}
+
+/* v37.0.19: guided STA and RISC-V educational workspaces */
+.sta-lib-details{margin-top:15px;border:1px solid #20435f;border-radius:14px;padding:13px;background:#091d2e}
+.sta-lib-details summary{cursor:pointer;font-weight:750;color:#9be4fa;padding:5px}
+.sta-lib-details .editor-card{margin-top:10px}
+.sta-lib-details textarea{min-height:220px;height:250px}
+.riscv-run-output{margin-top:0;min-width:0}
+.riscv-run-output pre{min-height:355px;max-height:450px}
+#sta-workshop-comparison{min-height:100px;max-height:260px}
+#riscv-assembly{min-height:110px}
+
+/* v37.0.20 — categorized EDA Lab tool navigation */
+.eda-navigation{margin-top:14px;padding:17px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(15,39,63,.98),rgba(6,18,31,.98));box-shadow:0 18px 55px rgba(0,0,0,.24)}
+.eda-nav-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:15px}
+.eda-nav-heading strong{display:block;font-size:16px;color:#fff}
+.eda-nav-heading span{display:block;color:#96b9ce;font-size:12px;margin-top:4px}
+.eda-nav-quick{display:flex;gap:8px;flex-wrap:wrap}
+.eda-navigation .eda-nav-quick .tool-tab{background:#0d2943!important;border:1px solid #2a5875!important;padding:10px 14px}
+.eda-navigation .eda-nav-quick .tool-tab.active{background:#174a70!important;border-color:#347da9!important}
+.eda-navigation .eda-category-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.eda-navigation .eda-category-tab{background:#081b2c;color:#b8d4e9;border:1px solid #285475;display:flex;gap:10px;align-items:center;justify-content:center;border-radius:11px;min-height:50px;padding:10px;cursor:pointer;font-size:13px;font-weight:750}
+.eda-navigation .eda-category-tab.active{color:#fff;background:linear-gradient(115deg,#16537d,#102f4d);border-color:#3bd3ff;box-shadow:inset 0 -3px #23c5f0}
+.eda-navigation .eda-category-tab:hover{border-color:#6fdbff}
+.eda-navigation .eda-category-tab:focus-visible{outline:3px solid #76deff;outline-offset:2px}
+.eda-navigation .eda-category-tab-count{display:inline-block;border-radius:7px;background:#16405c;color:#90e6ff;padding:3px 7px;font-size:11px}
+.eda-navigation .tool-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:12px 0 0;padding:0;background:transparent;border:0;box-shadow:none;border-radius:0;gap:8px}
+.eda-navigation .tool-tabs .tool-tab{min-width:0;min-height:44px;border:1px solid #204562!important;background:#091c2f!important;text-align:center;font-size:13px}
+.eda-navigation .tool-tabs .tool-tab.active{background:#174a70!important;border-color:#3bb9ef!important}
+.eda-navigation .tool-tabs .tool-tab[hidden]{display:none!important}
+@media(max-width:900px){.eda-navigation .tool-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.eda-nav-heading{align-items:start;flex-direction:column}}
+@media(max-width:650px){.eda-navigation{padding:12px}.eda-navigation .eda-category-tabs,.eda-navigation .tool-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.eda-navigation .eda-category-tab{font-size:12px}}
+@media(max-width:380px){.eda-navigation .tool-tabs{grid-template-columns:1fr}}
+
+/* v37.0.21: Six category navigation. */
+.eda-navigation .eda-category-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:700px){.eda-navigation .eda-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Separate waveform canvas for pyuvm, independent of cocotb. */
+.pyuvm-wave-result{margin-top:16px}
+#pyuvm-wave-search{width:100%;border:1px solid #37617b;color:#e5f5ff;background:#071925;border-radius:6px;padding:8px}
+#pyuvm-wave-signal-list{overflow:auto;max-height:460px;display:flex;flex-direction:column;gap:4px}
+#pyuvm-wave-cursor{font-size:11px;color:#a8d6eb;background:#133047;padding:8px 12px}
+#pyuvm-wave-scroll{overflow:auto;max-height:510px;position:relative;min-height:280px}
+#pyuvm-wave-canvas{display:block}
+#pyuvm-wave-empty{position:absolute;top:65px;left:25px;color:#96b8cd;max-width:80%;font-size:13px;line-height:1.8}
+
+.tool-status [hidden]{display:none!important}
+
+/* v37.0.26 — independent GHDL design styles and visual simulation workspace */
+[data-panel="ghdl"]{min-width:0}
+.ghdl-project-bar{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px;padding:15px;background:#0c253a;border:1px solid #2b546f;border-radius:13px;margin:12px 0}
+.ghdl-project-bar .tool-field{min-width:145px;max-width:215px}
+.ghdl-project-bar select{background:#071927;border:1px solid #315875;color:#e0f5ff;border-radius:8px;padding:10px;min-height:40px;width:100%}
+.ghdl-project-bar input{width:100%}
+#ghdl-state{font-size:12px;color:#b7d6e9;max-width:100%}
+.ghdl-models,.ghdl-results{min-width:0;border:1px solid #2e526e;background:#071826;border-radius:16px;overflow:hidden;margin:18px 0}
+.ghdl-model-nav,.ghdl-results-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:11px;background:#0f2a40;border-bottom:1px solid #315a77}
+.ghdl-model-nav button,.ghdl-results-nav button{flex:0 0 auto}
+.ghdl-model-tab.active,.ghdl-result-tab.active{background:#1b6084;border-color:#43b8ed;color:#fff}
+.ghdl-style-info,.ghdl-view-hint{color:#a9cde1;font-size:12px;line-height:1.65;margin:12px 16px}
+.ghdl-model-panel{padding:0 14px 14px;min-width:0}
+.ghdl-model-panel[hidden],.ghdl-result-panel[hidden]{display:none!important}
+.ghdl-model-panel .editor-card{min-width:0}
+.ghdl-model-panel textarea{min-height:360px;height:360px;width:100%;max-width:100%}
+.ghdl-testbench-card{margin-top:12px;min-width:0}
+.ghdl-testbench-card textarea{min-height:310px;height:310px;max-width:100%}
+.ghdl-result-panel{padding:14px;min-width:0}
+.ghdl-result-panel .output-card{margin:0;min-width:0}
+#ghdl-result-summary{font-size:12px;color:#99c7df;margin-left:auto}
+#ghdl-focus{font-size:12px}
+#ghdl-wave-scroll{max-height:580px;min-height:320px;overflow:auto;position:relative}
+#ghdl-wave-canvas{display:block;touch-action:none;cursor:crosshair}
+#ghdl-wave-cursor{padding:9px 12px;background:#15374e;color:#fff0cf;font:12px ui-monospace,Consolas,monospace;white-space:normal;overflow-wrap:anywhere;min-height:36px}
+#ghdl-wave-signal-list{display:flex;flex-direction:column;overflow-y:auto;max-height:570px;gap:4px}
+#ghdl-wave-search{width:100%;border:1px solid #37617b;color:#e5f5ff;background:#071925;border-radius:6px;padding:8px}
+#ghdl-wave-empty{position:absolute;top:55px;left:15px;color:#adc8dc;pointer-events:none}
+.ghdl-schematic-scroll{width:100%;height:min(66vh,690px);min-height:320px;overflow:auto;background:#061522;border:1px solid #34576f;border-radius:10px;position:relative}
+#ghdl-schematic-svg{display:block;max-width:none}
+#ghdl-schematic-empty{padding:35px 20px;max-width:620px;color:#a5c9df;line-height:1.7}
+#ghdl-schematic-details{max-width:100%;overflow:auto;max-height:165px;margin:12px 0 0;padding:13px;background:#091b2a;border:1px solid #2a4e67;color:#c9e6f3;border-radius:9px;font:12px/1.55 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.ghdl-results.ghdl-maximized{position:fixed;inset:12px;z-index:9999;margin:0;display:flex;flex-direction:column;box-shadow:0 0 0 200vmax rgba(0,0,0,.82);background:#071826;border:2px solid #5eb8df}
+.ghdl-results.ghdl-maximized .ghdl-result-panel.active{flex:1;min-height:0;overflow:auto}
+.ghdl-results.ghdl-maximized #ghdl-wave-scroll{max-height:calc(100vh - 245px);min-height:240px}
+.ghdl-results.ghdl-maximized .ghdl-schematic-scroll{height:calc(100vh - 265px)}
+.ghdl-results.ghdl-maximized #ghdl-output{max-height:calc(100vh - 190px)}
+@media(max-width:760px){.ghdl-project-bar .tool-field{max-width:none;flex:1;min-width:135px}.ghdl-results-nav{gap:5px}.ghdl-results-nav button{font-size:11px;padding:8px}.ghdl-result-panel .wave-body{flex-direction:column}.ghdl-result-panel .wave-sidebar{width:100%;max-width:100%;min-width:0;border-right:none;border-bottom:1px solid #315670}#ghdl-wave-signal-list{max-height:145px}}
+/* v37.0.27: modeling examples and implementation-variant controls */
+.ghdl-project-bar .ghdl-example-description{flex-basis:100%;margin:0;color:#acd8ef;font-size:12px}
+.ghdl-project-bar .tool-field:has(#ghdl-example){min-width:230px;max-width:330px}
+.ghdl-project-bar .tool-field:has(#ghdl-variant){min-width:230px;max-width:340px}
+.ghdl-model-tab:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:760px){.ghdl-project-bar .tool-field:has(#ghdl-example),.ghdl-project-bar .tool-field:has(#ghdl-variant){min-width:160px;max-width:none}}
+
+/* v37.0.28 — split highlighted source editors and professional waveform inspections */
+.ghdl-editor-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:12px;margin-top:14px}
+.ghdl-editor-columns>.ghdl-models,.ghdl-editor-columns>.ghdl-testbench-card{min-width:0;margin:0;max-width:100%;align-self:stretch}
+.ghdl-editor-columns>.ghdl-testbench-card{display:flex;flex-direction:column}
+.ghdl-editor-columns .ghdl-model-panel textarea,.ghdl-editor-columns .ghdl-testbench-card textarea{height:450px;min-height:380px}
+.ghdl-code-editor{position:relative;min-height:380px;height:450px;background:#e2e5e9;border:1px solid #9ba7b4;border-radius:8px;overflow:hidden}
+.ghdl-code-editor pre,.ghdl-code-editor textarea{position:absolute;inset:0;margin:0;padding:15px 17px!important;border:0!important;border-radius:0!important;line-height:1.52!important;letter-spacing:0!important;font:13px/1.52 Consolas,Menlo,monospace!important;white-space:pre!important;tab-size:4!important;overflow:auto!important;resize:none!important}
+.ghdl-code-editor pre{background:#e2e5e9;color:#1b2937;pointer-events:none;overflow:hidden!important;z-index:1}
+.ghdl-code-editor textarea{background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent!important;caret-color:#101f32!important;z-index:2;outline:0;scrollbar-color:#8f9dad #e4e8eb}
+.ghdl-code-editor textarea::selection{background:rgba(42,119,216,.32)!important}
+.ghdl-code-editor .hl-kw{color:#214bb2;font-weight:700}.ghdl-code-editor .hl-type{color:#8247a2}.ghdl-code-editor .hl-string{color:#a44524}.ghdl-code-editor .hl-num{color:#aa5121}.ghdl-code-editor .hl-comment{color:#63806a;font-style:italic}
+.ghdl-code-card-expanded{position:fixed!important;inset:14px!important;z-index:99999!important;background:#0d253a!important;box-shadow:0 0 0 100vmax rgba(0,0,0,.85)!important;border:2px solid #50bfea!important;display:flex;flex-direction:column}
+.ghdl-code-card-expanded .ghdl-code-editor{flex:1;height:auto;min-height:0}.ghdl-code-card-expanded .ghdl-code-editor textarea,.ghdl-code-card-expanded .ghdl-code-editor pre{height:100%!important}
+.ghdl-editor-expand{font-size:12px;margin-left:auto}
+#ghdl-wave-signal-list .wave-signal{display:grid!important;grid-template-columns:22px minmax(130px,1fr) minmax(38px,auto);align-items:center;gap:5px;padding:7px 5px;border-bottom:1px solid #274c62;width:max-content;min-width:100%;cursor:pointer}
+#ghdl-wave-signal-list .wave-signal span{overflow:visible;white-space:nowrap;text-overflow:clip;user-select:text}
+#ghdl-wave-signal-list .ghdl-signal-value{color:#aaffcf;justify-self:end;white-space:nowrap;font-weight:700}
+.ghdl-wave-header{display:flex;justify-content:space-between;font:11px Consolas,monospace;padding:5px 4px;background:#0d354b;border-bottom:1px solid #4d718b}
+[data-panel="ghdl"] .wave-sidebar{width:var(--ghdl-signals-width,310px);max-width:none;min-width:155px;padding:9px;overflow:auto}
+.ghdl-pane-grip{width:9px;cursor:col-resize;background:#32566a;flex:0 0 9px;border-inline:2px solid #081624;touch-action:none}
+.ghdl-pane-grip:hover,.ghdl-pane-grip:focus{background:#3ad0d7;outline:2px solid #94e8f2}
+.ghdl-reference-stage{background:#081524;min-height:340px;overflow:auto;border:1px solid #315a76;border-radius:9px;padding:15px}
+.ghdl-reference-stage svg{display:block;min-width:720px;max-width:1200px;margin:auto}
+.ghdl-truth-stage{max-height:570px;overflow:auto;background:#0b2133;padding:16px;border:1px solid #315b76;border-radius:9px}
+.ghdl-truth-stage table{border-collapse:collapse;min-width:380px;font:13px Consolas,monospace}
+.ghdl-truth-stage th,.ghdl-truth-stage td{border:1px solid #35617c;padding:8px 13px;text-align:center}
+.ghdl-truth-stage th{position:sticky;top:0;background:#19516e;color:#fff}.ghdl-truth-stage tr:nth-child(even){background:#133147}
+.ghdl-log-summary{border:1px solid #315d7a;background:#0f293e;border-radius:9px;margin-bottom:10px;padding:12px;display:flex;flex-wrap:wrap;gap:12px;font:12px Consolas,monospace}
+.ghdl-log-chip{padding:6px 10px;border-radius:6px;background:#1a445c}.ghdl-log-chip.pass{color:#9affc3}.ghdl-log-chip.warn{color:#ffd18a}.ghdl-log-chip.fail{color:#ffb5b5}
+@media(max-width:900px){.ghdl-editor-columns{grid-template-columns:1fr}.ghdl-editor-columns .ghdl-model-panel textarea,.ghdl-editor-columns .ghdl-testbench-card textarea{height:340px}.ghdl-code-editor{height:340px}}
+@media(max-width:760px){[data-panel="ghdl"] .wave-sidebar{max-width:100%;width:100%}.ghdl-pane-grip{display:none}}
+
+/* v37.0.29 — navigation and readable aligned code editing. */
+[data-panel="ghdl"] .ghdl-workflow-nav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px;border:1px solid #315a75;background:#0c2032;padding:12px;border-radius:12px;position:relative;z-index:1;scroll-margin-top:70px}
+[data-panel="ghdl"] .ghdl-workflow-tab{border:1px solid #3b6786;background:#0a1d2e;color:#bde2fb;padding:10px 13px;border-radius:9px;cursor:pointer;font-weight:700;flex:1 1 145px;text-align:center}
+[data-panel="ghdl"] .ghdl-workflow-tab.active,[data-panel="ghdl"] .ghdl-workflow-tab:hover{background:#0b6c96;border-color:#44c7e9;color:#fff}
+[data-panel="ghdl"] #ghdl-setup,[data-panel="ghdl"] .ghdl-editor-columns,[data-panel="ghdl"] #ghdl-results{scroll-margin-top:85px}
+[data-panel="ghdl"] .ghdl-editor-columns>.ghdl-models,[data-panel="ghdl"] .ghdl-editor-columns>.ghdl-testbench-card{min-width:0;max-width:100%;width:100%}
+[data-panel="ghdl"] .ghdl-editor-columns{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+[data-panel="ghdl"] .ghdl-model-panel,.ghdl-code-editor{max-width:100%;width:100%;min-width:0}
+[data-panel="ghdl"] .ghdl-results-nav{flex-wrap:wrap}
+[data-panel="ghdl"] .ghdl-result-panel[data-ghdl-view="schematic"]{display:none!important}
+@media(max-width:900px){[data-panel="ghdl"] .ghdl-editor-columns{grid-template-columns:1fr}}
+
+/* Vim Desert-like editor option, without changing simulation/output palettes. */
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor,[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor pre{background:#27282d;color:#e4e0ce}
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor textarea{caret-color:#f5e4a7!important;color:transparent!important}
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor .hl-kw{color:#e7bf72}
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor .hl-type{color:#9bbaff}
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor .hl-string{color:#a7dc96}
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor .hl-num{color:#ffa4a4}
+[data-panel="ghdl"].ghdl-theme-desert .ghdl-code-editor .hl-comment{color:#a5a4a4}
+.ghdl-color-theme{font-size:12px;display:flex;gap:7px;align-items:center;margin-left:auto;color:#c9e7f7}
+.ghdl-color-theme select{background:#10283e;color:#eff8ff;border:1px solid #3b6986;border-radius:7px;padding:5px}
+
+/* v37.0.31: align source editor and testbench card under shared modeling toolbar */
+[data-panel="ghdl"] .ghdl-model-nav{margin:12px 0 8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+[data-panel="ghdl"] .ghdl-style-info{margin:0 0 10px;min-height:21px}
+[data-panel="ghdl"] .ghdl-editor-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:14px;max-width:100%}
+[data-panel="ghdl"] .ghdl-editor-columns>.ghdl-models,[data-panel="ghdl"] .ghdl-editor-columns>.ghdl-testbench-card{min-width:0;margin:0;display:flex;flex-direction:column;height:100%}
+[data-panel="ghdl"] .ghdl-editor-columns .ghdl-model-panel.active{display:flex;flex:1;min-width:0;flex-direction:column}
+[data-panel="ghdl"] .ghdl-editor-columns .ghdl-model-panel.active .editor-card{height:100%;min-width:0;display:flex;flex-direction:column}
+[data-panel="ghdl"] .ghdl-editor-columns .card-head{min-height:100px;align-items:center}
+[data-panel="ghdl"] .ghdl-editor-columns .ghdl-code-editor{height:470px;min-width:0;max-width:100%}
+[data-panel="ghdl"] .ghdl-editor-columns .ghdl-code-editor textarea{height:100%}
+[data-panel="ghdl"] .ghdl-editor-columns .ghdl-models .ghdl-model-panel{min-width:0}
+[data-panel="ghdl"] .ghdl-truth-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border:1px solid #315b76;background:#0d2940;border-radius:8px;margin:8px 0 12px}
+[data-panel="ghdl"] .ghdl-truth-controls select{padding:7px 9px;color:#fff;background:#113850;border:1px solid #4b7895;border-radius:7px}
+[data-panel="ghdl"] .ghdl-truth-hint{color:#b0d4eb;font-size:12px}
+[data-panel="ghdl"] .ghdl-circuit-links{display:flex;flex-wrap:wrap;gap:9px;margin:8px 0 12px}
+[data-panel="ghdl"] .ghdl-circuit-links a{padding:8px 12px;border:1px solid #3a7996;border-radius:8px;color:#bce7ff;text-decoration:none}
+@media(max-width:900px){[data-panel="ghdl"] .ghdl-editor-columns{grid-template-columns:minmax(0,1fr)}[data-panel="ghdl"] .ghdl-editor-columns .ghdl-code-editor{height:390px}}
+
+/* v37.0.34 — circuit input controls without horizontal page overflow */
+.ghdl-interaction{border:1px solid #2b5b78;border-radius:10px;padding:13px;margin:0 0 12px;background:#0d2234;min-width:0}
+.ghdl-interaction-heading,.ghdl-input-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;justify-content:space-between}
+.ghdl-interaction-heading span:last-child{font-size:12px;color:#9cc8dc}
+.ghdl-input-controls{display:grid;grid-template-columns:repeat(auto-fill,minmax(146px,1fr));gap:10px;margin:12px 0;min-width:0}
+.ghdl-pin-editor{border:1px solid #315b79;border-radius:8px;background:#061827;padding:8px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.ghdl-pin-editor label{font-size:13px;font-family:Consolas,monospace;font-weight:600;color:#bfe8f8;overflow-wrap:anywhere}
+.ghdl-pin-editor small{color:#89aac6;font-size:10px}
+.ghdl-pin-editor input{border:1px solid #3986aa;background:#0c2e42;color:#e3f7ff;border-radius:5px;min-width:0;width:100%;padding:7px 8px;font-family:Consolas,monospace}
+.ghdl-pin-editor input[type=checkbox]{width:22px;height:22px;accent-color:#42dfc2}
+.ghdl-pin-editor.invalid input{border-color:#ff7676}
+.ghdl-input-actions{justify-content:flex-start}
+.ghdl-input-actions button{border:1px solid #2e7c9d;background:#143d58;color:white;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:600}
+.ghdl-input-actions button:disabled{opacity:.5;cursor:wait}
+.ghdl-input-actions button:first-child{background:#127da6}
+.ghdl-input-actions span,.ghdl-interaction-hint{font-size:12px;color:#b1cadc}
+.ghdl-interaction-hint{margin:12px 0 0;line-height:1.55}
+.ghdl-input-actions button[hidden]{display:none!important}
+.ghdl-functional-svg [data-input-port]{cursor:pointer;outline:none}
+.ghdl-functional-svg [data-input-port]:focus-visible{stroke:#ffe088;stroke-width:3}
+
+/* v37.0.35: self-hosted embedded lab shells and visible GHDL source entry */
+.embedded-lab-toolbar{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:16px 0}
+.embedded-lab-toolbar label{display:grid;gap:6px;color:#bcd9e9;font-size:13px;flex:1 1 300px}
+.embedded-lab-toolbar input{width:100%;border:1px solid #376586;border-radius:9px;background:#061624;color:#def6ff;padding:12px;font:13px ui-monospace,monospace}
+.embedded-lab-frame{height:min(75vh,760px);min-height:480px;position:relative;border:1px solid #315a77;border-radius:14px;overflow:hidden;background:#020c17}
+.embedded-lab-frame iframe{border:0;display:block;width:100%;height:100%;background:white}
+.embedded-frame-placeholder{display:grid;place-items:center;text-align:center;color:#afd1e3;padding:24px;height:100%}
+[data-panel="ghdl"] #ghdl-custom-project,[data-panel="ghdl"] #ghdl-jump-editors{align-self:end}
+.embedded-lab-frame iframe[hidden],.embedded-lab-frame .embedded-frame-placeholder[hidden]{display:none!important}
+
+/* Embedded lab connection feedback (v37.0.36) */
+.embedded-lab-frame{height:auto;min-height:250px;max-height:76vh}
+.embedded-lab-frame:has(iframe:not([hidden])){height:min(70vh,710px);min-height:320px}
+.embedded-frame-placeholder{min-height:250px;max-width:100%;line-height:1.65;color:#d2e8f4;background:linear-gradient(140deg,#0a2435,#061523)}
+.embedded-frame-placeholder>div{max-width:620px;text-align:center}
+.embedded-frame-placeholder strong{font-size:18px}
+.embedded-frame-placeholder code{background:#071019;color:#7be0ff;padding:3px 7px;border-radius:5px;overflow-wrap:anywhere}
+.embedded-tool-panel [role="status"][data-state="error"]{color:#ffc2ba}
+.embedded-tool-panel [role="status"][data-state="info"]{color:#a9d7eb}
+.embedded-tool-panel button[hidden]{display:none!important}
+
+/* v37.0.39: GHDL-style cocotb learning workspace */
+[data-panel="cocotb"] .cocotb-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+[data-panel="cocotb"] .editor-card{display:flex;flex-direction:column;min-width:0}
+[data-panel="cocotb"] .editor-card .card-head{min-height:72px;align-items:center}
+[data-panel="cocotb"] .editor-card textarea{height:430px;min-height:350px;resize:vertical;flex:1}
+[data-panel="cocotb"] .editor-card .code-toolbar{min-height:62px}
+.cocotb-summary{display:flex;gap:8px;padding:10px 13px;color:#aeebf7;background:#103048;border-radius:8px;margin-bottom:10px;white-space:pre-wrap;font-size:12px}
+.cocotb-reference-note{font-size:12px;color:#b0d0e3;margin-bottom:10px;line-height:1.55}
+.cocotb-diagram{overflow:auto;background:#061726;border:1px solid #285571;border-radius:12px;min-height:220px}
+.cocotb-diagram svg{display:block;max-width:100%;height:auto;margin:auto}
+.cocotb-truth{overflow:auto;max-height:440px}
+.cocotb-truth table{border-collapse:collapse;font:12px ui-monospace,monospace;min-width:420px;width:100%}
+.cocotb-truth th,.cocotb-truth td{border:1px solid #315873;padding:9px 12px;text-align:center}
+.cocotb-truth th{position:sticky;top:0;background:#17364c}.cocotb-truth tr:nth-child(even){background:#11283b}
+@media(max-width:900px){[data-panel="cocotb"] .cocotb-grid{grid-template-columns:1fr}}
+
+.cocotb-theme-control{display:flex;gap:9px;align-items:center;max-width:330px;margin:12px 0 0;font-size:12px;color:#b8dcec}
+.cocotb-theme-control select{background:#102d43;color:#eefaff;border:1px solid #42718f;border-radius:7px;padding:7px 12px}
+[data-panel="cocotb"].cocotb-gray .editor-card textarea{background:#e1e2e0;color:#182d3f;border-color:#a3afb5}
+[data-panel="cocotb"].cocotb-gray .code-toolbar{background:#d4d9dc;border-color:#9bafb8}
+[data-panel="cocotb"].cocotb-gray .code-toolbar button,[data-panel="cocotb"].cocotb-gray .code-toolbar select{background:#f5f6f6!important;color:#183a50!important}
+
+/* v37.0.41 — both RTL teaching labs share GHDL-style code canvases */
+[data-panel="cocotb"] .editor-card,[data-panel="rtl-workshop"] .editor-card{min-width:0;display:flex;flex-direction:column}
+[data-panel="rtl-workshop"] .cocotb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
+[data-panel="rtl-workshop"] .editor-card .card-head{min-height:72px;align-items:center}
+[data-panel="rtl-workshop"] .editor-card .code-toolbar{min-height:62px}
+[data-panel="rtl-workshop"] .rtl-code-surface,[data-panel="cocotb"] .rtl-code-surface{position:relative;background:#28282e;min-height:350px;height:430px;overflow:hidden;border:1px solid #69717b;border-radius:0 0 9px 9px}
+[data-panel="rtl-workshop"] .rtl-code-surface pre,[data-panel="rtl-workshop"] .rtl-code-surface textarea,[data-panel="cocotb"] .rtl-code-surface pre,[data-panel="cocotb"] .rtl-code-surface textarea{position:absolute;inset:0;width:100%;height:100%!important;box-sizing:border-box;min-height:0!important;margin:0!important;padding:16px!important;border:0!important;border-radius:0!important;font:13px/1.58 ui-monospace,Consolas,monospace!important;letter-spacing:0!important;white-space:pre!important;tab-size:4!important;overflow:auto!important}
+.rtl-code-surface pre{z-index:1;pointer-events:none;scrollbar-width:none;overflow:hidden!important;color:#e9e6db;}
+[data-panel] .rtl-code-surface textarea{z-index:2;background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent!important;caret-color:#f0f2f5;resize:none!important;outline:0!important}
+.rtl-code-surface textarea::selection{background:#538fc577!important;-webkit-text-fill-color:transparent!important}
+.rtl-code-surface .hl-kw{color:#f3be79;font-weight:650}.rtl-code-surface .hl-type{color:#9abdf4}.rtl-code-surface .hl-num{color:#fba59a}.rtl-code-surface .hl-string{color:#a5e5a3}.rtl-code-surface .hl-comment{color:#a1c799}
+.rtl-code-surface.rtl-gray{background:#e4e4e7}
+.rtl-code-surface.rtl-gray pre{color:#202b38}.rtl-code-surface.rtl-gray textarea{caret-color:#203044!important}
+.rtl-code-surface.rtl-gray .hl-kw{color:#064cba}.rtl-code-surface.rtl-gray .hl-type{color:#7144a7}.rtl-code-surface.rtl-gray .hl-num{color:#bb375e}.rtl-code-surface.rtl-gray .hl-string{color:#087b56}.rtl-code-surface.rtl-gray .hl-comment{color:#607664}
+.rtl-studio-tools{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:14px}
+.rtl-studio-tools label{color:#b8dcec;display:flex;align-items:center;gap:10px;font-size:12px}
+.rtl-studio-tools select{background:#102d43;color:#eefaff;border:1px solid #42718f;padding:8px;border-radius:7px}
+.rtl-editor-tip{color:#aac8d8;font-size:12px}
+[data-panel="rtl-workshop"] .editor-card .code-toolbar,[data-panel="cocotb"] .editor-card .code-toolbar{margin-top:12px;border-radius:9px 9px 0 0}
+.rtl-result-panel{display:none;padding:12px}.rtl-result-panel.active{display:block}
+@media(max-width:950px){[data-panel="rtl-workshop"] .cocotb-grid{grid-template-columns:1fr}}
+
+/* v37.0.42: Clean inline cocotb code panes. Editing keys still work; the
+   complete formatting/Vim toolbar is available in Open in new tab only. */
+[data-panel="cocotb"] .editor-card .rtl-code-surface {
+  margin-top: 12px;
+  border-radius: 9px;
+}
+[data-panel="cocotb"] .editor-card > textarea[data-editor-toolbar="expanded-only"] {
+  border-radius: 9px;
+}
+
+/* GTKWave-compatible export controls share the regular waveform toolbar. */
+.wave-controls button[id$='gtkw-open'],.wave-controls button[id$='gtkw-export']{white-space:nowrap;border-color:#3384a8}
+
+/* v37.0.45: consistent GHDL-style Desert Dark code palette in all verification editors. */
+[data-panel="cocotb"] .rtl-code-surface{background:#28282e!important;border:1px solid #8a939e;border-radius:10px!important}
+[data-panel="cocotb"] .rtl-code-surface.rtl-gray{background:#e4e4e7!important}
+[data-panel="cocotb"] .rtl-code-surface pre{color:#f0ece5}
+[data-panel="cocotb"] .rtl-code-surface .hl-kw{color:#ffbf78}
+[data-panel="cocotb"] .rtl-code-surface .hl-type{color:#80b1ff}
+[data-panel="cocotb"] .rtl-code-surface .hl-num{color:#f8a3b2}
+[data-panel="cocotb"] .rtl-code-surface .hl-string{color:#b6f3a5}
+[data-panel="cocotb"] .rtl-code-surface.rtl-gray .hl-kw{color:#064cba}
+.cocotb-schematic-status{padding:9px 13px;font-size:12px;color:#a9dbea;background:#102b3c;border:1px solid #2e6579;border-radius:7px;margin-bottom:10px}
+.wave-body>.asic-wave-resizer{flex:0 0 11px;width:11px;cursor:col-resize;touch-action:none;background:#355e75;border:2px solid #091827}
+.wave-body>.asic-wave-resizer:hover,.wave-body>.asic-wave-resizer:focus{background:#5cdce8;outline:1px solid #9fedef}
+.wave-body:has(>.asic-wave-resizer)>.wave-sidebar{flex:0 0 auto;width:295px;max-width:none;min-width:165px;overflow:auto}
+@media(max-width:810px){.wave-body>.asic-wave-resizer{display:none}.wave-body:has(>.asic-wave-resizer)>.wave-sidebar{width:100%!important;max-width:100%!important}}
+
+.asic-observed-clock-events{margin-top:18px;padding-top:10px;border-top:1px solid #356079;overflow:auto}
+.asic-observed-clock-events h3{font-size:15px;color:#8ce9ff}
+.asic-observed-clock-events p{color:#b2cadf;font-size:12px;line-height:1.6}
+.asic-observed-clock-events table{border-collapse:collapse;min-width:550px;width:100%;font:12px ui-monospace,monospace}
+.asic-observed-clock-events th,.asic-observed-clock-events td{border:1px solid #365d76;padding:9px 12px;text-align:center}
+.asic-observed-clock-events th{background:#1b3e56;color:#d9f8ff}
+
+/* v37.0.46 — cocotb full-screen results, true simulator PASS/FAIL, pinned names. */
+#cocotb-results .sim-results-nav{gap:8px}
+#cocotb-results .sim-results-nav #cocotb-focus{flex:0 0 auto;white-space:nowrap;border-color:#3d7190;background:#123351}
+#cocotb-results .sim-results-nav #cocotb-focus:focus-visible{outline:2px solid #64daed;outline-offset:2px}
+#cocotb-results #sim-run-status{font-weight:750;margin-left:auto;font-size:12px;white-space:normal}
+#cocotb-results .sim-status.idle{color:#a9c6d8}
+#cocotb-results .sim-status.running{color:#ffdb9b}
+#cocotb-results .sim-status.pass{color:#9bf7bd}
+#cocotb-results .sim-status.fail{color:#ffb0b0}
+.eda-page.cocotb-results-expanded{overflow:hidden}
+#cocotb-results.cocotb-maximized{position:fixed;inset:12px;z-index:9999;margin:0;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 200vmax rgba(0,0,0,.82);background:#071826;border:2px solid #5eb8df}
+#cocotb-results.cocotb-maximized>.sim-results-nav{flex:0 0 auto}
+#cocotb-results.cocotb-maximized>.sim-result-panel.active{display:flex;flex-direction:column;min-height:0;flex:1;overflow:auto}
+#cocotb-results.cocotb-maximized #sim-log-panel>.output-card{flex:1;min-height:0;display:flex;flex-direction:column}
+#cocotb-results.cocotb-maximized #cocotb-output{flex:1;min-height:0;max-height:none;overflow:auto}
+#cocotb-results.cocotb-maximized #sim-wave-panel>.wave-body{flex:1;min-height:0}
+#cocotb-results.cocotb-maximized #sim-wave-panel .wave-main{display:flex;flex-direction:column;min-height:0}
+#cocotb-results.cocotb-maximized #wave-scroll{flex:1;min-height:0;max-height:none;overflow:auto}
+#cocotb-results.cocotb-maximized #wave-signal-list{flex:1;min-height:0;max-height:none;overflow-y:auto}
+/* Keep checkbox and full signal-name origin stationary as the grip moves.
+   Only the right waveform viewport scrolls horizontally. Long names are
+   ellipsized in a narrow pane and available in full via their title tooltip. */
+#cocotb-results .wave-body>.wave-sidebar{box-sizing:border-box;overflow:hidden;min-width:165px;min-height:0;max-width:none}
+#cocotb-results #wave-search{min-width:0;width:100%;box-sizing:border-box}
+#cocotb-results #wave-signal-list{box-sizing:border-box;min-width:0;width:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior-x:contain;scrollbar-gutter:stable}
+#cocotb-results #wave-signal-list .wave-signal{box-sizing:border-box;display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:center;width:100%;min-width:0;max-width:100%;padding:7px 4px;margin:0;overflow:hidden}
+#cocotb-results #wave-signal-list .wave-signal input{grid-column:1;width:14px;height:14px;margin:0;justify-self:center;flex-shrink:0}
+#cocotb-results #wave-signal-list .wave-signal span{grid-column:2;display:block;min-width:0;width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:left;direction:ltr}
+#cocotb-results .wave-body>.asic-wave-resizer{flex-shrink:0}
+#cocotb-results .wave-main{min-width:0;overflow:hidden}
+#cocotb-results #wave-scroll{overscroll-behavior-x:contain}
+@media(max-width:810px){
+  #cocotb-results .wave-body>.wave-sidebar{width:100%!important;max-width:100%;min-width:0}
+  #cocotb-results.cocotb-maximized #sim-wave-panel>.wave-body{flex-direction:column}
+  #cocotb-results.cocotb-maximized #wave-signal-list{max-height:150px;flex:0 1 auto}
+  #cocotb-results.cocotb-maximized #wave-scroll{min-height:180px}
+}
+
+/* v37.0.47 – real netlistsvg/ELK layout (image-isolated), zoomable viewport. */
+.cocotb-netlistsvg-tools{position:sticky;top:0;z-index:3;display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+ padding:10px 12px;background:#102e43;border-bottom:1px solid #32647b}
+.cocotb-netlistsvg-tools span{margin-right:auto;color:#bce6f2;font-size:12px;font-family:ui-monospace,monospace}
+.cocotb-netlistsvg-tools button{border:1px solid #3d7896;border-radius:7px;background:#16435e;color:#ecf7ff;
+ padding:7px 12px;cursor:pointer}
+.cocotb-netlistsvg-tools button:hover,.cocotb-netlistsvg-tools button:focus-visible{background:#205b7e;outline:1px solid #88dcf2}
+.cocotb-netlistsvg-viewport{width:100%;max-height:min(78vh,900px);overflow:auto;background:#05090d;padding:14px;box-sizing:border-box;border:1px solid #315266;border-radius:8px}
+.cocotb-netlistsvg-viewport img{display:block;width:100%;max-width:none;height:auto;margin:0 auto;background:#fff}
+#cocotb-results.cocotb-maximized .cocotb-netlistsvg-viewport{max-height:calc(100vh - 220px)}
+
+/* v37.0.49 – cocotb-only schematic viewer polish for DigitalJS and netlistsvg. */
+.cocotb-schematic-modes{display:flex;flex-wrap:wrap;gap:8px;padding:9px 11px;background:#0b2436;border:1px solid #37647e;border-radius:9px;margin-bottom:10px}
+.cocotb-schematic-modes button{padding:8px 12px;color:#d5f4ff;background:#113951;border:1px solid #407994;border-radius:7px;cursor:pointer}
+.cocotb-schematic-modes button.active{background:#1e6f91;color:#fff;border-color:#65d1ed;font-weight:700}
+.cocotb-digitaljs-viewport{height:640px;max-height:80vh;overflow:auto;background:#000;border:1px solid #4f768d;border-radius:8px;padding:12px;position:relative;box-sizing:border-box}
+.cocotb-digitaljs-stage{position:relative;display:block;min-width:680px;min-height:420px;background:#030609}
+.cocotb-digitaljs-paper{position:relative;display:block;min-height:420px;min-width:680px;transform-origin:top left;color:#dfefff;background:#000}
+.cocotb-digitaljs-paper svg{overflow:visible}
+.cocotb-digitaljs-loading{font-size:13px;background:#17415a;color:#e6faff;padding:8px 12px;border-radius:6px;margin-bottom:9px}
+#cocotb-results.cocotb-maximized .cocotb-digitaljs-viewport{height:calc(100vh - 240px);max-height:none}
+
+/* v37.0.50 – cocotb waveform vector expansion; no change to GHDL. */
+#cocotb-results #wave-signal-list{gap:0;padding-top:38px;scrollbar-gutter:stable;}
+#cocotb-results #wave-signal-list .wave-signal-row{display:grid;grid-template-columns:19px minmax(0,1fr);align-items:center;box-sizing:border-box;height:38px;min-height:38px;width:100%;overflow:hidden;border-bottom:1px solid #28465b}
+#cocotb-results #wave-signal-list .wave-signal-row .wave-signal{display:grid;grid-template-columns:20px minmax(0,1fr);gap:6px;padding:0 2px;width:100%;height:100%;min-height:0;border:0;overflow:hidden;align-items:center;cursor:pointer}
+#cocotb-results #wave-signal-list .wave-signal-row .wave-signal span{grid-column:2;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;min-width:0}
+#cocotb-results #wave-signal-list .wave-bus-toggle{background:transparent;color:#65dffa;border:0;cursor:pointer;height:32px;width:19px;line-height:1;font-size:17px;padding:0}
+#cocotb-results #wave-signal-list .wave-bus-toggle:focus-visible{outline:1px solid #7fe9fd}
+#cocotb-results #wave-signal-list .wave-bit-row{background:#0b2031}
+#cocotb-results #wave-signal-list .wave-bit-row .wave-signal{padding-left:7px}
+#cocotb-results #wave-signal-list .wave-bit-row .wave-signal span{color:#a4efcf}
+/* Invert the stock DigitalJS black-on-white SVG into readable light-on-dark gates. */
+#cocotb-results .cocotb-digitaljs-viewport,
+#cocotb-results .cocotb-digitaljs-paper{background:#030609!important}
+#cocotb-results .cocotb-digitaljs-paper svg{filter:invert(1) hue-rotate(180deg);}
+
+/* v37.0.51: isolated cocotb schematic modes, zoomable gate/wire routing. */
+#cocotb-results .cocotb-schematic-drawing{min-width:0;width:100%;max-width:100%;overflow:hidden}
+#cocotb-results .cocotb-digitaljs-stage{margin-inline:auto}
+#cocotb-results .cocotb-digitaljs-paper{transform-origin:top left}
+#cocotb-results .cocotb-yosys-tools{position:sticky;top:0;z-index:2;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px;background:#102e43;border-bottom:1px solid #345b75}
+#cocotb-results .cocotb-yosys-tools span{margin-right:auto;color:#b8e7f7;font-size:12px}
+#cocotb-results .cocotb-yosys-tools button{border:1px solid #417b9e;background:#143e55;color:#eaf9ff;border-radius:6px;padding:7px 11px;cursor:pointer}
+#cocotb-results .cocotb-yosys-viewport{height:620px;max-height:78vh;width:100%;overflow:auto;background:#030e19;border:1px solid #315a75;border-radius:8px;box-sizing:border-box}
+#cocotb-results.cocotb-maximized .cocotb-yosys-viewport{height:calc(100vh - 250px);max-height:none}
+#cocotb-results .cocotb-yosys-svg{display:block;max-width:none;min-width:0;touch-action:pan-x pan-y}
+#cocotb-results .cocotb-yosys-route-handle{fill:#04c9ea;stroke:#071d2c;stroke-width:1.5;opacity:0;cursor:ns-resize;pointer-events:all;touch-action:none}
+#cocotb-results .cocotb-yosys-route:hover .cocotb-yosys-route-handle,
+#cocotb-results .cocotb-yosys-route-handle:focus,
+#cocotb-results .cocotb-yosys-route-handle.active{opacity:1}
+#cocotb-results .cocotb-yosys-route:hover .cocotb-yosys-wire{stroke:#fdd88f;stroke-width:2.2}
+#cocotb-results .cocotb-yosys-wire-hit{pointer-events:stroke}
+
+/* Fit should be able to scale circuits below the old 680px placeholder size. */
+#cocotb-results .cocotb-digitaljs-stage{min-width:0;min-height:0}
+
+/* v37.0.53 RTL Performance Verification: isolated RTL and testbench editors */
+.verilator-controls{display:flex;flex-wrap:wrap;align-items:end;gap:10px}
+.verilator-controls .tool-field{min-width:145px;max-width:205px}
+.verilator-editor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:15px}
+.verilator-editor-grid .editor-card{min-width:0}
+.verilator-editor-grid textarea{min-height:330px}
+.verilator-help{padding:10px 13px;color:#b6d6e9;background:#10273a;border:1px solid #27536d;border-radius:7px;line-height:1.6}
+.verilator-results-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 4px;color:#d6f2ff}
+.verilator-coverage-summary{border:1px solid #3b7895;border-radius:8px;padding:14px;background:#0e3044;color:#d5f5ff;white-space:pre-wrap;margin-bottom:12px;line-height:1.6}
+.verilator-wave-widget{margin:14px 0;padding:12px;background:#091a28;border:1px solid #356079;border-radius:10px}
+#verilator-wave-scroll{min-height:280px;max-height:510px;overflow:auto;position:relative}
+#verilator-wave-canvas{display:block}
+#verilator-wave-empty{position:absolute;top:50px;left:18px;color:#a1becf}
+#verilator-wave-cursor{padding:9px 12px;background:#163649;color:#d1edff;font:12px Consolas,monospace;overflow-wrap:anywhere}
+#verilator-wave-signal-list{display:flex;flex-direction:column;gap:4px;max-height:500px;overflow:auto}
+#verilator-wave-search{width:100%;background:#091e2f;color:#e1f8ff;border:1px solid #3a7790;border-radius:7px;padding:9px}
+.verilator-artifact-actions{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+@media(max-width:850px){.verilator-editor-grid{grid-template-columns:1fr}.verilator-wave-widget .wave-body{flex-direction:column}.verilator-wave-widget .wave-sidebar{width:100%;max-width:none;border-right:0;border-bottom:1px solid #315670}}

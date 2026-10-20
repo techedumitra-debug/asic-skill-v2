@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guided OpenROAD PnR Lab | ASIC-Skill</title>
+  <link rel="stylesheet" href="course-admin.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+  <link rel="stylesheet" href="openroad-lab.css?v=37.0.25">
+</head>
+<body class="lab-page">
+<header class="topbar">
+  <a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a>
+  <div class="top-actions"><a id="back-course" href="course-content.html">← Back to Course</a><a id="signin-link" href="signin.html">Sign In</a></div>
+</header>
+
+<main class="lab-shell">
+  <section class="lab-hero">
+    <div>
+      <div class="eyebrow">ASIC-SKILL GUIDED CLOUD LAB</div>
+      <h1 id="lab-title">OpenROAD RTL-to-GDS Guided Lab</h1>
+      <p id="lab-meta">Loading your lab…</p>
+    </div>
+    <span id="lab-access" class="pill free">FREE</span>
+  </section>
+
+  <div id="lab-notice" class="lab-notice">Preparing the interactive lab…</div>
+
+  <div class="page-scroll-controls" aria-label="Page scroll controls"><button id="page-top" type="button" title="Page top">↑</button><button id="page-bottom" type="button" title="Page bottom">↓</button></div>
+
+  <section id="lab-workspace" class="lab-workspace" hidden>
+    <aside class="lab-panel lab-controls">
+      <div class="panel-kicker">RTL → GDS EDUCATIONAL PnR</div>
+      <h2>Guided Implementation Lab</h2>
+      <p>Run synthesis, floorplan, placement, CTS, routing and final reports with automatic sanity checks before and after every sub-stage.</p>
+
+      <label>Design
+        <select id="design"><option value="gcd">Checking installed designs…</option></select>
+      </label>
+      <label>Technology
+        <select id="platform"><option value="sky130hd">Checking installed technologies…</option></select>
+      </label>
+      <label>Core utilization
+        <select id="utilization"><option>20</option><option>30</option><option selected>40</option><option>50</option><option>60</option><option>70</option></select><small>%</small>
+      </label>
+      <label>Aspect ratio
+        <select id="aspect"><option>0.7</option><option>0.8</option><option selected>1.0</option><option>1.2</option><option>1.5</option></select>
+      </label>
+      <label>Core margin
+        <select id="margin"><option selected>2</option><option>4</option><option>6</option><option>8</option><option>10</option></select><small>µm</small>
+      </label>
+
+      <p id="catalog-status" class="control-help" role="status">Checking the available ORFS design configurations…</p>
+      <button id="retry-catalog" class="connection-retry" type="button">↻ Retry Connection</button>
+      <button id="start-session" class="run-lab" type="button" disabled>▶ Start Guided PnR</button>
+      <button id="reset-session" class="secondary-action" type="button" hidden>↻ Reset Experiment</button>
+      <p class="control-help">Each learner gets an isolated Docker workspace. The browser terminal is restricted to approved educational commands and never exposes the host shell.</p>
+    </aside>
+
+    <section class="lab-main">
+      <div class="lab-status-card">
+        <div><span class="status-dot" id="status-dot"></span><strong id="job-status">Ready</strong><small id="job-substatus">Choose parameters and start the guided lab.</small></div>
+        <div class="status-actions"><span id="session-timer" class="session-timer">No session</span><span id="mode-badge" class="mode-badge">PREVIEW</span></div>
+      </div>
+
+      <div class="lab-results-grid">
+        <article><span>Requested Utilization</span><strong id="result-requested-util">—</strong></article>
+        <article><span>Measured Utilization</span><strong id="result-measured-util">—</strong></article>
+        <article><span>Design Area</span><strong id="result-area">—</strong></article>
+        <article><span>Difference</span><strong id="result-delta">—</strong></article>
+        <article><span>Aspect Ratio</span><strong id="result-aspect">—</strong></article>
+        <article><span>Core Margin</span><strong id="result-margin">—</strong></article>
+        <article><span>Peak Memory</span><strong id="result-memory">—</strong></article>
+        <article><span>Session</span><strong id="result-session">—</strong></article>
+      </div>
+
+      <nav class="lab-tabs" aria-label="OpenROAD lab views">
+        <button class="lab-tab" data-tab="collaterals" type="button">Input Collaterals</button>
+        <button class="lab-tab active" data-tab="flow" type="button">PnR Stages</button>
+        <button class="lab-tab" data-tab="sanity" type="button">Sanity Checks</button>
+        <button class="lab-tab" data-tab="layout" type="button">Layout</button>
+        <button class="lab-tab" data-tab="terminal" type="button">Linux Terminal</button>
+      </nav>
+
+      <section class="lab-tab-panel" data-panel="collaterals">
+        <div class="flow-toolbar"><div><span class="panel-kicker">IMPLEMENTATION INPUTS</span><h3>Netlist, SDC, timing libraries and technology inputs</h3></div><button id="refresh-collaterals" class="subtle-action" type="button">↻ Inspect Workspace</button></div>
+        <p class="quality-disclaimer">The inventory distinguishes files physically present in the isolated ORFS workspace from inputs confirmed used by a running stage. SPEF is normally an extraction output; TLU+ is not a standard native ORFS requirement. Nothing is downloaded to your computer.</p>
+        <p id="collateral-summary" class="quality-disclaimer" role="status">Start a guided session to inspect the actual installed design and technology files.</p>
+        <div id="collateral-rows" class="collateral-rows"></div>
+        <div class="readonly-box"><h4>Selected collateral / configuration declarations</h4><pre id="collateral-declarations" tabindex="0">No design selected yet.</pre></div>
+        <div class="readonly-box"><h4 id="collateral-preview-title">Read-only file inspection</h4><pre id="collateral-preview" tabindex="0">Choose an available file to preview a bounded excerpt in the browser.</pre></div>
+      </section>
+
+      <section class="lab-tab-panel active" data-panel="flow">
+        <div class="flow-toolbar">
+          <div><span class="panel-kicker">GUIDED FLOW</span><h3>RTL to GDS: run one sub-stage at a time</h3></div>
+          <div class="artifact-actions">
+            <button data-browser-preview="summary" type="button">View Summary</button>
+            <button data-browser-preview="log" type="button">Full Log (read-only)</button>
+            <button data-browser-preview="netlist" type="button">View Netlist</button>
+            <button data-browser-preview="sdc" type="button">View SDC</button>
+            <button data-browser-preview="def" type="button">View DEF</button>
+          </div>
+        </div>
+
+        <div id="phase-tabs" class="phase-tabs" aria-label="PnR flow phase"></div>
+        <div class="flow-steps" id="flow-steps"></div>
+
+        <div class="readonly-box" id="flow-preview-box" hidden><h4 id="flow-preview-title">Report preview</h4><pre id="flow-preview" tabindex="0"></pre></div>
+        <section class="terminal-card log-card">
+          <div class="terminal-bar"><span><i></i><i></i><i></i></span><strong>Guided Flow Log</strong><button id="log-top" type="button">↑ Top</button><button id="log-bottom" type="button">↓ Bottom</button><button id="clear-log" type="button">Clear</button></div>
+          <pre id="terminal-log" tabindex="0" aria-label="Scrollable OpenROAD flow log; Space and Shift Space page down or up">ASIC-Skill guided OpenROAD lab ready.\n</pre>
+        </section>
+      </section>
+
+      <section class="lab-tab-panel" data-panel="sanity">
+        <div class="flow-toolbar">
+          <div><span class="panel-kicker">AUTOMATED QUALITY GATES</span><h3>Pre-stage and post-stage sanity</h3></div>
+          <span class="muted-hint">In-browser only · no downloads</span>
+        </div>
+        <p class="quality-disclaimer">Every real stage verifies input design configuration and prerequisite OpenDB files before execution, then validates the generated OpenDB and expected timing files. These are implementation integrity checks, not a substitute for signoff STA, extraction, DRC, LVS or EM/IR.</p>
+        <div id="sanity-results" class="sanity-results">Start a session and run a stage to view its checks.</div>
+        <section class="signoff-boundary" aria-label="Signoff readiness scope">
+          <h4>Finalization versus signoff</h4>
+          <p><strong>Integrated:</strong> ORFS reports, OpenDB observations, and GDSII/DEF/netlist/SDC presence checks. Files stay in the isolated container.</p>
+          <p><strong>Not included:</strong> foundry-qualified signoff DRC/LVS, extracted-corner signoff STA, EM/IR, IR drop or reliability certification. These must be completed in appropriate qualified tools before tapeout.</p>
+        </section>
+      </section>
+
+      <section class="lab-tab-panel" data-panel="layout">
+        <div class="visual-head">
+          <div><span class="panel-kicker">PHYSICAL RESULTS</span><h3>Stage-by-stage layout</h3></div>
+          <span class="muted-hint">In-browser stage inspection · no downloads</span>
+        </div>
+        <div id="layout-stage-buttons" class="layout-stage-buttons"></div>
+        <div class="layout-frame"><img id="layout-image" alt="OpenROAD stage layout result" draggable="false"><div id="layout-fallback" class="layout-fallback" role="status">Select a completed stage to inspect its physical database observations and layout image when available.</div></div>
+        <p id="layout-message" class="layout-message">Select a completed stage to inspect its OpenDB results.</p>
+        <div class="result-insight"><b>Compare stages:</b><span id="result-insight">Compare placement, CTS, routing and floorplan database snapshots across stages.</span></div>
+      </section>
+
+      <section class="lab-tab-panel" data-panel="terminal">
+        <div class="terminal-intro">
+          <div><span class="panel-kicker">ISOLATED CONTAINER</span><h3>Guided Linux Terminal</h3><p>Practice real Linux inspection commands and approved ORFS make targets inside your own temporary OpenROAD container.</p></div>
+          <span class="safe-badge">HOST SHELL NOT EXPOSED</span>
+        </div>
+        <div class="terminal-shortcuts">
+          <button data-terminal-command="pwd">pwd</button>
+          <button data-terminal-command="ls -la">ls -la</button>
+          <button data-terminal-command="ls results/sky130hd/gcd/base">list results</button>
+          <button data-terminal-command="openroad -version">openroad -version</button>
+          <button data-terminal-command="yosys -V">yosys -V</button>
+          <button data-terminal-command="help">help</button>
+        </div>
+        <div id="xterm" class="xterm-host"></div>
+        <p class="terminal-note"><b>Keyboard:</b> Tab command completion, ↑/↓ history, Ctrl+A/E start/end, Ctrl+U/K erase to start/end, Ctrl+W previous word, Ctrl+L clear, Ctrl+C cancel, Home/End, ←/→ editing. Only allowlisted commands execute. Allowed: <code>pwd</code>, <code>ls</code>, <code>cat</code>, <code>head</code>, <code>tail</code>, <code>grep</code>, version commands, and the approved OpenROAD flow targets. Shell chaining, redirection, host paths, package installation and arbitrary processes are blocked.</p>
+      </section>
+
+      <section class="lab-explain">
+        <h3>What to observe</h3>
+        <div class="observation-grid">
+          <div><b>1</b><span>Inspect each stage's pre/post sanity checks and stop on a failed quality gate.</span></div>
+          <div><b>2</b><span>Compare placement, clock tree, routing and final GDS database snapshots.</span></div>
+          <div><b>3</b><span>Final OpenROAD reports are educational implementation QA; foundry signoff is a separate process.</span></div>
+        </div>
+      </section>
+    </section>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+<script src="supabase-config.js"></script>
+<script src="openroad-lab-config.js?v=37.0.23"></script>
+<script src="openroad-lab.js?v=37.0.24"></script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body>
+</html>

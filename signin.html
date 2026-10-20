@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In | ASIC-Skill</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="card">
+    <h1 id="auth-title">Sign in</h1>
+
+    <form id="signin-form">
+      <label for="email">Email address</label>
+      <input id="email" type="email" required autocomplete="email">
+
+      <div id="password-section">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input id="password" type="password" required autocomplete="current-password">
+          <button type="button" class="password-eye" onclick="togglePassword('password', this)" aria-label="Show password" aria-pressed="false">
+            <span class="eye-show" aria-hidden="true">◉</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="signin-button" type="submit">Sign In →</button>
+    </form>
+
+    <p id="forgot-link-section">
+      <a href="#" id="forgot-password">Forgot password?</a>
+    </p>
+
+    <div id="reset-actions" hidden>
+      <button type="button" id="send-reset-button">Send Reset Link →</button>
+      <p><a href="#" id="back-to-signin">← Back to Sign In</a></p>
+    </div>
+
+    <div id="auth-message" class="auth-message" hidden></div>
+
+    <p id="create-account-section">
+      Don't have an account? <a href="signup.html">Create one</a>
+    </p>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
+<script>
+  document.getElementById("signin-form").addEventListener("submit", signIn);
+
+  document.getElementById("forgot-password").addEventListener("click", function (event) {
+    event.preventDefault();
+    showForgotPassword();
+  });
+
+  document.getElementById("send-reset-button").addEventListener("click", sendPasswordReset);
+
+  document.getElementById("back-to-signin").addEventListener("click", function (event) {
+    event.preventDefault();
+    showSignIn();
+  });
+
+  checkVerificationMessage();
+</script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+/* Logic Simulation: standalone, original browser logic simulator. */
+.logic-lab{--lg-line:#315775;--lg-cyan:#45d8ff;--lg-green:#5ceab0;min-width:0}
+.logic-lab .logic-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.logic-lab .logic-top h2{margin:5px 0}.logic-lab .logic-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}
+.logic-lab button{font-size:13px}.logic-lab button[aria-pressed="true"]{background:#175a70;border-color:#34debd}
+.logic-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,300px);gap:14px;align-items:start}
+.logic-board{background:#040d17;border:1px solid var(--lg-line);border-radius:16px;overflow:hidden;min-width:0;position:relative}
+.logic-board svg{display:block;width:100%;aspect-ratio:12/7;min-height:340px;max-height:690px;touch-action:none;user-select:none;cursor:crosshair}
+.logic-board svg .logic-node{cursor:grab}.logic-board svg .logic-node:active{cursor:grabbing}
+.logic-board svg .logic-port{cursor:crosshair;stroke:#031927;stroke-width:2;transition:r .1s}.logic-board svg .logic-port:hover{r:9}
+.logic-board svg .logic-wire{fill:none;stroke:#62d6f1;stroke-width:3;pointer-events:stroke;cursor:pointer}
+.logic-board svg .logic-wire.selected{stroke:#ffca70;stroke-width:4}
+.logic-board svg text{font-family:ui-monospace,Consolas,monospace;fill:#dbfaff;font-size:15px;pointer-events:none}
+.logic-board svg .logic-active{fill:#54eead}.logic-board svg .logic-false{fill:#627f98}
+.logic-board svg .logic-selected{stroke:#ffca70!important;stroke-width:3!important}
+.logic-board svg .logic-gate-body{fill:#113248;stroke:#60d2e9;stroke-width:2}
+.logic-sidebar{background:#091a2c;border:1px solid var(--lg-line);border-radius:16px;padding:15px;min-width:0}
+.logic-sidebar h3{font-size:15px;margin:0 0 10px}.logic-palette{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.logic-palette button{padding:10px 3px;font-size:11px}
+.logic-lab .logic-hint{font-size:12px;line-height:1.6;color:#bad4e6;margin:11px 0}
+.logic-lab .logic-status{background:#112d40;border-radius:9px;border:1px solid #2b607e;padding:9px 12px;color:#aff8d0;font-size:12px;margin:10px 0;min-height:35px}
+.logic-lab .logic-property{display:grid;gap:8px}.logic-lab .logic-property label{font-size:12px;color:#bbd8ed}
+.logic-lab .logic-property input{width:100%;padding:9px;background:#031220;color:#e6faff;border:1px solid #3b6681;border-radius:8px}
+.logic-lab .logic-values{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.logic-lab .logic-values button{border-color:#3580a0}
+.logic-lab .logic-table-area{margin-top:14px;border:1px solid var(--lg-line);border-radius:14px;padding:14px;overflow:auto;background:#061422}
+.logic-lab .logic-table-area table{border-collapse:collapse;font-family:ui-monospace,Consolas,monospace;font-size:13px;margin-top:12px;width:100%;text-align:center}
+.logic-lab .logic-table-area td,.logic-lab .logic-table-area th{border-bottom:1px solid #23485f;padding:8px}
+.logic-lab .logic-table-area th{color:#63d6ee;background:#0d2a40}
+.logic-lab .logic-table-area .error{color:#ffb08b}
+.logic-lab .logic-meta{font-size:12px;color:#9ec6dd}
+.logic-lab .logic-board-status{position:absolute;right:8px;bottom:7px;color:#a9d1e6;font-size:10px;background:#06192b;border-radius:5px;padding:4px 8px;pointer-events:none}
+@media(max-width:960px){.logic-grid{grid-template-columns:1fr}.logic-board svg{min-height:310px}.logic-sidebar{display:grid;grid-template-columns:1fr 1fr;gap:16px}.logic-sidebar h3{grid-column:1/-1}}
+@media(max-width:600px){.logic-sidebar{display:block}.logic-board svg{min-height:260px}.logic-palette{grid-template-columns:repeat(4,1fr)}}
+
+.logic-lab select{display:block;max-width:100%;margin-top:5px;border:1px solid #3f7597;border-radius:9px;background:#0a263c;color:#ecf8ff;padding:10px;font-weight:700}
+.logic-lab label{color:#b4d6e8;font-size:12px;font-weight:650}
+.logic-lab .logic-top{margin-bottom:5px}
+
+/* v37.0.38: immediate feedback for toolbar operations and highlighted input vectors */
+.logic-lab .logic-toolbar{align-items:center}
+.logic-action-feedback{display:inline-flex;align-items:center;min-height:32px;padding:6px 10px;border-radius:8px;border:1px solid #315775;background:#0c2436;color:#b9def4;font-size:12px;flex:1 1 280px}
+.logic-action-feedback[data-kind="success"]{border-color:#237c62;color:#b5f4d1}
+.logic-action-feedback[data-kind="warning"]{border-color:#b48a32;color:#ffe2ab}
+.logic-action-feedback[data-kind="error"]{border-color:#ad4856;color:#ffd0d7}
+.logic-lab #logic-saved-state{white-space:nowrap}
+.logic-lab tr.logic-current-row{background:#1b4155;outline:1px solid #38c2bd;outline-offset:-1px}
+.logic-lab #logic-example-description{margin:7px 0 2px;color:#a8d8ef;min-height:1.5em}
+.logic-lab #logic-example{max-width:min(340px,95vw)}
+
+/* Independent student projects: clearly visible start action and drag-to-place target. */
+.logic-lab .logic-new-project{background:linear-gradient(120deg,#086d85,#2276d1);border-color:#37c2e7;color:#fff;font-weight:750}
+.logic-lab .logic-palette button[draggable=true]{cursor:grab;touch-action:auto}
+.logic-lab .logic-palette button[draggable=true]:active{cursor:grabbing}
+.logic-lab .logic-board.logic-drop-target{outline:3px dashed #55efcf;outline-offset:-6px;box-shadow:inset 0 0 22px #3bd7b337}
+.logic-lab .logic-project-label{display:flex;gap:6px;align-items:center;white-space:nowrap}
+.logic-lab .logic-project-label input{width:155px;max-width:32vw;padding:7px 9px;border-radius:7px;border:1px solid #4c7293;background:#0c273b;color:#e2f7ff}
+.logic-lab .logic-project-label input:disabled{opacity:.48}
+.logic-lab .logic-palette-help{font-size:12px;color:#a7cde3;margin:-3px 0 12px;line-height:1.4}

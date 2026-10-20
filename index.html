@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASIC-Skill | VLSI, ASIC & Physical Design Learning</title>
+  <meta name="description" content="Learn VLSI, ASIC design, RTL, synthesis, physical design, STA, SDC, MMMC, DRC, LVS, DFT and semiconductor engineering with ASIC-Skill.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.asic-skill.com/">
+  <meta name="theme-color" content="#07111d">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ASIC-Skill">
+  <meta property="og:title" content="ASIC-Skill | VLSI, ASIC & Physical Design Learning">
+  <meta property="og:description" content="Practical learning for VLSI, ASIC design, physical design, timing, signoff and semiconductor engineering.">
+  <meta property="og:url" content="https://www.asic-skill.com/">
+  <meta property="og:image" content="https://www.asic-skill.com/logo.jpeg">
+  <meta property="og:image:alt" content="ASIC-Skill VLSI and semiconductor learning platform logo">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ASIC-Skill | VLSI, ASIC & Physical Design Learning">
+  <meta name="twitter:description" content="Practical learning for VLSI, ASIC design, physical design, timing, signoff and semiconductor engineering.">
+  <meta name="twitter:image" content="https://www.asic-skill.com/logo.jpeg">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Organization",
+        "@id":"https://www.asic-skill.com/#organization",
+        "name":"ASIC-Skill",
+        "url":"https://www.asic-skill.com/",
+        "logo":"https://www.asic-skill.com/logo.jpeg",
+        "description":"Educational platform for VLSI, ASIC design, physical design, timing, signoff and semiconductor engineering."
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://www.asic-skill.com/#website",
+        "name":"ASIC-Skill",
+        "url":"https://www.asic-skill.com/",
+        "publisher":{"@id":"https://www.asic-skill.com/#organization"}
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css?v=37.0.41">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home">
+        <img src="logo.jpeg" alt="ASIC Skill logo">
+        <span>ASIC<span>-Skill</span></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
+      <nav class="nav">
+        <div class="topic-nav-wrap" data-topic-nav="vlsi"><button type="button" class="topic-nav-trigger" aria-expanded="false" aria-controls="vlsi-topics-menu" aria-haspopup="true">VLSI Topics <span aria-hidden="true">▾</span></button><div id="vlsi-topics-menu" class="topic-nav-menu" hidden><p class="topic-nav-intro">Choose a VLSI subject to view its subtopics</p><div class="topic-nav-list" data-topic-links="vlsi"></div></div></div>
+        <div class="topic-nav-wrap" data-topic-nav="asic"><button type="button" class="topic-nav-trigger" aria-expanded="false" aria-controls="asic-topics-menu" aria-haspopup="true">ASIC-Skill Topics <span aria-hidden="true">▾</span></button><div id="asic-topics-menu" class="topic-nav-menu" hidden><p class="topic-nav-intro">Choose an ASIC-Skill subject to view its subtopics</p><div class="topic-nav-list" data-topic-links="asic"></div></div></div>
+        <div class="eda-nav-wrap"><button type="button" class="eda-nav-button" id="eda-nav-trigger" aria-expanded="false" aria-controls="eda-nav-menu" aria-haspopup="true">EDA Lab <span aria-hidden="true">▾</span></button><div id="eda-nav-menu" class="eda-nav-menu" hidden><p class="eda-nav-intro">Explore a learning category or open a specific lab</p><div id="eda-nav-groups" class="eda-nav-groups"></div><a class="eda-nav-all" href="eda-lab.html">Open full EDA workspace →</a></div></div>
+        <a href="#resources">Resources</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" id="auth-signup-link" href="signup.html">Sign Up</a>
+        <div class="user-menu" id="user-menu" hidden>
+          <button class="user-menu-button" id="user-menu-button" type="button" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">A</span>
+            <span id="nav-user-name">Learner</span>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown" hidden>
+            <div class="user-dropdown-info">
+              <strong id="menu-user-name">ASIC-Skill Learner</strong>
+              <span id="menu-user-email"></span>
+            </div>
+            <a href="#tracks">VLSI Topics</a>
+            <a href="#courses">ASIC-Skill Topics</a>
+            <a href="eda-lab.html">EDA Cloud Lab</a>
+            <a href="#resources">Resources</a>
+            <button type="button" id="nav-logout">Log Out</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero hero-v2">
+      <div class="hero-grid"></div>
+      <div class="hero-orb orb-one"></div>
+      <div class="hero-orb orb-two"></div>
+      <div class="container hero-layout">
+        <div class="hero-content">
+          <div class="hero-badge"><span class="pulse-dot"></span> BUILT FOR VLSI • ASIC • SEMICONDUCTOR ENGINEERS</div>
+          <h1>Master the flow.<br><span>Build better silicon.</span></h1>
+          <p class="hero-copy"><strong>Learn VLSI, ASIC Design &amp; Physical Design from RTL to GDSII.</strong><br>
+            ASIC-Skill is a practical learning platform for understanding how modern chips are designed,
+            verified and signed off — from semiconductor fundamentals and RTL to physical design, timing,
+            physical verification and tapeout.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#tracks">Explore VLSI topics <span>→</span></a>
+            <a class="btn btn-ghost" href="eda-lab.html">Launch EDA Cloud Lab <span>↗</span></a>
+            <a class="btn btn-ghost" href="#courses">Browse ASIC-Skill topics</a>
+          </div>
+          <div class="hero-proof">
+            <div><strong>RTL</strong><span>Design</span></div>
+            <i>→</i>
+            <div><strong>PD</strong><span>Implementation</span></div>
+            <i>→</i>
+            <div><strong>STA</strong><span>Timing</span></div>
+            <i>→</i>
+            <div><strong>GDSII</strong><span>Signoff</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="ASIC design flow visualization">
+          <div class="visual-label">ASIC DESIGN FLOW</div>
+          <button class="flow-node active" type="button" data-flow-filter="frontend" aria-label="Explore RTL and frontend courses"><span class="node-icon">01</span><div><b>RTL / Design</b><small>Architecture • Verilog • SystemVerilog</small></div></button>
+          <div class="flow-line"></div>
+          <button class="flow-node" type="button" data-flow-filter="frontend" aria-label="Explore synthesis and frontend courses"><span class="node-icon">02</span><div><b>Synthesis</b><small>Libraries • Constraints • Optimization</small></div></button>
+          <div class="flow-line"></div>
+          <button class="flow-node" type="button" data-flow-filter="backend" aria-label="Explore physical design courses"><span class="node-icon">03</span><div><b>Physical Design</b><small>Floorplan • Placement • CTS • Route</small></div></button>
+          <div class="flow-line"></div>
+          <button class="flow-node" type="button" data-flow-filter="signoff" aria-label="Explore timing and signoff courses"><span class="node-icon">04</span><div><b>Timing &amp; Signoff</b><small>STA • DRC • LVS • EM/IR</small></div></button>
+          <div class="visual-chip"><span>ASIC</span><small>SKILL</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-strip">
+      <div class="container brand-strip-inner">
+        <span>LEARN</span><b>•</b><span>DESIGN</span><b>•</b><span>IMPLEMENT</span><b>•</b><span>ANALYZE</span><b>•</b><span>VERIFY</span><b>•</b><span>SIGN OFF</span>
+      </div>
+    </section>
+
+    <section class="section learn-section" id="learn">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">WHAT YOU CAN LEARN</div>
+            <h2>Build skills across the ASIC flow</h2>
+          </div>
+          <p>Follow focused learning areas from semiconductor fundamentals and RTL through physical implementation, timing and signoff.</p>
+        </div>
+        <div class="learn-grid">
+          <a class="learn-card" href="#tracks"><span class="learn-number">01</span><div><h3>VLSI Fundamentals</h3><p>CMOS, digital logic, libraries, PVT, power, area and performance.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="frontend"><span class="learn-number">02</span><div><h3>RTL Design &amp; Verification</h3><p>Verilog, SystemVerilog, RTL architecture and verification concepts.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="backend"><span class="learn-number">03</span><div><h3>Physical Design</h3><p>Floorplanning, placement, CTS, routing, optimization and closure.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="timing"><span class="learn-number">04</span><div><h3>STA, SDC &amp; MMMC</h3><p>Timing paths, constraints, corners, parasitics and timing closure.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="signoff"><span class="learn-number">05</span><div><h3>ASIC Signoff</h3><p>DRC, LVS, EM/IR, extraction and tapeout readiness.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="advanced"><span class="learn-number">06</span><div><h3>DFT &amp; Low Power</h3><p>UPF, power intent, scan, ATPG and advanced implementation topics.</p></div><b>→</b></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section topics-section" id="tracks" aria-labelledby="vlsi-topics-heading">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="eyebrow">VLSI KNOWLEDGE AREAS</div><h2 id="vlsi-topics-heading">VLSI Topics</h2></div>
+          <p>Explore nine learning areas. Open a topic to see its organized subtopics; future lessons can be added within each category.</p>
+        </div>
+        <div class="topic-card-grid" data-topic-group="vlsi">
+          <details class="topic-card" id="vlsi-digital-vlsi-design"><summary><span class="topic-number">01</span><span class="topic-heading"><strong>Digital VLSI Design</strong><small>RTL architecture, logic design and ASIC fundamentals</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Number systems &amp; Boolean algebra</li><li>Combinational and sequential circuits</li><li>Verilog / VHDL design</li><li>CMOS digital design</li><li>Synthesis and design optimization</li></ul></div></details>
+          <details class="topic-card" id="vlsi-digital-signal-processing"><summary><span class="topic-number">02</span><span class="topic-heading"><strong>Digital Signal Processing</strong><small>Discrete-time signals and hardware realization</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Signals and systems</li><li>Z-transform &amp; DFT/FFT</li><li>FIR &amp; IIR filters</li><li>Fixed-point arithmetic</li><li>DSP hardware architectures</li></ul></div></details>
+          <details class="topic-card" id="vlsi-testing-verification"><summary><span class="topic-number">03</span><span class="topic-heading"><strong>Testing &amp; Verification</strong><small>Functional verification and manufacturing test</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Testbench architecture and simulation</li><li>Assertions and coverage</li><li>SystemVerilog / UVM / cocotb</li><li>Scan, ATPG and fault models</li><li>Formal verification</li></ul></div></details>
+          <details class="topic-card" id="vlsi-semiconductor-fundamental"><summary><span class="topic-number">04</span><span class="topic-heading"><strong>Semiconductor Fundamental</strong><small>Semiconductor devices and electronic materials</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Crystal structure and materials</li><li>Energy bands, carriers and doping</li><li>PN junctions and diodes</li><li>MOSFET device fundamentals</li><li>Process, voltage and temperature effects</li></ul></div></details>
+          <details class="topic-card" id="vlsi-analog-design"><summary><span class="topic-number">05</span><span class="topic-heading"><strong>Analog Design</strong><small>Transistor-level circuits and analog system concepts</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>MOS device operating regions</li><li>Current mirrors and biasing</li><li>Amplifiers and op-amps</li><li>Noise, bandwidth and stability</li><li>ADC/DAC fundamentals</li></ul></div></details>
+          <details class="topic-card" id="vlsi-hardware-software-co-design"><summary><span class="topic-number">06</span><span class="topic-heading"><strong>Hardware-Software Co-Design</strong><small>Embedded architectures and hardware/software integration</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Processor and ISA fundamentals</li><li>Embedded C and peripheral interfaces</li><li>Hardware/software partitioning</li><li>FPGA prototyping</li><li>SoC buses and accelerators</li></ul></div></details>
+          <details class="topic-card" id="vlsi-ic-fabrication-technology"><summary><span class="topic-number">07</span><span class="topic-heading"><strong>IC Fabrication Technology</strong><small>How chips are manufactured</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Lithography and patterning</li><li>Oxidation, deposition and etching</li><li>Doping and ion implantation</li><li>Interconnect and BEOL processes</li><li>Packaging, yield and reliability</li></ul></div></details>
+          <details class="topic-card" id="vlsi-vlsi-signal-processing"><summary><span class="topic-number">08</span><span class="topic-heading"><strong>VLSI Signal Processing</strong><small>Area, power and throughput in DSP architectures</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Pipelining and parallelism</li><li>Systolic architectures</li><li>Arithmetic units and multipliers</li><li>Low-power DSP implementations</li><li>ASIC/FPGA signal-processing accelerators</li></ul></div></details>
+          <details class="topic-card" id="vlsi-miscellaneous"><summary><span class="topic-number">09</span><span class="topic-heading"><strong>Miscellaneous</strong><small>Related semiconductor engineering topics</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>EDA scripting with Tcl, Python and Perl</li><li>Linux engineering workflows</li><li>Emerging semiconductor technologies</li><li>Hardware security concepts</li><li>Career and project development</li></ul></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section flow-section" id="asic-flow">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">RTL → GDSII</div>
+            <h2>Understand the complete ASIC design flow</h2>
+          </div>
+          <p>See how the major stages connect. Each stage will become a dedicated learning area as ASIC-Skill grows.</p>
+        </div>
+        <div class="full-flow" aria-label="RTL to GDSII ASIC design flow">
+          <a href="#courses" data-jump-filter="frontend"><span>01</span><strong>RTL</strong><small>Design</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="frontend"><span>02</span><strong>Synthesis</strong><small>Netlist</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>03</span><strong>Floorplan</strong><small>Power / Area</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>04</span><strong>Placement</strong><small>Optimization</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>05</span><strong>CTS</strong><small>Clocking</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>06</span><strong>Routing</strong><small>Connections</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="timing"><span>07</span><strong>STA</strong><small>Timing</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="signoff"><span>08</span><strong>Signoff</strong><small>DRC / LVS</small></a>
+          <i>→</i>
+          <a href="#contact"><span>09</span><strong>GDSII</strong><small>Tapeout</small></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-section" id="courses">
+      <div class="container">
+        <div class="section-head light">
+          <div>
+            <div class="eyebrow">ASIC-SKILL LEARNING AREAS</div>
+            <h2>ASIC-Skill Topics</h2>
+          </div>
+          <p>Open any of the six ASIC-Skill subjects for its subtopics. Existing courses remain available underneath.</p>
+        </div>
+        <div class="topic-card-grid asic-topic-grid" data-topic-group="asic">
+          <details class="topic-card" id="asic-asic-design-flow"><summary><span class="topic-number">01</span><span class="topic-heading"><strong>ASIC Design Flow</strong><small>Requirements through RTL, synthesis and tapeout</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Specifications and microarchitecture</li><li>RTL and functional verification</li><li>Logic synthesis and DFT handoff</li><li>Place and route / signoff</li><li>Tapeout deliverables</li></ul></div></details>
+          <details class="topic-card" id="asic-physical-design"><summary><span class="topic-number">02</span><span class="topic-heading"><strong>Physical Design</strong><small>Floorplan to routed and finished layout</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Inputs: netlist, SDC, libraries, LEF/tech</li><li>Floorplanning and power planning</li><li>Placement and optimization</li><li>CTS and routing</li><li>Physical verification and ECO closure</li></ul></div></details>
+          <details class="topic-card" id="asic-static-timing-analysis"><summary><span class="topic-number">03</span><span class="topic-heading"><strong>Static Timing Analysis</strong><small>Timing constraints, paths and signoff</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Clocks and SDC constraints</li><li>Setup and hold analysis</li><li>Timing libraries and PVT corners</li><li>MMMC, derates and on-chip variation</li><li>SI, extraction and timing ECO</li></ul></div></details>
+          <details class="topic-card" id="asic-asic-verification"><summary><span class="topic-number">04</span><span class="topic-heading"><strong>ASIC Verification</strong><small>From RTL checks to pre-silicon confidence</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Verification plans and testbenches</li><li>SystemVerilog/UVM and Python verification</li><li>Assertions and functional coverage</li><li>Formal and equivalence checking</li><li>Regression and debug methodology</li></ul></div></details>
+          <details class="topic-card" id="asic-dft"><summary><span class="topic-number">05</span><span class="topic-heading"><strong>DFT</strong><small>Design for test and scan methodology</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Fault models and test coverage</li><li>Scan chains and compression</li><li>ATPG and test pattern generation</li><li>MBIST/LBIST concepts</li><li>Test-mode timing and physical impact</li></ul></div></details>
+          <details class="topic-card" id="asic-analog"><summary><span class="topic-number">06</span><span class="topic-heading"><strong>Analog</strong><small>Analog blocks in ASIC systems</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Analog design flow and specifications</li><li>SPICE and device models</li><li>Biasing, amplification and filters</li><li>Mixed-signal interfaces</li><li>Analog layout, matching and verification</li></ul></div></details>
+        </div>
+        <div class="topic-existing-courses"><div class="eyebrow">AVAILABLE COURSES</div><h3>Explore existing learning courses</h3></div>
+        <div class="filter-row">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="frontend">Frontend</button>
+          <button class="filter" data-filter="backend">Backend</button>
+          <button class="filter" data-filter="timing">Timing</button>
+          <button class="filter" data-filter="signoff">Signoff</button>
+          <button class="filter" data-filter="advanced">Advanced</button>
+        </div>
+        <div class="course-grid">
+          <article class="course-card" data-category="backend">
+            <div class="course-top"><span>BACKEND</span><b>01</b></div>
+            <h3>ASIC Physical Design — Complete Flow</h3>
+            <p>From design inputs and floorplan through placement, CTS, routing and chip finishing.</p>
+            <div class="course-meta"><span>Beginner → Advanced</span><a href="course-content.html?course=physical-design">View course</a></div>
+          </article>
+          <article class="course-card" data-category="timing">
+            <div class="course-top"><span>TIMING</span><b>02</b></div>
+            <h3>Static Timing Analysis</h3>
+            <p>Timing paths, setup/hold, slack, libraries, parasitics, OCV, SI and report analysis.</p>
+            <div class="course-meta"><span>Core skill</span><a href="course-content.html?course=static-timing-analysis">View course</a></div>
+          </article>
+          <article class="course-card" data-category="timing">
+            <div class="course-top"><span>TIMING</span><b>03</b></div>
+            <h3>SDC & Timing Constraints</h3>
+            <p>Clocks, I/O delays, clock groups, false paths, multicycle paths and constraint validation.</p>
+            <div class="course-meta"><span>Practical</span><a href="course-content.html?course=sdc-timing-constraints">View course</a></div>
+          </article>
+          <article class="course-card" data-category="timing">
+            <div class="course-top"><span>MMMC</span><b>04</b></div>
+            <h3>MMMC Timing Signoff</h3>
+            <p>Modes, PVT corners, analysis views, parasitic corners and multi-scenario closure.</p>
+            <div class="course-meta"><span>Advanced</span><a href="course-content.html?course=mmmc-timing-signoff">View course</a></div>
+          </article>
+          <article class="course-card" data-category="signoff">
+            <div class="course-top"><span>SIGNOFF</span><b>05</b></div>
+            <h3>DRC, LVS & Physical Verification</h3>
+            <p>Understand physical verification checks, debug methodology and tapeout evidence.</p>
+            <div class="course-meta"><span>Industry flow</span><a href="course-content.html?course=physical-verification">View course</a></div>
+          </article>
+          <article class="course-card" data-category="advanced">
+            <div class="course-top"><span>LOW POWER</span><b>06</b></div>
+            <h3>UPF & Low-Power Design</h3>
+            <p>Power domains, isolation, level shifters, retention, power intent and verification.</p>
+            <div class="course-meta"><span>Specialization</span><a href="course-content.html?course=upf-low-power">View course</a></div>
+          </article>
+          <article class="course-card" data-category="frontend">
+            <div class="course-top"><span>RTL</span><b>07</b></div>
+            <h3>Verilog & SystemVerilog</h3>
+            <p>RTL coding foundations, synthesizable design, testbenches and verification concepts.</p>
+            <div class="course-meta"><span>Beginner</span><a href="course-content.html?course=verilog-systemverilog">View course</a></div>
+          </article>
+          <article class="course-card" data-category="advanced">
+            <div class="course-top"><span>DFT</span><b>08</b></div>
+            <h3>DFT, Scan & ATPG</h3>
+            <p>Test architecture, scan chains, fault models, ATPG concepts and test coverage.</p>
+            <div class="course-meta"><span>Specialization</span><a href="course-content.html?course=dft-scan-atpg">View course</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section eda-home-section" id="eda-lab">
+      <div class="container">
+        <div class="eda-home-intro">
+          <div><div class="eyebrow">ASIC-SKILL • HANDS-ON DESIGN WORKBENCH</div>
+            <h2>Explore the <span>ASIC & FPGA toolchain.</span></h2>
+            <p>Choose a tool to see a sample task, commands and the right lab to launch. Real jobs execute in isolated containers after sign-in—not on this public preview.</p></div>
+          <a class="eda-lab-entry" href="eda-lab.html">Open complete EDA workspace <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="eda-category-heading"><div><strong>Explore by design stage</strong><span id="eda-category-description">RTL design, verification and processor programming</span></div><span id="eda-category-count">8 tools</span></div>
+        <div class="eda-category-tabs" role="tablist" aria-label="EDA design stages">
+          <button type="button" class="eda-category-tab active" role="tab" data-home-category="frontend" aria-selected="true">Front-End<span class="eda-category-tab-count">8</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="synthesis" aria-selected="false">Synthesis<span class="eda-category-tab-count">2</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="physical" aria-selected="false">Physical Design / STA<span class="eda-category-tab-count">6</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="fpga" aria-selected="false">FPGA / Microcontroller<span class="eda-category-tab-count">3</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="linux" aria-selected="false">Linux / Scripting<span class="eda-category-tab-count">3</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="analog" aria-selected="false">Analog / CMOS<span class="eda-category-tab-count">3</span></button>
+        </div>
+        <div class="eda-tool-picker" role="tablist" aria-label="Tools in selected EDA stage">
+          <button type="button" role="tab" id="eda-tool-logic-simulation" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="logic-simulation"><span class="eda-tool-icon">LOGIC</span><strong>Logic Simulation</strong><small>Visual circuit builder</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-cocotb" data-eda-category="frontend" aria-selected="true" aria-controls="eda-tool-detail" class="eda-pick active" data-home-tool="cocotb"><span class="eda-tool-icon">01</span><strong>RTL Verification Studio</strong><small>RTL verification</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-yosys" data-eda-category="synthesis" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="yosys"><span class="eda-tool-icon">02</span><strong>Yosys</strong><small>Logic synthesis</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-opensta" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="opensta"><span class="eda-tool-icon">03</span><strong>OpenSTA</strong><small>Static timing</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-openroad" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="openroad"><span class="eda-tool-icon">04</span><strong>OpenROAD</strong><small>Place & route</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-nextpnr" data-eda-category="fpga" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="nextpnr"><span class="eda-tool-icon">05</span><strong>nextpnr</strong><small>FPGA place & route</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-klayout" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="klayout"><span class="eda-tool-icon">06</span><strong>KLayout</strong><small>GDSII layout editor</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-ngspice" data-eda-category="analog" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="ngspice"><span class="eda-tool-icon">07</span><strong>ngspice</strong><small>SPICE simulation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-verilator" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="verilator"><span class="eda-tool-icon">08</span><strong>RTL Performance</strong><small>Lint · Simulation · Coverage</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-ghdl-fpga" data-eda-category="fpga" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="ghdl"><span class="eda-tool-icon">VHDL</span><strong>GHDL</strong><small>VHDL for FPGA design</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-microcontroller-studio" data-eda-category="fpga" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="microcontroller-studio"><span class="eda-tool-icon">MCU</span><strong>Microcontroller Studio</strong><small>Arduino / embedded-board emulator</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-analog-circuit-studio" data-eda-category="analog" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="analog-circuit-studio"><span class="eda-tool-icon">SPICE</span><strong>Analog Circuit Studio</strong><small>Visual SPICE schematic workspace</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-ghdl" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="ghdl"><span class="eda-tool-icon">09</span><strong>GHDL</strong><small>VHDL simulation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-design-roadmap" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="design-roadmap"><span class="eda-tool-icon">FLOW</span><strong>VLSI Design Flow</strong><small>Learning roadmap</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-pd-workshop" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="pd-workshop"><span class="eda-tool-icon">PD</span><strong>PD Workshop</strong><small>Floorplan and implementation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-dft-workshop" data-eda-category="synthesis" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="dft-workshop"><span class="eda-tool-icon">DFT</span><strong>DFT Workshop</strong><small>Scan readiness</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-tcl-workshop" data-eda-category="linux" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="tcl-workshop"><span class="eda-tool-icon">TCL</span><strong>Tcl Workshop</strong><small>EDA scripting</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-openlane-workshop" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="openlane-workshop"><span class="eda-tool-icon">OL</span><strong>OpenLane Workshop</strong><small>Flow preparation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-cmos-workshop" data-eda-category="analog" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="cmos-workshop"><span class="eda-tool-icon">CMOS</span><strong>CMOS Workshop</strong><small>Transistor simulation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-sta-workshop" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="sta-workshop"><span class="eda-tool-icon">STA</span><strong>STA Workshop</strong><small>Timing experiments</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-riscv-workshop" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="riscv-workshop"><span class="eda-tool-icon">RV</span><strong>RISC-V Workshop</strong><small>Cross-compile + simulate</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-pyuvm" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="pyuvm"><span class="eda-tool-icon">UVM</span><strong>pyuvm</strong><small>Python UVM verification</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-terminal" data-eda-category="linux" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="terminal"><span class="eda-tool-icon">LINUX</span><strong>Linux Terminal</strong><small>Isolated command practice</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-perl-workshop" data-eda-category="linux" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="perl-workshop"><span class="eda-tool-icon">PERL</span><strong>Perl Workshop</strong><small>Text processing and reports</small><span class="eda-pick-arrow">↗</span></button>
+        </div>
+        <div class="eda-showcase" id="eda-tool-detail" role="tabpanel" aria-labelledby="eda-tool-cocotb">
+          <div class="eda-showcase-info">
+            <div class="eda-showcase-overline" id="eda-home-stage">01 / RTL VERIFICATION</div>
+            <h3 id="eda-home-title">Verify RTL with Python testbenches.</h3>
+            <p id="eda-home-description">Write testbenches and verify your RTL design.</p>
+            <div class="eda-home-tags" id="eda-home-tags"><span>Python</span><span>Assertions</span><span>Simulation</span></div>
+            <div class="eda-home-links">
+              <a id="eda-home-launch" class="eda-launch-main" href="eda-lab.html?tool=cocotb">Launch RTL Verification Studio <span aria-hidden="true">→</span></a>
+              <a id="eda-home-secondary" class="eda-launch-secondary" href="eda-lab.html">View integrated workflow ↗</a>
+            </div>
+            <p class="eda-home-caption">Real EDA runs require sign-in and local Docker images. KLayout uses a local desktop stream; repository links stay in the backend documentation.</p>
+          </div>
+          <div class="eda-home-terminal" aria-label="Selected tool example (illustration, not live output)">
+            <div class="eda-terminal-chrome"><span class="eda-lights"><i></i><i></i><i></i></span><strong id="eda-terminal-name">cocotb / iverilog</strong><span class="eda-demo-pill">EXAMPLE · NOT LIVE</span></div>
+            <pre id="eda-home-snippet">$ make SIM=icarus TOPLEVEL=counter MODULE=test_counter
+# Python coroutine stimulates RTL inputs
+# Assert the expected counter value</pre>
+            <div class="eda-terminal-foot"><span>SELECT A TOOL ABOVE TO PREVIEW ITS WORKFLOW</span><span>ASIC-SKILL LAB</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="container resource-layout">
+        <div>
+          <div class="eyebrow">FREE RESOURCES</div>
+          <h2>Learn something useful today.</h2>
+          <p class="lead">Build a growing knowledge base with interview questions, cheat sheets, flow diagrams, tool guides, glossaries and practical examples.</p>
+          <div class="resource-list">
+            <a href="#contact"><span>01</span><div><strong>VLSI Interview Questions</strong><small>Beginner to expert questions across RTL, PD, STA and signoff.</small></div><b>→</b></a>
+            <a href="#contact"><span>02</span><div><strong>ASIC Flow Cheat Sheets</strong><small>Quick references for the major stages of the chip flow.</small></div><b>→</b></a>
+            <a href="#contact"><span>03</span><div><strong>EDA Tool Learning</strong><small>Tool concepts, commands, reports and workflow notes.</small></div><b>→</b></a>
+          </div>
+        </div>
+        <div class="resource-panel">
+          <div class="panel-glow"></div>
+          <div class="mini-chip">ASIC<br>SKILL</div>
+          <h3>From concept<br>to tapeout.</h3>
+          <p>One place to organize the skills needed across the semiconductor design lifecycle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="container about-grid">
+        <div>
+          <div class="eyebrow">WHY ASIC SKILL</div>
+          <h2>A platform built around the way engineers actually learn.</h2>
+        </div>
+        <div class="about-copy">
+          <p>ASIC Skill is designed to connect theory with implementation. The long-term platform can combine structured courses, practical labs, technical articles, downloadable resources, quizzes, interview preparation and community learning.</p>
+          <div class="principles">
+            <div><b>01</b><strong>Practical</strong><span>Flow-oriented learning and examples.</span></div>
+            <div><b>02</b><strong>Structured</strong><span>Clear paths from fundamentals to signoff.</span></div>
+            <div><b>03</b><strong>Career-focused</strong><span>Interview and industry-readiness resources.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+      <div class="container cta-box">
+        <div>
+          <div class="eyebrow">BUILD WITH ASIC SKILL</div>
+          <h2>Build your ASIC skills from fundamentals to signoff.</h2>
+          <p>Explore VLSI topics, course topics and resources as ASIC-Skill grows into a complete VLSI and semiconductor learning platform.</p>
+          <p class="contact-email"><strong>Email:</strong> <a href="mailto:support@asic-skill.com">support@asic-skill.com</a></p>
+        </div>
+        <a class="btn btn-primary" href="mailto:support@asic-skill.com">Contact ASIC Skill <span>→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand footer-brand"><img src="logo.jpeg" alt="ASIC Skill logo"><span>ASIC<span>-Skill</span></span></div>
+      <p>VLSI • ASIC • Semiconductor Learning</p>
+      <p>© 2026 ASIC Skill. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="eda-tool-categories.js?v=37.0.35"></script>
+  <script src="eda-home.js?v=37.0.53"></script><script src="eda-navigation-menu.js?v=37.0.35"></script><script src="learning-topics.js?v=37.0.41"></script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body>
+</html>

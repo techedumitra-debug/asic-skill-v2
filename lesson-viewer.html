@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson Viewer | ASIC-Skill</title><link rel="stylesheet" href="course-admin.css"><link rel="stylesheet" href="lesson-viewer.css"></head>
+<body class="viewer-page">
+<header class="topbar"><a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a><div class="top-actions"><a id="back-course" href="course-content.html">← Back to Course</a><a id="signin-link" href="signin.html">Sign In</a></div></header>
+<main class="viewer-shell">
+  <section class="viewer-heading"><div><div class="eyebrow">ASIC-SKILL LESSON</div><h1 id="lesson-title">Loading lesson…</h1><p id="lesson-meta"></p></div><span id="access-pill" class="pill free">FREE</span></section>
+  <div id="viewer-message" class="viewer-message">Preparing your course material…</div>
+
+  <!-- Free Google Drive material keeps the embedded Drive viewer. -->
+  <section id="viewer-frame-wrap" class="viewer-frame-wrap" hidden>
+    <iframe id="material-frame" title="ASIC-Skill course material" referrerpolicy="no-referrer"></iframe><div class="viewer-drive-guard" aria-hidden="true" title="External viewing disabled"></div>
+  </section>
+
+
+  <!-- Embedded Google Forms quiz lesson (Tally links remain backward compatible). -->
+  <section id="tally-viewer" class="tally-viewer" hidden aria-label="ASIC-Skill quiz area">
+    <div class="tally-shell-bar"><span>ASIC-Skill Quiz</span><span class="tally-shell-note">Complete and submit the quiz here without leaving ASIC-Skill</span></div>
+    <div id="quiz-student-identity" class="quiz-student-identity" hidden>
+      <span>ASIC-Skill student:</span>
+      <strong id="quiz-student-name">Signed-in student</strong>
+      <span id="quiz-student-email"></span>
+    </div>
+    <div class="quiz-result-tools">
+      <button id="quiz-check-result" class="quiz-result-btn" type="button">Check my result</button>
+      <span id="quiz-result-status">Your result will appear here automatically after submission.</span>
+    </div>
+    <div id="quiz-result-card" class="quiz-result-card" hidden></div>
+    <div id="quiz-processing" class="quiz-processing" hidden role="status" aria-live="polite"><div class="quiz-processing-spinner" aria-hidden="true"></div><strong>Processing your result…</strong><span>Please wait while ASIC-Skill securely receives your quiz score.</span></div>
+    <div class="quiz-embed-wrap">
+      <iframe id="tally-frame" title="ASIC-Skill quiz" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-write" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+      <div class="asic-quiz-brandbar" aria-hidden="true">
+        <div class="asic-quiz-brand">
+          <span class="asic-chip-mark">▦</span>
+          <strong>ASIC-Skill</strong>
+          <span class="asic-brand-divider"></span>
+          <span class="asic-brand-sub">Your Trusted VLSI Learning Partner</span>
+        </div>
+        <div class="asic-brand-motto">LEARN <b>•</b> PRACTICE <b>•</b> GROW</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Premium R2 video lesson. -->
+  <section id="premium-video-viewer" class="premium-video-viewer" hidden>
+    <video id="premium-video" controls controlsList="nodownload" disablePictureInPicture playsinline preload="metadata"></video>
+    <div id="video-watermark" class="video-watermark" aria-hidden="true">ASIC-Skill Premium</div>
+  </section>
+
+  <!-- Premium R2 PDFs: continuous scroll with floating controls and full-screen reading. -->
+  <section id="premium-pdf-viewer" class="premium-pdf-viewer" hidden>
+    <div id="pdf-stage" class="pdf-stage">
+      <div id="pdf-pages" class="pdf-pages" aria-label="Premium PDF pages"></div>
+    </div>
+    <div id="premium-floating-controls" class="premium-floating-controls" role="toolbar" aria-label="PDF controls">
+      <button id="pdf-drag-handle" class="pdf-drag-handle" type="button" title="Drag controls" aria-label="Drag controls"><span class="grip-dots" aria-hidden="true"></span></button>
+      <button id="pdf-prev" type="button" title="Previous page" aria-label="Previous page">↑</button>
+      <label class="floating-page" for="pdf-page-input"><input id="pdf-page-input" type="number" min="1" value="1" inputmode="numeric" aria-label="Go to page"><span>/ <strong id="pdf-page-count">1</strong></span></label>
+      <button id="pdf-next" type="button" title="Next page" aria-label="Next page">↓</button>
+      <span class="floating-divider"></span>
+      <button id="pdf-zoom-out" type="button" title="Zoom out" aria-label="Zoom out"><span aria-hidden="true">−</span></button>
+      <span id="pdf-zoom-label">100%</span>
+      <button id="pdf-zoom-in" type="button" title="Zoom in" aria-label="Zoom in"><span aria-hidden="true">+</span></button>
+      <button id="pdf-fullscreen" type="button" title="Full screen" aria-label="Full screen">⛶</button>
+    </div>
+  </section>
+  <p class="viewer-note">Course material is displayed inside ASIC-Skill. Download and print controls are intentionally not provided on this page.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script type="module" src="lesson-viewer.js"></script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenSTA Web Lab | ASIC-Skill</title><link rel="stylesheet" href="opensta-lab.css?v=37.0.9"><link rel="stylesheet" href="code-editor.css?v=37.0.9"></head><body>
+<header class="topbar"><a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a><div><a href="eda-lab.html">← EDA Cloud Lab</a><a id="auth-state" href="signin.html">Sign In</a></div></header>
+<main class="shell">
+<section class="hero"><div><div class="eyebrow">OPENSTA WEB LAB</div><h1>Static Timing Analysis Lab</h1><p>Edit Verilog, Liberty and SDC inputs, run OpenSTA in the isolated lab environment, and inspect setup/hold timing paths directly in the browser.</p></div></section>
+<section class="session"><div><b>Lab session</b><span id="session-status">Not started</span></div><button id="start-session" class="primary">▶ Start OpenSTA Session</button><button id="end-session" hidden>End Session</button><button id="reset-default">Reset Default Example</button></section>
+<nav class="tabs"><button class="tab active" data-tab="files">Design Files</button><button class="tab" data-tab="constraints">Constraints</button><button class="tab" data-tab="run">Run STA</button><button class="tab" data-tab="paths">Timing Paths</button><button class="tab" data-tab="schematic">Schematic</button><button class="tab" data-tab="console">Console</button></nav>
+<section class="panel active" data-panel="files"><div class="grid"><article class="editor"><header><div><small>VERILOG NETLIST</small><h2>design.v</h2></div><label>Load .v<input id="file-netlist" type="file" accept=".v,.sv,text/plain"></label></header><textarea id="netlist" data-code-editor data-language="verilog" data-filename="design.v" aria-label="Verilog netlist editor"></textarea></article><article class="editor"><header><div><small>LIBERTY</small><h2>design.lib</h2></div><label>Load .lib<input id="file-liberty" type="file" accept=".lib,text/plain"></label></header><textarea id="liberty" data-code-editor data-language="liberty" data-filename="design.lib" aria-label="Liberty cell library editor"></textarea></article></div><div class="uploads"><label>SPEF optional<input id="file-spef" type="file" accept=".spef,text/plain"><span id="spef-name">None</span></label><label>SDF optional<input id="file-sdf" type="file" accept=".sdf,text/plain"><span id="sdf-name">None</span></label></div></section>
+<section class="panel" data-panel="constraints"><article class="editor"><header><div><small>SDC</small><h2>design.sdc</h2></div><label>Load .sdc<input id="file-sdc" type="file" accept=".sdc,.tcl,text/plain"></label></header><textarea id="sdc" class="sdc" data-code-editor data-language="sdc" data-filename="design.sdc" aria-label="SDC timing constraints editor"></textarea><p class="hint">Default example: input transition 0.125 ns and late timing derate 1.10. Edit the SDC to test other values; Reset Default Example restores these defaults. Guided mode allows supported STA constraints only.</p></article></section>
+<section class="panel" data-panel="run"><div class="runbox"><div><label>Top module<input id="top-module" value="top"></label><label>Paths<select id="path-count"><option>1</option><option selected>5</option><option>10</option><option>20</option></select></label></div><button id="run-analysis" class="primary big">▶ Run Detailed Timing Analysis</button>
+<p id="run-status" role="status" aria-live="polite">Start a session, then run the analysis.</p>
+<div id="run-progress-area" class="run-progress-area" hidden>
+  <div class="run-progress-head"><strong id="run-stage">Waiting to start</strong><span id="run-progress-percent">0%</span></div>
+  <div id="run-progress-track" class="run-progress-track" role="progressbar" aria-label="OpenSTA analysis progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="run-progress-bar"></div></div>
+  <div class="run-log-head"><strong>Live OpenSTA execution log</strong><span>Docker stages and STA output</span></div>
+  <pre id="run-log" aria-live="off">Waiting for OpenSTA output...</pre>
+</div>
+<div id="run-results" class="run-results" hidden>
+  <h3>Transition and timing derate constraints</h3>
+  <pre id="run-constraints">Run the analysis to view loaded SDC settings.</pre>
+  <button id="view-paths" type="button" class="primary">View Timing Paths →</button>
+</div></div></section>
+<section class="panel" data-panel="paths"><details open><summary>Applied transition and timing derate settings (from SDC)</summary><pre id="constraint-report">Run STA to inspect your SDC settings.</pre></details><div class="cards"><article><header><span>SETUP / MAX</span><b id="setup-status">—</b></header><dl><dt>Startpoint</dt><dd id="setup-start">—</dd><dt>Endpoint</dt><dd id="setup-end">—</dd><dt>Arrival</dt><dd id="setup-arrival">—</dd><dt>Required</dt><dd id="setup-required">—</dd><dt>Slack</dt><dd id="setup-slack">—</dd><dt>Path group</dt><dd id="setup-group">—</dd></dl></article><article><header><span>HOLD / MIN</span><b id="hold-status">—</b></header><dl><dt>Startpoint</dt><dd id="hold-start">—</dd><dt>Endpoint</dt><dd id="hold-end">—</dd><dt>Arrival</dt><dd id="hold-arrival">—</dd><dt>Required</dt><dd id="hold-required">—</dd><dt>Slack</dt><dd id="hold-slack">—</dd><dt>Path group</dt><dd id="hold-group">—</dd></dl></article></div><details open><summary>Full setup report — Description first</summary><pre id="setup-report"></pre></details><details><summary>Full hold report — Description first</summary><pre id="hold-report"></pre></details><details><summary>Endpoint summary</summary><pre id="endpoint-report"></pre></details></section>
+<section class="panel" data-panel="schematic"><div class="schematic-head"><div><div class="eyebrow">SYNTHESIZED NETLIST VIEW</div><h2>Gate-level schematic</h2><p>The diagram is generated from the exact Verilog netlist used by OpenSTA, using Yosys in the isolated lab backend.</p></div><div><button id="generate-schematic" class="primary">Generate Schematic</button><button id="fit-schematic">Fit View</button></div></div><div id="schematic-status" class="schematic-status">Run timing analysis or click Generate Schematic.</div><div id="schematic-wrap" class="schematic-wrap"><svg id="schematic-svg" viewBox="0 0 1200 560" role="img" aria-label="Synthesized netlist schematic"><text x="600" y="280" text-anchor="middle" fill="#8fb5d0" font-size="18">Schematic will appear here.</text></svg></div></section>
+<section class="panel console-panel" data-panel="console">
+  <div class="console-head">
+    <div>
+      <div class="eyebrow">GUIDED TCL CONSOLE</div>
+      <h2>OpenSTA Console</h2>
+      <p>Run approved OpenSTA report/query commands against the Verilog, Liberty and SDC currently loaded in this lab. Transition is shown as <code>Slew</code>; timing derates affect delays and slack rather than forming a separate path column.</p>
+    </div>
+    <button id="clear-console" type="button">Clear</button>
+  </div>
+  <div class="console-presets" aria-label="OpenSTA console quick commands">
+    <button type="button" data-console-command="report_checks -path_delay max -format full -fields {slew capacitance fanout input_pin} -digits 3">Setup path</button>
+    <button type="button" data-console-command="report_checks -path_delay min -format full -fields {slew capacitance fanout input_pin} -digits 3">Hold path</button>
+    <button type="button" data-console-command="asic_skill_constraints">Transition / Derate</button>
+    <button type="button" data-console-command="report_wns">WNS</button>
+    <button type="button" data-console-command="report_tns">TNS</button>
+    <button type="button" data-console-command="asic_skill_design_area">Design area</button>
+    <button type="button" data-console-command="get_cells *">List cells</button>
+    <button type="button" data-console-command="get_ports *">List ports</button>
+    <button type="button" data-console-command="check_setup -verbose">Check setup</button>
+  </div>
+  <pre id="console">OpenSTA console ready. Start a lab session, then enter a command below.</pre>
+  <div class="console-command-row">
+    <span class="console-prompt">sta&gt;</span>
+    <input id="console-command" type="text" autocomplete="off" spellcheck="false" value="report_checks -path_delay max -format full -digits 3" aria-label="OpenSTA Tcl command">
+    <button id="run-console" type="button">Run Command</button>
+  </div>
+  <div id="console-status" class="console-status">Guided console: approved reporting/query commands only. Current design files are reloaded automatically for every command.</div>
+</section>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="eda-lab-config.js"></script><script src="opensta-lab.js?v=37.0.9"></script><script src="code-editor.js?v=37.0.9"></script><script>ASICCodeEditor.init();</script><script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Course Admin | ASIC-Skill</title><link rel="stylesheet" href="course-admin.css"></head>
+<body><header class="topbar"><a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a><a href="course-content.html">View Courses</a></header>
+<main class="admin-shell"><section class="admin-card"><div class="eyebrow">COURSE ADMIN</div><h1>Build the course learning path</h1>
+<p class="intro">Organize content as <strong>Course → Module → Sub-module → Topic → Material</strong>. Students can expand modules, sub-modules and topics without leaving the course page.</p>
+<div id="admin-status" class="status">Checking administrator access…</div>
+<form id="material-form" hidden>
+<div class="grid"><label>Course<select id="course" required></select></label><label>Module<input id="module" required placeholder="e.g. 02 · Floorplanning"></label></div>
+<div class="grid"><label>Sub-module<input id="sub-module" required placeholder="e.g. Macro Planning"></label><label>Topic<input id="topic" required placeholder="e.g. Macro Placement Strategy"></label></div>
+<label>Material title<input id="title" required placeholder="e.g. Macro Placement Notes"></label>
+<div class="grid"><label>Material type<select id="type">
+<option value="pdf">PDF / Notes</option>
+<option value="video">Video Record</option>
+<option value="lab">Lab Work</option>
+<option value="openroad_lab">OpenROAD Interactive Lab</option>
+<option value="eda_lab">EDA Cloud Lab — OpenROAD / OpenSTA / Yosys / Magic</option>
+<option value="poll">Quiz / Poll (Google Forms)</option>
+<option value="assignment">Assignment</option>
+<option value="presentation">Presentation</option>
+<option value="document">Document</option>
+<option value="cheatsheet">Cheat Sheet</option>
+<option value="other">Other</option>
+</select></label><label>Access<select id="access"><option value="free">Free</option><option value="premium">Premium</option></select></label></div>
+<label>Short description<textarea id="description" rows="3" placeholder="What will the student learn?"></textarea></label>
+<section id="poll-builder" class="poll-builder" hidden>
+  <div class="eyebrow">GOOGLE FORMS QUIZ / POLL</div>
+  <label>Google Forms responder URL<input id="tally-url" type="url" placeholder="https://docs.google.com/forms/d/.../viewform"></label>
+  <p class="muted">Paste the published Google Forms Responder URL (the /viewform link). ASIC-Skill will display the quiz inside the lesson viewer. Existing Tally links remain supported for backward compatibility.</p>
+</section>
+<div id="free-source"><label>Google Drive link<input id="drive-url" type="url" placeholder="https://drive.google.com/file/d/.../view"></label><p class="muted">FREE material: use an individual Google Drive file link.</p></div>
+<div id="premium-source" hidden><label><span id="premium-file-label">Premium PDF</span><input id="premium-file" type="file" accept="application/pdf,.pdf"></label><p id="premium-source-help" class="muted">PREMIUM material: the PDF is uploaded to your private Cloudflare R2 bucket. Public R2 access stays disabled.</p></div>
+<button id="upload-btn" type="submit">Add Material →</button><div id="upload-message" class="message" hidden></div>
+</form></section>
+<section class="admin-card"><div class="eyebrow">COURSE CONTENT</div><h2>Hierarchical course material</h2><div id="material-list" class="material-list"><p class="muted">Sign in as an administrator to manage material.</p></div></section>
+<section class="admin-card"><div class="eyebrow">PREMIUM ACCESS</div><h2>Grant Premium Access</h2>
+<p class="intro">Use this to test paid access before payment integration. Enter an existing ASIC-Skill user email, select a course, and grant access.</p>
+<div id="access-admin" hidden>
+  <div class="access-admin-grid">
+    <label>Student email<input id="access-email" type="email" placeholder="student@example.com"></label>
+    <label>Course<select id="access-course"></select></label>
+  </div>
+  <button id="grant-access-btn" type="button">Grant Premium Access →</button>
+  <div id="access-message" class="message access-message" hidden></div>
+  <div id="access-list" class="access-list"><p class="muted">No access records loaded yet.</p></div>
+</div>
+</section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="course-admin.js"></script><script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

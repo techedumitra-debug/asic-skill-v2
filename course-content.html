@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Course | ASIC-Skill</title>
+  <link rel="stylesheet" href="course-admin.css">
+  <link rel="stylesheet" href="course-learning.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a>
+  <div class="top-actions"><a href="index.html#courses">All Courses</a><a id="signin-link" href="signin.html">Sign In</a></div>
+</header>
+
+<main class="learning-shell">
+  <section class="learning-hero">
+    <div>
+      <div class="eyebrow">ASIC-SKILL LEARNING PATH</div>
+      <h1 id="course-title">Course Content</h1>
+      <p id="course-description">Structured learning from fundamentals to practice.</p>
+    </div>
+    <div class="course-stats" id="course-stats" aria-live="polite"></div>
+  </section>
+
+  <div id="course-picker" class="course-picker learning-picker"></div>
+
+  <div class="learning-layout">
+    <aside class="curriculum-panel">
+      <div class="curriculum-head">
+        <div>
+          <span class="small-label">CURRICULUM</span>
+          <h2>Course sections</h2>
+        </div>
+        <button id="expand-all" class="ghost-btn" type="button">Expand all</button>
+      </div>
+      <div id="curriculum" class="curriculum"><div class="empty compact">Loading curriculum…</div></div>
+    </aside>
+
+    <section class="course-main">
+      <div id="course-overview" class="course-overview">
+        <div class="overview-icon">⌁</div>
+        <div>
+          <span class="small-label">START HERE</span>
+          <h2>Choose a lesson from the curriculum</h2>
+          <p>Work through the sections in order. Notes, videos, labs, assignments and quizzes are kept together so the course feels like one learning path.</p>
+        </div>
+      </div>
+      <div id="lesson-area" class="lesson-area-modern"></div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="course-content.js"></script>
+<script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body>
+</html>

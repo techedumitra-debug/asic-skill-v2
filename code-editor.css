@@ -1,0 +1,11 @@
+/* Shared code-editor toolbar for OpenSTA Verilog/Liberty/SDC and Yosys RTL. */
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:9px 11px;background:#10283d;border-bottom:1px solid #28506c}
+.code-toolbar-left,.code-toolbar-right{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.code-toolbar button,.code-toolbar select{background:#071a2a!important;color:#cdeafa!important;border:1px solid #345d79!important;border-radius:7px!important;padding:6px 9px!important;font:600 11px/1.4 Inter,Arial,sans-serif!important;cursor:pointer;max-width:100%}
+.code-toolbar button:hover,.code-toolbar select:hover{border-color:#38bdf8!important;background:#103751!important}
+.code-toolbar button:focus-visible,.code-toolbar select:focus-visible{outline:2px solid #38bdf8;outline-offset:2px}
+.code-cursor{font:11px ui-monospace,Consolas,monospace;color:#96bad3;white-space:nowrap;padding:0 5px}
+.editor textarea[data-code-editor],.editor-card textarea[data-code-editor]{width:100%;font-family:ui-monospace,Consolas,monospace;tab-size:4;line-height:1.6}
+.editor-card .code-toolbar{margin-top:12px;border:1px solid #28506c;border-radius:10px 10px 0 0}
+.editor-card textarea[data-code-editor]{margin-top:0;border-radius:0 0 10px 10px}
+@media(max-width:600px){.code-toolbar{align-items:stretch}.code-toolbar-left,.code-toolbar-right{gap:4px}.code-toolbar button,.code-toolbar select{padding:5px 7px!important}}

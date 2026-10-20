@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASIC-Skill — Waveform Workspace</title><link rel="stylesheet" href="gtkwave-workspace.css?v=37.0.45"></head>
+<body><main>
+  <header><div><div class="eyebrow">ASIC-SKILL · VCD WAVEFORM ANALYSIS</div><h1>GTKWave-compatible Waveform Workspace</h1><p>Browser-based viewer with signal values, time cursor, zoom, and GTKWave export.</p></div><button id="return-lab" type="button">← Return to EDA Lab</button></header>
+  <div class="toolbar"><strong id="wave-origin">No waveform loaded</strong><span id="gtkw-status" role="status"></span><div class="buttons"><label class="import">Open VCD <input id="open-vcd" type="file" accept=".vcd,text/plain"></label><button id="refresh-wave" type="button">Refresh from Lab</button><button id="gtkw-export" type="button" disabled>Export GTKWave ZIP</button></div></div>
+  <section class="wave-body">
+    <aside class="wave-sidebar"><label for="ghdl-gtkw-search">Objects · Name / Value</label><input id="ghdl-gtkw-search" type="search" placeholder="Filter signals…"><div class="ghdl-wave-header"><strong>Signal</strong><strong>Value</strong></div><div id="ghdl-gtkw-signal-list"></div></aside>
+    <div class="asic-wave-resizer" role="separator" tabindex="0" aria-label="Resize waveform signals panel" aria-orientation="vertical"></div>
+    <div class="wave-main"><div class="wave-toolbar"><span id="ghdl-gtkw-status">No waveform</span><div class="wave-controls"><button id="ghdl-gtkw-zoom-out" type="button">−</button><span id="ghdl-gtkw-zoom-value">1.0×</span><button id="ghdl-gtkw-zoom-in" type="button">+</button><button id="ghdl-gtkw-fit" type="button">Fit</button><button id="ghdl-gtkw-download" type="button" disabled>Export VCD</button></div></div><div id="ghdl-gtkw-cursor">Click or drag to place the time cursor</div><div id="ghdl-gtkw-scroll"><canvas id="ghdl-gtkw-canvas" tabindex="0" aria-label="Digital signal waveform with draggable time cursor"></canvas><p id="ghdl-gtkw-empty">Run cocotb or GHDL, then open this waveform workspace. You may also open a local VCD file.</p></div></div>
+  </section>
+  <footer>This is an ASIC-Skill browser viewer; the ZIP export opens in the native GTKWave desktop application. No remote GTKWave GUI is embedded.</footer>
+</main><script src="waveform-viewer.js?v=37.0.44"></script><script src="gtkwave-integration.js?v=37.0.44"></script><script src="gtkwave-workspace.js?v=37.0.45"></script><script src="asic-wave-resize.js?v=37.0.45"></script><script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ASIC-Skill | cocotb Source Editor</title><link rel="stylesheet" href="ghdl-popup.css?v=37.0.40"><link rel="stylesheet" href="code-editor.css?v=37.0.40"><style>
+body{margin:0;background:#071b2d;color:#e3f3ff;font-family:Inter,Arial,sans-serif}.edit-shell{min-height:100vh;display:flex;flex-direction:column;padding:14px;gap:10px}
+.edit-head{display:flex;gap:15px;justify-content:space-between;align-items:center;border-bottom:1px solid #39718e;padding:10px 6px}.edit-head small{color:#32d4ff;letter-spacing:.11em;font-weight:800}.edit-head h1{margin:7px 0;font-size:22px}.actions{display:flex;gap:8px;flex-wrap:wrap}button,select,input{background:#153753;color:white;border:1px solid #39718e;padding:9px 12px;border-radius:8px;cursor:pointer}
+label{color:#c3e5f4;font-size:13px}.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.bar button{padding:7px 10px}.bar input{min-width:200px}.hint{color:#aecde3;font-size:12px;line-height:1.5;margin:0}
+.editor-card{display:flex;flex:1;min-height:300px;flex-direction:column;padding:0;border:1px solid #39718e;border-radius:12px;overflow:hidden;background:#10283d}.editor-card textarea{flex:1;width:100%;resize:vertical;border:0;border-radius:0;min-height:65vh;background:#081423;color:#edda86;font:14px/1.6 ui-monospace,Consolas,monospace;padding:16px;tab-size:4}
+/* Gray Light only changes the editable code canvas, never the popup workspace. */
+body.theme-gray .cocotb-popup-highlight{background:#e4e4e7}
+body.theme-gray .cocotb-popup-highlight pre{color:#202b38}
+body.theme-gray .cocotb-popup-highlight textarea{caret-color:#222}
+body.theme-gray .cocotb-popup-highlight .hl-kw{color:#064cba}
+body.theme-gray .cocotb-popup-highlight .hl-num{color:#bb375e}
+body.theme-gray .cocotb-popup-highlight .hl-type{color:#7144a7}
+body.theme-gray .cocotb-popup-highlight .hl-comment{color:#607664}
+body.theme-gray .cocotb-popup-highlight .hl-string{color:#087b56}
+body.theme-desert .cocotb-popup-highlight{background:#28282e}
+body.theme-desert .cocotb-popup-highlight pre{color:#e9e6db}
+body.theme-desert .cocotb-popup-highlight .hl-kw{color:#f3be79}
+body.theme-desert .cocotb-popup-highlight .hl-num{color:#fba59a}
+body.theme-desert .cocotb-popup-highlight .hl-type{color:#9abdf4}
+body.theme-desert .cocotb-popup-highlight .hl-comment{color:#a1c799}
+body.theme-desert .cocotb-popup-highlight .hl-string{color:#a5e5a3}
+.cocotb-popup-highlight{position:relative;flex:1;min-height:300px;overflow:hidden;border-radius:0 0 10px 10px}
+.editor-card .cocotb-popup-highlight textarea,.editor-card .cocotb-popup-highlight pre{position:absolute;inset:0;box-sizing:border-box;width:100%;height:100%!important;max-width:none;margin:0!important;padding:16px!important;border:0!important;border-radius:0!important;white-space:pre!important;tab-size:4;font:14px/1.6 ui-monospace,Consolas,monospace!important;letter-spacing:0!important;overflow:auto}
+.editor-card .cocotb-popup-highlight pre{z-index:1;pointer-events:none;scrollbar-width:none;overflow:hidden}
+.editor-card .cocotb-popup-highlight textarea{z-index:2;background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent;caret-color:#f8f4e4;resize:none;min-height:0!important}
+.editor-card .cocotb-popup-highlight textarea::selection{background:#6194c977;-webkit-text-fill-color:transparent}
+.editor-card .code-toolbar{margin:0;border-radius:0}.status{color:#8dd7ff;font-size:12px;min-height:18px}
+</style></head><body class="theme-desert"><main class="edit-shell">
+<div class="edit-head"><div><small>ASIC-SKILL • EXPANDED RTL EDITOR</small><h1 id="model-title">Verilog design</h1></div><div class="actions"><button id="model-sync">Sync to Lab</button><button id="model-return">✓ Save &amp; Return to cocotb</button></div></div>
+<div class="bar"><label>Code colors <select id="model-color-theme"><option value="desert">Desert · Dark</option><option value="gray">Gray · Light</option></select></label><button id="vim-toggle" aria-pressed="false">Vim Lite: Off</button><button id="vim-undo">↶ Undo</button><button id="vim-redo">↷ Redo</button><button id="vim-visual">Visual (v)</button><button id="vim-visual-line">Visual line (V)</button><span id="vim-mode" role="status">Standard editing</span><input id="vim-command" aria-label="Vim command" placeholder=":w, :q, :wq" hidden></div>
+<p class="hint">Vim Lite: <strong>i</strong> insert · <strong>Esc</strong> normal · <strong>u</strong> undo · <strong>Ctrl+R</strong> redo · <strong>v</strong>/<strong>V</strong> visual selection · <strong>y/d/p</strong> yank/delete/paste. Keep the original cocotb tab open.</p>
+<div id="model-status" class="status" role="status">Edits synchronize to your cocotb workspace while you type.</div>
+<article class="editor-card"><textarea id="model-source" data-code-editor data-language="verilog" data-filename="design.v" spellcheck="false"></textarea></article>
+</main><script src="code-editor.js?v=37.0.40"></script><script>
+(()=>{'use strict';const $=id=>document.getElementById(id),kind=new URLSearchParams(location.search).get('kind')==='test'?'test':'rtl',t=$('model-source');
+const initial=(()=>{try{return window.opener?.ASICCOCOTB?.getEditorInfo?.(kind);}catch{return null}})();$('model-title').textContent=initial?.title||(kind==='test'?'Python cocotb Testbench':'Verilog RTL Design');t.dataset.language=initial?.language||(kind==='test'?'python':'verilog');t.dataset.filename=initial?.filename||(kind==='test'?'test_dut.py':'design.v');
+const parent=()=>{try{const o=window.opener;if(o&&!o.closed&&o.location.origin===location.origin)return o.ASICCOCOTB||null;}catch{}return null;};
+const base=parent();if(base)t.value=base.getSource(kind)||'';else $('model-status').textContent='Open this editor from your cocotb workspace; original tab is not available.';
+function sync(){const p=parent();if(!p){$('model-status').textContent='Original cocotb tab unavailable. Copy source before closing.';return;}p.setSource(kind,t.value);$('model-status').textContent='Source synchronized with cocotb workspace.';}
+t.addEventListener('input',sync);$('model-sync').onclick=sync;
+$('model-return').onclick=()=>{const p=parent();sync();if(p){p.focus(kind);try{window.opener.focus();}catch{}window.close();$('model-status').textContent='Changes saved. Select the original cocotb tab if this window stays open.';}};
+window.addEventListener('pagehide',()=>{if(parent())sync();});
+const theme=$('model-color-theme');try{theme.value=localStorage.getItem('asic-cocotb-editor-theme')||'desert';}catch{}
+function applyTheme(){document.body.classList.toggle('theme-gray',theme.value==='gray');document.body.classList.toggle('theme-desert',theme.value!=='gray');try{localStorage.setItem('asic-cocotb-editor-theme',theme.value);}catch{}}
+theme.onchange=applyTheme;applyTheme();window.ASICCodeEditor?.init();
+// Mirror the GHDL pop-out editor: a code-color overlay below a real editable textarea.
+const holder=document.createElement('div');holder.className='cocotb-popup-highlight';
+const highlighted=document.createElement('pre');highlighted.setAttribute('aria-hidden','true');
+t.parentNode.insertBefore(holder,t);holder.append(highlighted,t);
+const escapeHtml=v=>v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const pythonMode=t.dataset.language==='python';
+const keywords=new Set((pythonMode
+ ? 'import from as async await def class return assert for in if else elif while try except finally with pass break continue True False None not and or yield'
+ : 'module endmodule input output inout wire logic reg assign always always_ff always_comb begin end if else case endcase default posedge negedge parameter localparam generate endgenerate for genvar integer initial function endfunction task endtask').split(' '));
+const types=new Set((pythonMode?'int str bool float list dict tuple range Timer RisingEdge FallingEdge Clock':'signed unsigned integer real time bit byte').split(' '));
+function renderSyntax(){
+ const matcher=pythonMode?/(?:#[^\n]*|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'|\b\d+\b|\b[A-Za-z_]\w*\b|[\s\S])/g
+ :/(?:\/\/[^\n]*|\/\*[\s\S]*?\*\/|\"(?:\\.|[^\"\\])*\"|\b\d+(?:'[bhd][0-9a-f_xz]+)?\b|\b[A-Za-z_]\w*\b|[\s\S])/gi;
+ const tokens=t.value.match(matcher)||[];
+ highlighted.innerHTML=tokens.map(v=>{
+   const type=(pythonMode?v.startsWith('#'):v.startsWith('//')||v.startsWith('/*'))?'comment'
+     :/^['"]/.test(v)?'string':/^\d/.test(v)?'num':keywords.has(v)?'kw':types.has(v)?'type':'';
+   return type?'<span class="hl-'+type+'">'+escapeHtml(v)+'</span>':escapeHtml(v);
+ }).join('')+'\n';
+ highlighted.scrollTop=t.scrollTop;highlighted.scrollLeft=t.scrollLeft;
+}
+t.addEventListener('input',renderSyntax);
+t.addEventListener('scroll',()=>{highlighted.scrollTop=t.scrollTop;highlighted.scrollLeft=t.scrollLeft;});
+renderSyntax();
+})();
+</script><script src="ghdl-vim-lite.js?v=37.0.39"></script><script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

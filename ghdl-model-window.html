@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASIC-Skill VHDL Model Editor</title>
+<link rel="stylesheet" href="ghdl-popup.css?v=37.0.31"><link rel="stylesheet" href="code-editor.css?v=37.0.26"><style>
+.model-popup{height:100vh;display:flex;flex-direction:column}.model-popup header{flex:0 0 auto}.model-popup textarea{flex:1;min-height:250px;resize:vertical;width:100%;border-radius:12px;border:1px solid #39718e;background:#01111c;color:#c0ffcf;padding:15px;font:13px/1.5 ui-monospace,Consolas,monospace;tab-size:4}.model-popup p{color:#9abdd3;font-size:13px}
+.model-popup .editor-card{display:flex;min-height:300px;flex-direction:column;flex:1}.model-popup .code-editor-toolbar{flex-shrink:0}.vim-lite-bar{display:flex;align-items:center;gap:12px;padding:8px 4px;flex-wrap:wrap;color:#bae7fa;font:13px ui-monospace,monospace}.vim-lite-bar button{padding:8px 12px!important}.vim-hint{font-size:12px!important;margin:3px 4px 6px!important;color:#b2cfe4!important}.vim-lite-bar input{min-width:220px;background:#061a2c;color:#fff;border:1px solid #347493;border-radius:6px;padding:8px}
+</style></head><body><main class="popup-shell model-popup">
+<header><div><small>VHDL DESIGN · INDEPENDENT EDITOR</small><h1 id="model-title">Model Editor</h1></div><div class="popup-actions"><button id="model-sync" type="button">Sync to Lab</button><button id="model-return" type="button">✓ Save &amp; Return to GHDL</button></div></header>
+<div class="vim-lite-bar"><button type="button" id="vim-toggle" aria-pressed="false">Vim Lite: Off</button><button type="button" id="vim-undo" title="Vim undo (u)">↶ Undo</button><button type="button" id="vim-redo" title="Vim redo (Ctrl+R)">↷ Redo</button><button type="button" id="vim-visual" title="Characterwise visual selection (v)">Visual (v)</button><button type="button" id="vim-visual-line" title="Linewise visual selection (V)">Visual line (V)</button><span id="vim-mode" role="status">Standard editing</span><input id="vim-command" type="text" aria-label="Vim command" placeholder=":w, :q, :wq" hidden></div>
+<p class="vim-hint">Vim Lite: <strong>i</strong> insert · <strong>Esc</strong> normal · <strong>u</strong> undo · <strong>Ctrl+R</strong> redo · <strong>v</strong> select · <strong>V</strong> select lines · <strong>y/d/p</strong> yank/delete/paste · <strong>&gt;/&lt;</strong> indent/outdent</p>
+<p id="model-status" role="status">Changes are synchronized to your original GHDL Lab tab as you type. Use Save &amp; Return to go back without losing your place.</p>
+<label class="model-theme-select">Code colors <select id="model-color-theme"><option value="desert">Desert · Dark</option><option value="gray">Gray · Light</option></select></label><article class="editor-card"><textarea id="model-source" data-code-editor data-language="vhdl" data-filename="design.vhd" spellcheck="false"></textarea></article>
+</main><script src="code-editor.js?v=37.0.37"></script><script>
+(()=>{'use strict';
+const style=new URLSearchParams(location.search).get('style')||'dataflow';
+const label={dataflow:'Dataflow',behavioral:'Behavioral',structural:'Structural',testbench:'VHDL Testbench'}[style];
+const t=document.getElementById('model-source'),status=document.getElementById('model-status');
+
+function mainTab(){try{const w=window.opener;if(!w||w.closed||w.location.origin!==location.origin)return null;return w;}catch{return null;}}
+if(!label){status.textContent='Unknown modeling style.';return;}
+document.getElementById('model-title').textContent=label+' Model';
+function lab(){return mainTab()?.ASICGHDL||null;}
+function sync(){const parent=lab();if(!parent){status.textContent='Lab window not available. Keep the main ASIC-Skill tab open.';return;}if(style==='testbench')parent.setTestbenchSource(t.value);else parent.setModelSource(style,t.value);status.textContent=label+' synchronized with the main GHDL lab.';}
+const app=lab();if(app){t.value=(style==='testbench'?app.getTestbenchSource():app.getModelSource(style))||'';}else status.textContent='Open this editor from the main GHDL Lab to synchronize source.';
+t.addEventListener('input',sync);document.getElementById('model-sync').onclick=sync;
+function returnToLab(){
+  const original=mainTab();
+  if(original){
+    sync();
+    try{original.ASICGHDL?.focusEditor?.(style);}catch{}
+    // Browser focus can be restricted, but this is a direct click on Return.
+    try{original.focus();}catch{}
+    window.close();
+    // Some browsers do not let a script close a tab. Keep an accessible fallback.
+    status.textContent='Changes saved. Select the original GHDL Lab tab if this editor stays open.';
+
+  }else{
+    // The lab tab may have been closed or opened with noopener.
+    status.textContent='The original GHDL tab is closed. Your changes remain here; copy them before closing this window.';
+  }
+}
+document.getElementById('model-return').addEventListener('click',returnToLab);
+t.addEventListener('keydown',e=>{if(e.key==='Escape'&&e.ctrlKey){e.preventDefault();returnToLab();}});
+// Keep source synchronized when a user closes the popup using the browser X.
+window.addEventListener('pagehide',()=>{if(mainTab())sync();});
+if(window.ASICCodeEditor)window.ASICCodeEditor.init();
+// Independent colorized editor: keep textarea selectable/editable; overlay displays highlighted tokens.
+const themeChoice=document.getElementById('model-color-theme');
+const shell=document.querySelector('.model-popup');
+const editor=document.createElement('div');editor.className='ghdl-popup-highlight';
+const high=document.createElement('pre');high.setAttribute('aria-hidden','true');
+t.parentNode.insertBefore(editor,t);editor.append(high,t);
+function esc(v){return v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+const kw=/^(library|use|entity|architecture|begin|end|port|generic|signal|variable|constant|process|if|then|else|elsif|case|when|others|loop|for|in|out|downto|to|wait|assert|report|severity|component|map|of|is|function|return|not|and|or|xor|nand|nor|xnor|rising_edge|falling_edge)$/i;
+function renderCode(){
+ const tokens=t.value.match(/--[^\n]*|"(?:""|[^"])*"|'[01XZUWLH-]'|\b\d+\b|\b[A-Za-z_]\w*\b|[\s\S]/g)||[];
+ high.innerHTML=tokens.map(v=>{
+  const kind=v.startsWith('--')?'comment':/^"/.test(v)||/^'[01XZUWLH-]'$/i.test(v)?'string':/^\d+$/.test(v)?'num':kw.test(v)?'kw':/^(std_logic|std_logic_vector|unsigned|signed|integer|boolean)$/i.test(v)?'type':'';
+  return kind?'<span class="hl-'+kind+'">'+esc(v)+'</span>':esc(v);
+ }).join('')+'\n';high.scrollTop=t.scrollTop;high.scrollLeft=t.scrollLeft;
+}
+function setTheme(v){shell.classList.toggle('popup-gray',v==='gray');shell.classList.toggle('popup-desert',v!=='gray');try{localStorage.setItem('asic-ghdl-editor-theme',v);}catch{}}
+try{themeChoice.value=localStorage.getItem('asic-ghdl-editor-theme')||'desert';}catch{themeChoice.value='desert';}
+setTheme(themeChoice.value);themeChoice.onchange=()=>setTheme(themeChoice.value);
+t.addEventListener('input',renderCode);t.addEventListener('scroll',()=>{high.scrollTop=t.scrollTop;high.scrollLeft=t.scrollLeft;});
+renderCode();
+})();
+</script><script src="ghdl-vim-lite.js?v=37.0.37"></script><script src="ui-neutral-labels.js?v=37.0.52"></script>
+</body></html>

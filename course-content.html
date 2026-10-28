@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Course | ASIC-Skill</title>
+  <style data-bundled-from="course-admin.css">
+*{box-sizing:border-box}body{margin:0;background:#050b13;color:#eef6ff;font-family:Arial,sans-serif}.topbar{min-height:72px;padding:12px max(20px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #183149;background:#07111d}.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:20px}.brand img{width:38px;height:38px;border-radius:9px;object-fit:cover}.brand span span,.eyebrow{color:#25c7ef}.topbar>a,.top-actions a{color:#a9c8e5;text-decoration:none}.top-actions{display:flex;gap:18px}.admin-shell,.course-shell{max-width:1120px;margin:44px auto;padding:0 20px}.admin-shell{display:grid;grid-template-columns:1.25fr .75fr;gap:24px}.admin-card,.module{background:#091522;border:1px solid #1c3b56;border-radius:18px;padding:28px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em}.admin-card h1,.course-hero h1{font-size:clamp(30px,5vw,52px);margin:10px 0}.admin-card h2{margin-top:10px}.intro,.muted,.course-hero p{color:#91a8bd;line-height:1.6}.status,.message{padding:12px 14px;border:1px solid #294963;border-radius:10px;margin:18px 0;color:#a9bfd2}.status.ok,.message.ok{border-color:#1b8b70;color:#8cf0d4}.message.bad{border-color:#9c4949;color:#ffb1b1}form{display:grid;gap:16px}label{display:grid;gap:8px;font-weight:700;color:#dcecff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}input,select,textarea{width:100%;border:1px solid #294963;background:#06101a;color:#fff;border-radius:10px;padding:13px;font:inherit}input[type=file]{padding:10px}button{border:0;border-radius:10px;background:#1688ff;color:#fff;padding:13px 16px;font-weight:800;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.material-list{display:grid;gap:10px}.material-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;background:#06101a;border-radius:10px}.material-row strong,.material-row small{display:block}.material-row small{margin-top:5px;color:#7891a7}.pill{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;text-transform:uppercase;font-weight:800}.pill.free{background:#123c35;color:#7ce6c9}.pill.premium{background:#4a3510;color:#ffd36a}.course-hero{padding:34px 0}.course-picker{display:flex;gap:8px;overflow:auto;padding-bottom:18px}.course-picker button{white-space:nowrap;background:#0a1928;border:1px solid #244762;color:#bad1e5}.course-picker button.active{background:#1688ff;color:white;border-color:#1688ff}.lesson-area{display:grid;gap:20px}.module h2{margin:0 0 16px}.lesson{display:grid;grid-template-columns:52px 1fr auto auto;gap:16px;align-items:center;padding:16px 0;border-top:1px solid #163047}.lesson:first-of-type{border-top:0}.lesson-num{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:#0d2235;color:#43d9ff;font-weight:800}.lesson h3{margin:0 0 5px}.lesson p{margin:0;color:#8299ad}.open-material{margin:0}.empty{padding:34px;border:1px dashed #294963;border-radius:14px;color:#91a8bd;text-align:center}@media(max-width:800px){.admin-shell{grid-template-columns:1fr}.lesson{grid-template-columns:44px 1fr}.lesson .pill,.lesson .open-material{grid-column:2}.grid{grid-template-columns:1fr}}
+/* Admin lesson deletion */
+.material-row{gap:12px;flex-wrap:wrap}
+.delete-material{width:auto;min-width:76px;padding:9px 12px;background:transparent;border:1px solid #f87171;color:#fca5a5;border-radius:9px;cursor:pointer;font-weight:700}
+.delete-material:hover{background:rgba(248,113,113,.12)}
+.delete-material:disabled{opacity:.55;cursor:wait}
+
+/* Course page admin actions */
+.lesson-actions{display:flex;align-items:center;gap:10px}
+.delete-course-material{width:auto;padding:13px 16px;background:transparent;border:1px solid #f87171;color:#fca5a5}
+.delete-course-material:hover{background:rgba(248,113,113,.12)}
+@media(max-width:800px){.lesson .lesson-actions{grid-column:2;display:flex;flex-wrap:wrap}}
+
+/* v13 premium access administration */
+.access-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}.access-admin-grid label{margin:0}.access-list{display:grid;gap:10px;margin-top:16px}.access-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:14px;border:1px solid #1c3b56;border-radius:12px;background:#07131e}.access-row small{display:block;color:#91a8bd;margin-top:5px}.access-row button{width:auto;margin:0;padding:9px 14px}.access-row .revoke-access{background:#35151a;border:1px solid #7d2d39}.access-message{margin-top:12px}@media(max-width:760px){.access-admin-grid{grid-template-columns:1fr}.access-row{grid-template-columns:1fr}.access-row button{width:100%}}
+
+/* v25 learning activity types */
+.material-icon{font-size:20px;color:#35d39a;border:1px solid rgba(53,211,154,.35);background:#071b19}.material-kind{color:#9fd9c7;font-weight:700}.material-row small{line-height:1.45}
+
+/* v26 interactive poll builder */
+.poll-builder{margin:18px 0;padding:18px;border:1px solid #294963;border-radius:14px;background:rgba(8,24,36,.45)}
+.poll-options{display:grid;gap:10px;margin:12px 0}.poll-option-row{display:grid;grid-template-columns:34px 1fr 42px;gap:8px;align-items:center}.poll-option-row input[type="radio"]{width:18px;height:18px;margin:auto}.poll-option-row input[type="text"]{margin:0}.poll-option-row button{height:40px;margin:0;padding:0;border-radius:9px}.secondary-btn{width:auto!important;margin:0 0 14px!important;padding:10px 14px!important}.poll-points{max-width:180px}
+
+</style>
+  <style data-bundled-from="course-learning.css">
+:root{--bg:#050b13;--panel:#091522;--panel2:#07111d;--line:#1b3650;--muted:#8fa7bc;--cyan:#35d7ff;--blue:#1688ff;--green:#35d39a;--text:#eef6ff;--shadow:0 22px 70px rgba(0,0,0,.27)}
+.learning-shell{max-width:1380px;margin:0 auto;padding:0 24px 74px}.learning-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding:42px 0 28px}.learning-hero h1{font-size:clamp(34px,5vw,58px);line-height:1.04;margin:8px 0 14px}.learning-hero p{max-width:780px;color:var(--muted);font-size:17px;line-height:1.6;margin:0}.course-stats{display:grid;grid-template-columns:repeat(4,minmax(82px,1fr));gap:9px;min-width:420px}.course-stats div{border:1px solid rgba(62,154,202,.22);background:linear-gradient(180deg,rgba(12,30,47,.9),rgba(6,17,29,.88));border-radius:16px;padding:14px 12px;text-align:center;box-shadow:0 12px 34px rgba(0,0,0,.16)}.course-stats strong{display:block;font-size:22px;color:#fff}.course-stats span{display:block;color:#7892aa;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.learning-picker{margin-bottom:20px}.learning-layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:26px;align-items:start}.curriculum-panel{position:sticky;top:18px;background:rgba(6,17,29,.9);backdrop-filter:blur(16px);border:1px solid rgba(74,166,216,.22);border-radius:22px;overflow:hidden;max-height:calc(100vh - 36px);display:flex;flex-direction:column;box-shadow:var(--shadow)}.curriculum-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px;border-bottom:1px solid var(--line)}.curriculum-head h2{font-size:18px;margin:3px 0 0}.small-label{font-size:10px;font-weight:800;letter-spacing:.14em;color:#46ccec}.ghost-btn{width:auto;padding:8px 10px;background:transparent;border:1px solid #294963;color:#9fc2df;font-size:11px}.curriculum{overflow:auto;padding:10px}.nav-module{border:1px solid transparent;border-radius:15px;margin-bottom:8px;overflow:hidden}.nav-module.open{background:#071726;border-color:#153a55}.nav-module-toggle,.nav-sub-toggle{width:100%;display:grid;align-items:center;text-align:left;background:transparent;border:0}.nav-module-toggle{grid-template-columns:34px 1fr 20px;gap:9px;padding:13px}.nav-module-toggle:hover,.nav-sub-toggle:hover{background:#0a2031}.section-number{font-size:10px;color:#4cd4f7;font-weight:900}.nav-module-toggle strong,.nav-sub-toggle strong{display:block;color:#eaf5ff;font-size:12px}.nav-module-toggle small,.nav-sub-toggle small{display:block;color:#6f879d;margin-top:3px;font-size:10px}.chevron{color:#70a1bd;transition:.22s}.nav-module.open>.nav-module-toggle .chevron,.nav-sub.open>.nav-sub-toggle .chevron,.floating-module.open>.floating-module-head .chevron,.floating-sub.open>.floating-sub-head .chevron{transform:rotate(180deg)}.nav-module-body,.nav-sub-body,.floating-module-body,.floating-sub-body{display:none}.nav-module.open>.nav-module-body,.nav-sub.open>.nav-sub-body,.floating-module.open>.floating-module-body,.floating-sub.open>.floating-sub-body{display:block}.nav-module-body{padding:0 7px 8px}.nav-sub{border-left:1px solid #19425f;margin-left:10px}.nav-sub-toggle{grid-template-columns:18px 1fr 18px;gap:7px;padding:9px 10px;border-radius:10px}.branch-dot{width:7px;height:7px;border:1px solid #35d7ff;border-radius:50%;margin-left:2px}.nav-sub-body{padding:2px 4px 6px 18px}.nav-topic-jump{width:100%;display:grid;grid-template-columns:16px 1fr auto;gap:6px;align-items:center;text-align:left;background:transparent;border:0;border-radius:9px;padding:8px 7px;color:#9fb7ca;font-size:11px}.nav-topic-jump:hover{background:#0b2437;color:#e9f8ff}.nav-topic-jump small{min-width:18px;text-align:center;border:1px solid #23485f;border-radius:999px;font-size:9px;padding:2px 4px}.course-main{min-width:0}.course-overview{display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:start;padding:26px;border:1px solid rgba(69,170,220,.24);border-radius:22px;background:linear-gradient(135deg,rgba(11,35,53,.95),rgba(7,17,29,.9));margin-bottom:26px;box-shadow:var(--shadow)}.overview-icon{width:56px;height:56px;display:grid;place-items:center;border-radius:16px;background:#0b2940;color:#43dcff;font-size:30px;box-shadow:inset 0 0 24px rgba(53,215,255,.08)}.course-overview h2{margin:5px 0 8px;font-size:23px}.course-overview p{color:var(--muted);line-height:1.6;margin:0}.lesson-area-modern{display:grid;gap:22px}.floating-module{border:1px solid rgba(64,157,208,.20);background:linear-gradient(150deg,rgba(9,25,40,.92),rgba(5,14,24,.92));border-radius:24px;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.22);transition:.2s}.floating-module:hover{border-color:rgba(66,194,241,.34);transform:translateY(-1px)}.floating-module-head{width:100%;display:grid;grid-template-columns:58px 1fr auto;gap:16px;align-items:center;padding:20px 22px;background:transparent;border:0;text-align:left}.module-orb{width:52px;height:52px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(145deg,#0d334d,#071b2c);border:1px solid #1f5a79;color:#52defe;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.2)}.module-copy strong{display:block;font-size:20px;color:#f2f8ff;margin:4px 0}.module-copy small,.sub-copy small,.topic-copy small{color:#7894aa;font-size:11px}.module-expand{display:flex;align-items:center;gap:10px;color:#72cae6;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.floating-module-body{padding:0 18px 20px 78px}.floating-sub{border:1px solid #153850;border-radius:18px;background:rgba(7,20,32,.74);margin-top:12px;overflow:hidden}.floating-sub-head{width:100%;display:grid;grid-template-columns:58px 1fr 22px;gap:12px;align-items:center;padding:15px 17px;background:transparent;border:0;text-align:left}.floating-sub-head:hover{background:#092033}.sub-index{font-size:11px;font-weight:900;color:#56cfea;border-right:1px solid #24475d;padding-right:10px}.sub-copy strong{display:block;color:#e9f5ff;font-size:15px;margin-bottom:3px}.floating-sub-body{padding:3px 13px 14px}.topic-card{border:1px solid rgba(50,111,145,.5);border-radius:15px;background:rgba(5,15,25,.78);margin-top:10px;overflow:hidden;transition:.18s}.topic-card:hover{border-color:#2a7195}.topic-card-head{width:100%;display:grid;grid-template-columns:36px 1fr auto;gap:11px;align-items:center;text-align:left;padding:13px 14px;background:transparent;border:0}.topic-index{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#0a2639;color:#42d8fb;font-size:11px;font-weight:900}.topic-kicker{display:block;font-size:8px;letter-spacing:.16em;color:#4fbfdc;margin-bottom:3px}.topic-copy strong{display:block;color:#eaf6ff;font-size:14px}.topic-open{display:flex;align-items:center;gap:7px;font-size:10px;color:#77abc4;text-transform:uppercase;letter-spacing:.08em}.topic-open b{font-size:18px;line-height:1;transition:.2s}.topic-card.open .topic-open b{transform:rotate(45deg)}.topic-materials{display:none;border-top:1px solid #153348;padding:7px 10px 10px;background:rgba(3,10,18,.32)}.topic-card.open .topic-materials{display:block}.topic-material-row{display:grid;grid-template-columns:38px minmax(0,1fr) auto auto auto;gap:10px;align-items:center;padding:10px;border-radius:11px}.topic-material-row:hover{background:#081b2a}.material-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#0b2739;border:1px solid #1c536f;color:#44d9fb}.material-copy strong{display:block;color:#dcecff;font-size:12px}.material-copy small{display:block;color:#6f879d;font-size:10px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px}.material-action{width:auto;white-space:nowrap;padding:8px 11px;font-size:10px;background:#0b6e8f;border:1px solid #198fb2;color:white}.delete-course-material{width:auto;padding:7px 9px;font-size:9px}.pill{font-size:9px}.empty.compact{margin:14px;padding:18px}.course-picker button{font-size:12px}
+@media(max-width:1100px){.learning-layout{grid-template-columns:290px minmax(0,1fr)}.course-stats{min-width:350px}.floating-module-body{padding-left:24px}.material-copy small{max-width:360px}}
+@media(max-width:820px){.learning-shell{padding:0 16px 40px}.learning-hero{align-items:flex-start;flex-direction:column}.course-stats{min-width:0;width:100%;grid-template-columns:repeat(2,1fr)}.learning-layout{grid-template-columns:1fr}.curriculum-panel{position:static;max-height:none}.curriculum{max-height:none}.course-overview{grid-template-columns:1fr}.overview-icon{width:48px;height:48px}.floating-module-head{grid-template-columns:48px 1fr auto;padding:17px}.module-orb{width:44px;height:44px;border-radius:13px}.module-expand span{display:none}.floating-module-body{padding:0 12px 14px}.topic-material-row{grid-template-columns:36px 1fr auto}.topic-material-row .pill{grid-column:2}.material-action{grid-column:3;grid-row:1/3}.delete-course-material{grid-column:3}.material-copy small{max-width:55vw}}
+@media(max-width:520px){.learning-hero h1{font-size:36px}.top-actions{gap:10px;font-size:12px}.floating-module-head{grid-template-columns:42px 1fr 18px;gap:10px}.module-orb{width:38px;height:38px}.module-copy strong{font-size:16px}.floating-sub-head{grid-template-columns:48px 1fr 18px}.topic-card-head{grid-template-columns:32px 1fr 20px}.topic-open{font-size:0}.topic-open b{font-size:18px}.topic-material-row{grid-template-columns:32px 1fr}.topic-material-row .pill,.material-action,.delete-course-material{grid-column:2;justify-self:start}.material-action{grid-row:auto}.material-copy small{white-space:normal;max-width:none}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a>
+  <div class="top-actions"><a href="index.html#courses">All Courses</a><a id="signin-link" href="signin.html">Sign In</a></div>
+</header>
+
+<main class="learning-shell">
+  <section class="learning-hero">
+    <div>
+      <div class="eyebrow">ASIC-SKILL LEARNING PATH</div>
+      <h1 id="course-title">Course Content</h1>
+      <p id="course-description">Structured learning from fundamentals to practice.</p>
+    </div>
+    <div class="course-stats" id="course-stats" aria-live="polite"></div>
+  </section>
+
+  <div id="course-picker" class="course-picker learning-picker"></div>
+
+  <div class="learning-layout">
+    <aside class="curriculum-panel">
+      <div class="curriculum-head">
+        <div>
+          <span class="small-label">CURRICULUM</span>
+          <h2>Course sections</h2>
+        </div>
+        <button id="expand-all" class="ghost-btn" type="button">Expand all</button>
+      </div>
+      <div id="curriculum" class="curriculum"><div class="empty compact">Loading curriculum…</div></div>
+    </aside>
+
+    <section class="course-main">
+      <div id="course-overview" class="course-overview">
+        <div class="overview-icon">⌁</div>
+        <div>
+          <span class="small-label">START HERE</span>
+          <h2>Choose a lesson from the curriculum</h2>
+          <p>Work through the sections in order. Notes, videos, labs, assignments and quizzes are kept together so the course feels like one learning path.</p>
+        </div>
+      </div>
+      <div id="lesson-area" class="lesson-area-modern"></div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script  data-bundled-from="supabase-config.js">
+const SUPABASE_URL = "https://orfmyrbiitpsefnucrxr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_mGkXIP3ZqFnaf42_AmGbEw_XrAcgwlM";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+</script>
+<script  data-bundled-from="course-content.js">
+let session=null, courses=[], isAdmin=false, currentCourse=null, currentMaterials=[];
+const params=new URLSearchParams(location.search);
+
+async function init(){
+  ({data:{session}}=await supabaseClient.auth.getSession());
+  if(session){
+    document.getElementById("signin-link").textContent="Signed In";
+    const {data:adminFlag}=await supabaseClient.rpc("is_admin");
+    isAdmin=adminFlag===true;
+  }
+  const {data,error}=await supabaseClient.from("courses").select("id,title,slug,description").eq("is_active",true).order("sort_order");
+  if(error){ showCourseError("Course database is not set up yet. Run the included Supabase SQL setup."); return; }
+  courses=data||[]; renderPicker();
+  const requested=params.get("course");
+  const course=courses.find(c=>c.slug===requested)||courses[0];
+  if(course){
+    if(!requested || requested!==course.slug) history.replaceState(null,"",`?course=${encodeURIComponent(course.slug)}`);
+    await loadCourse(course);
+  } else showCourseError("No active courses are available yet.");
+}
+
+function renderPicker(){
+  document.getElementById("course-picker").innerHTML=courses.map(c=>`<button data-slug="${escapeHtml(c.slug)}">${escapeHtml(c.title)}</button>`).join("");
+  document.querySelectorAll("#course-picker button").forEach(b=>b.onclick=async()=>{
+    const c=courses.find(x=>x.slug===b.dataset.slug); history.replaceState(null,"",`?course=${encodeURIComponent(c.slug)}`); await loadCourse(c);
+  });
+}
+
+async function loadCourse(course){
+  currentCourse=course;
+  document.getElementById("course-title").textContent=course.title;
+  document.getElementById("course-description").textContent=course.description||"Structured ASIC-Skill learning material.";
+  document.querySelectorAll("#course-picker button").forEach(b=>b.classList.toggle("active",b.dataset.slug===course.slug));
+  document.getElementById("curriculum").innerHTML='<div class="empty compact">Loading curriculum…</div>';
+  document.getElementById("lesson-area").innerHTML="";
+  const {data,error}=await supabaseClient.from("materials")
+    .select("id,module_name,sub_module_name,topic_name,title,description,material_type,access_level,file_name,drive_url,storage_provider,sort_order")
+    .eq("course_id",course.id).eq("is_published",true).order("sort_order").order("created_at");
+  if(error){
+    const msg=(error.message||"").includes("sub_module_name")|| (error.message||"").includes("topic_name")
+      ? "Run supabase-v34-hierarchical-curriculum.sql once, then refresh this page."
+      : error.message;
+    showCourseError(msg); return;
+  }
+  currentMaterials=data||[]; renderStats(currentMaterials); renderCurriculum(currentMaterials); renderHierarchy(currentMaterials);
+}
+
+function norm(v,fallback){ const t=String(v??"").trim(); return t||fallback; }
+function buildHierarchy(items){
+  const modules=[]; const moduleMap=new Map();
+  for(const m of items){
+    const moduleName=norm(m.module_name,"General");
+    const subName=norm(m.sub_module_name,"General");
+    const topicName=norm(m.topic_name,m.title||"Topic");
+    if(!moduleMap.has(moduleName)){ const mod={name:moduleName,subs:[],_map:new Map(),count:0}; moduleMap.set(moduleName,mod); modules.push(mod); }
+    const mod=moduleMap.get(moduleName); mod.count++;
+    if(!mod._map.has(subName)){ const sub={name:subName,topics:[],_map:new Map(),count:0}; mod._map.set(subName,sub); mod.subs.push(sub); }
+    const sub=mod._map.get(subName); sub.count++;
+    if(!sub._map.has(topicName)){ const topic={name:topicName,items:[]}; sub._map.set(topicName,topic); sub.topics.push(topic); }
+    sub._map.get(topicName).items.push(m);
+  }
+  return modules;
+}
+
+function renderStats(items){
+  const h=buildHierarchy(items);
+  const subs=h.reduce((n,m)=>n+m.subs.length,0);
+  const topics=h.reduce((n,m)=>n+m.subs.reduce((a,s)=>a+s.topics.length,0),0);
+  document.getElementById("course-stats").innerHTML=`
+    <div><strong>${h.length}</strong><span>Modules</span></div>
+    <div><strong>${subs}</strong><span>Sub-modules</span></div>
+    <div><strong>${topics}</strong><span>Topics</span></div>
+    <div><strong>${items.length}</strong><span>Materials</span></div>`;
+}
+
+function renderCurriculum(items){
+  const box=document.getElementById("curriculum");
+  if(!items.length){ box.innerHTML='<div class="empty compact">No topics have been published for this course yet.</div>'; return; }
+  const modules=buildHierarchy(items);
+  box.innerHTML=modules.map((mod,mi)=>`
+    <section class="nav-module ${mi===0?'open':''}">
+      <button class="nav-module-toggle accordion-toggle" type="button" aria-expanded="${mi===0?'true':'false'}">
+        <span class="section-number">${String(mi+1).padStart(2,'0')}</span><span><strong>${escapeHtml(mod.name)}</strong><small>${mod.subs.length} sub-module${mod.subs.length===1?'':'s'}</small></span><span class="chevron">⌄</span>
+      </button>
+      <div class="nav-module-body">
+        ${mod.subs.map((sub,si)=>`<section class="nav-sub ${mi===0&&si===0?'open':''}">
+          <button class="nav-sub-toggle accordion-toggle" type="button" aria-expanded="${mi===0&&si===0?'true':'false'}"><span class="branch-dot"></span><span><strong>${escapeHtml(sub.name)}</strong><small>${sub.topics.length} topic${sub.topics.length===1?'':'s'}</small></span><span class="chevron">⌄</span></button>
+          <div class="nav-sub-body">${sub.topics.map(topic=>`<button class="nav-topic-jump" type="button" data-anchor="${anchorFor(mi,si,topic.name)}"><span>↳</span><span>${escapeHtml(topic.name)}</span><small>${topic.items.length}</small></button>`).join('')}</div>
+        </section>`).join('')}
+      </div>
+    </section>`).join('');
+  wireAccordions(box);
+  box.querySelectorAll('.nav-topic-jump').forEach(btn=>btn.onclick=()=>document.getElementById(btn.dataset.anchor)?.scrollIntoView({behavior:'smooth',block:'center'}));
+}
+
+function renderHierarchy(items){
+  const area=document.getElementById("lesson-area");
+  if(!items.length){ area.innerHTML='<div class="empty">No topics have been published for this course yet.</div>'; return; }
+  const modules=buildHierarchy(items);
+  area.innerHTML=modules.map((mod,mi)=>`
+    <section class="floating-module ${mi===0?'open':''}">
+      <button class="floating-module-head accordion-toggle" type="button" aria-expanded="${mi===0?'true':'false'}">
+        <span class="module-orb">${String(mi+1).padStart(2,'0')}</span>
+        <span class="module-copy"><span class="small-label">MODULE ${mi+1}</span><strong>${escapeHtml(mod.name)}</strong><small>${mod.subs.length} sub-modules · ${mod.count} materials</small></span><span class="module-expand"><span>Expand</span><b class="chevron">⌄</b></span>
+      </button>
+      <div class="floating-module-body">
+        ${mod.subs.map((sub,si)=>`
+          <section class="floating-sub ${mi===0&&si===0?'open':''}">
+            <button class="floating-sub-head accordion-toggle" type="button" aria-expanded="${mi===0&&si===0?'true':'false'}">
+              <span class="sub-index">${String(mi+1).padStart(2,'0')}.${si+1}</span><span class="sub-copy"><strong>${escapeHtml(sub.name)}</strong><small>${sub.topics.length} topics</small></span><span class="chevron">⌄</span>
+            </button>
+            <div class="floating-sub-body">
+              ${sub.topics.map((topic,ti)=>topicBlock(topic,mi,si,ti)).join('')}
+            </div>
+          </section>`).join('')}
+      </div>
+    </section>`).join('');
+  wireAccordions(area);
+  area.querySelectorAll('.topic-card-head').forEach(btn=>btn.onclick=()=>{
+    const card=btn.closest('.topic-card'); const open=card.classList.toggle('open'); btn.setAttribute('aria-expanded',String(open));
+  });
+  area.querySelectorAll('.material-action').forEach(btn=>btn.onclick=e=>{ e.stopPropagation(); openMaterialById(btn.dataset.id); });
+  area.querySelectorAll('.delete-course-material').forEach(btn=>btn.onclick=e=>{e.stopPropagation();deleteMaterial(btn,currentCourse);});
+}
+
+function topicBlock(topic,mi,si,ti){
+  const anchor=anchorFor(mi,si,topic.name);
+  const premiumCount=topic.items.filter(x=>x.access_level==='premium').length;
+  return `<article class="topic-card" id="${anchor}">
+    <button class="topic-card-head" type="button" aria-expanded="false">
+      <span class="topic-index">${ti+1}</span><span class="topic-copy"><span class="topic-kicker">TOPIC</span><strong>${escapeHtml(topic.name)}</strong><small>${topic.items.length} material${topic.items.length===1?'':'s'}${premiumCount?` · ${premiumCount} premium`:''}</small></span><span class="topic-open">Open <b>＋</b></span>
+    </button>
+    <div class="topic-materials">${topic.items.map(materialRow).join('')}</div>
+  </article>`;
+}
+
+function materialRow(m){
+  const premium=m.access_level==='premium';
+  return `<div class="topic-material-row">
+    <span class="material-icon">${materialTypeIcon(m.material_type)}</span>
+    <span class="material-copy"><strong>${escapeHtml(m.title)}</strong><small>${escapeHtml(materialTypeLabel(m.material_type))}${m.description?` · ${escapeHtml(m.description)}`:''}</small></span>
+    <span class="pill ${premium?'premium':'free'}">${premium?'Premium':'Free'}</span>
+    <button class="material-action" type="button" data-id="${m.id}">${premium?'View / Unlock':'View'} →</button>
+    ${isAdmin?`<button class="delete-course-material" type="button" data-id="${m.id}" data-title="${escapeHtml(m.title)}">Delete</button>`:''}
+  </div>`;
+}
+
+function wireAccordions(root){
+  root.querySelectorAll('.accordion-toggle').forEach(btn=>btn.onclick=()=>{
+    const section=btn.parentElement; const open=section.classList.toggle('open'); btn.setAttribute('aria-expanded',String(open));
+  });
+}
+function anchorFor(mi,si,name){ return `topic-${mi}-${si}-${slugify(name)}`; }
+function slugify(v){ return String(v||'topic').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,42)||'topic'; }
+
+async function openMaterialById(id){
+  const m=currentMaterials.find(x=>x.id===id); if(!m) return;
+  if(m.access_level==="premium"&&!session){ location.href="signin.html"; return; }
+  if(m.material_type!=="openroad_lab" && (m.storage_provider||"drive")==="drive" && !m.drive_url){ alert("No Google Drive link is saved for this material."); return; }
+  location.href=`lesson-viewer.html?id=${encodeURIComponent(id)}`;
+}
+function materialTypeLabel(type){ return ({video:"Video",lab:"Lab",openroad_lab:"OpenROAD Lab",poll:"Quiz",assignment:"Assignment",presentation:"Presentation",pdf:"Notes / PDF",document:"Document",cheatsheet:"Cheat Sheet",other:"Resource"})[type]||"Material"; }
+function materialTypeIcon(type){ return ({video:"▶",lab:"⌘",openroad_lab:"⬡",poll:"?",assignment:"✓",presentation:"▣",pdf:"▤",document:"≡",cheatsheet:"★",other:"＋"})[type]||"•"; }
+function escapeHtml(value){ return String(value ?? "").replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+function showCourseError(text){ document.getElementById("curriculum").innerHTML=`<div class="empty compact">${escapeHtml(text)}</div>`; document.getElementById("lesson-area").innerHTML=`<div class="empty">${escapeHtml(text)}</div>`; }
+
+async function deleteMaterial(btn,course){
+  if(!isAdmin){ alert("Administrator access is required to delete course material."); return; }
+  const id=btn.dataset.id, title=btn.dataset.title||"this material";
+  const material=currentMaterials.find(x=>x.id===id); const provider=material?.storage_provider||"drive";
+  if(!window.confirm(`Remove "${title}" from ASIC-Skill? ${provider==="r2"?"The private R2 file will also be deleted.":"The original Google Drive file will NOT be deleted."}`)) return;
+  btn.disabled=true; btn.textContent="Deleting…";
+  if(provider==="r2"){
+    const res=await fetch("https://asic-skill-material-server.asic-skill-materials.workers.dev/admin/material/"+encodeURIComponent(id),{method:"DELETE",headers:{Authorization:`Bearer ${session?.access_token||""}`}});
+    if(!res.ok){ const body=await res.json().catch(()=>({})); alert("The premium material could not be deleted: "+(body.error||res.statusText)); btn.disabled=false; btn.textContent="Delete"; return; }
+  }else{
+    const {data:deleted,error}=await supabaseClient.from("materials").delete().eq("id",id).select("id");
+    if(error||!deleted?.length){ alert("The material could not be deleted: "+(error?.message||"Check administrator permissions.")); btn.disabled=false; btn.textContent="Delete"; return; }
+  }
+  await loadCourse(course);
+}
+
+document.getElementById("refresh-course")?.addEventListener("click",()=>currentCourse&&loadCourse(currentCourse));
+init();
+
+</script>
+<script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body>
+</html>

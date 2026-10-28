@@ -1,0 +1,30 @@
+ASIC-Skill Digital Electronics · 19 units · GitHub upload edition
+
+This upload package contains only the static website assets. The original external CSS/JS
+files are embedded into their referring HTML pages, preserving page-specific execution order.
+The 1080p microprocessor video and logo are included.
+
+Upload all files and the digital-electronics-assets folder to your GitHub Pages branch/root.
+For Project Pages, use relative paths and test under the project base path.
+External CDN scripts and configured Supabase/Cloudflare endpoints still require connectivity.
+EDA server-side simulations, account APIs, and paid lesson services require separately
+deployed backends; GitHub Pages cannot host Python/Docker/Cloudflare Worker runtimes.
+
+README* documents remain available in the separate README archive (not this upload).
+The EDA server and deploy/config files are in the separate Backend-and-Setup archive.
+
+Note: GitHub browser upload allows at most 100 files per upload operation, not
+100 files per repository. Git push is an alternative for a full source repository.
+
+Version 37.0.95: Fixed Visual Content Editor with drag and drop and export-safe block IDs.
+- Click the existing paragraph at the desired location, then add a heading, paragraph, note, list, or image.
+- Reorder new blocks via their drag handle or the Up/Down/Top/Bottom controls.
+- New content gets a persistent block ID. Exporting/reopening/re-exporting does not append a second copy.
+- Existing editable text is changed in place and does not generate a duplicate paragraph.
+- Saved drafts from v37.0.94 are migrated on first use. Each export replaces only one unit HTML file.
+- If you already customized content in VS Code, upload only the new content-editor.js (and optionally content-editor.html), then do a hard refresh. Do not overwrite your other unit pages.
+
+Previous: Version 37.0.94: Browser Content Editor. Open content-editor.html, or click "Edit Content" on any unit page.
+Edits save to browser localStorage only; "Export Updated HTML" downloads one changed HTML file. Commit this exported file on GitHub to publish.
+The editor is not a secure admin-only area, and static GitHub Pages cannot accept server-side content changes.
+Because the editor uses content-editor.js, keep it alongside the HTML pages.

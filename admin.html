@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Course Admin | ASIC-Skill</title><style data-bundled-from="course-admin.css">
+*{box-sizing:border-box}body{margin:0;background:#050b13;color:#eef6ff;font-family:Arial,sans-serif}.topbar{min-height:72px;padding:12px max(20px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #183149;background:#07111d}.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:20px}.brand img{width:38px;height:38px;border-radius:9px;object-fit:cover}.brand span span,.eyebrow{color:#25c7ef}.topbar>a,.top-actions a{color:#a9c8e5;text-decoration:none}.top-actions{display:flex;gap:18px}.admin-shell,.course-shell{max-width:1120px;margin:44px auto;padding:0 20px}.admin-shell{display:grid;grid-template-columns:1.25fr .75fr;gap:24px}.admin-card,.module{background:#091522;border:1px solid #1c3b56;border-radius:18px;padding:28px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em}.admin-card h1,.course-hero h1{font-size:clamp(30px,5vw,52px);margin:10px 0}.admin-card h2{margin-top:10px}.intro,.muted,.course-hero p{color:#91a8bd;line-height:1.6}.status,.message{padding:12px 14px;border:1px solid #294963;border-radius:10px;margin:18px 0;color:#a9bfd2}.status.ok,.message.ok{border-color:#1b8b70;color:#8cf0d4}.message.bad{border-color:#9c4949;color:#ffb1b1}form{display:grid;gap:16px}label{display:grid;gap:8px;font-weight:700;color:#dcecff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}input,select,textarea{width:100%;border:1px solid #294963;background:#06101a;color:#fff;border-radius:10px;padding:13px;font:inherit}input[type=file]{padding:10px}button{border:0;border-radius:10px;background:#1688ff;color:#fff;padding:13px 16px;font-weight:800;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.material-list{display:grid;gap:10px}.material-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;background:#06101a;border-radius:10px}.material-row strong,.material-row small{display:block}.material-row small{margin-top:5px;color:#7891a7}.pill{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;text-transform:uppercase;font-weight:800}.pill.free{background:#123c35;color:#7ce6c9}.pill.premium{background:#4a3510;color:#ffd36a}.course-hero{padding:34px 0}.course-picker{display:flex;gap:8px;overflow:auto;padding-bottom:18px}.course-picker button{white-space:nowrap;background:#0a1928;border:1px solid #244762;color:#bad1e5}.course-picker button.active{background:#1688ff;color:white;border-color:#1688ff}.lesson-area{display:grid;gap:20px}.module h2{margin:0 0 16px}.lesson{display:grid;grid-template-columns:52px 1fr auto auto;gap:16px;align-items:center;padding:16px 0;border-top:1px solid #163047}.lesson:first-of-type{border-top:0}.lesson-num{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:#0d2235;color:#43d9ff;font-weight:800}.lesson h3{margin:0 0 5px}.lesson p{margin:0;color:#8299ad}.open-material{margin:0}.empty{padding:34px;border:1px dashed #294963;border-radius:14px;color:#91a8bd;text-align:center}@media(max-width:800px){.admin-shell{grid-template-columns:1fr}.lesson{grid-template-columns:44px 1fr}.lesson .pill,.lesson .open-material{grid-column:2}.grid{grid-template-columns:1fr}}
+/* Admin lesson deletion */
+.material-row{gap:12px;flex-wrap:wrap}
+.delete-material{width:auto;min-width:76px;padding:9px 12px;background:transparent;border:1px solid #f87171;color:#fca5a5;border-radius:9px;cursor:pointer;font-weight:700}
+.delete-material:hover{background:rgba(248,113,113,.12)}
+.delete-material:disabled{opacity:.55;cursor:wait}
+
+/* Course page admin actions */
+.lesson-actions{display:flex;align-items:center;gap:10px}
+.delete-course-material{width:auto;padding:13px 16px;background:transparent;border:1px solid #f87171;color:#fca5a5}
+.delete-course-material:hover{background:rgba(248,113,113,.12)}
+@media(max-width:800px){.lesson .lesson-actions{grid-column:2;display:flex;flex-wrap:wrap}}
+
+/* v13 premium access administration */
+.access-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}.access-admin-grid label{margin:0}.access-list{display:grid;gap:10px;margin-top:16px}.access-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:14px;border:1px solid #1c3b56;border-radius:12px;background:#07131e}.access-row small{display:block;color:#91a8bd;margin-top:5px}.access-row button{width:auto;margin:0;padding:9px 14px}.access-row .revoke-access{background:#35151a;border:1px solid #7d2d39}.access-message{margin-top:12px}@media(max-width:760px){.access-admin-grid{grid-template-columns:1fr}.access-row{grid-template-columns:1fr}.access-row button{width:100%}}
+
+/* v25 learning activity types */
+.material-icon{font-size:20px;color:#35d39a;border:1px solid rgba(53,211,154,.35);background:#071b19}.material-kind{color:#9fd9c7;font-weight:700}.material-row small{line-height:1.45}
+
+/* v26 interactive poll builder */
+.poll-builder{margin:18px 0;padding:18px;border:1px solid #294963;border-radius:14px;background:rgba(8,24,36,.45)}
+.poll-options{display:grid;gap:10px;margin:12px 0}.poll-option-row{display:grid;grid-template-columns:34px 1fr 42px;gap:8px;align-items:center}.poll-option-row input[type="radio"]{width:18px;height:18px;margin:auto}.poll-option-row input[type="text"]{margin:0}.poll-option-row button{height:40px;margin:0;padding:0;border-radius:9px}.secondary-btn{width:auto!important;margin:0 0 14px!important;padding:10px 14px!important}.poll-points{max-width:180px}
+
+</style></head>
+<body><header class="topbar"><a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a><a href="course-content.html">View Courses</a></header>
+<main class="admin-shell"><section class="admin-card"><div class="eyebrow">COURSE ADMIN</div><h1>Build the course learning path</h1>
+<p class="intro">Organize content as <strong>Course → Module → Sub-module → Topic → Material</strong>. Students can expand modules, sub-modules and topics without leaving the course page.</p>
+<div id="admin-status" class="status">Checking administrator access…</div>
+<form id="material-form" hidden>
+<div class="grid"><label>Course<select id="course" required></select></label><label>Module<input id="module" required placeholder="e.g. 02 · Floorplanning"></label></div>
+<div class="grid"><label>Sub-module<input id="sub-module" required placeholder="e.g. Macro Planning"></label><label>Topic<input id="topic" required placeholder="e.g. Macro Placement Strategy"></label></div>
+<label>Material title<input id="title" required placeholder="e.g. Macro Placement Notes"></label>
+<div class="grid"><label>Material type<select id="type">
+<option value="pdf">PDF / Notes</option>
+<option value="video">Video Record</option>
+<option value="lab">Lab Work</option>
+<option value="openroad_lab">OpenROAD Interactive Lab</option>
+<option value="eda_lab">EDA Cloud Lab — OpenROAD / OpenSTA / Yosys / Magic</option>
+<option value="poll">Quiz / Poll (Google Forms)</option>
+<option value="assignment">Assignment</option>
+<option value="presentation">Presentation</option>
+<option value="document">Document</option>
+<option value="cheatsheet">Cheat Sheet</option>
+<option value="other">Other</option>
+</select></label><label>Access<select id="access"><option value="free">Free</option><option value="premium">Premium</option></select></label></div>
+<label>Short description<textarea id="description" rows="3" placeholder="What will the student learn?"></textarea></label>
+<section id="poll-builder" class="poll-builder" hidden>
+  <div class="eyebrow">GOOGLE FORMS QUIZ / POLL</div>
+  <label>Google Forms responder URL<input id="tally-url" type="url" placeholder="https://docs.google.com/forms/d/.../viewform"></label>
+  <p class="muted">Paste the published Google Forms Responder URL (the /viewform link). ASIC-Skill will display the quiz inside the lesson viewer. Existing Tally links remain supported for backward compatibility.</p>
+</section>
+<div id="free-source"><label>Google Drive link<input id="drive-url" type="url" placeholder="https://drive.google.com/file/d/.../view"></label><p class="muted">FREE material: use an individual Google Drive file link.</p></div>
+<div id="premium-source" hidden><label><span id="premium-file-label">Premium PDF</span><input id="premium-file" type="file" accept="application/pdf,.pdf"></label><p id="premium-source-help" class="muted">PREMIUM material: the PDF is uploaded to your private Cloudflare R2 bucket. Public R2 access stays disabled.</p></div>
+<button id="upload-btn" type="submit">Add Material →</button><div id="upload-message" class="message" hidden></div>
+</form></section>
+<section class="admin-card"><div class="eyebrow">COURSE CONTENT</div><h2>Hierarchical course material</h2><div id="material-list" class="material-list"><p class="muted">Sign in as an administrator to manage material.</p></div></section>
+<section class="admin-card"><div class="eyebrow">PREMIUM ACCESS</div><h2>Grant Premium Access</h2>
+<p class="intro">Use this to test paid access before payment integration. Enter an existing ASIC-Skill user email, select a course, and grant access.</p>
+<div id="access-admin" hidden>
+  <div class="access-admin-grid">
+    <label>Student email<input id="access-email" type="email" placeholder="student@example.com"></label>
+    <label>Course<select id="access-course"></select></label>
+  </div>
+  <button id="grant-access-btn" type="button">Grant Premium Access →</button>
+  <div id="access-message" class="message access-message" hidden></div>
+  <div id="access-list" class="access-list"><p class="muted">No access records loaded yet.</p></div>
+</div>
+</section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script  data-bundled-from="supabase-config.js">
+const SUPABASE_URL = "https://orfmyrbiitpsefnucrxr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_mGkXIP3ZqFnaf42_AmGbEw_XrAcgwlM";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+</script><script  data-bundled-from="course-admin.js">
+const statusBox = document.getElementById("admin-status");
+const form = document.getElementById("material-form");
+const message = document.getElementById("upload-message");
+const MATERIAL_SERVER = "https://asic-skill-material-server.asic-skill-materials.workers.dev";
+
+function showMessage(text, ok=false){ message.hidden=false; message.textContent=text; message.className="message "+(ok?"ok":"bad"); }
+function escapeHtml(value){ return String(value ?? "").replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+function validDriveUrl(value){ try { const u=new URL(value); return u.protocol==='https:' && (u.hostname==='drive.google.com' || u.hostname==='docs.google.com'); } catch { return false; } }
+function validQuizUrl(value){
+  try {
+    const u=new URL(value);
+    if(u.protocol!=='https:') return false;
+    const google=(u.hostname==='docs.google.com' && /^\/forms\/d\/(?:e\/)?[^/]+\/(?:viewform|preview)$/.test(u.pathname));
+    const tally=((u.hostname==='tally.so' || u.hostname.endsWith('.tally.so')) && /^\/(r|embed)\//.test(u.pathname));
+    return google || tally;
+  } catch { return false; }
+}
+function updateSourceFields(){
+  const premium=document.getElementById("access").value==="premium";
+  const type=document.getElementById("type").value;
+  const isVideo=type==="video", isPoll=type==="poll", isOpenRoad=type==="openroad_lab", isEda=type==="eda_lab", isNativeLab=isOpenRoad||isEda;
+  document.getElementById("poll-builder").hidden=!isPoll;
+  document.getElementById("free-source").hidden=premium||isPoll||isNativeLab;
+  document.getElementById("premium-source").hidden=!premium||isPoll||isNativeLab;
+  document.getElementById("drive-url").required=!premium&&!isPoll&&!isNativeLab;
+  document.getElementById("tally-url").required=isPoll;
+  const file=document.getElementById("premium-file");
+  file.required=premium&&!isPoll&&!isNativeLab;
+  file.accept=isVideo?"video/mp4,video/webm,.mp4,.webm":"application/pdf,.pdf";
+  document.getElementById("premium-file-label").textContent=isVideo?"Premium video file":"Premium PDF";
+  document.getElementById("premium-source-help").textContent=isVideo
+    ?"PREMIUM video: upload MP4/WebM to your private Cloudflare R2 bucket. For very large course videos, a dedicated streaming service is recommended."
+    :"PREMIUM material: the PDF is uploaded to your private Cloudflare R2 bucket. Public R2 access stays disabled.";
+  document.getElementById("upload-btn").textContent=isPoll?"Add Quiz →":(isOpenRoad?"Add OpenROAD Lab →":(isEda?"Add EDA Cloud Lab →":"Add Material →"));
+}
+
+async function initAdmin(){
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(!session){ statusBox.innerHTML='Please <a href="signin.html">sign in</a> first.'; return; }
+  const {data:isAdmin,error}=await supabaseClient.rpc("is_admin");
+  if(error){ statusBox.textContent="Database setup is not finished. Run the included Supabase SQL setup/migration first."; return; }
+  if(!isAdmin){ statusBox.textContent="This account is not authorized as a course administrator."; return; }
+  statusBox.textContent="Administrator access confirmed."; statusBox.classList.add("ok"); form.hidden=false;
+  updateSourceFields(); await loadCourses(); await loadMaterials();
+}
+async function loadCourses(){
+  const {data,error}=await supabaseClient.from("courses").select("id,title,slug").eq("is_active",true).order("sort_order");
+  const select=document.getElementById("course"); if(error){ showMessage(error.message); return; }
+  select.innerHTML=(data||[]).map(c=>`<option value="${c.id}">${escapeHtml(c.title)}</option>`).join("");
+}
+async function loadMaterials(){
+  const {data,error}=await supabaseClient.from("materials").select("id,title,module_name,sub_module_name,topic_name,access_level,material_type,drive_url,storage_provider,created_at,courses(title)").order("created_at",{ascending:false}).limit(100);
+  const box=document.getElementById("material-list"); if(error){ box.textContent=error.message; return; }
+  box.innerHTML=(data||[]).length ? data.map(m=>`<div class="material-row"><div><strong>${escapeHtml(m.title)}</strong><small>${escapeHtml(m.courses?.title||"Course")} · ${escapeHtml(m.module_name)} › ${escapeHtml(m.sub_module_name||'General')} › ${escapeHtml(m.topic_name||m.title)} · ${m.material_type==='poll'?'Quiz / Poll':(m.material_type==='openroad_lab'?'OpenROAD Interactive Lab':(m.material_type==='eda_lab'?'EDA Cloud Lab':(m.storage_provider==='r2'?'Private R2':(m.storage_provider==='none'?'ASIC-Skill Lab':'Google Drive'))))}</small></div><span class="pill ${m.access_level==='premium'?'premium':'free'}">${m.access_level}</span>${(m.drive_url||m.material_type==='openroad_lab'||m.material_type==='eda_lab')?`<button type="button" class="view-material" data-id="${m.id}" data-type="${m.material_type||''}" data-url="${escapeHtml(m.drive_url||'')}">View</button>`:''}<button type="button" class="delete-material" data-material-id="${m.id}" data-provider="${m.storage_provider||'drive'}" aria-label="Delete ${escapeHtml(m.title)}">Delete</button></div>`).join("") : '<p class="muted">No material added yet.</p>';
+}
+async function deleteMaterial(id,provider,button){
+  const {data:material,error:lookupError}=await supabaseClient.from("materials").select("id,title").eq("id",id).single();
+  if(lookupError || !material){ showMessage("Could not find lesson: "+(lookupError?.message||"Unknown error")); return; }
+  const note=provider==='r2'?'The private R2 PDF will also be deleted.':'The original Google Drive file will NOT be deleted.';
+  if(!window.confirm(`Remove "${material.title}" from ASIC-Skill? ${note}`)) return;
+  button.disabled=true; button.textContent="Deleting…";
+  if(provider==='r2'){
+    const {data:{session}}=await supabaseClient.auth.getSession();
+    const res=await fetch(`${MATERIAL_SERVER}/admin/material/${encodeURIComponent(id)}`,{method:'DELETE',headers:{Authorization:`Bearer ${session?.access_token||''}`}});
+    if(!res.ok){ const body=await res.json().catch(()=>({})); showMessage("Could not delete premium lesson: "+(body.error||res.statusText)); button.disabled=false; button.textContent="Delete"; return; }
+  } else {
+    const {data:deleted,error}=await supabaseClient.from("materials").delete().eq("id",id).select("id");
+    if(error || !deleted?.length){ showMessage("Could not delete lesson: "+(error?.message||"Check administrator permissions.")); button.disabled=false; button.textContent="Delete"; return; }
+  }
+  showMessage("Lesson deleted successfully.",true); await loadMaterials();
+}
+document.getElementById("access").addEventListener("change",updateSourceFields);
+document.getElementById("type").addEventListener("change",updateSourceFields);
+document.getElementById("material-list").addEventListener("click",event=>{
+  const view=event.target.closest("button.view-material");
+  if(view){
+    if((view.dataset.type==="poll" || view.dataset.type==="openroad_lab" || view.dataset.type==="eda_lab") && view.dataset.id){
+      window.open(`lesson-viewer.html?id=${encodeURIComponent(view.dataset.id)}`,"_blank","noopener,noreferrer");
+    } else {
+      window.open(view.dataset.url,"_blank","noopener,noreferrer");
+    }
+    return;
+  }
+  const button=event.target.closest("button.delete-material"); if(button && !button.disabled) deleteMaterial(button.dataset.materialId,button.dataset.provider,button);
+});
+form.addEventListener("submit",async e=>{
+  e.preventDefault(); message.hidden=true;
+  const btn=document.getElementById("upload-btn"), course=document.getElementById("course"), access=document.getElementById("access").value;
+  if(!course.value){ showMessage("Please select a course."); return; }
+  btn.disabled=true; btn.textContent=access==='premium'?"Uploading securely…":"Adding…";
+  try {
+    const type=document.getElementById("type").value;
+    const moduleName=document.getElementById("module").value.trim();
+    const subModuleName=document.getElementById("sub-module").value.trim();
+    const topicName=document.getElementById("topic").value.trim();
+    if(!moduleName || !subModuleName || !topicName){ showMessage("Module, sub-module and topic are required."); return; }
+    if(type==="openroad_lab" || type==="eda_lab"){
+      const payload={course_id:course.value,module_name:moduleName,sub_module_name:subModuleName,topic_name:topicName,title:document.getElementById("title").value.trim(),description:document.getElementById("description").value.trim(),material_type:type,access_level:access,drive_url:null,storage_provider:"none",file_name:null,storage_path:null};
+      const {error}=await supabaseClient.from("materials").insert(payload); if(error) throw error;
+      showMessage(type==="eda_lab"?"EDA Cloud Lab added. It will open the OpenROAD / OpenSTA / Yosys / Magic workspace.":"OpenROAD interactive lab added. It will open inside ASIC-Skill Lab.",true);
+    } else if(type==="poll"){
+      const quizUrl=document.getElementById("tally-url").value.trim();
+      if(!validQuizUrl(quizUrl)){ showMessage("Please paste a valid published Google Forms Responder URL (/viewform). Existing Tally Share/Embed URLs are also supported."); return; }
+      const payload={course_id:course.value,module_name:moduleName,sub_module_name:subModuleName,topic_name:topicName,title:document.getElementById("title").value.trim(),description:document.getElementById("description").value.trim(),material_type:'poll',access_level:access,drive_url:quizUrl,storage_provider:'none',file_name:null,storage_path:null};
+      const {error}=await supabaseClient.from("materials").insert(payload); if(error) throw error;
+      showMessage("Quiz added successfully and will open inside ASIC-Skill.",true);
+    } else if(access==='premium'){
+      const file=document.getElementById("premium-file").files[0];
+      const type=document.getElementById("type").value;
+      const isVideo=type==="video";
+      const validFile=isVideo ? !!file && (file.type==="video/mp4" || file.type==="video/webm" || /\.(mp4|webm)$/i.test(file.name)) : !!file && (file.type==="application/pdf" || /\.pdf$/i.test(file.name));
+      if(!validFile){ showMessage(isVideo?"Please choose an MP4 or WebM video file.":"Please choose a PDF file for premium material."); return; }
+      const {data:{session}}=await supabaseClient.auth.getSession();
+      if(!session){ location.href='signin.html'; return; }
+      const fd=new FormData();
+      fd.append('file',file); fd.append('course_id',course.value); fd.append('module_name',moduleName); fd.append('sub_module_name',subModuleName); fd.append('topic_name',topicName); fd.append('title',document.getElementById("title").value.trim()); fd.append('description',document.getElementById("description").value.trim()); fd.append('material_type',document.getElementById("type").value);
+      const res=await fetch(`${MATERIAL_SERVER}/admin/material`,{method:'POST',headers:{Authorization:`Bearer ${session.access_token}`},body:fd});
+      const body=await res.json().catch(()=>({})); if(!res.ok) throw new Error(body.error||`Upload failed (${res.status})`);
+      showMessage(type==="video"?"Premium video uploaded privately to Cloudflare R2 and lesson published.":"Premium PDF uploaded privately to Cloudflare R2 and lesson published.",true);
+    } else {
+      const driveUrl=document.getElementById("drive-url").value.trim(); if(!validDriveUrl(driveUrl)){ showMessage("Please paste a valid Google Drive file link."); return; }
+      const payload={course_id:course.value,module_name:moduleName,sub_module_name:subModuleName,topic_name:topicName,title:document.getElementById("title").value.trim(),description:document.getElementById("description").value.trim(),material_type:document.getElementById("type").value,access_level:'free',drive_url:driveUrl,storage_provider:'drive',file_name:null,storage_path:null};
+      const {error}=await supabaseClient.from("materials").insert(payload); if(error) throw error;
+      showMessage("Free Google Drive material added successfully.",true);
+    }
+    form.reset(); updateSourceFields(); await loadCourses(); await loadMaterials();
+  } catch(err){ showMessage(err.message||String(err)); } finally { btn.disabled=false; btn.textContent="Add Material →"; }
+});
+initAdmin();
+
+// v13: manual premium entitlement administration
+const accessAdmin = document.getElementById("access-admin");
+const accessEmail = document.getElementById("access-email");
+const accessCourse = document.getElementById("access-course");
+const accessMessage = document.getElementById("access-message");
+const accessList = document.getElementById("access-list");
+const grantAccessBtn = document.getElementById("grant-access-btn");
+
+function showAccessMessage(text, ok=false){
+  accessMessage.hidden=false;
+  accessMessage.textContent=text;
+  accessMessage.className="message access-message "+(ok?"ok":"bad");
+}
+async function loadAccessCourses(){
+  const {data,error}=await supabaseClient.from("courses").select("id,title").eq("is_active",true).order("sort_order");
+  if(error){ showAccessMessage(error.message); return; }
+  accessCourse.innerHTML=(data||[]).map(c=>`<option value="${c.id}">${escapeHtml(c.title)}</option>`).join("");
+}
+async function loadPremiumAccess(){
+  const {data,error}=await supabaseClient.rpc("admin_list_premium_access");
+  if(error){
+    accessList.innerHTML='<p class="muted">Run <strong>supabase-v13-premium-access.sql</strong> first.</p>';
+    return;
+  }
+  const active=(data||[]).filter(r=>r.active);
+  accessList.innerHTML=active.length ? active.map(r=>`<div class="access-row"><div><strong>${escapeHtml(r.student_email)}</strong><small>${escapeHtml(r.course_title)}</small></div><span class="pill premium">ACTIVE</span><button type="button" class="revoke-access" data-email="${escapeHtml(r.student_email)}" data-course-id="${r.course_id}">Revoke</button></div>`).join("") : '<p class="muted">No active premium access yet.</p>';
+}
+async function initPremiumAccessAdmin(){
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(!session) return;
+  const {data:isAdmin}=await supabaseClient.rpc("is_admin");
+  if(!isAdmin) return;
+  accessAdmin.hidden=false;
+  await loadAccessCourses();
+  await loadPremiumAccess();
+}
+grantAccessBtn?.addEventListener("click",async()=>{
+  const email=accessEmail.value.trim(); const courseId=accessCourse.value;
+  if(!email){ showAccessMessage("Enter the student's ASIC-Skill email address."); return; }
+  if(!courseId){ showAccessMessage("Select a course."); return; }
+  grantAccessBtn.disabled=true; grantAccessBtn.textContent="Granting…";
+  const {error}=await supabaseClient.rpc("admin_grant_premium_access",{student_email:email,target_course_id:courseId});
+  grantAccessBtn.disabled=false; grantAccessBtn.textContent="Grant Premium Access →";
+  if(error){ showAccessMessage(error.message); return; }
+  showAccessMessage("Premium access granted successfully.",true); accessEmail.value=""; await loadPremiumAccess();
+});
+accessList?.addEventListener("click",async event=>{
+  const btn=event.target.closest("button.revoke-access"); if(!btn || btn.disabled) return;
+  if(!confirm(`Revoke premium access for ${btn.dataset.email}?`)) return;
+  btn.disabled=true; btn.textContent="Revoking…";
+  const {error}=await supabaseClient.rpc("admin_revoke_premium_access",{student_email:btn.dataset.email,target_course_id:btn.dataset.courseId});
+  if(error){ showAccessMessage(error.message); btn.disabled=false; btn.textContent="Revoke"; return; }
+  showAccessMessage("Premium access revoked.",true); await loadPremiumAccess();
+});
+initPremiumAccessAdmin();
+
+</script><script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body></html>

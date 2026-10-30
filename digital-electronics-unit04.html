@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="ASIC-Skill Unit 04 Logic Gates: expanded interactive lessons, truth tables, CMOS gate circuits, waveforms, Verilog/VHDL and responsive study material." name="description"/><title>Unit 04 · Logic Gates | ASIC-Skill Expanded Study Material</title><link href="logo.jpeg" rel="icon"/><style data-bundled-from="digital-electronics.css">
+:root{--ink:#152a3c;--muted:#577080;--orange:#e87918;--green:#087858;--teal:#047a85;--line:#d9e4e5;--bg:#f4f8f7;--paper:#fff;--soft:#eef7f2;--shadow:0 10px 34px rgba(18,43,61,.09);--lesson-font:17px;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.68}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #ed9928;outline-offset:3px}button:disabled{opacity:.42;cursor:not-allowed}body.dark{--ink:#e8f4f5;--muted:#9bb7bd;--orange:#ffab55;--green:#74ddb1;--teal:#4bc5d0;--line:#355461;--bg:#0c202a;--paper:#18303b;--soft:#203a3c;--shadow:0 10px 34px rgba(0,0,0,.2);color-scheme:dark}
+.de-topbar{background:#102c3d;color:white;min-height:72px;display:flex;align-items:center;justify-content:space-between;padding:9px clamp(16px,4vw,52px);gap:15px}.de-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}.de-brand:hover{text-decoration:none}.de-brand img{height:44px;width:44px;object-fit:cover;border-radius:12px}.de-brand b{font-size:21px;line-height:1.15}.de-brand small{display:block;letter-spacing:.07em;font-size:10px;text-transform:uppercase;color:#bbd1d1}.de-brand-orange{color:#ff9237}.de-head-links{display:flex;gap:9px;align-items:center}.de-head-links a{color:#e5f6f5;font-size:13px;margin-right:9px}.de-top-btn{border:1px solid #53707c;color:#fff;background:transparent;border-radius:9px;min-width:38px;height:37px}.de-top-btn:hover{background:#254c5c}.de-breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:10px clamp(18px,4vw,52px);font-size:12px;background:var(--paper);border-bottom:1px solid var(--line);color:var(--muted)}.de-breadcrumb strong{color:var(--ink);font-weight:600}
+.de-shell{display:grid;grid-template-columns:284px minmax(0,1fr);max-width:1540px;margin:auto;min-height:calc(100vh - 114px)}.de-sidebar{height:calc(100vh - 112px);position:sticky;top:0;background:var(--paper);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;z-index:5}.de-side-top{padding:22px 20px 16px;border-bottom:1px solid var(--line)}.de-course-label{font-size:10px;font-weight:800;letter-spacing:.18em;color:var(--green)}.de-side-top h2{margin:6px 0 0;font-size:25px;letter-spacing:-.04em}.de-side-top p{font-size:13px;color:var(--muted);margin:0 0 17px}.de-progress-bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.de-progress-bar span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--green),var(--orange));transition:width .25s}.de-progress-text{font-size:12px;color:var(--muted);margin:7px 0 16px}.de-search-label{display:block;font-size:11px;font-weight:700;margin:5px 0}.de-side-top input{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 11px;border-radius:9px;font-size:13px}.de-sidenav{overflow:auto;padding:10px 9px;flex:1}.de-nav-item{display:flex;gap:10px;align-items:center;width:100%;border:none;border-radius:10px;background:transparent;color:var(--muted);padding:10px 10px;text-align:left;line-height:1.35;font-size:12.5px;margin:2px 0;min-height:44px}.de-nav-item:hover{background:var(--soft);color:var(--ink)}.de-nav-item.active{background:var(--soft);color:var(--green);font-weight:750;border-left:3px solid var(--green)}.de-nav-index{font-size:10px;font-weight:800;opacity:.65;min-width:22px}.de-done-mark{color:var(--green);margin-left:auto}.de-side-bottom{padding:14px 17px;border-top:1px solid var(--line);font-size:12px}
+.de-main{padding:0 clamp(17px,3.5vw,54px);min-width:0}.de-content-top{max-width:990px;margin:auto;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:26px 0 16px;color:var(--muted);font-size:11px;letter-spacing:.12em;font-weight:750}.de-menu{display:none;padding:7px 11px;border-radius:8px;background:var(--paper);border:1px solid var(--line);color:var(--ink)}.de-study-panel{max-width:990px;margin:auto;background:var(--paper);box-shadow:var(--shadow);border:1px solid var(--line);border-radius:17px;min-height:66vh;padding:clamp(22px,4.4vw,57px)}.de-kicker{font-weight:800;font-size:11px;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:9px}.de-lesson h1{font-size:clamp(27px,3.1vw,39px);line-height:1.18;letter-spacing:-.035em;margin:0 0 27px}.de-content{font-size:var(--lesson-font);line-height:1.8}.de-content>p:first-child{font-size:1.04em}.de-content h2{font-size:1.35em;line-height:1.3}.de-content h3{font-size:1.1em;margin:30px 0 12px;letter-spacing:-.015em}.de-content ul{padding-left:22px}.de-content li{margin:7px 0}.de-content code{font-size:.89em;background:var(--soft);padding:2px 4px;border-radius:4px}.de-content table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.83em;min-width:520px}.de-content table th{background:#126d59;color:#fff;font-weight:700;text-align:left}.de-content table td,.de-content table th{padding:11px 13px;border:1px solid var(--line);vertical-align:top}.de-content table tbody tr:nth-child(even){background:var(--soft)}.de-table-wrap{overflow:auto}.de-content:has(>table){overflow-wrap:anywhere}.de-content>table{display:block;overflow-x:auto}.de-hero{background:linear-gradient(115deg,#142d42,#17615a);border-radius:18px;padding:clamp(22px,5vw,42px);color:#fff}.de-hero h2{font-size:clamp(24px,3vw,35px);max-width:660px;line-height:1.18;letter-spacing:-.03em;margin:12px 0 14px}.de-hero p{color:#e4f6f2}.de-pill{border:1px solid #8dcfc4;border-radius:99px;padding:6px 11px;font-size:11px;letter-spacing:.05em}.de-hero-stats{display:flex;gap:15px;flex-wrap:wrap;margin-top:20px}.de-hero-stats span{border:1px solid #7199a4;background:#20485b;border-radius:9px;font-size:12px;padding:10px 15px}.de-hero-stats strong{color:#ffad62;font-size:23px;margin-right:5px}.de-two,.de-three{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}.de-three{grid-template-columns:repeat(3,minmax(0,1fr))}.de-panel,.de-three article{padding:17px;background:var(--soft);border:1px solid var(--line);border-radius:12px}.de-panel h3{margin:0 0 8px;font-size:1em}.de-panel p,.de-three p{font-size:.9em;margin:9px 0}.de-three b{color:var(--green)}.de-note{padding:15px 18px;border-left:4px solid var(--orange);background:color-mix(in srgb,var(--orange) 9%,var(--paper));border-radius:0 9px 9px 0;font-size:.9em;margin:22px 0}.de-equation{font-size:1.15em;font-weight:750;color:var(--green)}
+.de-demo{background:var(--soft);border:1px solid var(--line);padding:clamp(16px,3vw,24px);border-radius:14px;margin:24px 0}.de-demo-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}.de-demo-head strong{color:var(--ink);font-size:1em}.de-demo-head span{font-size:.68em;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--green)}.de-controls{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px}.de-controls label{display:flex;flex-direction:column;gap:8px;min-width:160px;flex:1;font-weight:750;font-size:.78em;color:var(--ink)}.de-controls output{color:var(--green);font-weight:800}.de-controls input[type=range]{width:100%;accent-color:#159877}.de-controls select,.de-controls input:not([type=range]){border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px}.de-demo svg{max-width:100%;display:block}.de-result{color:var(--green);font-size:.88em;font-weight:650;margin:10px 0 0}.de-control-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.de-button{border:1px solid transparent;background:#10785e;color:#fff;padding:10px 15px;border-radius:9px;font-size:.77em;font-weight:780;transition:transform .1s}.de-button:hover{transform:translateY(-1px);background:#0c5d4c}.de-button.alt{background:var(--paper);border-color:var(--line);color:var(--ink)}.de-button.alt:hover{background:var(--soft)}.de-bit-flow,.de-block-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0}.de-bit-flow>span,.de-block-flow>span{border:1px solid var(--line);border-radius:12px;padding:12px 15px;background:var(--paper);text-align:center;font-size:.85em}.de-bit-flow b{font-size:1.6em;color:var(--green);padding:0 4px}.de-block-flow b{color:var(--orange)}.de-bit-flow .de-chip{background:#17645a;color:white;border-color:#17645a;font-weight:800}.de-voltage{display:flex;overflow:hidden;border:1px solid var(--line);border-radius:9px;max-width:680px;text-align:center;color:#172d3c;font-weight:760;font-size:.67em}.de-voltage>div{padding:12px 6px}.de-low{width:16%;background:#91d6d6}.de-mid{width:24%;background:#ffe1b4}.de-high{width:60%;background:#b1dfb9}.de-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px;margin:16px 0}.de-metric{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:5px;font-size:.67em;color:var(--muted)}.de-metric strong{font-size:1.55em;color:var(--ink)}.de-diagram-box{margin:20px 0;overflow-x:auto}.de-diagram-box svg{min-width:420px;max-width:100%;width:100%;color:var(--green)}.de-svg-boxes rect{fill:var(--soft);stroke:var(--green);stroke-width:2}.de-svg-lines path{fill:none;stroke:var(--orange);stroke-width:2.4}.de-svg-text text{font-size:14px;fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-weight:650}.de-caption{font-size:.74em;color:var(--muted)}.de-switch-row{display:flex;flex-wrap:wrap;gap:9px}.de-switch-row button{padding:7px 10px}.de-register{display:flex;justify-content:center;gap:9px;margin:20px 0}.de-register span,.de-tx-bit{display:inline-flex;align-items:center;justify-content:center;width:45px;height:45px;border:2px solid var(--green);border-radius:10px;background:var(--paper);color:var(--ink);font-family:ui-monospace,monospace;font-weight:800}.de-tx-lines{margin:15px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.de-tx-lines strong{min-width:82px;font-size:.75em}.de-tx-lines .de-tx-bit{width:35px;height:35px;font-size:.75em}.de-tx-line{border-top:3px solid var(--teal);width:35px}.de-reveal{margin:22px 0;border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--paper);font-size:.9em}.de-reveal summary{font-weight:760;color:var(--green);cursor:pointer}.de-reveal p{margin-bottom:0}.de-code-panel{margin:0 0 20px;border:1px solid var(--line);border-radius:0 10px 10px 10px;overflow:hidden}.de-tabs{display:flex;gap:3px;margin-top:20px}.de-code-tab{padding:10px 17px;background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:8px 8px 0 0;font-weight:750;font-size:.75em}.de-code-tab.active{background:#173a4c;color:white}.de-code-head{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#12313f;color:#e8f9fa;font-size:.75em;padding:10px 15px}.de-copy{border:1px solid #76979a;background:transparent;color:white;border-radius:8px;padding:4px 11px;font-size:11px}.de-code-panel pre{white-space:pre;overflow:auto;background:#122431;color:#d7f6e6;margin:0;padding:18px;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.de-code-panel code{background:none;padding:0;color:inherit}.de-quiz-head{display:flex;justify-content:space-between;font-size:.76em;color:var(--muted);font-weight:780}.de-question{background:var(--paper);padding:16px;margin:14px 0;border-radius:10px;border:1px solid var(--line)}.de-question h3{margin:0 0 10px;font-size:.89em;line-height:1.4}.de-question label{display:flex;align-items:flex-start;gap:9px;padding:6px;cursor:pointer;font-size:.78em;font-weight:500}.de-question input{accent-color:#0d886b;margin-top:7px}.de-feedback{padding:9px;border-radius:9px;margin-top:8px;font-size:.75em}.de-feedback.right{background:#d6f5e7;color:#14553a}.de-feedback.wrong{background:#ffe8d8;color:#85411c}.de-lesson-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;border-top:1px solid var(--line);margin:45px 0 0;padding-top:24px}.de-footer{max-width:990px;margin:25px auto;padding-bottom:22px;text-align:center;color:var(--muted);font-size:11px}
+@media(max-width:1080px){.de-shell{grid-template-columns:256px minmax(0,1fr)}.de-study-panel{padding:30px}.de-three{grid-template-columns:1fr}.de-two{grid-template-columns:1fr}}@media(max-width:780px){.de-topbar{padding:9px 16px}.de-head-links{gap:4px}.de-head-links a{display:none}.de-breadcrumb{padding:10px 15px;gap:6px}.de-breadcrumb strong{font-size:11px}.de-shell{display:block}.de-sidebar{position:fixed;top:0;left:0;bottom:0;height:100dvh;width:min(330px,88vw);transform:translateX(-105%);box-shadow:var(--shadow);transition:transform .25s;z-index:20}.de-sidebar.show{transform:translateX(0)}.de-sidebar-overlay{position:fixed;inset:0;background:#0009;z-index:19}.de-sidebar-overlay:not([hidden]){display:block}.de-menu{display:inline-flex}.de-main{padding:0 12px}.de-content-top{padding:13px 3px}.de-route{display:none}.de-study-panel{padding:24px 17px;border-radius:12px}.de-lesson h1{font-size:27px}.de-lesson-actions{justify-content:center}.de-content table{min-width:470px}.de-content>table{max-width:100%}.de-demo{padding:13px}.de-controls{flex-direction:column}.de-controls label{min-width:0}.de-hero-stats span{flex:1}.de-bit-flow>span{padding:7px 9px}.de-block-flow{gap:6px}.de-block-flow>span{padding:6px 8px}.de-hero{padding:20px}.de-hero h2{font-size:24px}}@media(max-width:390px){.de-top-btn{min-width:30px;height:32px}.de-brand b{font-size:17px}.de-brand img{height:36px;width:36px}.de-content{font-size:16px}.de-study-panel{padding:19px 13px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+.de-visual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.de-visual-grid-wide{grid-template-columns:minmax(0,1.35fr) minmax(0,.95fr)}.de-figure-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}.de-mini-title{margin:0 0 10px;font-size:.95em;color:var(--ink)}.de-symbol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}.de-symbol-card{border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--soft);display:flex;flex-direction:column;align-items:center;gap:6px}.de-symbol-card svg{width:100%;height:72px}.de-symbol-card span{font-size:.75em;font-weight:700;color:var(--ink)}.de-dff-row-active{background:color-mix(in srgb,var(--orange) 16%,var(--paper))!important;font-weight:800}.de-io-on{fill:#148f7b!important;color:#148f7b!important}.de-io-off{fill:#dce8e4!important;color:#728590!important}.de-svg-label{font-size:16px;fill:var(--ink);font-weight:700}.de-svg-small{font-size:12px;fill:var(--muted);font-weight:600}.de-svg-wire{stroke:#137f6c;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.de-svg-outline{stroke:#152a3c;stroke-width:3.2;fill:var(--paper);stroke-linecap:round;stroke-linejoin:round}.de-svg-fill-soft{fill:var(--soft);stroke:var(--line);stroke-width:1.6}.de-svg-accent{fill:#ecf7f0;stroke:#137f6c;stroke-width:2}.de-svg-active{stroke:#e87918!important;fill:#fff7ec!important}.de-svg-active-fill{fill:#e87918!important;color:#e87918!important}.de-svg-dot{stroke:#152a3c;stroke-width:2;fill:var(--paper)}
+@media(max-width:780px){.de-visual-grid,.de-visual-grid-wide{grid-template-columns:1fr}.de-symbol-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}/* v37.0.63 – pin-connected circuits & accessible lesson layouts */
+.de-figure-full{margin:15px 0 20px;overflow-x:auto;overflow-y:hidden}
+.de-figure-full svg{width:100%;height:auto;display:block}
+.de-figure-card{overflow-x:auto}
+.de-figure-card table{min-width:0;width:100%;font-size:.78em;margin:8px 0}
+.de-figure-card table th,.de-figure-card table td{padding:9px 10px;white-space:nowrap;text-align:center}
+.de-svg-wire{stroke:#137f6c;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.de-svg-active{stroke:#de7b21!important}
+.de-svg-outline{stroke:var(--ink);fill:var(--paper);stroke-width:3.5;stroke-linejoin:round}
+.de-svg-pin{stroke:var(--ink);fill:none;stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round}
+.de-svg-fill-soft{fill:var(--soft);stroke:var(--line);stroke-width:1.6}
+.de-svg-label{fill:var(--ink);font-size:19px;font-weight:700}
+.de-svg-title{fill:var(--ink);font-size:23px;font-weight:850}
+.de-svg-small{fill:var(--muted);font-size:15px;font-weight:600}
+.de-io-on{fill:#148c77;stroke:#148c77;stroke-width:2}
+.de-io-off{fill:#dae8e3;stroke:#c4d7d1;stroke-width:2}
+.de-value-label{font-size:20px;font-weight:900;fill:var(--ink)}
+.de-svg-wave-data{stroke:#d77419;stroke-width:4.5;fill:none;stroke-linejoin:round}
+.de-svg-wave-clock{stroke:#087c68;stroke-width:2.8;fill:none;stroke-linejoin:round}
+.de-svg-guideline{stroke:var(--line);stroke-width:1;stroke-dasharray:4 7}
+.de-symbol-wire{fill:none;stroke:#137f6c;stroke-width:2.8;stroke-linecap:round}
+.de-symbol-body{stroke:var(--ink);fill:var(--paper);stroke-width:2.6}
+.de-symbol-pin{stroke:var(--ink);fill:none;stroke-width:2.3}
+.de-data-recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:15px}
+.de-data-recap .de-metric strong{font-size:1.07em;overflow-wrap:anywhere}
+@media(max-width:780px){.de-figure-full svg{min-width:580px}.de-figure-card table{font-size:12px}.de-figure-card table td,.de-figure-card table th{padding:7px 5px}.de-figure-card{padding:10px}}
+
+.de-native-illustration{margin:1rem 0 1.75rem;border-radius:15px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}.de-native-illustration img{display:block;width:100%;height:auto;object-fit:contain}.de-native-illustration figcaption{padding:7px 15px;font-size:.76rem;color:var(--muted);background:var(--soft)}.de-demo>svg,.de-figure-card>svg{display:block;width:100%;height:auto;min-height:180px}.de-figure-card>svg{min-height:0}.de-demo svg text{paint-order:stroke fill}
+
+/* v37.0.65: uploaded course illustrations, responsive without canvas or JavaScript */
+.de-architecture-illustration{max-width:880px;margin-inline:auto}.de-schematic-illustration{width:100%;max-width:1142px;margin-inline:auto}.de-native-illustration img{max-width:100%;height:auto;display:block}.de-architecture-illustration img{max-width:862px;margin:auto;background:white}
+
+
+/* Unit 01 — selected illustrations, selectable learning notes, interactive block diagrams */
+.de-unit-graphic{margin:20px 0 14px}.de-unit-graphic img{display:block;width:100%;height:auto;object-fit:contain;max-height:none}.de-selectable-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:18px 0}.de-selectable-notes article{border:1px solid var(--line);border-radius:12px;padding:17px 18px;background:var(--soft)}.de-selectable-notes h3{margin:0 0 10px;font-size:.95em;color:var(--green)}.de-selectable-notes p{font-size:.83em;line-height:1.65;margin:8px 0}.de-level-notes{grid-template-columns:repeat(3,minmax(0,1fr))}.de-inline-lab,.de-activity,.de-architecture-interactive{padding:18px;border:1px solid var(--line);border-radius:13px;margin:20px 0;background:var(--soft)}.de-inline-lab>p{font-size:.86em}.de-detail-panel{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.9em;line-height:1.65}.de-detail-panel h3{margin:0 0 8px!important}.de-detail-panel p{margin:7px 0}.de-level-btn[aria-pressed=true]{border-color:var(--green);background:var(--green);color:var(--paper)}.de-op-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:15px 0}.de-op-tab{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:10px 6px;font-weight:750;font-size:.75em}.de-op-tab[aria-pressed=true]{background:#155f54;color:white;border-color:#155f54}.de-activity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.de-activity-grid .de-figure-card{overflow:hidden}.de-live-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.de-live-results>div{background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:9px 11px;min-width:0}.de-live-results small{display:block;color:var(--muted);font-size:.77em}.de-live-results strong{overflow-wrap:anywhere;font-size:.88em;color:var(--ink)}.de-binary-strip{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0}.de-binary-strip span{font:700 .95em ui-monospace,monospace;background:var(--soft);border:1px solid var(--line);padding:5px 9px;border-radius:6px}.de-step-list{padding-left:20px;font-size:.86em}.de-step-list li{margin:7px 0}.de-hotspot-canvas{position:relative;width:100%;aspect-ratio:862/640;max-width:862px;margin:auto}.de-hotspot-canvas img{display:block;width:100%;height:100%;object-fit:contain}.de-hotspot{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);background:transparent;border:2px solid transparent;border-radius:10px;color:transparent;z-index:2;cursor:pointer;transition:background .14s,border-color .14s}.de-hotspot span{position:absolute;top:2px;right:2px;font-size:10px;font-weight:800;background:#0b6657;color:white;padding:2px 5px;border-radius:5px;opacity:0;pointer-events:none}.de-hotspot:hover,.de-hotspot:focus-visible,.de-hotspot[aria-pressed=true]{border-color:#e87918;background:rgba(251,191,90,.13)}.de-hotspot:hover span,.de-hotspot:focus-visible span,.de-hotspot[aria-pressed=true] span{opacity:1}.de-hotspot-chips{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}.de-hotspot-chips button{background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:7px 12px;font-size:.74em;font-weight:700}.de-hotspot-chips button[aria-pressed=true]{background:var(--green);color:var(--paper);border-color:var(--green)}.de-architecture-interactive .de-native-illustration{padding:8px}.de-architecture-interactive .de-native-table{overflow-x:auto}.de-architecture-interactive .de-native-table table{min-width:0}.de-architecture-interactive .de-detail-panel{min-height:135px}
+@media(max-width:850px){.de-level-notes{grid-template-columns:1fr}.de-op-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.de-selectable-notes,.de-activity-grid{grid-template-columns:1fr}.de-op-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.de-inline-lab,.de-activity,.de-architecture-interactive{padding:12px}.de-hotspot span{font-size:8px;padding:0 3px}.de-hotspot-chips{gap:5px}.de-hotspot-chips button{padding:6px 9px;font-size:11px}}/* v37.0.67: native selectable instructional figures, no raster lesson diagrams */
+.de-native-graph,.de-native-twocol,.de-native-levels,.de-storage-native,.de-computer-diagram{margin:22px 0}
+.de-native-graph{padding:17px;background:var(--soft);border:1px solid var(--line);border-radius:16px}
+.de-hybrid-grid{display:grid;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr) 20px minmax(0,1fr) 20px minmax(0,1fr) 20px minmax(0,1fr);align-items:stretch;gap:4px}
+.de-hybrid-node{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;min-width:0;min-height:110px;padding:11px 6px;border:1px solid var(--line);border-radius:12px;background:var(--paper);text-align:center;color:var(--ink)}
+.de-hybrid-node strong{font-size:.86em;line-height:1.2}.de-hybrid-node small{font-size:.63em;color:var(--muted)}.de-emoji{font-size:1.7em;color:var(--green)}.de-native-arrow{align-self:center;text-align:center;color:var(--orange);font-weight:900;font-size:1.3em}
+.de-native-twocol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.de-signal-figure{min-width:0;padding:18px;background:var(--paper);border:1px solid var(--line);border-radius:15px}
+.de-signal-title{display:flex;align-items:center;gap:10px;background:#147257;color:#fff;border-radius:10px;padding:9px 12px;font-size:.86em}.de-figure-count{background:#ebfff2;color:#126448;border-radius:99px;display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;flex:none;font-weight:800}
+.de-signal-figure p{font-size:.81em;line-height:1.6;margin:12px 0}.de-inline-svg{width:100%;height:auto;min-width:0;display:block;color:var(--ink);overflow:visible;user-select:text}
+.de-graph-wave{stroke:#098566;stroke-width:3.5;fill:none;stroke-linejoin:round}.de-graph-path{stroke:var(--ink);stroke-width:2.7;fill:none;stroke-linejoin:round;stroke-linecap:round}.de-graph-output{stroke:#0b756a;stroke-width:4;fill:none;stroke-linejoin:round}.de-graph-accent{stroke:var(--orange);stroke-width:3.5;fill:none}.de-graph-dashed{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}.de-graph-block{stroke:var(--green);stroke-width:2.2;fill:var(--soft)}.de-svg-native-text{font-family:system-ui,sans-serif;font-size:13px;fill:var(--ink);font-weight:700;user-select:text}
+.de-handshake-diagram{display:grid;grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);gap:8px;align-items:center;margin:27px 0 35px}.de-handshake-box{padding:13px 7px;min-height:105px;text-align:center;border:2px solid #239c86;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--soft)}.de-handshake-box strong{font-size:.72em}.de-handshake-box small{font-size:.65em;color:var(--muted)}.de-handshake-signals{display:flex;flex-direction:column;gap:9px;text-align:center;font-weight:800;color:var(--green);font-size:.75em}
+.de-native-levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.de-native-stage{border-radius:14px;border:1px solid var(--line);background:var(--paper);min-width:0;padding:15px}.de-native-stage header{border-radius:8px;background:#17856d;color:white;font-size:.83em;font-weight:800;padding:8px 10px}.de-stage-logic header{background:#236aab}.de-stage-circuit header{background:#ca771f}.de-native-stage p{font-size:.77em;line-height:1.5}.de-stage-flow{display:flex;gap:5px;align-items:center;justify-content:center;margin:22px 0;flex-wrap:wrap}.de-stage-flow span{border:1px solid #a5d7c7;background:var(--soft);border-radius:9px;padding:9px 8px;font-weight:700;text-align:center;font-size:.76em;max-width:100%}.de-stage-flow b{color:var(--orange)}.de-stage-flow .de-stage-center{border-color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--paper))}.de-stage-flow small{font-size:.7em}.de-native-acc-flow{border:1px solid var(--line);border-radius:14px;padding:16px;margin:18px 0;background:var(--soft);text-align:center}.de-native-acc-flow>p{font-size:.78em}
+.de-storage-native{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.de-storage-card{min-width:0;display:flex;flex-direction:column;background:var(--paper);padding:15px;border:1px solid var(--line);border-radius:14px}.de-storage-card h3{font-size:.95em;margin:0 0 8px!important;color:var(--ink)}.de-storage-card>p{font-size:.76em;line-height:1.6;margin:0 0 10px}.de-storage-card .de-caption{font-size:.73em;line-height:1.5;margin-top:auto}.de-shift-rail{display:flex;gap:4px;align-items:center;justify-content:center;flex-wrap:wrap;margin:22px 0}.de-input-label{font-size:.67em;font-weight:750}.de-shift-rail>span[aria-hidden]{color:var(--green);font-weight:800}.de-shift-cell{border:1.5px solid var(--green);border-radius:8px;display:flex;align-items:center;flex-direction:column;min-width:39px;padding:4px 3px;font-size:.75em;color:var(--ink)}.de-shift-cell strong{font-family:ui-monospace,monospace;font-size:1.35em}.de-native-clock{font-weight:750;text-align:center;font-size:.78em;color:var(--green);border-top:1px dotted var(--muted);padding-top:7px}.de-counter-cycle{display:flex;align-items:center;flex-wrap:wrap;gap:5px;justify-content:center;margin:24px 0 16px}.de-counter-cycle>span{font-weight:800;color:var(--green)}.de-state-cell{border:1.5px solid var(--green);border-radius:9px;background:var(--paper);color:var(--ink);padding:6px 5px;min-width:40px;font-weight:800;font-size:.78em;display:flex;align-items:center;flex-direction:column}.de-state-cell small{font-size:.83em;font-weight:500}.de-state-cell[aria-pressed=true]{background:#11785b;color:#fff}.de-storage-card svg{margin:10px 0}
+.de-video-module{margin:20px 0 26px;border:1px solid var(--line);border-radius:15px;background:var(--paper);padding:16px}.de-video-module h3{margin:0 0 14px}.de-video-module video{width:100%;height:auto;aspect-ratio:16/9;background:#101820;border-radius:10px;display:block}.de-video-module .de-caption{margin:11px 0 0}
+.de-computer-diagram{border:1px solid var(--line);background:var(--paper);padding:15px;border-radius:15px}
+.de-computer-diagram .de-hotspot{position:static;left:auto;top:auto;width:auto;height:auto;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--ink);border:2px solid #64b99f;background:var(--soft);border-radius:10px;padding:10px;min-height:65px;font-weight:800;line-height:1.25;cursor:pointer}
+.de-computer-diagram .de-hotspot small{font-size:.7em;font-weight:500;color:var(--muted)}.de-computer-diagram .de-hotspot:hover,.de-computer-diagram .de-hotspot:focus-visible,.de-computer-diagram .de-hotspot[aria-pressed=true]{color:var(--ink);background:color-mix(in srgb,var(--orange) 15%,var(--paper));border-color:var(--orange)}
+.de-bus-row{display:flex;align-items:center;justify-content:center;gap:20px}.de-bus-row .de-native-part{width:26%;min-width:160px}.de-bus-row>span{color:var(--orange);font-size:2em}.de-bus-lines{display:grid;grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0 12px}.de-computer-diagram .de-bus{border:none;min-height:37px;padding:6px 12px;border-radius:7px;color:#143047}.de-computer-diagram .de-address{background:#fce4a1}.de-computer-diagram .de-data{background:#ade1fa}.de-computer-diagram .de-control{background:#f3afbd}.de-bus-lines .de-bus:hover,.de-bus-lines .de-bus[aria-pressed=true]{background:#ffca73;color:#203040}
+.de-device-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.de-peripheral-grid{margin-top:12px}.de-memory-brace{font-size:.72em;border:1px dashed var(--line);padding:10px;display:flex;align-items:center;justify-content:center;text-align:center}.de-device-grid .de-native-part{min-height:78px}
+@media(max-width:1100px){.de-storage-native,.de-native-levels{grid-template-columns:1fr}.de-signal-figure svg{max-height:230px}.de-storage-card{min-height:0}}
+@media(max-width:680px){.de-native-twocol{grid-template-columns:1fr}.de-hybrid-grid{grid-template-columns:1fr}.de-native-arrow{transform:rotate(90deg);font-size:1.15em;line-height:1}.de-hybrid-node{min-height:76px}.de-stage-flow{margin:12px 0}.de-bus-row{gap:7px}.de-bus-row .de-native-part{min-width:0;width:44%;font-size:.85em}.de-device-grid{gap:6px}.de-computer-diagram{padding:7px}.de-computer-diagram .de-hotspot{font-size:.75em;min-height:64px;padding:8px 4px}.de-device-grid .de-native-part{min-height:70px}.de-computer-diagram .de-hotspot small{font-size:.65em}.de-counter-cycle{gap:3px}.de-state-cell{min-width:42px}}
+
+/* v37.0.68: scoped circuit-timing corrections and standalone system/logic/circuit lessons */
+.de-timing-revised .de-revised-svg-wrap{overflow:auto;max-width:100%;margin:15px 0 10px;border-radius:12px;background:var(--soft);border:1px solid var(--line);padding:9px}
+.de-timing-revised .de-revised-svg-wrap svg{display:block;width:100%;min-width:440px;height:auto;max-height:none;overflow:visible;user-select:text}
+.de-timing-revised .de-signal-figure{min-width:0}
+.de-design-detail{border:1px solid var(--line);background:var(--paper);border-radius:15px;padding:clamp(12px,2vw,20px);margin:20px 0}
+.de-design-detail h3{margin:0 0 10px!important;font-size:1.02em}
+.de-design-scroll{max-width:100%;overflow-x:auto;background:var(--soft);border-radius:11px;border:1px solid var(--line)}
+.de-design-svg{width:100%;height:auto;min-width:590px;max-height:none;display:block;user-select:text}
+.de-design-wire{stroke:#137c6c;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.de-design-return{stroke:#54849b;stroke-width:1.3;stroke-dasharray:5 5}
+.de-design-block{fill:var(--paper);stroke:var(--green);stroke-width:2.7}
+.de-design-memory,.de-design-reg{fill:var(--paper);stroke:#247cb8;stroke-width:2.7}
+.de-design-text{fill:var(--ink);font-size:19px;font-weight:600;user-select:text}
+.de-design-strong{font-size:23px;font-weight:800}
+.de-design-caption-box{fill:var(--paper);stroke:var(--line);stroke-width:1.8}
+.de-design-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+.de-design-details article{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.de-design-details h3{margin:0 0 10px!important;font-size:1.04em}
+.de-design-details p{font-size:.9em;line-height:1.65;margin:0}
+@media(max-width:720px){.de-design-details{grid-template-columns:1fr}.de-design-svg{min-width:570px}.de-timing-revised .de-revised-svg-wrap svg{min-width:480px}}
+/* Keep both corrected timing diagrams fully readable instead of clipping a stage or signal at the card edge. */
+.de-native-twocol.de-timing-revised{grid-template-columns:minmax(0,1fr)}
+.de-timing-revised .de-revised-svg-wrap svg{min-width:0}
+@media(max-width:620px){.de-timing-revised .de-revised-svg-wrap svg{min-width:480px}}
+
+/* Unit 01 page 8: MOS source, insulated gate, drain and conductive state. */
+.de-cmos-controls{justify-content:space-between;margin:16px 0 12px}
+.de-cmos-live{display:flex;gap:10px;flex-wrap:wrap}
+.de-cmos-live span{display:flex;align-items:center;gap:12px;padding:8px 15px;background:var(--paper);border:1px solid var(--line);border-radius:9px;color:var(--ink);font-weight:700}
+.de-cmos-live strong{font-size:1.2em;color:var(--green)}
+.de-cmos-svg{min-width:580px}
+.de-cmos-svg .de-cmos-terminal{font-size:13px;fill:var(--muted);font-weight:600}
+.de-cmos-svg .de-cmos-status{font-size:18px;font-weight:800;fill:var(--green)}
+.de-cmos-table table{min-width:440px}
+.de-cmos-selected{background:color-mix(in srgb, var(--green) 15%, var(--paper))!important;outline:2px solid var(--green);outline-offset:-2px;font-weight:800}
+@media(max-width:740px){.de-cmos-svg{min-width:540px}.de-cmos-controls{align-items:flex-start}}
+
+/* Unit 01 voltage inputs: geometrically scaled voltage bands and distinct 0.8/2.0-V boundaries. */
+.de-voltage-guide{max-width:100%;margin:30px 0 10px;padding:0 4px;color:var(--ink)}
+.de-voltage-track{height:104px;display:flex;position:relative;border:1px solid var(--line);border-radius:12px;overflow:visible;isolation:isolate}
+.de-voltage-track>div:not(.de-voltage-marker){min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:9px 3px;gap:6px;text-align:center;color:#142d3e}
+.de-voltage-track strong{font-size:clamp(10px,1.5vw,16px);line-height:1.2;overflow-wrap:anywhere}
+.de-voltage-track span:not(#v-marker-label){font-size:clamp(10px,1.3vw,13px);font-weight:600;line-height:1.15}
+.de-voltage-low{width:16%;background:#9cdbda;border-radius:12px 0 0 12px}
+.de-voltage-mid{width:24%;background:#ffe1b2;border-left:3px solid #be7928;border-right:3px solid #be7928}
+.de-voltage-high{width:60%;background:#b7dfbe;border-radius:0 12px 12px 0}
+.de-voltage-marker{pointer-events:none;position:absolute;top:-11px;bottom:-10px;width:0;border-left:3px solid #19416c;z-index:3;filter:drop-shadow(0 1px 1px #fff8)}
+.de-voltage-marker:before{content:'';position:absolute;left:-7px;top:-8px;border-left:5.5px solid transparent;border-right:5.5px solid transparent;border-top:9px solid #19416c}
+.de-voltage-marker #v-marker-label{position:absolute;left:0;top:-35px;transform:translateX(-50%);padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:var(--paper);font-size:12px;font-weight:800;color:var(--ink);white-space:nowrap}
+.de-voltage-ticks{height:30px;position:relative;font-size:12px;font-weight:700;color:var(--ink)}
+.de-voltage-ticks span{position:absolute;top:7px;transform:translateX(-50%);white-space:nowrap}
+.de-voltage-ticks span:first-child{transform:none}.de-voltage-ticks span:last-child{transform:translateX(-100%)}
+.de-voltage-presets{margin:18px 0 10px}
+@media(max-width:560px){.de-voltage-track{height:110px}.de-voltage-track strong{font-size:9px}.de-voltage-track span:not(#v-marker-label){font-size:9px}.de-voltage-marker #v-marker-label{font-size:10px}.de-voltage-ticks{font-size:10px}.de-voltage-presets .de-button{font-size:11px;padding:7px}}
+
+/* Keep the live voltage cursor clear of signal-band labels. */
+.de-voltage-track .de-voltage-marker{top:calc(100% - 23px);bottom:-9px}
+.de-voltage-track .de-voltage-marker:before{top:-9px;border-top:0;border-bottom:9px solid #19416c}
+.de-voltage-track .de-voltage-marker #v-marker-label{display:none}
+.de-voltage-mid .de-mid-short{display:none}
+@media(max-width:560px){.de-voltage-mid .de-mid-long{display:none}.de-voltage-mid .de-mid-short{display:block}}
+
+/* MUX control labels sit inside the trapezoid, immediately above the physical pin entrances. */
+.de-svg-pinlabel{font-size:17px;font-weight:800;fill:var(--ink);paint-order:stroke fill;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}
+
+/* Shared Unit 01 / Unit 02 selector in the Digital Electronics header. */
+.de-unit-switch{display:inline-flex;align-items:center;position:relative;gap:8px;min-width:0;color:#e3f5f2;font-size:12px;font-weight:740;letter-spacing:.01em;line-height:1.3}
+.de-unit-switch>span:first-child{white-space:nowrap}
+.de-unit-switch select{appearance:none;-webkit-appearance:none;min-width:0;width:clamp(160px,23vw,310px);max-width:310px;background:#1d4151;color:#f6fdfb;border:1px solid #6c909a;border-radius:11px;padding:10px 29px 10px 11px;font-size:12.5px;font-weight:700;cursor:pointer;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+.de-unit-switch select:focus-visible{outline:3px solid #ffa32d;outline-offset:2px}
+.de-unit-switch select option{color:#142d3a;background:#fff}
+.de-unit-caret{position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:18px;color:#def9f2}
+.de-head-links{min-width:0}
+@media(max-width:900px){.de-topbar{flex-wrap:wrap}.de-head-links{width:100%;justify-content:space-between;gap:8px}.de-unit-switch{flex:1}.de-unit-switch select{width:100%;max-width:none}}
+@media(max-width:420px){.de-head-links{gap:5px}.de-unit-switch{gap:5px}.de-unit-switch>span:first-child{font-size:11px}.de-unit-switch select{font-size:11px;padding:8px 22px 8px 8px}.de-unit-caret{right:6px}.de-top-btn{flex-shrink:0}}
+
+</style><style data-bundled-from="digital-electronics-unit04.css">
+/* ASIC-Skill Unit 04. Native, selectable circuit diagrams and readable code. */
+.u4-overview-hero{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;border:1px solid #b8d7d2;background:linear-gradient(125deg,#edf9f5,#fff9ee);padding:24px;border-radius:18px;margin:16px 0 28px;color:#163145}.u4-overview-hero strong{color:#0b7a60;font-size:.72em;letter-spacing:.12em}.u4-overview-hero h2{margin:10px 0 6px;font-size:1.7em}.u4-overview-hero p{margin:5px 0;font-size:.9em}.u4-hero-gates{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-items:center}.u4-hero-gates span{text-align:center;border:2px solid #1e9376;border-radius:35px 9px 35px 9px;background:white;padding:20px 5px;font-weight:800;color:#0d7861;font-size:.85em}
+.u4-workbench{background:var(--soft);border:1px solid var(--line);border-radius:15px;padding:clamp(14px,2vw,23px);margin:22px 0;min-width:0}.u4-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px;margin-bottom:15px}.u4-head strong{font-size:1em;color:var(--ink)}.u4-head span{font-size:.7em;color:var(--green);font-weight:700}.u4-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;margin:12px 0}.u4-fields label{display:flex;flex-direction:column;gap:7px;font-size:.8em;font-weight:750;color:var(--ink)}.u4-fields select,.u4-fields input{width:100%;min-width:0;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:1em}.u4-toggle-row{display:flex;gap:12px;flex-wrap:wrap;margin:17px 0}.u4-toggle-row button,.u4-inv-toggle,.u4-mini-switch button{background:var(--paper);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-weight:800;padding:10px 20px;cursor:pointer}.u4-toggle-row button[aria-pressed=true]{color:white;background:#0b7e68;border-color:#0b7e68}.u4-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:14px;margin-top:16px}.u4-diagram,.u4-table,.u4-wave-wrap{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px;min-width:0;overflow-x:auto}.u4-gate-svg{width:100%;height:auto;display:block;max-height:270px}.u4-eqn{text-align:center;font-weight:800;font-size:.9em;color:var(--green);min-height:24px}.u4-table table,.u4-scroll table{border-collapse:collapse;width:100%;font-size:.8em;color:var(--ink)}.u4-table td,.u4-table th,.u4-scroll td,.u4-scroll th{border:1px solid var(--line);padding:9px 8px;text-align:center;white-space:nowrap}.u4-table th,.u4-scroll th{background:#137760;color:white}.u4-table tr.current{background:rgba(237,133,42,.19);font-weight:800}.u4-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}.u4-cards>div{border:1px solid var(--line);background:var(--soft);border-radius:13px;padding:20px;min-width:0}.u4-cards strong{color:var(--green)}.u4-cards p{font-size:.84em}.u4-circuit-row{display:flex;align-items:center;gap:8px;font-size:.8em;margin:9px 0;flex-wrap:wrap}.u4-element{border:2px solid #0e7e68;background:var(--paper);padding:7px 10px;border-radius:7px}.u4-node{border-radius:100%;color:white;background:#0e7e68;padding:8px}.u4-mini-switch{padding:18px;background:var(--soft);border:1px solid var(--line);border-radius:12px;margin-top:14px}.u4-mini-state{padding:12px 0;font-size:.88em}.u4-wave-wrap{padding:16px}.u4-wave-svg{display:block;width:100%;min-width:530px;height:auto}.u4-wave-caption{font-size:.8em;color:var(--ink);margin:12px 0}.u4-pol-result,.u4-inv-state,.u4-universal-output,.u4-controlled-output,.u4-equal-result,.u4-inhibit-result{background:var(--paper);border:1px solid var(--line);padding:16px;border-radius:11px;margin-top:12px;color:var(--ink);font-size:.88em;line-height:1.65}.u4-inv-svg{width:100%;max-height:330px;display:block;background:var(--paper);border-radius:12px;margin-top:15px}.u4-hdl{margin:23px 0}.u4-tabs{display:flex;flex-wrap:wrap;gap:5px}.u4-tabs button{border:1px solid var(--line);border-radius:11px 11px 0 0;padding:9px 13px;background:var(--soft);color:var(--ink);font-weight:800}.u4-tabs button.active{background:#0a8068;color:#fff}.u4-code-host{border:1px solid var(--line);border-radius:0 12px 12px 12px;overflow:hidden;background:#102a39}.u4-code-head{display:flex;justify-content:space-between;gap:15px;padding:12px 16px;background:#183d51;color:#f0fbff;font-size:.85em}.u4-code-head button{background:#2a5870;color:white;border:1px solid #90afbe;border-radius:8px;padding:5px 10px}.de-content .u4-code-host pre{padding:20px!important;margin:0!important;background:#102a39!important;color:#edf9ee!important;overflow-x:auto!important;min-width:0!important;max-width:100%!important;white-space:pre!important;font-size:13px!important;line-height:1.65!important;border:0!important;border-radius:0!important}.de-content .u4-code-host pre code{background:transparent!important;color:#edf9ee!important;padding:0!important;font-family:ui-monospace,Consolas,monospace!important;letter-spacing:0!important;font-size:inherit!important;white-space:pre!important;display:inline!important}.u4-question{border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:17px;margin:13px 0}.u4-question legend{font-size:.88em;color:var(--ink);font-weight:800}.u4-question label{display:flex;align-items:center;gap:9px;font-size:.82em;line-height:1.55;margin:7px 0}.u4-feedback{font-size:.8em;border-left:4px solid #0b8a70;padding:8px 12px;background:var(--soft);margin-top:12px}.u4-actions{display:flex;gap:10px;flex-wrap:wrap}.u4-scroll{overflow-x:auto;margin:20px 0}.u4-pill{padding:6px 10px;border-radius:8px;background:#d8f3e7;color:#073e31;display:inline-block;font-weight:800}.u4-strong{font-weight:900;color:#0c8167}.de-lesson[hidden]{display:none!important}
+@media(max-width:760px){.u4-grid,.u4-cards,.u4-overview-hero{grid-template-columns:1fr}.u4-overview-hero{padding:18px}.u4-hero-gates span{padding:12px 5px}.u4-fields{grid-template-columns:1fr}.u4-gate-svg{min-width:0}.u4-table table{min-width:0}.de-content .u4-code-host pre{font-size:12px!important}}
+
+</style><style data-bundled-from="digital-electronics-consolidated.css">
+/* Course consolidation: multiple related micro-lessons within one navigable lesson. */
+.de-shell,.de-main,.de-content{min-width:0;max-width:100%}.de-shell{box-sizing:border-box}.de-sublesson{display:block;margin:2rem 0 0;padding:1.4rem 0 0;border-top:2px solid #d5e9e0;scroll-margin-top:6rem}
+.de-sublesson>h2{color:#142f47;font-size:clamp(1.3rem,2.5vw,1.85rem);line-height:1.25;margin:.65rem 0 1rem}
+.de-sublesson>.de-kicker{font-size:.72rem;letter-spacing:.07em;color:#0b7d66;font-weight:700}
+.de-sublesson>.de-content{max-width:100%}
+.de-sublesson .u16-lab,.de-sublesson .de-reveal{max-width:100%}
+.de-consolidation-note{background:#eff8f4;border:1px solid #c6e3d7;border-radius:12px;padding:10px 14px;margin:1rem 0 1.5rem;color:#0b6356;font-weight:600;font-size:.9rem}
+body.dark .de-sublesson>h2{color:#ecf7f5}
+body.dark .de-sublesson{border-top-color:#345850}
+body.dark .de-consolidation-note{background:#173d37;color:#e0f6ed}
+@media(max-width:680px){.de-sublesson{margin-top:1.4rem;padding-top:1.1rem}.de-sublesson>h2{font-size:1.25rem}}
+
+</style><script>(function(){"use strict";
+const aliases={"xor-pulses":"and-pulses","nand":"universal","and-hardware":"and","nor-apps":"nand-apps","xnor-inverter":"xnor","logic-design":"three-input","positive-negative":"intro","or-hardware":"or","xor-properties":"xor","universal-pulses":"and-pulses","nor":"nand-apps","rtl-inverter":"not","pulse-intro":"gate-symbols","xor-inverter":"xor"},topics={"intro":["intro","positive-negative"],"and":["and","and-hardware"],"or":["or","or-hardware"],"not":["not","rtl-inverter"],"universal":["universal","nand"],"nand-apps":["nand-apps","nor","nor-apps"],"xor":["xor","xor-inverter","xor-properties"],"xnor":["xnor","xnor-inverter"],"gate-symbols":["gate-symbols","pulse-intro"],"and-pulses":["and-pulses","universal-pulses","xor-pulses"],"three-input":["three-input","logic-design"]},key="asic-de-04-completed";
+const migrateHash=()=>{let old=decodeURIComponent(location.hash.slice(1));if(aliases[old])history.replaceState(null,'','#'+aliases[old]);};
+migrateHash();window.addEventListener('hashchange',migrateHash);
+try{let arr=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(arr)){
+let prior=new Set(arr),after=new Set(arr);
+for(const [parent,ids] of Object.entries(topics)){if(ids.length<2)continue;
+if(ids.every(id=>prior.has(id)))after.add(parent);else after.delete(parent);
+for(const child of ids.slice(1))after.delete(child);
+}
+localStorage.setItem(key,JSON.stringify([...after]));}}
+catch(e){}
+})();</script><style id="asic-consistent-table-layout-v37101">
+
+/* ASIC-Skill v37.1.01 — consistent content tables in Edit, Preview and exported HTML.
+   Intrinsic column sizing changes when a TD/TH becomes contenteditable, so
+   normal learning-material tables use fixed layout. Explicit editor column widths
+   (colgroup + data-asic-width-edited) always take precedence. */
+.de-content:has(> table) {
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+.de-content > table:not([data-asic-width-edited="1"]),
+.de-content > .de-table-wrap > table:not([data-asic-width-edited="1"]) {
+  table-layout: fixed;
+}
+/* Keep comparison tables readable instead of collapsing the label column.
+   Narrow viewports scroll within lesson content rather than splitting words. */
+.de-content > table:not([data-asic-width-edited="1"]) {
+  min-width: 760px;
+}
+.de-content > table:not([data-asic-width-edited="1"]):has(> thead > tr:first-child > th:nth-child(3):last-child)
+  > thead > tr:first-child > th:first-child {
+  width: 23%;
+}
+/* Editing browser UA styles must not change wrapping and therefore column widths. */
+.de-content table th,
+.de-content table td {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none;
+}
+</style>
+<style id="asic-v37107-shared-footer-css">
+/* v37.1.07: same footer on every unit and every lesson view. */
+.de-main > .de-footer, .de-footer {
+  display:block;box-sizing:border-box;max-width:990px;width:100%;margin:26px auto 0;
+  padding:21px 16px 23px;border-top:4px solid #e87918;
+  background:#233146;color:#f5f8fc;text-align:center;
+  font:500 12px/1.75 Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-shadow:0 2px 8px rgba(0,0,0,.10);
+}
+body.dark .de-main > .de-footer,body.dark .de-footer{background:#203044;color:#f5f8fc;border-top-color:#ff953c}
+@media(max-width:550px){.de-main > .de-footer,.de-footer{font-size:11px;padding:17px 12px;margin-top:20px}}
+</style>
+<style id="asic-unit04-expanded-responsive">/* ASIC-Skill Unit 04 expanded learning material — responsive, editor-safe additions */
+:root{--u4-study-border:var(--line)}
+.de-shell,.de-main,.de-study-panel,.de-content,.de-lesson,.de-sublesson{min-width:0}
+.u4-study-addendum{margin:26px 0 20px;border-top:3px solid var(--orange);padding:22px 0 0;font-size:1em;line-height:1.78;color:var(--ink);overflow-wrap:break-word}
+.u4-study-addendum h3{font-size:clamp(1.04em,2vw,1.27em);color:var(--green);line-height:1.35;margin:25px 0 11px}
+.u4-study-addendum h3:first-child{margin-top:0}
+.u4-study-addendum h4{font-size:1em;color:var(--ink);margin:22px 0 10px}
+.u4-study-addendum p{margin:12px 0}
+.u4-study-addendum ul,.u4-study-addendum ol{padding-left:1.35em;margin:12px 0}
+.u4-study-addendum li{margin:7px 0}
+.u4-study-addendum strong{color:var(--ink)}
+.u4-study-addendum table{display:table!important;width:100%;min-width:0!important;max-width:none;border-collapse:collapse;table-layout:auto!important;margin:0!important;font-size:.86em}
+.u4-study-addendum .u4-study-table{max-width:100%;width:100%;overflow-x:auto;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--line);margin:17px 0}
+.u4-study-addendum th,.u4-study-addendum td{border:1px solid var(--line);padding:10px 12px;white-space:normal;min-width:0;overflow-wrap:normal!important;word-break:normal!important;hyphens:none}
+.u4-study-addendum th{background:#126d59;color:white;font-weight:750}
+.u4-study-addendum tr:nth-child(even) td{background:var(--soft)}
+.u4-study-addendum blockquote{border-left:4px solid var(--orange);background:var(--soft);padding:13px 17px;margin:22px 0;border-radius:0 9px 9px 0}
+.u4-study-addendum blockquote p{margin:3px 0}
+.u4-study-addendum details{border:1px solid var(--line);border-left:4px solid var(--green);border-radius:11px;padding:12px 16px;margin:18px 0;background:var(--soft)}
+.u4-study-addendum summary{font-weight:750;color:var(--green);cursor:pointer;line-height:1.5}
+.u4-study-addendum details[open] summary{margin-bottom:8px}
+.u4-study-addendum pre{display:block;max-width:100%;overflow-x:auto;white-space:pre;tab-size:4;background:#102a39;color:#f1fcf5;padding:15px;border-radius:10px;font:13px/1.55 Consolas,Monaco,monospace}
+.u4-study-addendum pre code{white-space:pre;background:transparent;color:inherit;font:inherit;padding:0}
+.u4-study-addendum :not(pre)>code{font-size:.89em;background:var(--soft);padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}
+.u4-study-addendum--related{padding-top:17px;margin:20px 0 8px;border-top:1px dashed var(--green)}
+.u4-study-addendum--related h3{font-size:1.1em}
+.u4-study-diagram{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);border-radius:12px;background:var(--soft);padding:16px 10px;margin:20px 0}
+.u4-study-diagram span{background:var(--paper);border:2px solid var(--green);padding:9px 10px;border-radius:9px;font-size:.85em;font-weight:700;text-align:center;min-width:74px}
+.u4-study-diagram b{color:var(--orange);font-size:1.15em}
+.u4-workbench,.u4-grid,.u4-diagram,.u4-table,.u4-hdl,.u4-code-host,.de-content{max-width:100%;min-width:0}
+.u4-grid>*{min-width:0}
+.de-content img,.de-content video,.de-content canvas{max-width:100%;height:auto}
+.de-content svg{max-width:100%}
+.u4-code-host pre,.de-content pre{max-width:100%;overflow-x:auto}
+.de-study-panel{overflow-wrap:break-word}
+@media(max-width:900px){.de-topbar{flex-wrap:wrap;gap:8px}.de-head-links{min-width:0;flex-wrap:wrap;justify-content:flex-end}.de-brand{min-width:0}.de-unit-switch{min-width:0}.de-unit-switch select{max-width:100%}.de-lesson h1{overflow-wrap:break-word}}
+@media(max-width:780px){.de-main{width:100%;padding-inline:12px}.de-study-panel{max-width:100%;padding:22px 16px}.u4-workbench{max-width:100%;padding:13px}.u4-grid,.u4-cards,.u4-overview-hero{grid-template-columns:minmax(0,1fr)}.u4-diagram,.u4-table,.u4-wave-wrap{min-width:0}.u4-study-addendum{margin-top:19px;padding-top:17px}.u4-study-addendum .u4-study-table table{min-width:370px!important}.u4-study-addendum pre{font-size:12px}.de-lesson-actions{justify-content:space-between;gap:8px}.de-lesson-actions button{flex:1 1 140px}}
+@media(max-width:420px){.de-topbar{padding:9px 11px;gap:6px}.de-head-links{gap:5px}.de-unit-switch select{width:100%;max-width:none}.de-unit-switch{flex:1 1 100%;order:0}.de-top-btn{flex:0 0 auto}.de-study-panel{padding:17px 12px}.de-lesson h1{font-size:clamp(23px,7vw,29px)}.de-content{font-size:min(var(--lesson-font),16px)}.u4-study-addendum .u4-study-table table{min-width:320px!important;font-size:12px}.u4-study-addendum th,.u4-study-addendum td{padding:7px 9px}.u4-toggle-row button{min-width:0;max-width:100%}.u4-study-addendum pre{font-size:11.5px}.de-main > .de-footer{width:100%}}
+</style></head><body>
+<header class="de-topbar"><a class="de-brand" href="index.html#vlsi-digital-electronics"><img alt="" src="logo.jpeg"/><span><b>ASIC<span class="de-brand-orange">-Skill</span></b><small>Digital Electronics</small></span></a><div class="de-head-links"><label class="de-unit-switch" for="de-unit-switch"><span>Unit</span><select aria-label="Choose a Digital Electronics unit" id="de-unit-switch"><option value="digital-electronics.html">Unit 01 · Introduction to Digital Electronics</option><option value="digital-electronics-unit02.html">Unit 02 · Number Systems</option><option value="digital-electronics-unit03.html">Unit 03 · Binary Codes</option><option selected="" value="digital-electronics-unit04.html">Unit 04 · Logic Gates</option><option value="digital-electronics-unit05.html">Unit 05 · Boolean Algebra</option><option value="digital-electronics-unit06.html">Unit 06 · Minimization of Switching Functions</option><option value="digital-electronics-unit07.html">Unit 07 · Combinational Logic Design</option><option value="digital-electronics-unit08.html">Unit 08 · Programmable Logic Devices</option><option value="digital-electronics-unit09.html">Unit 09 · Threshold Logic</option><option value="digital-electronics-unit10.html">Unit 10 · Flip-Flops</option><option value="digital-electronics-unit11.html">Unit 11 · Shift Registers</option><option value="digital-electronics-unit12.html">Unit 12 · Counters</option><option value="digital-electronics-unit13.html">Unit 13 · Sequential Circuits-I</option><option value="digital-electronics-unit14.html">Unit 14 · Sequential Circuits-II</option><option value="digital-electronics-unit15.html">Unit 15 · Algorithmic State Machines</option><option value="digital-electronics-unit16.html">Unit 16 · Logic Families</option><option value="digital-electronics-unit17.html">Unit 17 · ADC and DAC Converters</option><option value="digital-electronics-unit18.html">Unit 18 · Memories</option><option value="digital-electronics-unit19.html">Unit 19 · Timing Circuits and Display Devices</option></select><span aria-hidden="true" class="de-unit-caret">⌄</span></label><button aria-label="Toggle theme" class="de-top-btn" id="de-theme">◐</button><button aria-label="Reduce font" class="de-top-btn" id="de-font-down">A−</button><button aria-label="Increase font" class="de-top-btn" id="de-font-up">A+</button></div></header>
+<div class="de-breadcrumb"><a href="index.html#tracks">VLSI Topics</a><span>›</span><a href="index.html#vlsi-digital-electronics">Digital Electronics</a><span>›</span><strong>Unit 04 Logic Gates</strong></div>
+<div class="de-shell"><aside class="de-sidebar" id="de-sidebar"><div class="de-side-top"><div class="de-course-label">DIGITAL ELECTRONICS</div><h2>Unit 04</h2><p>Logic Gates</p><div class="de-progress-bar"><span id="de-progress-fill"></span></div><div class="de-progress-text" id="de-progress-text">0 of 15 complete</div><label class="de-search-label" for="de-search">Search lessons</label><input autocomplete="off" id="de-search" placeholder="Find NAND, XOR, waveform…" type="search"/></div><nav aria-label="Unit 03 lessons" class="de-sidenav"><button class="de-nav-item" data-target="intro" title="Includes 2 original related topics" type="button"><span class="de-nav-index">00</span><span>Overview</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="and" title="Includes 2 original related topics" type="button"><span class="de-nav-index">01</span><span>4.2 · AND gate · All inputs must be HIGH</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="or" title="Includes 2 original related topics" type="button"><span class="de-nav-index">02</span><span>4.3 · OR gate · Any asserted input is sufficient</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="not" title="Includes 2 original related topics" type="button"><span class="de-nav-index">03</span><span>4.4 · NOT gate · Logic inversion</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="universal" title="Includes 2 original related topics" type="button"><span class="de-nav-index">04</span><span>4.5 · Why NAND and NOR are universal</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="nand-apps" title="Includes 3 original related topics" type="button"><span class="de-nav-index">05</span><span>4.5.1 · NAND-only inverter, AND and OR networks</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="xor" title="Includes 3 original related topics" type="button"><span class="de-nav-index">06</span><span>4.6 · XOR gate · Detect unequal inputs</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="xnor" title="Includes 2 original related topics" type="button"><span class="de-nav-index">07</span><span>4.8 · XNOR gate · Detect equal inputs</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="inhibit" type="button"><span class="de-nav-index">08</span><span>4.9 · Enable and inhibit logic</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="gate-symbols" title="Includes 2 original related topics" type="button"><span class="de-nav-index">09</span><span>4.2–4.8 · Standard logic symbols and truth tables</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="and-pulses" title="Includes 3 original related topics" type="button"><span class="de-nav-index">10</span><span>4.10 · AND and OR output waveforms</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="three-input" title="Includes 2 original related topics" type="button"><span class="de-nav-index">11</span><span>4.2–4.10 · Three-input gates and parity</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="verilog" type="button"><span class="de-nav-index">12</span><span>HDL · Verilog gate models and NAND networks</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="vhdl" type="button"><span class="de-nav-index">13</span><span>HDL · VHDL logic gates and structural mapping</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button><button class="de-nav-item" data-target="review" type="button"><span class="de-nav-index">14</span><span>Review · Check your understanding · Logic Gates</span><span aria-label="Completed" class="de-done-mark" hidden="">✓</span></button></nav><div class="de-side-bottom"><a href="digital-electronics-unit02.html">← Unit 02</a> · <a href="index.html#vlsi-digital-electronics">All units</a></div></aside>
+<div class="de-sidebar-overlay" hidden="" id="de-sidebar-overlay"></div><main class="de-main"><div class="de-content-top"><button aria-controls="de-sidebar" aria-expanded="false" class="de-menu" id="de-menu" type="button">☰ Lessons</button><div class="de-route" id="de-route">UNIT 04 / OVERVIEW</div><span id="de-counter">01 / 15</span></div><div class="de-study-panel"><section aria-labelledby="title-intro" class="de-lesson" id="intro"><div class="de-kicker">4.1 · Logic gates</div><h1 id="title-intro">What is a logic gate?</h1><div class="de-content"><div class="u4-overview-hero"><div><strong>UNIT 04 · DIGITAL ELECTRONICS</strong><h2>Logic becomes hardware</h2><p>Explore logic functions through connected symbols, truth tables, waveforms, circuit implementations, and HDL examples.</p></div><div aria-hidden="true" class="u4-hero-gates"><span>AND</span><span>OR</span><span>NOT</span><span>XOR</span></div></div><p>A digital logic gate maps one or more logical inputs to a binary output according to an exact Boolean rule. A truth table lists every permitted input combination and the corresponding result.</p><p>Logic gates are assembled to form combinational functions, arithmetic circuits, control blocks and many other hardware structures. A gate symbol describes its logic behavior, not necessarily the transistor implementation.</p><div class="u4-workbench" data-initial="AND" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option selected="" value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-cards"><div><strong>Logical versus electrical levels</strong><p>Logic zero and logic one represent two accepted signal ranges. They are not required to be exact voltages.</p></div><div><strong>In circuit design</strong><p>In CMOS and TTL, the electrical limits for a valid LOW or HIGH depend on the device family and supply conditions.</p></div></div><div class="u4-study-addendum" data-asic-expansion="intro"><h3>1. From Boolean expression to hardware output</h3><div aria-label="Conceptual logic signal flow" class="u4-study-diagram"><span>INPUTS</span><b>→</b><span>Boolean rule</span><b>→</b><span>OUTPUT</span></div>
+<p>A <strong>logic gate</strong> implements a Boolean function using electronic devices. In an ideal two-state model, its inputs and output are either <strong>0 (LOW)</strong> or <strong>1 (HIGH)</strong>. In physical CMOS hardware, these logical levels correspond to voltage ranges, not perfectly fixed voltages. A combinational gate has no stored state: its output depends on the present inputs, subject to propagation delay.</p>
+<p>For two input signals, there are <strong>2² = 4</strong> combinations; for three independent inputs, there are <strong>2³ = 8</strong>. A <em>truth table</em> lists every possible input combination and the output predicted by the Boolean equation.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>AND (A·B)</th>
+<th>OR (A+B)</th>
+<th>XOR (A⊕B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2. A repeatable way to analyse any gate</h3>
+<ol>
+<li>Identify the number of input pins and whether a pin has an inversion bubble.</li>
+<li>Write the gate's Boolean equation, for example <strong>Y = A·B</strong> for AND.</li>
+<li>Enumerate every input combination and calculate Y.</li>
+<li>Select a row and confirm it in the interactive gate explorer above.</li>
+<li>If the inputs vary with time, apply the same Boolean rule at each stable time interval, and then consider real propagation delay.</li>
+</ol>
+<h3>3. Example: two-condition machine interlock</h3>
+<p>Let <strong>A = guard closed</strong> and <strong>B = start requested</strong>. An AND gate permits the command <strong>Y = A·B</strong> only if both conditions are true. For A=1 and B=0, Y=0; for A=1 and B=1, Y=1. This illustrates a logical interlock, not a substitute for certified safety hardware.</p>
+<blockquote>
+<p><strong>Design note:</strong> A logic gate does not by itself specify drive strength, voltage thresholds, physical timing, or whether asynchronous inputs are safe. Those details are addressed at the circuit and system levels.</p>
+</blockquote>
+<details><summary>Practice: How many rows are needed for a truth table with four inputs?</summary><p>There are 2⁴ = <strong>16</strong> distinct input combinations.</p></details>
+</div><article aria-labelledby="title-positive-negative" class="de-sublesson" data-original-topic="positive-negative" id="positive-negative"><div class="de-kicker">RELATED TOPIC · POSITIVE NEGATIVE</div><h2 id="title-positive-negative">Positive and negative logic conventions</h2><div class="de-content"><p>Positive logic interprets the higher nominal voltage level as logic 1 and the lower level as logic 0. Negative logic reverses that interpretation without changing the physical voltage.</p><p>Gate truth tables must always specify which convention is being used. The following demonstration shows the same two physical levels interpreted using opposite logic conventions.</p><div class="u4-workbench" data-tool="polarity"><div class="u4-fields"><label>Physical input level<select class="u4-voltage"><option value="0">LOW voltage</option><option value="1">HIGH voltage</option></select></label><label>Logic convention<select class="u4-polarity"><option value="positive">Positive logic</option><option value="negative">Negative logic</option></select></label></div><div aria-live="polite" class="u4-pol-result"></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="positive-negative"><h3>Interpreting voltage levels consistently</h3>
+<p>In <strong>positive logic</strong>, a higher voltage range encodes logic 1 and a lower range encodes logic 0. In <strong>negative logic</strong>, the assignment is reversed. This is a convention for interpreting signal levels; the same physical voltage transition can therefore correspond to a different logical transition depending on the convention.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Voltage range</th>
+<th>Positive-logic meaning</th>
+<th>Negative-logic meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>For example, with a hypothetical circuit using a valid LOW of 0 V and a valid HIGH of 3.3 V, <strong>3.3 V means 1 in positive logic but 0 in negative logic</strong>. Actual valid voltage ranges must be taken from the relevant device specifications.</p>
+<p>An <strong>active-low input</strong>, commonly written <code>RESET_N</code> or with an inversion bar, is <em>asserted</em> at logic 0 in an otherwise positive-logic system. Active-low naming is not the same as converting an entire system to negative logic.</p>
+<details><summary>Check: When is an active-low enable asserted?</summary><p>At logic 0 (LOW); its inactive state is logic 1 (HIGH).</p></details>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-and" class="de-lesson" hidden="" id="and"><div class="de-kicker">4.2 · Logic gates</div><h1 id="title-and">AND gate · All inputs must be HIGH</h1><div class="de-content"><p>A two-input AND operation produces logic 1 only for A = 1 and B = 1. Adding more inputs extends the same rule: the output is HIGH only when every input is HIGH.</p><p>AND gates are useful for qualification and enable logic. A data signal can pass when an enable control is asserted.</p><div class="u4-workbench" data-initial="AND" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option selected="" value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-cards"><div><strong>Boolean form</strong><p>Y = A · B. With three inputs Y = A · B · C.</p></div><div><strong>In circuit design</strong><p>Combine an event and an enable: Y = event · enable.</p></div></div><div class="u4-study-addendum" data-asic-expansion="and"><h3>AND operation: complete truth table and equation</h3>
+<p>For a two-input AND gate, <strong>Y = A·B</strong>. A dot indicates Boolean multiplication, not ordinary arithmetic multiplication over arbitrary integers. All inputs must be 1 for the output to be 1.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Y = A·B</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Neither input is HIGH</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>A is LOW</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>B is LOW</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>Both inputs are HIGH</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Three-input AND and timing</h3>
+<p>For three inputs, <strong>Y = A·B·C</strong>. If A=1, B=1, and C=0, then Y=0. Changing C to 1 permits Y to become 1 after the physical gate's propagation delay. In ideal Boolean analysis, the change is instantaneous.</p>
+<h3>Worked application: qualified write enable</h3>
+<p>A memory write should occur only when both the write request (<code>WR</code>) and chip select (<code>CS</code>) are asserted:</p>
+<p><strong>WRITE_EN = WR · CS</strong></p>
+<p>If WR=1 while CS=0, WRITE_EN=0. If both are 1, WRITE_EN=1. Additional controls such as clocking, setup time, and output enable must be considered in a complete memory interface.</p>
+<h3>Useful AND identities</h3>
+<ul>
+<li><strong>A·0 = 0</strong>: zero is an annihilator.</li>
+<li><strong>A·1 = A</strong>: one is the identity element.</li>
+<li><strong>A·A = A</strong>: idempotent law.</li>
+<li><strong>A·¬A = 0</strong>: complementary inputs cannot both be 1.</li>
+</ul>
+<details><summary>Practice: What is 1·1·0·1?</summary><p><strong>0</strong>. A multi-input AND is 1 only when every input is 1.</p></details>
+</div><article aria-labelledby="title-and-hardware" class="de-sublesson" data-original-topic="and-hardware" id="and-hardware"><div class="de-kicker">RELATED TOPIC · AND HARDWARE</div><h2 id="title-and-hardware">AND gate using diodes and transistors</h2><div class="de-content"><p>Diode logic can realize the AND truth table by combining a pull-up resistor with input clamp diodes. In the idealized operation, any LOW input clamps the output LOW; all HIGH inputs allow the output to rise.</p><p>Transistor-based implementations may cascade stages or use an inverted network followed by another inversion. Circuit-level behavior also depends on noise margins, loading and voltage drops.</p><div class="u4-cards"><div><strong>Diode AND principle</strong><p>Pull-up resistor sets the output HIGH when none of the input diodes clamps it.</p><div class="u4-circuit-row"><span>A</span><span class="u4-element">D₁</span><span class="u4-node">X</span><span class="u4-element">R → VDD</span></div><div class="u4-circuit-row"><span>B</span><span class="u4-element">D₂</span><span>joins X</span></div></div><div><strong>Resistor–transistor logic</strong><p>Device networks implement a Boolean function using switching transistors and resistors, often requiring output inversion.</p><p>Technology note: these educational discrete circuits are different from the complementary CMOS gates used in most modern digital ICs.</p></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="and-hardware"><h3>Diode-AND principle (positive logic)</h3>
+<p>A classic diode-AND arrangement uses a resistor to pull the output toward a positive supply and diodes oriented so that <strong>any LOW input can clamp the output LOW</strong>. Only when all inputs are HIGH does the pull-up permit a HIGH output. The output HIGH level and LOW clamp voltages depend on diode drops and loading, so this is a teaching model rather than an ideal logic family.</p>
+<h3>CMOS implementation</h3>
+<p>A common static-CMOS <strong>NAND</strong> uses two nMOS devices in series in its pull-down network and two pMOS devices in parallel in its pull-up network. Following it with a CMOS inverter implements <strong>AND</strong>. The complementary networks ensure that the internal NAND node is LOW only when both inputs are HIGH.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Internal NAND</th>
+<th>Final AND after inverter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Implementation note:</strong> Timing, noise margin, transistor sizing, and load capacitance determine the practical quality of the gate; truth tables alone do not.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-or" class="de-lesson" hidden="" id="or"><div class="de-kicker">4.3 · Logic gates</div><h1 id="title-or">OR gate · Any asserted input is sufficient</h1><div class="de-content"><p>An OR gate produces a HIGH output when at least one of its inputs is HIGH. The output is LOW only when all inputs are LOW.</p><p>The OR is inclusive: when both A and B are 1, Y is still 1. The Boolean addition symbol denotes OR, not integer addition.</p><div class="u4-workbench" data-initial="OR" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option selected="" value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-cards"><div><strong>Boolean form</strong><p>Y = A + B. For three inputs Y = A + B + C.</p></div><div><strong>In circuit design</strong><p>Merge requests from independent hardware blocks: request = sourceA + sourceB.</p></div></div><div class="u4-study-addendum" data-asic-expansion="or"><h3>OR operation: complete truth table</h3>
+<p>For two inputs, <strong>Y = A + B</strong>, where <code>+</code> means <strong>Boolean OR</strong>, not integer addition. OR is <strong>inclusive</strong>: when A=B=1, the output remains 1.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Y = A+B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Three-input OR</h3>
+<p><strong>Y = A+B+C</strong> becomes 1 when <em>at least one</em> input is 1. For A=0, B=0, C=1, the output is 1. It becomes 0 only when every input is 0.</p>
+<h3>Worked application: combining request signals</h3>
+<p>Suppose three units can request access to a shared service: R₀, R₁, and R₂. The combined request is <strong>REQUEST = R₀+R₁+R₂</strong>. This detects whether any request exists, but does <strong>not</strong> identify which unit wins arbitration.</p>
+<h3>Useful OR identities</h3>
+<ul>
+<li><strong>A+0 = A</strong>: zero is the identity element.</li>
+<li><strong>A+1 = 1</strong>: one dominates.</li>
+<li><strong>A+A = A</strong>: idempotent law.</li>
+<li><strong>A+¬A = 1</strong>: complementary signals cover both possibilities.</li>
+</ul>
+<details><summary>Practice: Is OR the same as XOR when A=B=1?</summary><p>No. <strong>OR=1</strong> because at least one input is HIGH, whereas <strong>XOR=0</strong> because the inputs are equal.</p></details>
+</div><article aria-labelledby="title-or-hardware" class="de-sublesson" data-original-topic="or-hardware" id="or-hardware"><div class="de-kicker">RELATED TOPIC · OR HARDWARE</div><h2 id="title-or-hardware">OR gate using diode and transistor logic</h2><div class="de-content"><p>A diode OR arrangement drives a common output when any input becomes HIGH; a resistor establishes a LOW level when none is asserted.</p><p>Real diodes introduce a forward voltage drop, so their output levels must be checked against the input thresholds of the next stage. Transistor logic uses active devices and bias networks instead.</p><div class="u4-cards"><div><strong>Diode OR principle</strong><div class="u4-circuit-row"><span>A</span><span class="u4-element">D₁</span><span class="u4-node">X</span></div><div class="u4-circuit-row"><span>B</span><span class="u4-element">D₂</span><span>joins X</span><span class="u4-element">R → GND</span></div></div><div><strong>Practical limits</strong><p>Forward voltage, resistor choice, fan-out and input noise margin constrain a discrete-diode implementation. CMOS gates use complementary transistor networks for full-rail outputs.</p></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="or-hardware"><h3>Diode-OR principle (positive logic)</h3>
+<p>A simple diode-OR network uses diodes oriented so that any HIGH input can forward-bias its diode and raise a common output node. A pull-down resistor provides a LOW level when all inputs are LOW. Diode forward-voltage drops mean the resulting output is not a perfect logic HIGH, and cascading stages may require buffering.</p>
+<h3>CMOS OR construction</h3>
+<p>A static-CMOS <strong>NOR</strong> contains two parallel nMOS transistors in the pull-down network and two series pMOS transistors in the pull-up network. A following inverter converts NOR into OR.</p>
+<p><strong>Example:</strong> A=0, B=1 → NOR=0 → inverted output OR=1. A=0, B=0 → NOR=1 → OR=0.</p>
+<p>The OR gate's physical implementation is selected based on logic function, available cells, voltage conditions, fan-out, propagation delay, power, and area.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-not" class="de-lesson" hidden="" id="not"><div class="de-kicker">4.4 · Logic gates</div><h1 id="title-not">NOT gate · Logic inversion</h1><div class="de-content"><p>A NOT gate has one input. It reverses the binary value: an input of 0 produces 1, and an input of 1 produces 0.</p><p>An inversion bubble on a logic symbol denotes the complemented signal. An inverter may be built from a transistor and load or a complementary PMOS/NMOS pair.</p><div class="u4-workbench" data-initial="NOT" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option selected="" value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-mini-switch" data-modes="not"><strong>Inversion identity</strong><button type="button">Toggle A</button><div aria-live="polite" class="u4-mini-state"></div></div><div class="u4-study-addendum" data-asic-expansion="not"><h3>Inversion and the Boolean complement</h3>
+<p>A <strong>NOT gate</strong>, also called an <strong>inverter</strong>, produces the complement of one input: <strong>Y = ¬A</strong> (or A̅). It has one logical input, unlike AND or OR.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>Y = ¬A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Important properties</h3>
+<ul>
+<li><strong>¬(¬A) = A</strong>: two ideal inversions cancel logically.</li>
+<li><strong>A·¬A = 0</strong> and <strong>A+¬A = 1</strong>.</li>
+<li>A small <strong>bubble</strong> at the output of a gate symbol indicates inversion; an input bubble indicates an inverted input sense.</li>
+</ul>
+<h3>Worked application: active-low output</h3>
+<p>If <code>FAULT=1</code> means an error condition, an active-low indicator signal may be defined as <strong>FAULT_N = ¬FAULT</strong>. When FAULT=1, FAULT_N=0 and the active-low signal is asserted. The electrical design still needs the correct output drive and LED/load interface.</p>
+<h3>Delay versus logic</h3>
+<p>An inverter has a finite high-to-low and low-to-high propagation delay. Two cascaded inverters reproduce the original logical level, but with added delay; they are <strong>not</strong> a zero-delay wire.</p>
+<details><summary>Practice: What is ¬(¬0)?</summary><p>First inversion: ¬0=1. Second inversion: ¬1=0. The result is <strong>0</strong>.</p></details>
+</div><article aria-labelledby="title-rtl-inverter" class="de-sublesson" data-original-topic="rtl-inverter" id="rtl-inverter"><div class="de-kicker">RELATED TOPIC · RTL INVERTER</div><h2 id="title-rtl-inverter">Discrete inverter operation</h2><div class="de-content"><p>A resistor-transistor inverter can produce a HIGH output when its transistor is OFF. When the transistor turns ON, it pulls the output toward the LOW rail.</p><p>The output has opposite logical polarity to the input. A CMOS inverter uses a PMOS pull-up and NMOS pull-down: ideally only one is conducting in a stable state.</p><div class="u4-workbench" data-tool="inverter"><div class="u4-head"><strong>CMOS inverter state explorer</strong><span>Input changes which network conducts</span></div><button class="u4-inv-toggle" type="button">A = 0 · Change input</button><svg aria-label="CMOS inverter with PMOS above and NMOS below" class="u4-inv-svg" role="img" viewbox="0 0 600 340"></svg><div aria-live="polite" class="u4-inv-state"></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="rtl-inverter"><h3>Resistor-transistor inverter operation</h3>
+<p>For a conceptual nMOS/resistor inverter, the resistor pulls the output toward the supply when the transistor is OFF. A HIGH gate input turns the nMOS ON, creating a path to ground and pulling the output LOW. A LOW gate input turns it OFF, allowing the resistor to pull the output HIGH.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Input</th>
+<th>nMOS state</th>
+<th>Output direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOW</td>
+<td>OFF</td>
+<td>Pulled HIGH</td>
+</tr>
+<tr>
+<td>HIGH</td>
+<td>ON</td>
+<td>Pulled LOW</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Static CMOS inverter:</strong> A pMOS transistor connects the output to the supply and an nMOS transistor connects it to ground. Their gates share the input; their drains join at the output. When the input is LOW, pMOS conducts and nMOS is OFF, producing HIGH. When the input is HIGH, the reverse occurs, producing LOW.</p>
+<p>Unlike resistor-load logic, complementary CMOS ideally has very little static current in steady valid logic states, although leakage and switching losses remain.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-universal" class="de-lesson" hidden="" id="universal"><div class="de-kicker">4.5 · Logic gates</div><h1 id="title-universal">Why NAND and NOR are universal</h1><div class="de-content"><p>AND, OR and NOT can all be constructed using only NAND gates or only NOR gates. A set of gates capable of expressing every Boolean function is called functionally complete.</p><p>This matters in cell libraries, where it can be useful to implement an entire logic network using a small selection of transistor structures, while still meeting timing and power constraints.</p><div class="u4-cards"><div><strong>Single-family construction</strong><p>A NAND fed with the same signal at both inputs inverts it; a NOR with tied inputs does likewise.</p></div><div><strong>In circuit design</strong><p>Any combinational Boolean function can be mapped into NAND-only or NOR-only gates.</p></div></div><div class="u4-study-addendum" data-asic-expansion="universal"><h3>1. What does functionally complete mean?</h3>
+<p>A gate family is <strong>functionally complete</strong> if arbitrary Boolean functions can be constructed from gates in that family. Because <strong>NAND</strong> and <strong>NOR</strong> can each produce NOT, AND, and OR, either family is universal. This does <strong>not</strong> mean every NAND-only or NOR-only circuit is the fastest physical implementation.</p>
+<h3>2. Building functions using NAND only</h3>
+<p>Use <strong>↑</strong> to indicate NAND, so <code>A ↑ B = ¬(A·B)</code>.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>NAND-only expression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOT A</td>
+<td>A ↑ A</td>
+</tr>
+<tr>
+<td>A AND B</td>
+<td>(A ↑ B) ↑ (A ↑ B)</td>
+</tr>
+<tr>
+<td>A OR B</td>
+<td>(A ↑ A) ↑ (B ↑ B)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Worked example:</strong> A=0, B=1. First form ¬A=1 and ¬B=0 using tied-input NANDs; NANDing these gives ¬(1·0)=1 = A OR B.</p>
+<h3>3. Building functions using NOR only</h3>
+<p>Use <strong>↓</strong> to indicate NOR, so <code>A ↓ B = ¬(A+B)</code>.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>NOR-only expression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOT A</td>
+<td>A ↓ A</td>
+</tr>
+<tr>
+<td>A OR B</td>
+<td>(A ↓ B) ↓ (A ↓ B)</td>
+</tr>
+<tr>
+<td>A AND B</td>
+<td>(A ↓ A) ↓ (B ↓ B)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4. Connection to De Morgan's theorems</h3>
+<p><strong>¬(A·B) = ¬A + ¬B</strong>, and <strong>¬(A+B) = ¬A · ¬B</strong>. These identities explain why inversion and universal gates can transform one logic structure into another.</p>
+<details><summary>Practice: How can a NAND gate become an inverter?</summary><p>Connect both NAND inputs to the same signal A: Y = ¬(A·A) = <strong>¬A</strong>.</p></details>
+</div><article aria-labelledby="title-nand" class="de-sublesson" data-original-topic="nand" id="nand"><div class="de-kicker">RELATED TOPIC · NAND</div><h2 id="title-nand">NAND gate · Complemented AND</h2><div class="de-content"><p>NAND performs an AND operation and then inverts it. Consequently, its output becomes 0 only when every input is 1.</p><p>The output inversion bubble is essential: NAND and AND have the same body shape but opposite output polarities.</p><div class="u4-workbench" data-initial="NAND" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option selected="" value="NAND">NAND</option><option value="NOR">NOR</option><option value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-cards"><div><strong>Boolean form</strong><p>Y = ¬(A · B).</p></div><div><strong>In circuit design</strong><p>NAND is widely used in standard-cell libraries and as a universal logic primitive.</p></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="nand"><h3>NAND truth table and CMOS behavior</h3>
+<p>NAND means <strong>NOT-AND</strong>. For two inputs, <strong>Y = ¬(A·B)</strong>. Only the 11 input combination generates a LOW output.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A·B</th>
+<th>NAND = ¬(A·B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<p>In a static CMOS NAND gate, <strong>series nMOS</strong> devices make the pull-down path conduct only when A=B=1; <strong>parallel pMOS</strong> devices provide a pull-up path when either input is LOW.</p>
+<p><strong>Three-input NAND:</strong> <strong>Y = ¬(A·B·C)</strong>. With A=1, B=1, C=0 the output is 1. With all three inputs HIGH, the output is 0.</p>
+<details><summary>Practice: What is NAND(1,0)?</summary><p>A·B=0, so its complement is <strong>1</strong>.</p></details>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-nand-apps" class="de-lesson" hidden="" id="nand-apps"><div class="de-kicker">4.5.1 · Logic gates</div><h1 id="title-nand-apps">NAND-only inverter, AND and OR networks</h1><div class="de-content"><p>A NAND with its two inputs tied together gives ¬A. Another NAND applied to the inverted result can restore A · B. Inverting both operands and NANDing them produces A + B.</p><p>Although these identities are logically equivalent, each physical gate adds delay, capacitance and power cost. Technology mapping chooses structures based on circuit requirements.</p><div class="u4-workbench" data-kind="NAND" data-tool="universal"><div class="u4-fields"><label>Target function<select class="u4-universal-target"><option>NOT</option><option>AND</option><option>OR</option></select></label><label>Input A<select class="u4-universal-a"><option value="0">0</option><option value="1">1</option></select></label><label>Input B<select class="u4-universal-b"><option value="0">0</option><option value="1">1</option></select></label></div><div aria-live="polite" class="u4-universal-output"></div></div><div class="u4-study-addendum" data-asic-expansion="nand-apps"><h3>Gate-by-gate implementation walkthrough</h3><div aria-label="Conceptual logic signal flow" class="u4-study-diagram"><span>A, B</span><b>→</b><span>NAND(A,B)</span><b>→</b><span>invert NAND</span><b>→</b><span>A AND B</span></div>
+<p>A two-input NAND is <strong>N(A,B) = ¬(A·B)</strong>. A NAND-only network can reconstruct all basic functions:</p>
+<ol>
+<li><strong>Inverter:</strong> <code>nA = N(A,A) = ¬A</code>.</li>
+<li><strong>AND:</strong> <code>t = N(A,B)</code> followed by <code>Y = N(t,t) = A·B</code>.</li>
+<li><strong>OR:</strong> <code>nA = N(A,A)</code> and <code>nB = N(B,B)</code> followed by <code>Y = N(nA,nB) = A+B</code>.</li>
+</ol>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>NAND(A,B)</th>
+<th>NAND-only AND</th>
+<th>NAND-only OR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Example: implementing a two-term sum of products</h3>
+<p>For <strong>Y = A·B + C·D</strong>, first generate <strong>n₁ = NAND(A,B)</strong> and <strong>n₂ = NAND(C,D)</strong>. Then <strong>Y = NAND(n₁,n₂)</strong>. By De Morgan's theorem, this equals <strong>A·B + C·D</strong>, requiring just three two-input NAND gates.</p>
+<p><strong>Hardware consideration:</strong> Tied-input configurations and multiple cascaded stages create real fan-out and delay. A mapped ASIC implementation may use available complex gates instead.</p>
+<details><summary>Practice: How many two-input NAND gates implement A OR B using this direct construction?</summary><p><strong>Three</strong>: one NAND inverter for each operand, followed by one final NAND.</p></details>
+</div><article aria-labelledby="title-nor" class="de-sublesson" data-original-topic="nor" id="nor"><div class="de-kicker">RELATED TOPIC · NOR</div><h2 id="title-nor">NOR gate · Complemented OR</h2><div class="de-content"><p>NOR first performs an OR operation, then inverts it. Its output is 1 only if all inputs are 0.</p><p>Applying the same signal to both NOR inputs creates a NOT operation. De Morgan’s laws explain how NOR can build the other fundamental functions.</p><div class="u4-workbench" data-initial="NOR" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option selected="" value="NOR">NOR</option><option value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="nor"><h3>NOR truth table and CMOS implementation</h3>
+<p>NOR means <strong>NOT-OR</strong>. For two inputs, <strong>Y = ¬(A+B)</strong>. Its output is HIGH only when both inputs are LOW.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A+B</th>
+<th>NOR = ¬(A+B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<p>In static CMOS, the NOR pull-down network uses <strong>parallel nMOS</strong>, so either HIGH input can pull the output LOW. Its pull-up network uses <strong>series pMOS</strong>, so both inputs must be LOW to pull the output HIGH.</p>
+<p><strong>Three-input NOR:</strong> <strong>Y = ¬(A+B+C)</strong>, which equals 1 only when A=B=C=0. Tying all inputs together produces an inverter.</p>
+</div></div></article><article aria-labelledby="title-nor-apps" class="de-sublesson" data-original-topic="nor-apps" id="nor-apps"><div class="de-kicker">RELATED TOPIC · NOR APPS</div><h2 id="title-nor-apps">NOR-only logic constructions</h2><div class="de-content"><p>Tying the inputs of a NOR gate gives the NOT function. Two NOR stages can produce OR. To form AND, invert A and B separately using NORs, then NOR those inverted signals.</p><p>A Boolean identity does not guarantee identical analog behavior: gate count, fan-out, and propagation delay can differ.</p><div class="u4-workbench" data-kind="NOR" data-tool="universal"><div class="u4-fields"><label>Target function<select class="u4-universal-target"><option>NOT</option><option>OR</option><option>AND</option></select></label><label>Input A<select class="u4-universal-a"><option value="0">0</option><option value="1">1</option></select></label><label>Input B<select class="u4-universal-b"><option value="0">0</option><option value="1">1</option></select></label></div><div aria-live="polite" class="u4-universal-output"></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="nor-apps"><h3>NOR-only network construction</h3>
+<p>Define <code>R(A,B) = ¬(A+B)</code>.</p>
+<ol>
+<li><strong>NOT:</strong> <code>nA = R(A,A) = ¬A</code>.</li>
+<li><strong>OR:</strong> <code>t = R(A,B)</code> then <code>Y = R(t,t) = A+B</code>.</li>
+<li><strong>AND:</strong> <code>nA = R(A,A)</code> and <code>nB = R(B,B)</code> then <code>Y = R(nA,nB) = A·B</code>.</li>
+</ol>
+<p><strong>Worked example:</strong> For A=1 and B=0, the NOR-derived AND is <code>NOR(¬1,¬0) = NOR(0,1) = 0</code>, which matches 1·0=0.</p>
+<p>The sum-of-products form often maps naturally to NAND–NAND stages; a product-of-sums form such as <strong>(A+B)(C+D)</strong> can map naturally to NOR–NOR stages. Mapping tools may select alternative cells for better timing or area.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-xor" class="de-lesson" hidden="" id="xor"><div class="de-kicker">4.6 · Logic gates</div><h1 id="title-xor">XOR gate · Detect unequal inputs</h1><div class="de-content"><p>An XOR gate is HIGH when its two inputs differ. It is the Boolean modulo-two sum, where 1 ⊕ 1 = 0.</p><p>XOR is fundamental for binary adders, parity networks, code transforms and mismatch detection. A chain of XOR operations produces an odd-parity function.</p><div class="u4-workbench" data-initial="XOR" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option selected="" value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-study-addendum" data-asic-expansion="xor"><h3>XOR: addition modulo two</h3>
+<p>The two-input <strong>exclusive OR (XOR)</strong> function is 1 exactly when the inputs differ. Its Boolean equation is <strong>Y = A⊕B = ¬A·B + A·¬B</strong>.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>XOR</th>
+<th>Interpret as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Equal</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>Different</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>Different</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>Equal</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Worked example: half-adder sum</h3>
+<p>For two binary digits A and B, a half adder produces <strong>Sum = A⊕B</strong> and <strong>Carry = A·B</strong>. When A=B=1, Sum=0 and Carry=1, representing binary <code>10₂</code> (decimal 2). This is why XOR is often called <em>addition without carry</em>.</p>
+<h3>Three-input parity</h3>
+<p><strong>P = A⊕B⊕C</strong> is 1 when the number of asserted inputs is odd: examples 001, 010, 100, or 111. In contrast, two-input XOR is <strong>not</strong> the same as inclusive OR.</p>
+<h3>Useful identities</h3>
+<ul>
+<li><strong>A⊕0=A</strong> and <strong>A⊕1=¬A</strong>.</li>
+<li><strong>A⊕A=0</strong> and <strong>A⊕¬A=1</strong>.</li>
+<li>XOR is commutative and associative: <strong>A⊕B=B⊕A</strong>, <strong>(A⊕B)⊕C=A⊕(B⊕C)</strong>.</li>
+</ul>
+<details><summary>Practice: What is 1⊕1⊕1?</summary><p>1⊕1=0, and 0⊕1=<strong>1</strong>; an odd number of ones gives odd parity.</p></details>
+</div><article aria-labelledby="title-xor-inverter" class="de-sublesson" data-original-topic="xor-inverter" id="xor-inverter"><div class="de-kicker">RELATED TOPIC · XOR INVERTER</div><h2 id="title-xor-inverter">XOR as a controlled inverter</h2><div class="de-content"><p>For a single input A, A ⊕ 0 equals A, while A ⊕ 1 equals ¬A. Therefore a second input can select whether a signal passes unchanged or inverted.</p><p>This behavior is used for adder/subtractor control: an XOR can conditionally invert an operand when subtraction is selected.</p><div class="u4-workbench" data-tool="controlled"><div class="u4-fields"><label>Data input A<select class="u4-data-a"><option value="0">0</option><option value="1">1</option></select></label><label>Invert control B<select class="u4-data-b"><option value="0">0 · Pass</option><option value="1">1 · Invert</option></select></label></div><div aria-live="polite" class="u4-controlled-output"></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="xor-inverter"><h3>Controlling inversion with one bit</h3>
+<p>XOR can act as an electronically controlled inverter. Let D be the data input and SEL the control: <strong>Y = D⊕SEL</strong>.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>SEL</th>
+<th>D=0 produces</th>
+<th>D=1 produces</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>Pass D unchanged</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>Invert D</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Worked example:</strong> With D=1 and SEL=1, Y=0. With the same D=1 and SEL=0, Y=1. This property is useful for conditional bit complementation, bit-mask operations, and forming adder/subtractor input inversion.</p>
+<p>For subtraction using a shared binary adder, a mode bit can XOR every B bit with MODE and set the adder carry-in to MODE, implementing <strong>A + (B⊕MODE) + MODE</strong> across the word (with suitable bit width and overflow handling).</p>
+</div></div></article><article aria-labelledby="title-xor-properties" class="de-sublesson" data-original-topic="xor-properties" id="xor-properties"><div class="de-kicker">RELATED TOPIC · XOR PROPERTIES</div><h2 id="title-xor-properties">Important properties of XOR</h2><div class="de-content"><p>The XOR result depends on parity rather than the order of operands. A ⊕ A = 0, A ⊕ 0 = A and A ⊕ 1 = ¬A.</p><p>XOR is associative and commutative, enabling parity-tree reduction and Gray-code transforms. Real gate networks still exhibit finite propagation delay.</p><div class="u4-scroll"><table><thead><tr><th>Identity</th><th>Result</th><th>Use</th></tr></thead><tbody><tr><td>A ⊕ 0</td><td>A</td><td>Pass-through</td></tr><tr><td>A ⊕ 1</td><td>¬A</td><td>Conditional inversion</td></tr><tr><td>A ⊕ A</td><td>0</td><td>Cancellation</td></tr><tr><td>A ⊕ ¬A</td><td>1</td><td>Complement detection</td></tr><tr><td>A ⊕ B ⊕ B</td><td>A</td><td>Decode cancellation</td></tr></tbody></table></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="xor-properties"><h3>Algebraic laws of XOR</h3>
+<p>XOR performs <strong>modulo-2 addition on individual bits</strong>: adding two ones produces zero with no retained XOR carry.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Result</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A⊕0</td>
+<td>A</td>
+<td>Zero does not change A</td>
+</tr>
+<tr>
+<td>A⊕1</td>
+<td>¬A</td>
+<td>One toggles A</td>
+</tr>
+<tr>
+<td>A⊕A</td>
+<td>0</td>
+<td>Equal copies cancel</td>
+</tr>
+<tr>
+<td>A⊕B⊕B</td>
+<td>A</td>
+<td>Repeating B cancels</td>
+</tr>
+<tr>
+<td>A⊕B</td>
+<td>B⊕A</td>
+<td>Operand order does not matter</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Worked example: generating parity</h3>
+<p>For the data bits <code>1011</code>, compute <code>1⊕0⊕1⊕1 = 1</code>. This is the odd-parity XOR of the data. To create an <strong>even-parity transmitted word</strong>, append a parity bit of 1 so the XOR of all five bits is 0.</p>
+<p><strong>Limit:</strong> One parity bit detects an odd number of bit flips, but cannot identify the flipped bit or reliably detect every even number of bit flips.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-xnor" class="de-lesson" hidden="" id="xnor"><div class="de-kicker">4.8 · Logic gates</div><h1 id="title-xnor">XNOR gate · Detect equal inputs</h1><div class="de-content"><p>XNOR is the complement of XOR. Its output is HIGH for matching two-bit inputs, 00 or 11, and LOW for mismatches, 01 or 10.</p><p>XNOR is especially useful in magnitude/equality comparators, where corresponding bit pairs are compared before their match signals are combined.</p><div class="u4-workbench" data-initial="XNOR" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option value="XOR">XOR</option><option selected="" value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-study-addendum" data-asic-expansion="xnor"><h3>XNOR as an equality operation</h3>
+<p>The <strong>exclusive-NOR (XNOR)</strong> gate is the complement of XOR: <strong>Y = ¬(A⊕B) = A·B + ¬A·¬B</strong>. Its output is 1 when the inputs are equal.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>XOR</th>
+<th>XNOR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Worked example: comparing two 2-bit words</h3>
+<p>Let <strong>A=A₁A₀</strong> and <strong>B=B₁B₀</strong>. The equality output is:</p>
+<p><strong>EQ = XNOR(A₁,B₁) · XNOR(A₀,B₀)</strong></p>
+<p>For A=<code>10</code> and B=<code>10</code>, both bit pairs match, so EQ=1. For A=<code>10</code> and B=<code>11</code>, bit 0 differs, so EQ=0.</p>
+<p><strong>Application:</strong> Equality comparisons appear in address decoders, identifier checks, control logic, and data integrity monitors. Multi-bit comparisons combine per-bit equality results.</p>
+<details><summary>Practice: What is XNOR(0,0)?</summary><p><strong>1</strong>, because both inputs are equal.</p></details>
+</div><article aria-labelledby="title-xnor-inverter" class="de-sublesson" data-original-topic="xnor-inverter" id="xnor-inverter"><div class="de-kicker">RELATED TOPIC · XNOR INVERTER</div><h2 id="title-xnor-inverter">XNOR as an equality detector and inverter</h2><div class="de-content"><p>An XNOR gate with one input tied LOW inverts the other input, whereas tying that input HIGH passes the other input unchanged.</p><p>A multi-bit equality comparator XNORs each corresponding bit pair and ANDs the matching results together.</p><div class="u4-workbench" data-tool="equal"><div class="u4-fields"><label>Two-bit word A<select class="u4-compare-a"><option>00</option><option>01</option><option>10</option><option>11</option></select></label><label>Two-bit word B<select class="u4-compare-b"><option>00</option><option>01</option><option>10</option><option>11</option></select></label></div><div aria-live="polite" class="u4-equal-result"></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="xnor-inverter"><h3>XNOR control input behavior</h3>
+<p>For <strong>Y = ¬(A⊕SEL)</strong>, the control input determines whether the output passes or complements A:</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>SEL</th>
+<th>Output equation</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>¬A</td>
+<td>Inverts A</td>
+</tr>
+<tr>
+<td>1</td>
+<td>A</td>
+<td>Passes A unchanged</td>
+</tr>
+</tbody>
+</table></div>
+<p>This is the opposite control sense to the XOR controlled-inverter example. For A=0, SEL=1, XNOR gives 0; for A=0, SEL=0, it gives 1.</p>
+<p><strong>Comparison:</strong> XOR is HIGH for mismatch; XNOR is HIGH for match. The output polarity should be chosen to suit the downstream circuit's active-high or active-low requirements.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-inhibit" class="de-lesson" hidden="" id="inhibit"><div class="de-kicker">4.9 · Logic gates</div><h1 id="title-inhibit">Enable and inhibit logic</h1><div class="de-content"><p>A second input can act as a control signal that permits or suppresses a data signal. AND follows input A when B = 1, while OR follows A when B = 0.</p><p>The complemented versions NAND and NOR can also enable or inhibit a signal, but their enabled output is inverted. The disabled output is a constant 0 or 1 determined by the gate.</p><div class="u4-workbench" data-tool="inhibit"><div class="u4-fields"><label>Data A<select class="u4-inh-a"><option value="0">0</option><option value="1">1</option></select></label><label>Control B<select class="u4-inh-b"><option value="0">0</option><option value="1">1</option></select></label></div><div aria-live="polite" class="u4-inhibit-result"></div></div><div class="u4-study-addendum" data-asic-expansion="inhibit"><h3>1. Enable, inhibit, and pass-through behavior</h3>
+<p>A signal can be conditionally passed or suppressed with Boolean gates. For <strong>AND enable</strong>, <strong>Y = D·EN</strong>: setting EN=1 passes D, while EN=0 forces Y=0.</p>
+<p>For <strong>OR inhibit</strong>, <strong>Y = D+INH</strong>: setting INH=0 passes D, while INH=1 forces Y=1. The forced level matters: AND blocks with a zero; OR blocks with a one.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>D</th>
+<th>EN</th>
+<th>D·EN</th>
+<th>INH</th>
+<th>D+INH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2. Active-low controls and output inversion</h3>
+<p>A NAND gate gives <strong>¬(D·EN)</strong>. When EN=1, it passes the <strong>inverted</strong> data; when EN=0, it forces output 1. Similarly, NOR gives <strong>¬(D+INH)</strong>, passing inverted data when INH=0 and forcing 0 when INH=1.</p>
+<h3>3. Worked application: masking a status vector</h3>
+<p>If a collection of status bits <code>D[3:0]</code> must be output only when <code>VALID=1</code>, each bit can use <strong>Yᵢ = Dᵢ·VALID</strong>. With <code>D=1010</code> and VALID=0, output is <code>0000</code>. When VALID=1, output is <code>1010</code>.</p>
+<p><strong>Practical warning:</strong> Gating a clock using arbitrary combinational logic can introduce glitches and timing hazards. Integrated clock-gating cells or safe synchronous enable structures should be used for clock control.</p>
+<details><summary>Practice: If D=1 and AND-enable EN=0, what is the output?</summary><p><strong>0</strong>, because the AND gate forces LOW when its enable input is LOW.</p></details>
+</div></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-gate-symbols" class="de-lesson" hidden="" id="gate-symbols"><div class="de-kicker">4.2–4.8 · Logic gates</div><h1 id="title-gate-symbols">Standard logic symbols and truth tables</h1><div class="de-content"><p>A gate’s outline conveys its operation, and a small circle at a pin indicates inversion. AND/NAND share a D-shaped body; OR/NOR use a curved input boundary; XOR/XNOR add a second input-side arc.</p><p>Select a gate to explore its input-output behavior. The selected symbol and truth table update together so the correspondence remains unambiguous.</p><div class="u4-workbench" data-initial="XOR" data-three="0" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option selected="" value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option selected="" value="2">2 inputs</option><option value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-study-addendum" data-asic-expansion="gate-symbols"><h3>Recognizing the seven standard gates</h3>
+<p>The gate <strong>body shape</strong>, <strong>input connections</strong>, and <strong>inversion bubbles</strong> indicate the Boolean function. AND uses a flat-input/D-shaped body; OR uses a curved-input form. NAND and NOR add a small output bubble; XOR includes an extra curved input line; XNOR adds an output bubble to XOR; NOT uses a triangle with an output bubble.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Boolean equation</th>
+<th>Output HIGH when…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AND</td>
+<td>A·B</td>
+<td>Both inputs are 1</td>
+</tr>
+<tr>
+<td>OR</td>
+<td>A+B</td>
+<td>Either input is 1</td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>¬A</td>
+<td>A is 0</td>
+</tr>
+<tr>
+<td>NAND</td>
+<td>¬(A·B)</td>
+<td>At least one input is 0</td>
+</tr>
+<tr>
+<td>NOR</td>
+<td>¬(A+B)</td>
+<td>Both inputs are 0</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>A⊕B</td>
+<td>Inputs differ</td>
+</tr>
+<tr>
+<td>XNOR</td>
+<td>¬(A⊕B)</td>
+<td>Inputs match</td>
+</tr>
+</tbody>
+</table></div>
+<h3>How to read truth tables correctly</h3>
+<ol>
+<li>Count the <strong>independent inputs</strong>; a two-input gate has four rows, a three-input gate eight.</li>
+<li>Read each row as one instantaneous input combination.</li>
+<li>Evaluate the Boolean equation or use a known gate rule.</li>
+<li>Do not infer physical delay or glitch behavior from the static truth table alone.</li>
+</ol>
+<h3>Mini-example: output bubbles</h3>
+<p>An AND symbol <strong>without</strong> an output bubble computes A·B; adding an output bubble makes it NAND, ¬(A·B). An OR symbol with an output bubble computes NOR, ¬(A+B).</p>
+<details><summary>Practice: A curved OR symbol with an extra curved input line and output bubble is which gate?</summary><p><strong>XNOR</strong>, the complemented XOR function.</p></details>
+</div><article aria-labelledby="title-pulse-intro" class="de-sublesson" data-original-topic="pulse-intro" id="pulse-intro"><div class="de-kicker">RELATED TOPIC · PULSE INTRO</div><h2 id="title-pulse-intro">Pulsed operation · Combining changing inputs</h2><div class="de-content"><p>Logic gates operate on the instantaneously interpreted values of their inputs, whether the inputs stay constant or change over time.</p><p>In an ideal zero-delay timing diagram, each output interval is determined directly by the gate truth table. In physical circuits, propagation delay, slew and transient glitches also matter.</p><div class="u4-workbench" data-initial="AND" data-tool="wave"><div class="u4-head"><strong>Live logic waveforms</strong><span>Select a gate and edit the bit patterns</span></div><div class="u4-fields"><label>Logic function<select class="u4-wave-type"><option selected="">AND</option><option>OR</option><option>NOT</option><option>NAND</option><option>NOR</option><option>XOR</option><option>XNOR</option></select></label><label>A input pattern<input class="u4-wave-a" inputmode="numeric" maxlength="16" spellcheck="false" value="001111000011"/></label><label>B input pattern<input class="u4-wave-b" inputmode="numeric" maxlength="16" spellcheck="false" value="010101010101"/></label></div><div class="u4-wave-wrap"><svg aria-label="Input and output digital waveforms" class="u4-wave-svg" role="img" viewbox="0 0 920 310"></svg></div><p aria-live="polite" class="u4-wave-caption"></p></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="pulse-intro"><h3>From static truth tables to timing diagrams</h3>
+<p>A <strong>timing diagram</strong> draws logic levels against time. Divide the waveform into intervals where inputs A and B have stable values; determine Y in each interval from the same truth table used for DC logic analysis.</p>
+<p>For example, if the successive input pairs are <strong>00 → 01 → 11 → 10</strong>, then:</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Interval</th>
+<th>A B</th>
+<th>AND</th>
+<th>OR</th>
+<th>XOR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>t₀</td>
+<td>00</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>t₁</td>
+<td>01</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>t₂</td>
+<td>11</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>t₃</td>
+<td>10</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ideal timing examples often show outputs changing at the same instant as inputs. Real gates have <strong>propagation delay</strong>; if two inputs change nearly together, brief hazards or glitches may occur before the output settles.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-and-pulses" class="de-lesson" hidden="" id="and-pulses"><div class="de-kicker">4.10 · Logic gates</div><h1 id="title-and-pulses">AND and OR output waveforms</h1><div class="de-content"><p>The AND output rises only during intervals when every input is HIGH. OR rises when at least one input is HIGH.</p><p>Changing the input patterns below updates the complete output sequence and its step waveform.</p><div class="u4-workbench" data-initial="OR" data-tool="wave"><div class="u4-head"><strong>Live logic waveforms</strong><span>Select a gate and edit the bit patterns</span></div><div class="u4-fields"><label>Logic function<select class="u4-wave-type"><option>AND</option><option selected="">OR</option><option>NOT</option><option>NAND</option><option>NOR</option><option>XOR</option><option>XNOR</option></select></label><label>A input pattern<input class="u4-wave-a" inputmode="numeric" maxlength="16" spellcheck="false" value="001111000011"/></label><label>B input pattern<input class="u4-wave-b" inputmode="numeric" maxlength="16" spellcheck="false" value="010101010101"/></label></div><div class="u4-wave-wrap"><svg aria-label="Input and output digital waveforms" class="u4-wave-svg" role="img" viewbox="0 0 920 310"></svg></div><p aria-live="polite" class="u4-wave-caption"></p></div><div class="u4-study-addendum" data-asic-expansion="and-pulses"><h3>1. Reading AND and OR waveforms</h3>
+<p>For each time slot, compute <strong>AND = A·B</strong> and <strong>OR = A+B</strong>. AND is HIGH during the overlap of HIGH intervals; OR is HIGH during the union of HIGH intervals.</p>
+<p><strong>Worked eight-slot example</strong> (leftmost digit is the earliest time slot):</p>
+<p>A = <code>00111100</code><br/>
+B = <code>01010101</code></p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>A·B</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>A+B</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Thus the ideal AND bit sequence is <strong>00010100</strong> and the ideal OR sequence is <strong>01111101</strong>. Enter these inputs in the waveform workbench to compare the result.</p>
+<h3>2. Physical timing characteristics</h3>
+<p>Real output transitions occur after gate delay, including <strong>tPLH</strong> (LOW-to-HIGH) and <strong>tPHL</strong> (HIGH-to-LOW). Their values depend on cell type, input slew, output load, voltage, temperature, and process. A narrow pulse may be suppressed or distorted by inertial behavior and physical bandwidth.</p>
+<h3>3. Applying waveforms to logic design</h3>
+<p>Waveform analysis is important for debugging enable signals, hazard detection, synchronizing controls, and confirming that a combinational expression behaves as expected over a stimulus sequence. A waveform alone cannot establish safe clock-domain crossing behavior.</p>
+<details><summary>Practice: For A=1010 and B=1100, what is the AND sequence?</summary><p>Bitwise AND is <strong>1000</strong>: only the first time slot has both inputs HIGH.</p></details>
+</div><article aria-labelledby="title-universal-pulses" class="de-sublesson" data-original-topic="universal-pulses" id="universal-pulses"><div class="de-kicker">RELATED TOPIC · UNIVERSAL PULSES</div><h2 id="title-universal-pulses">NAND and NOR output waveforms</h2><div class="de-content"><p>NAND and NOR output waveforms are the logical inversions of AND and OR output sequences.</p><p>NAND is LOW only when both inputs are HIGH. NOR is HIGH only when both inputs are LOW.</p><div class="u4-workbench" data-initial="NAND" data-tool="wave"><div class="u4-head"><strong>Live logic waveforms</strong><span>Select a gate and edit the bit patterns</span></div><div class="u4-fields"><label>Logic function<select class="u4-wave-type"><option>AND</option><option>OR</option><option>NOT</option><option selected="">NAND</option><option>NOR</option><option>XOR</option><option>XNOR</option></select></label><label>A input pattern<input class="u4-wave-a" inputmode="numeric" maxlength="16" spellcheck="false" value="001111000011"/></label><label>B input pattern<input class="u4-wave-b" inputmode="numeric" maxlength="16" spellcheck="false" value="010101010101"/></label></div><div class="u4-wave-wrap"><svg aria-label="Input and output digital waveforms" class="u4-wave-svg" role="img" viewbox="0 0 920 310"></svg></div><p aria-live="polite" class="u4-wave-caption"></p></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="universal-pulses"><h3>NAND and NOR are complemented waveforms</h3>
+<p>The NAND output is the inverse of AND: <strong>NAND(t)=¬[A(t)·B(t)]</strong>. The NOR output is the inverse of OR: <strong>NOR(t)=¬[A(t)+B(t)]</strong>.</p>
+<p>Using the eight-slot sample above (A=<code>00111100</code>, B=<code>01010101</code>):</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Output bit sequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AND</td>
+<td><code>00010100</code></td>
+</tr>
+<tr>
+<td>NAND</td>
+<td><code>11101011</code></td>
+</tr>
+<tr>
+<td>OR</td>
+<td><code>01111101</code></td>
+</tr>
+<tr>
+<td>NOR</td>
+<td><code>10000010</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The complement relationship holds <strong>logically</strong> per stable time slot. Real inverter and gate delays can shift edges, and switching inputs may temporarily cause glitches.</p>
+</div></div></article><article aria-labelledby="title-xor-pulses" class="de-sublesson" data-original-topic="xor-pulses" id="xor-pulses"><div class="de-kicker">RELATED TOPIC · XOR PULSES</div><h2 id="title-xor-pulses">XOR and XNOR timing waveforms</h2><div class="de-content"><p>XOR highlights time intervals in which the input bits disagree. XNOR indicates equality of the inputs, yielding the complementary waveform.</p><p>With input transitions that are not perfectly aligned, a real circuit can exhibit narrow hazards that an idealized truth table cannot predict.</p><div class="u4-workbench" data-initial="XOR" data-tool="wave"><div class="u4-head"><strong>Live logic waveforms</strong><span>Select a gate and edit the bit patterns</span></div><div class="u4-fields"><label>Logic function<select class="u4-wave-type"><option>AND</option><option>OR</option><option>NOT</option><option>NAND</option><option>NOR</option><option selected="">XOR</option><option>XNOR</option></select></label><label>A input pattern<input class="u4-wave-a" inputmode="numeric" maxlength="16" spellcheck="false" value="001111000011"/></label><label>B input pattern<input class="u4-wave-b" inputmode="numeric" maxlength="16" spellcheck="false" value="010101010101"/></label></div><div class="u4-wave-wrap"><svg aria-label="Input and output digital waveforms" class="u4-wave-svg" role="img" viewbox="0 0 920 310"></svg></div><p aria-live="polite" class="u4-wave-caption"></p></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="xor-pulses"><h3>Mismatch and match intervals</h3>
+<p>XOR identifies time slots where A and B are different; XNOR identifies intervals where they are equal.</p>
+<p>For A=<code>00111100</code> and B=<code>01010101</code>:</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Bit sequence</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XOR</td>
+<td><code>01101001</code></td>
+<td>A differs from B</td>
+</tr>
+<tr>
+<td>XNOR</td>
+<td><code>10010110</code></td>
+<td>A equals B</td>
+</tr>
+</tbody>
+</table></div>
+<p>For a changing signal pair, comparing XOR and XNOR waveforms is a simple method to visualize complementary mismatch and match conditions. <strong>Physical output pulses may momentarily differ from the ideal table</strong> because inputs do not switch at exactly the same time and gates have finite delay.</p>
+<p><strong>Exercise:</strong> Two identical stable bit streams produce XOR=all zero and XNOR=all one; test this by setting A and B to the same pattern.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-three-input" class="de-lesson" hidden="" id="three-input"><div class="de-kicker">4.2–4.10 · Logic gates</div><h1 id="title-three-input">Three-input gates and parity</h1><div class="de-content"><p>AND and OR support multiple inputs naturally. A three-input XOR parity network can be formed by cascading two XOR operations: (A ⊕ B) ⊕ C.</p><p>The resulting parity output is HIGH when an odd number of the three inputs is asserted.</p><div class="u4-workbench" data-initial="XOR" data-three="1" data-tool="gate"><div class="u4-head"><strong>Gate behavior explorer</strong><span>Toggle inputs to update the symbol and truth table</span></div><div class="u4-fields"><label>Logic function<select class="u4-gate-type"><option value="AND">AND</option><option value="OR">OR</option><option value="NOT">NOT</option><option value="NAND">NAND</option><option value="NOR">NOR</option><option selected="" value="XOR">XOR</option><option value="XNOR">XNOR</option></select></label><label>Inputs<select class="u4-gate-arity"><option value="2">2 inputs</option><option selected="" value="3">3 inputs</option></select></label></div><div class="u4-toggle-row"><button data-toggle="A" type="button">A = 0</button><button data-toggle="B" type="button">B = 0</button><button data-toggle="C" type="button">C = 0</button></div><div class="u4-grid"><div class="u4-diagram"><svg aria-label="Connected logic gate and live inputs and output" class="u4-gate-svg" role="img" viewbox="0 0 620 240"></svg><p aria-live="polite" class="u4-eqn"></p></div><div aria-live="polite" class="u4-table"></div></div></div><div class="u4-study-addendum" data-asic-expansion="three-input"><h3>1. Three-input AND, OR, and XOR</h3>
+<p>Extending a gate to three inputs creates <strong>2³ = 8 input combinations</strong>. For AND, <strong>Y=A·B·C</strong>; for OR, <strong>Y=A+B+C</strong>; for XOR, <strong>P=A⊕B⊕C</strong>.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>AND</th>
+<th>OR</th>
+<th>Odd-parity XOR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2. Parity tree hardware</h3>
+<p>A three-input XOR is commonly formed by two cascaded two-input XOR gates: calculate <strong>T=A⊕B</strong>, then <strong>P=T⊕C</strong>. The output is 1 when an odd number of the inputs are HIGH.</p>
+<h3>3. Worked application: 4-bit even-parity generator</h3>
+<p>For data <code>1011</code>, the XOR of all four data bits is <strong>1</strong>. To make the XOR of the complete transmitted word equal 0, attach parity bit <strong>1</strong>. The result detects any single bit flip (and more generally any odd count of bit flips), but cannot correct the location of an error.</p>
+<h3>4. Gate fan-in and performance</h3>
+<p>A three-input gate may exist as a single standard cell or as a network of smaller gates. The implementation chosen affects transistor stack depth, fan-in capacitance, propagation delay, and output drive.</p>
+<details><summary>Practice: What is 1⊕1⊕0?</summary><p><strong>0</strong>, because two ones make even parity.</p></details>
+</div><article aria-labelledby="title-logic-design" class="de-sublesson" data-original-topic="logic-design" id="logic-design"><div class="de-kicker">RELATED TOPIC · LOGIC DESIGN</div><h2 id="title-logic-design">Two-bit equality comparator design</h2><div class="de-content"><p>Two unsigned binary words are equal when every pair of corresponding bits matches. Individual XNOR gates generate per-bit equality signals, which are then combined using AND.</p><p>For two-bit values A₁A₀ and B₁B₀: EQ = (A₁ XNOR B₁) · (A₀ XNOR B₀). This structure scales to wider comparators by reducing the per-bit match signals.</p><div class="u4-workbench" data-tool="equal"><div class="u4-fields"><label>Two-bit word A<select class="u4-compare-a"><option>00</option><option>01</option><option>10</option><option>11</option></select></label><label>Two-bit word B<select class="u4-compare-b"><option>00</option><option>01</option><option>10</option><option>11</option></select></label></div><div aria-live="polite" class="u4-equal-result"></div></div><div class="u4-study-addendum u4-study-addendum--related" data-asic-expansion="logic-design"><h3>Two-bit equality comparator: step-by-step design</h3><div aria-label="Conceptual logic signal flow" class="u4-study-diagram"><span>A₁, B₁</span><b>→</b><span>XNOR match₁</span><b>→</b><span>AND with match₀</span><b>→</b><span>EQ</span></div>
+<p>Compare the unsigned words <strong>A=A₁A₀</strong> and <strong>B=B₁B₀</strong>. Equality requires both corresponding bit pairs to match:</p>
+<p><strong>EQ = ¬(A₁⊕B₁) · ¬(A₀⊕B₀)</strong></p>
+<p>That is, form two XNOR outputs and combine them with AND.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Bit 1 match</th>
+<th>Bit 0 match</th>
+<th>EQ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>00</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>01</td>
+<td>01</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10</td>
+<td>11</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11</td>
+<td>01</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Design steps:</strong> write the truth requirement, compare each bit with XNOR, combine matches using AND, and verify representative matching/mismatching vectors. For wider words, AND-reduce all per-bit XNOR outputs.</p>
+</div></div></article></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-verilog" class="de-lesson" hidden="" id="verilog"><div class="de-kicker">HDL · HDL · Logic gates</div><h1 id="title-verilog">Verilog gate models and NAND networks</h1><div class="de-content"><p>Continuous assignments in Verilog describe simple combinational expressions. The synthesis result should preserve logical behavior, while a gate-level netlist depends on the target library.</p><p>Use simulation to verify input cases and make sure widths and active-high/active-low signals are documented.</p><div class="u4-hdl" data-lang="verilog"><div class="u4-tabs" role="tablist"><button class="active" data-code="verilog-gates" type="button">Basic gates</button><button data-code="verilog-nand" type="button">NAND-only OR</button><button data-code="verilog-compare" type="button">2-bit comparator</button></div><div class="u4-code-host"></div></div><div class="u4-study-addendum" data-asic-expansion="verilog"><h3>1. Modeling combinational gates in synthesizable Verilog</h3>
+<p>Verilog's <strong>bitwise operators</strong> implement gate functions on equal-width vectors: <code>&amp;</code> (AND), <code>|</code> (OR), <code>~</code> (NOT), <code>^</code> (XOR), and <code>~^</code> or <code>^~</code> (XNOR). A continuous <code>assign</code> expression represents combinational logic.</p>
+<pre><code class="language-verilog">module basic_gates (
+    input  wire a, b,
+    output wire y_and, y_or, y_not,
+    output wire y_nand, y_nor, y_xor, y_xnor
+);
+    assign y_and  = a &amp; b;
+    assign y_or   = a | b;
+    assign y_not  = ~a;
+    assign y_nand = ~(a &amp; b);
+    assign y_nor  = ~(a | b);
+    assign y_xor  = a ^ b;
+    assign y_xnor = ~(a ^ b);
+endmodule
+</code></pre>
+<h3>2. Testing all combinations</h3>
+<p>A simple testbench applies the four possible two-input vectors. A delay in the testbench allows combinational outputs to settle in simulation; the delay is <strong>not synthesizable hardware</strong>.</p>
+<pre><code class="language-verilog">module tb_basic_gates;
+    reg a, b;
+    wire y_and, y_or, y_not, y_nand, y_nor, y_xor, y_xnor;
+    basic_gates dut(
+        .a(a), .b(b), .y_and(y_and), .y_or(y_or),
+        .y_not(y_not), .y_nand(y_nand), .y_nor(y_nor),
+        .y_xor(y_xor), .y_xnor(y_xnor)
+    );
+    initial begin
+        {a,b}=2'b00; #10;
+        {a,b}=2'b01; #10;
+        {a,b}=2'b10; #10;
+        {a,b}=2'b11; #10;
+        $finish;
+    end
+endmodule
+</code></pre>
+<h3>3. NAND-only OR example</h3>
+<p>Using <code>nA = ~(a&amp;a)</code> and <code>nB = ~(b&amp;b)</code>, <strong>OR = ~(nA &amp; nB)</strong>. The interactive Verilog tabs above include basic and structural constructions; use these explanations to interpret the generated equations.</p>
+<h3>4. Verification and synthesis notes</h3>
+<ul>
+<li>Distinguish <strong>bitwise <code>&amp;</code></strong> from <strong>logical <code>&amp;&amp;</code></strong> and reduction <code>&amp;vector</code>.</li>
+<li>In four-state simulation, unknown <code>X</code>/high-impedance <code>Z</code> can propagate through gates; verify explicitly where required.</li>
+<li>Ensure output widths are declared correctly and that your modules have no unintended latches.</li>
+<li>A synthesis tool may map a Boolean expression into different physical standard cells while preserving its logic function.</li>
+</ul>
+<details><summary>Practice: Which Verilog operator implements XOR between two single-bit signals?</summary><p>The operator is <code>^</code>; for example <code>assign y = a ^ b;</code>.</p></details>
+</div></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-vhdl" class="de-lesson" hidden="" id="vhdl"><div class="de-kicker">HDL · HDL · Logic gates</div><h1 id="title-vhdl">VHDL logic gates and structural mapping</h1><div class="de-content"><p>VHDL concurrent signal assignments describe combinational logic, and the IEEE std_logic_1164 package provides useful resolved logic types.</p><p>Structural descriptions instantiate submodules to form a hierarchy. Synthesis tools may optimize the hierarchy while maintaining function.</p><div class="u4-hdl" data-lang="vhdl"><div class="u4-tabs" role="tablist"><button class="active" data-code="vhdl-gates" type="button">Basic gates</button><button data-code="vhdl-nand" type="button">NAND-only OR</button><button data-code="vhdl-compare" type="button">2-bit comparator</button></div><div class="u4-code-host"></div></div><div class="u4-study-addendum" data-asic-expansion="vhdl"><h3>1. Concurrent VHDL logic assignments</h3>
+<p>VHDL describes combinational gates with concurrent assignments using <code>and</code>, <code>or</code>, <code>not</code>, <code>nand</code>, <code>nor</code>, <code>xor</code>, and <code>xnor</code>. The <code>std_logic</code> type is defined in <strong>IEEE <code>std_logic_1164</code></strong>.</p>
+<pre><code class="language-vhdl">library ieee;
+use ieee.std_logic_1164.all;
+
+entity basic_gates is
+    port (
+        a, b   : in  std_logic;
+        y_and  : out std_logic;
+        y_or   : out std_logic;
+        y_not  : out std_logic;
+        y_nand : out std_logic;
+        y_nor  : out std_logic;
+        y_xor  : out std_logic;
+        y_xnor : out std_logic
+    );
+end entity;
+
+architecture rtl of basic_gates is
+begin
+    y_and  &lt;= a and b;
+    y_or   &lt;= a or b;
+    y_not  &lt;= not a;
+    y_nand &lt;= a nand b;
+    y_nor  &lt;= a nor b;
+    y_xor  &lt;= a xor b;
+    y_xnor &lt;= a xnor b;
+end architecture;
+</code></pre>
+<h3>2. NAND-only OR in VHDL</h3>
+<p>The identity <strong>A+B = ¬(¬A·¬B)</strong> can be written directly:</p>
+<pre><code class="language-vhdl">signal na, nb : std_logic;
+na &lt;= a nand a;
+nb &lt;= b nand b;
+y_or &lt;= na nand nb;
+</code></pre>
+<p>The <code>signal</code> declarations belong in the <strong>architecture declarative region before <code>begin</code></strong>, while the three assignments belong after <code>begin</code>.</p>
+<h3>3. Simulation and structural mapping</h3>
+<p>A testbench should stimulate A and B with 00, 01, 10, and 11 and assert the expected results for every gate. VHDL <code>std_logic</code> supports values beyond 0 and 1 (including <code>U</code>, <code>X</code>, and <code>Z</code>), so simulator behavior for unknown states should not be mistaken for an ordinary two-valued truth table.</p>
+<p>A structural design can instantiate components to build a larger network; synthesis may optimize or flatten it into available cells. Check the resulting netlist and timing constraints rather than assuming a particular gate topology from the RTL alone.</p>
+<details><summary>Practice: Write the VHDL concurrent assignment for XNOR.</summary><p><code>y_xnor &lt;= a xnor b;</code></p></details>
+</div></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section><section aria-labelledby="title-review" class="de-lesson" hidden="" id="review"><div class="de-kicker">Review · Review · Logic gates</div><h1 id="title-review">Check your understanding · Logic Gates</h1><div class="de-content"><p>Test the gate truth tables, inversion-bubble rules, universal gates, timing relationships and basic RTL functions. The answers are checked instantly and include brief explanations.</p><div class="u4-workbench"><div id="u4-quiz"></div><div class="u4-actions"><button class="de-button" id="u4-grade" type="button">Check answers</button><button class="de-button alt" id="u4-reset" type="button">Reset quiz</button></div><p aria-live="polite" id="u4-score"></p></div><div class="u4-study-addendum" data-asic-expansion="review"><h3>Consolidated revision sheet</h3>
+<p>This unit connects <strong>gate symbols</strong>, <strong>Boolean equations</strong>, <strong>truth tables</strong>, <strong>input timing</strong>, and <strong>HDL descriptions</strong>. A single gate truth table specifies the static Boolean function; actual electrical implementations add propagation delays, loading, and possible hazards.</p>
+<div aria-label="Scrollable learning table" class="u4-study-table" role="region" tabindex="0"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Core rule</th>
+<th>Common use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AND</td>
+<td>All inputs HIGH</td>
+<td>Enable qualification</td>
+</tr>
+<tr>
+<td>OR</td>
+<td>At least one input HIGH</td>
+<td>Request combination</td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>Invert one input</td>
+<td>Polarity conversion</td>
+</tr>
+<tr>
+<td>NAND</td>
+<td>Inverted AND</td>
+<td>Universal gate networks</td>
+</tr>
+<tr>
+<td>NOR</td>
+<td>Inverted OR</td>
+<td>Universal gate networks</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>Odd parity / mismatch</td>
+<td>Adders, parity</td>
+</tr>
+<tr>
+<td>XNOR</td>
+<td>Equality</td>
+<td>Comparators</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Worked mixed example</h3>
+<p>For <strong>A=1, B=0, C=1</strong>, calculate:</p>
+<ul>
+<li><strong>Y₁ = A·B = 0</strong>.</li>
+<li><strong>Y₂ = A+B = 1</strong>.</li>
+<li><strong>Y₃ = A⊕B⊕C = 0</strong> (two asserted inputs).</li>
+<li><strong>Y₄ = ¬(B+C) = 0</strong>.</li>
+<li><strong>Y₅ = ¬(A⊕C) = 1</strong>, because A=C.</li>
+</ul>
+<h3>Suggested study workflow</h3>
+<ol>
+<li>Reproduce all basic two-input truth tables without looking at the answers.</li>
+<li>Use the gate explorer to test edge cases such as A=B=1 for OR versus XOR.</li>
+<li>Compare NAND- and NOR-only implementations with their target Boolean expressions.</li>
+<li>Change waveform input patterns and identify matching/mismatching intervals.</li>
+<li>Review Verilog and VHDL examples, then attempt the scored quiz above.</li>
+</ol>
+<blockquote>
+<p><strong>Key takeaway:</strong> Use Boolean algebra for logical correctness, timing diagrams to understand changes over time, and HDL simulation plus synthesis to connect the equations to hardware implementations.</p>
+</blockquote>
+</div></div><div class="de-lesson-actions"><button class="de-button alt" data-action="previous" type="button">← Previous</button><button class="de-button" data-action="complete" type="button">Mark complete ✓</button><button class="de-button alt" data-action="next" type="button">Next lesson →</button></div></section></div><footer class="de-footer" role="contentinfo">ASIC-Skill Study Material | Digital Electronics  ·  © ASIC-Skill Pvt. Ltd. | Proprietary study material. All rights reserved.</footer></main></div>
+<script data-bundled-from="digital-electronics-unit04.js" defer="">
+/* ASIC-Skill Unit 04 · Interactive Logic Gates; independent SVG symbols and truth tables */
+(()=>{'use strict';
+const $=id=>document.getElementById(id), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const sections=$$('.de-lesson'), ids=sections.map(s=>s.id), nav=$$('.de-nav-item');
+const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const save=(k,d)=>{try{localStorage.setItem(k,JSON.stringify(d))}catch{}};
+let current=0, completed=new Set(load('asic-de-04-completed',[]).filter(x=>ids.includes(x)));
+function drawProgress(){let total=completed.size;const bar=$('de-progress-fill');if(bar)bar.style.width=(100*total/ids.length)+'%';$('de-progress-text').textContent=`${total} of ${ids.length} complete`;nav.forEach(n=>{n.querySelector('.de-done-mark').hidden=!completed.has(n.dataset.target)});const mark=$(ids[current])?.querySelector('[data-action=complete]');if(mark)mark.textContent=completed.has(ids[current])?'✓ Completed · Mark incomplete':'Mark complete ✓';}
+function closeSidebar(){$('de-sidebar')?.classList.remove('show');if($('de-sidebar-overlay'))$('de-sidebar-overlay').hidden=true;$('de-menu')?.setAttribute('aria-expanded','false')}
+function go(id,scroll=true){const i=ids.indexOf(id);if(i<0)return;current=i;sections.forEach(s=>s.hidden=s.id!==id);nav.forEach(n=>{const on=n.dataset.target===id;n.classList.toggle('active',on);n.setAttribute('aria-current',on?'page':'false')});$(id).querySelector('[data-action=previous]').disabled=i===0;$(id).querySelector('[data-action=next]').disabled=i===ids.length-1;$('de-route').textContent=`UNIT 04 / ${i===0?'OVERVIEW':i===ids.length-1?'REVIEW':'LESSON '+String(i).padStart(2,'0')}`;$('de-counter').textContent=`${String(i+1).padStart(2,'0')} / ${ids.length}`;document.title=$(id).querySelector('h1').textContent+' | ASIC-Skill Unit 04';if(location.hash.slice(1)!==id)history.replaceState(null,'','#'+id);drawProgress();closeSidebar();if(scroll)window.scrollTo({top:0,behavior:'instant'})}
+nav.forEach(b=>b.addEventListener('click',()=>go(b.dataset.target)));
+document.querySelector('.de-study-panel')?.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const a=b.dataset.action;if(a==='previous'&&current>0)go(ids[current-1]);else if(a==='next'&&current<ids.length-1)go(ids[current+1]);else if(a==='complete'){completed.has(ids[current])?completed.delete(ids[current]):completed.add(ids[current]);save('asic-de-04-completed',[...completed]);drawProgress()}});
+$('de-search')?.addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();nav.forEach(n=>n.hidden=!!q&&!($(n.dataset.target).textContent.toLowerCase().includes(q)))});
+$('de-menu')?.addEventListener('click',()=>{const v=$('de-sidebar').classList.toggle('show');$('de-sidebar-overlay').hidden=!v;$('de-menu').setAttribute('aria-expanded',String(v))});$('de-sidebar-overlay')?.addEventListener('click',closeSidebar);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});window.addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(ids.includes(h))go(h)});
+$('de-theme')?.addEventListener('click',()=>{document.body.classList.toggle('dark');save('asic-de-04-dark',document.body.classList.contains('dark'))});document.body.classList.toggle('dark',!!load('asic-de-04-dark',false));
+$('de-font-up')?.addEventListener('click',()=>adjustFont(1));$('de-font-down')?.addEventListener('click',()=>adjustFont(-1));let zoom=load('asic-de-04-zoom',100);function adjustFont(n){zoom=Math.max(80,Math.min(125,zoom+n*5));save('asic-de-04-zoom',zoom);document.documentElement.style.setProperty('--de-font-scale',zoom/100);const main=document.querySelector('.de-study-panel');if(main)main.style.fontSize=zoom+'%'}adjustFont(0);
+function val(g,bits){const a=bits[0]||0,b=bits[1]||0;switch(g){case'AND':return bits.reduce((x,y)=>x&y,1);case'OR':return bits.reduce((x,y)=>x|y,0);case'NAND':return 1-val('AND',bits);case'NOR':return 1-val('OR',bits);case'XOR':return bits.reduce((x,y)=>x^y,0);case'XNOR':return 1-val('XOR',bits);case'NOT':return 1-a;default:return 0}}
+const exp=(g,n)=>({AND:'Y = '+Array.from({length:n},(_,i)=>'ABC'[i]).join(' · '),OR:'Y = '+Array.from({length:n},(_,i)=>'ABC'[i]).join(' + '),NAND:'Y = ¬('+Array.from({length:n},(_,i)=>'ABC'[i]).join(' · ')+')',NOR:'Y = ¬('+Array.from({length:n},(_,i)=>'ABC'[i]).join(' + ')+')',XOR:'Y = '+Array.from({length:n},(_,i)=>'ABC'[i]).join(' ⊕ '),XNOR:'Y = ¬('+Array.from({length:n},(_,i)=>'ABC'[i]).join(' ⊕ ')+')',NOT:'Y = ¬A'})[g];
+function gateSvg(g,bits){const n=g==='NOT'?1:bits.length,y=[80,120,160];const positions=n===1?[120]:n===2?[89,151]:y;const bubble=['NAND','NOR','XNOR','NOT'].includes(g);const family=['AND','NAND'].includes(g)?'AND':['OR','NOR'].includes(g)?'OR':['XOR','XNOR'].includes(g)?'XOR':'NOT';
+let body,begin,output;
+if(family==='AND'){body='<path d="M246 52 H308 A68 68 0 0 1 308 188 H246 Z"/>';begin=246;output=376}
+else if(family==='OR'){body='<path d="M235 52 Q273 120 235 188 Q326 188 388 120 Q326 52 235 52 Z"/>';begin=255;output=388}
+else if(family==='XOR'){body='<path d="M248 52 Q286 120 248 188 Q338 188 397 120 Q338 52 248 52 Z"/><path d="M225 52 Q263 120 225 188"/>';begin=238;output=397}
+else{body='<path d="M245 54 L245 186 L377 120 Z"/>';begin=245;output=377}
+const end=bubble?output+19:output;const out=val(g,bits);
+const inputs=positions.map((py,i)=>`<path d="M86 ${py} H${begin}" stroke="${bits[i]?'#ed882c':'#15816e'}" stroke-width="4" fill="none"/><text x="20" y="${py+5}" fill="#15354b" font-weight="700" font-size="16">${'ABC'[i]} = ${bits[i]}</text>`).join('');
+const ports=positions.map((py,i)=>`<circle cx="92" cy="${py}" r="6" fill="${bits[i]?'#ef892a':'#15816e'}"/>`).join('');
+return `<rect x="6" y="6" width="608" height="228" fill="#edf8f3" rx="15"/><g>${inputs}${ports}</g><g fill="white" stroke="#122e43" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${body}${bubble?`<circle cx="${output+9}" cy="120" r="9"/>`:''}</g><path d="M${end} 120 H548" stroke="${out?'#ef892a':'#15816e'}" stroke-width="4"/><circle cx="505" cy="120" r="18" fill="${out?'#ef892a':'#d5e8e0'}"/><text x="500" y="126" fill="${out?'white':'#17384a'}" font-weight="850" font-size="18">${out}</text><text x="556" y="109" fill="#15354b" font-weight="750" font-size="16">Y</text><text x="556" y="130" fill="#15354b" font-weight="700" font-size="16">${out}</text><text x="311" y="26" text-anchor="middle" fill="#15354b" font-weight="850" font-size="19">${g}</text>`;
+}
+$$('[data-tool=gate]').forEach(w=>{let bits=[0,0,0];const g=w.querySelector('.u4-gate-type'),a=w.querySelector('.u4-gate-arity'),toggles=$$('[data-toggle]',w);a.value=w.dataset.three==='1'?'3':'2';function render(){const type=g.value,n=type==='NOT'?1:+a.value,used=bits.slice(0,n),out=val(type,used);toggles.forEach((btn,i)=>{btn.hidden=i>=n;btn.textContent=`${'ABC'[i]} = ${bits[i]}`;btn.setAttribute('aria-pressed',String(bits[i]===1))});w.querySelector('.u4-gate-svg').innerHTML=gateSvg(type,used);w.querySelector('.u4-eqn').textContent=exp(type,n)+' → '+out;const count=1<<n;let body='';for(let i=0;i<count;i++){const arr=Array.from({length:n},(_,j)=>(i>>(n-j-1))&1),v=val(type,arr);body+=`<tr class="${arr.every((x,j)=>x===used[j])?'current':''}">${arr.map(b=>`<td>${b}</td>`).join('')}<td>${v}</td></tr>`}w.querySelector('.u4-table').innerHTML=`<table><thead><tr>${Array.from({length:n},(_,j)=>`<th>${'ABC'[j]}</th>`).join('')}<th>Y</th></tr></thead><tbody>${body}</tbody></table>`}
+  toggles.forEach((b,i)=>b.addEventListener('click',()=>{bits[i]^=1;render()}));g.addEventListener('change',render);a.addEventListener('change',render);render();});
+$$('[data-tool=wave]').forEach(w=>{const gt=w.querySelector('.u4-wave-type'),ia=w.querySelector('.u4-wave-a'),ib=w.querySelector('.u4-wave-b');function render(){const g=gt.value,a=ia.value.trim(),b=ib.value.trim();const caption=w.querySelector('.u4-wave-caption');if(!/^[01]{2,16}$/.test(a)||!/^[01]{2,16}$/.test(b)||a.length!==b.length){caption.textContent='Enter A and B as binary strings of the same length (2–16 samples).';w.querySelector('svg').innerHTML='';return}const result=[...a].map((v,i)=>val(g,[+v,+b[i]])).join(''),len=a.length,unit=740/len;const waves=[['A',a],...(g==='NOT'?[]:[['B',b]]),['Y',result]];let svg='<rect x="5" y="5" width="910" height="298" rx="14" fill="#eef8f3"/>';
+    waves.forEach(([name,str],j)=>{const base=64+j*93,hi=base-27,lo=base+21;let path=`M142 ${str[0]==='1'?hi:lo}`;for(let i=0;i<len;i++){const x=142+(i+1)*unit;path+=` H${x.toFixed(1)}`;if(i<len-1&&str[i]!==str[i+1])path+=` V${(str[i+1]==='1'?hi:lo)}`}svg+=`<text x="38" y="${base+7}" fill="#15354b" font-size="24" font-weight="800">${name}</text><path d="${path}" stroke="${name==='Y'?'#e67e22':'#117d6a'}" stroke-width="4" fill="none" stroke-linejoin="round"/><line x1="142" x2="882" y1="${lo}" y2="${lo}" stroke="#bad4cf" stroke-dasharray="3 6"/>`});w.querySelector('svg').innerHTML=svg;caption.textContent=`Input A: ${a} · ${g==='NOT'?'':`Input B: ${b} · `}Output Y: ${result}. Each sample is evaluated using the ${g} truth table.`}
+  [gt,ia,ib].forEach(e=>{e.addEventListener('input',render);e.addEventListener('change',render)});render();});
+$$('[data-tool=polarity]').forEach(w=>{const s=w.querySelector('.u4-voltage'),p=w.querySelector('.u4-polarity');function f(){const high=s.value==='1',logical=p.value==='positive'?+high:+!high;w.querySelector('.u4-pol-result').innerHTML=`<strong>Physical level: ${high?'HIGH':'LOW'}</strong><p>Under <b>${p.value}</b> logic convention this corresponds to logical <b>${logical}</b>. The electrical voltage is unchanged; only the interpretation differs.</p>`}[s,p].forEach(e=>e.addEventListener('change',f));f()});
+$$('[data-tool=controlled]').forEach(w=>{const a=w.querySelector('.u4-data-a'),b=w.querySelector('.u4-data-b');function f(){const y=+a.value ^ +b.value;w.querySelector('.u4-controlled-output').innerHTML=`<strong>Y = A ⊕ B = ${y}</strong><p>Control B = ${b.value} ${+b.value?'inverts':'passes'} input A = ${a.value}.</p>`}[a,b].forEach(e=>e.addEventListener('change',f));f()});
+$$('[data-tool=equal]').forEach(w=>{const a=w.querySelector('.u4-compare-a'),b=w.querySelector('.u4-compare-b');function f(){const matches=[0,1].map(i=>Number(a.value[i]===b.value[i])),eq=matches[0]&matches[1];w.querySelector('.u4-equal-result').innerHTML=`<strong>EQ = ${eq?'1 · EQUAL':'0 · NOT EQUAL'}</strong><p>MSB comparison: ${a.value[0]} XNOR ${b.value[0]} = ${matches[0]}. LSB comparison: ${a.value[1]} XNOR ${b.value[1]} = ${matches[1]}. Their AND is ${eq}.</p>`}[a,b].forEach(e=>e.addEventListener('change',f));f()});
+$$('[data-tool=inhibit]').forEach(w=>{const a=w.querySelector('.u4-inh-a'),b=w.querySelector('.u4-inh-b');function f(){let x=+a.value,y=+b.value;w.querySelector('.u4-inhibit-result').innerHTML='<table><thead><tr><th>Gate</th><th>Expression</th><th>Output</th><th>Behavior for selected B</th></tr></thead><tbody>'+[['AND','A·B',x&y,y?'Pass A':'Force 0'],['OR','A+B',x|y,y?'Force 1':'Pass A'],['NAND','¬(A·B)',1-(x&y),y?'Invert A':'Force 1'],['NOR','¬(A+B)',1-(x|y),y?'Force 0':'Invert A']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td><strong>${r[2]}</strong></td><td>${r[3]}</td></tr>`).join('')+'</tbody></table>'}[a,b].forEach(e=>e.addEventListener('change',f));f()});
+$$('[data-tool=universal]').forEach(w=>{const typ=w.dataset.kind,t=w.querySelector('.u4-universal-target'),a=w.querySelector('.u4-universal-a'),b=w.querySelector('.u4-universal-b');function f(){let A=+a.value,B=+b.value,g=t.value;let y=g==='NOT'?1-A:g==='AND'?(A&B):A|B;let network=typ==='NAND'?({NOT:'NAND(A,A)',AND:'NAND(NAND(A,B), NAND(A,B))',OR:'NAND(NAND(A,A), NAND(B,B))'})[g]:({NOT:'NOR(A,A)',OR:'NOR(NOR(A,B), NOR(A,B))',AND:'NOR(NOR(A,A), NOR(B,B))'})[g];w.querySelector('.u4-universal-output').innerHTML=`<strong>${typ}-only implementation of ${g}</strong><p><code>${network}</code></p><p>A = ${A}, B = ${B}; evaluated output Y = <span class="u4-strong">${y}</span>. Every operation is formed using ${typ} only.</p>`}[t,a,b].forEach(e=>e.addEventListener('change',f));f()});
+$$('.u4-mini-switch').forEach(w=>{let a=0;const b=w.querySelector('button');function f(){w.querySelector('.u4-mini-state').textContent=`A = ${a}, ¬A = ${1-a}. An inversion bubble indicates NOT.`}b.addEventListener('click',()=>{a^=1;f()});f()});
+$$('[data-tool=inverter]').forEach(w=>{let a=0;const button=w.querySelector('.u4-inv-toggle');function f(){const y=1-a;button.textContent=`A = ${a} · Change input`;w.querySelector('.u4-inv-svg').innerHTML=`<rect x="6" y="5" width="585" height="326" rx="14" fill="#edf7f4"/><g stroke="#123247" stroke-width="3.8" fill="none" stroke-linecap="round"><path d="M300 32 V68 M300 112 V170 M300 218 V279 M300 170 H485 M300 279 V304 M280 72 V112 M280 184 V223"/><path d="M77 156 H153 V92 H260 M153 156 V202 H260"/><path d="M260 65 V118 M260 178 V229"/><path d="M280 72 H300 M280 112 H300 M280 184 H300 M280 223 H300"/></g><g fill="#123247" font-size="18" font-weight="800"><text x="270" y="24">VDD</text><text x="67" y="146">A = ${a}</text><text x="488" y="176">Y = ${y}</text><text x="320" y="102">PMOS · ${a?'OFF':'ON'}</text><text x="320" y="218">NMOS · ${a?'ON':'OFF'}</text><text x="270" y="324">GND</text></g><path d="M289 94 l-12 -8 v16 z" fill="${a?'#abc5c0':'#e68124'}"/><path d="M285 202 l13 -8 v16 z" fill="${a?'#e68124':'#abc5c0'}"/><circle cx="300" cy="170" r="6" fill="#0a8266"/>`;w.querySelector('.u4-inv-state').innerHTML=`<strong>A = ${a}, output Y = ${y}</strong><p>PMOS ${a?'OFF':'ON'}, NMOS ${a?'ON':'OFF'}. In steady state the conducting network drives the output to ${y?'VDD':'GND'}.</p>`}button.addEventListener('click',()=>{a^=1;f()});f()});
+const HDL={
+'verilog-gates':`module logic_gates(input wire a, b, output wire and_y, or_y, not_a, nand_y, nor_y, xor_y, xnor_y);\n  assign and_y  = a & b;\n  assign or_y   = a | b;\n  assign not_a  = ~a;\n  assign nand_y = ~(a & b);\n  assign nor_y  = ~(a | b);\n  assign xor_y  = a ^ b;\n  assign xnor_y = ~(a ^ b);\nendmodule`,
+'verilog-nand':`module or_via_nand(input wire a, b, output wire y);\n  wire not_a, not_b;\n  nand u0(not_a, a, a);\n  nand u1(not_b, b, b);\n  nand u2(y, not_a, not_b);\nendmodule`,
+'verilog-compare':`module compare2(input wire [1:0] a,b, output wire eq);\n  wire bit1_equal, bit0_equal;\n  xnor u1(bit1_equal, a[1], b[1]);\n  xnor u0(bit0_equal, a[0], b[0]);\n  and  u2(eq, bit1_equal, bit0_equal);\nendmodule`,
+'vhdl-gates':`library ieee;\nuse ieee.std_logic_1164.all;\nentity logic_gates is\n  port(a,b: in std_logic; and_y,or_y,not_a,nand_y,nor_y,xor_y,xnor_y: out std_logic);\nend entity;\narchitecture rtl of logic_gates is\nbegin\n  and_y <= a and b;\n  or_y <= a or b;\n  not_a <= not a;\n  nand_y <= a nand b;\n  nor_y <= a nor b;\n  xor_y <= a xor b;\n  xnor_y <= a xnor b;\nend architecture;`,
+'vhdl-nand':`library ieee;\nuse ieee.std_logic_1164.all;\nentity or_via_nand is\n  port(a,b: in std_logic; y: out std_logic);\nend entity;\narchitecture rtl of or_via_nand is\n  signal na,nb: std_logic;\nbegin\n  na <= a nand a;\n  nb <= b nand b;\n  y <= na nand nb;\nend architecture;`,
+'vhdl-compare':`library ieee;\nuse ieee.std_logic_1164.all;\nentity compare2 is\n  port(a,b: in std_logic_vector(1 downto 0); eq: out std_logic);\nend entity;\narchitecture rtl of compare2 is\nbegin\n  eq <= (a(1) xnor b(1)) and (a(0) xnor b(0));\nend architecture;`
+};
+$$('.u4-hdl').forEach(w=>{const tabs=$$('[data-code]',w),box=w.querySelector('.u4-code-host');function f(key){box.innerHTML=`<div class="u4-code-head"><strong>${esc(key.toUpperCase())}</strong><button type="button" class="u4-copy">Copy code</button></div><pre><code>${esc(HDL[key])}</code></pre>`;tabs.forEach(t=>{t.classList.toggle('active',t.dataset.code===key);t.setAttribute('aria-selected',String(t.dataset.code===key))})}tabs.forEach(t=>t.addEventListener('click',()=>f(t.dataset.code)));box.addEventListener('click',async e=>{if(!e.target.closest('.u4-copy'))return;try{await navigator.clipboard.writeText(box.querySelector('code').textContent);box.querySelector('.u4-copy').textContent='Copied ✓'}catch{box.querySelector('.u4-copy').textContent='Select text to copy'}});f(tabs[0].dataset.code)});
+const quiz=[
+['When is a two-input AND output HIGH?',['Either input is HIGH','Both inputs are HIGH','Both inputs are LOW'],1,'AND requires all inputs to be HIGH.'],
+['When is an OR gate LOW?',['Both inputs are LOW','Either input is HIGH','Both inputs are HIGH'],0,'OR is LOW only when none of its inputs is HIGH.'],
+['NAND of 1 and 1 is…',['1','0','Unknown'],1,'NAND complements the AND result.'],
+['NOR of 0 and 0 is…',['0','1','Unknown'],1,'NOR complements the OR result.'],
+['Which gate outputs HIGH for unequal bits?',['XNOR','AND','XOR'],2,'XOR is an inequality detector.'],
+['Which gate outputs HIGH for equal bits?',['XNOR','OR','NAND'],0,'XNOR indicates equality.'],
+['Which pair of gates is functionally complete individually?',['XOR and XNOR','AND and OR','NAND and NOR'],2,'NAND-only or NOR-only networks can realize NOT, AND and OR.'],
+['Tie both NAND inputs to A. The output is…',['A','¬A','0'],1,'NAND(A,A) = ¬A.'],
+['For XOR, A ⊕ 1 equals…',['A','¬A','0'],1,'XOR with one conditionally inverts the other input.'],
+['A 3-input XOR is HIGH if…',['One or three input bits are HIGH','Exactly two inputs are HIGH','All inputs match'],0,'Odd-number-of-ones parity produces HIGH.'],
+['An inversion bubble on the output of OR makes…',['AND','NOR','XOR'],1,'OR with output inversion is NOR.'],
+['To enable A through an AND gate, control B is…',['0','1','Floating'],1,'With B=1, A·B = A.'],
+['A positive-logic system maps HIGH voltage to…',['Logical 1','Logical 0','Invalid'],0,'Positive logic treats the higher of the two levels as logical 1.'],
+['A two-bit equality comparator typically combines two XNOR matches with…',['OR','AND','NOT'],1,'All corresponding bits must match for equality.']];
+const quizbox=$('u4-quiz');if(quizbox)quizbox.innerHTML=quiz.map((q,i)=>`<fieldset class="u4-question"><legend>${i+1}. ${esc(q[0])}</legend>${q[1].map((x,j)=>`<label><input type="radio" name="u4q${i}" value="${j}">${esc(x)}</label>`).join('')}<p class="u4-feedback" id="u4-feedback-${i}" hidden></p></fieldset>`).join('');
+$('u4-grade')?.addEventListener('click',()=>{let score=0;quiz.forEach((q,i)=>{const chosen=document.querySelector(`input[name=u4q${i}]:checked`),correct=chosen&&Number(chosen.value)===q[2];if(correct)score++;const fb=$(`u4-feedback-${i}`);fb.hidden=false;fb.textContent=`${correct?'Correct':'Review'} · ${q[3]}`});$('u4-score').textContent=`Score: ${score} / ${quiz.length}.`});$('u4-reset')?.addEventListener('click',()=>{$$('#u4-quiz input:checked').forEach(e=>e.checked=false);$$('#u4-quiz .u4-feedback').forEach(e=>e.hidden=true);$('u4-score').textContent='Quiz reset.'});
+const initial=decodeURIComponent(location.hash.slice(1));go(ids.includes(initial)?initial:ids[0],false);
+})();
+
+</script><script data-bundled-from="digital-electronics-unit-switcher.js" defer="">
+/* Shared unit switcher for ASIC-Skill Digital Electronics. */
+(() => {
+  'use strict';
+  const select = document.getElementById('de-unit-switch');
+  if (!select) return;
+  select.addEventListener('change', () => {
+    const file = select.value;
+    // Use a fixed allowlist: no arbitrary redirect targets from markup.
+    if (file === 'digital-electronics.html' || file === 'digital-electronics-unit02.html' || file === 'digital-electronics-unit03.html' || file === 'digital-electronics-unit04.html' || file === 'digital-electronics-unit05.html' || file === 'digital-electronics-unit06.html' || file === 'digital-electronics-unit07.html' || file === 'digital-electronics-unit08.html' || file === 'digital-electronics-unit09.html' || file === 'digital-electronics-unit10.html' || file === 'digital-electronics-unit11.html' || file === 'digital-electronics-unit12.html' || file === 'digital-electronics-unit13.html' || file === 'digital-electronics-unit14.html' || file === 'digital-electronics-unit15.html' || file === 'digital-electronics-unit16.html' || file === 'digital-electronics-unit17.html' || file === 'digital-electronics-unit18.html' || file === 'digital-electronics-unit19.html') {
+      window.location.assign(file);
+    }
+  });
+})();
+
+</script><script defer="" src="asic-skill-consistency.js?v=37.1.07"></script><script defer="" src="content-editor.js?v=37.1.12"></script></body></html>

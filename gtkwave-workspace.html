@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASIC-Skill — Waveform Workspace</title><style data-bundled-from="gtkwave-workspace.css">
+:root{font-family:Inter,system-ui,-apple-system,sans-serif;color:#e5f4ff;background:#061321;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0}main{margin:auto;max-width:1800px;padding:20px 24px}header{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #274960;padding-bottom:17px}h1{font-size:24px;margin:6px 0}.eyebrow{font-size:11px;color:#43cffa;font-weight:800;letter-spacing:1.6px}p{margin:3px 0 0;color:#a7c9de;font-size:13px}button,.import{background:#16354d;color:#e3f5ff;border:1px solid #376b89;border-radius:8px;padding:9px 13px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer}button:hover,.import:hover{background:#235374}button:disabled{opacity:.45;cursor:not-allowed}.import input{display:none}.toolbar{margin:16px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}.toolbar strong{font-size:14px}.buttons,.wave-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}#gtkw-status{font-size:12px;color:#93c3d9;flex:1}.wave-body{display:flex;min-height:500px;border:1px solid #2b536b;border-radius:12px;overflow:hidden;background:#061420}.wave-sidebar{width:310px;min-width:190px;max-width:42%;padding:11px;background:#10283a;display:flex;flex-direction:column;gap:10px;border-right:1px solid #315670}.wave-sidebar>label{font-size:13px;font-weight:700}.wave-sidebar input{padding:8px 9px;color:#e5f5ff;background:#071925;border:1px solid #37617b;border-radius:6px}#ghdl-gtkw-signal-list{overflow:auto;max-height:calc(100vh - 245px);min-height:350px}.ghdl-wave-header{display:flex;justify-content:space-between;font:11px monospace;border-bottom:1px solid #43617e;padding:5px 2px}.wave-signal{display:grid;grid-template-columns:22px minmax(140px,1fr) 60px;min-width:max-content;align-items:center;border-bottom:1px solid #21384d;gap:5px;padding:7px 3px;font:12px ui-monospace,monospace;cursor:pointer}.wave-signal span{white-space:nowrap}.wave-signal strong{color:#abffc8;text-align:right}.wave-main{flex:1;min-width:0;position:relative}.wave-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:9px 12px;border-bottom:1px solid #35536a;color:#b6ddec;font-size:12px}#ghdl-gtkw-cursor{min-height:38px;padding:10px;background:#123046;color:#ffcd8f;font:12px ui-monospace,monospace}#ghdl-gtkw-scroll{overflow:auto;max-height:calc(100vh - 210px);min-height:410px;position:relative}#ghdl-gtkw-canvas{display:block;touch-action:none;cursor:crosshair}#ghdl-gtkw-empty{position:absolute;top:55px;left:25px;max-width:65%;color:#abcbd9;font-size:14px;line-height:1.7}footer{margin-top:16px;font-size:12px;color:#92b5c6}@media(max-width:750px){main{padding:10px}header{flex-direction:column;align-items:start}.wave-body{flex-direction:column}.wave-sidebar{width:100%;max-width:100%;min-width:0;border-right:0;border-bottom:1px solid #315670}#ghdl-gtkw-signal-list{max-height:220px;min-height:120px}}
+
+/* Resizable Objects panel; always retain usable waveform width */
+.wave-body>.wave-sidebar{flex:0 0 auto;max-width:none;width:310px;min-width:165px;overflow:auto}
+.asic-wave-resizer{flex:0 0 11px;width:11px;background:#355d76;border-left:2px solid #081e2a;border-right:2px solid #081e2a;cursor:col-resize;touch-action:none}
+.asic-wave-resizer:hover,.asic-wave-resizer:focus{background:#53d6ed;outline:1px solid #abeef4}
+@media(max-width:750px){.wave-body>.wave-sidebar{width:100%!important}.asic-wave-resizer{display:none}}
+
+</style></head>
+<body><main>
+  <header><div><div class="eyebrow">ASIC-SKILL · VCD WAVEFORM ANALYSIS</div><h1>GTKWave-compatible Waveform Workspace</h1><p>Browser-based viewer with signal values, time cursor, zoom, and GTKWave export.</p></div><button id="return-lab" type="button">← Return to EDA Lab</button></header>
+  <div class="toolbar"><strong id="wave-origin">No waveform loaded</strong><span id="gtkw-status" role="status"></span><div class="buttons"><label class="import">Open VCD <input id="open-vcd" type="file" accept=".vcd,text/plain"></label><button id="refresh-wave" type="button">Refresh from Lab</button><button id="gtkw-export" type="button" disabled>Export GTKWave ZIP</button></div></div>
+  <section class="wave-body">
+    <aside class="wave-sidebar"><label for="ghdl-gtkw-search">Objects · Name / Value</label><input id="ghdl-gtkw-search" type="search" placeholder="Filter signals…"><div class="ghdl-wave-header"><strong>Signal</strong><strong>Value</strong></div><div id="ghdl-gtkw-signal-list"></div></aside>
+    <div class="asic-wave-resizer" role="separator" tabindex="0" aria-label="Resize waveform signals panel" aria-orientation="vertical"></div>
+    <div class="wave-main"><div class="wave-toolbar"><span id="ghdl-gtkw-status">No waveform</span><div class="wave-controls"><button id="ghdl-gtkw-zoom-out" type="button">−</button><span id="ghdl-gtkw-zoom-value">1.0×</span><button id="ghdl-gtkw-zoom-in" type="button">+</button><button id="ghdl-gtkw-fit" type="button">Fit</button><button id="ghdl-gtkw-download" type="button" disabled>Export VCD</button></div></div><div id="ghdl-gtkw-cursor">Click or drag to place the time cursor</div><div id="ghdl-gtkw-scroll"><canvas id="ghdl-gtkw-canvas" tabindex="0" aria-label="Digital signal waveform with draggable time cursor"></canvas><p id="ghdl-gtkw-empty">Run cocotb or GHDL, then open this waveform workspace. You may also open a local VCD file.</p></div></div>
+  </section>
+  <footer>This is an ASIC-Skill browser viewer; the ZIP export opens in the native GTKWave desktop application. No remote GTKWave GUI is embedded.</footer>
+</main><script  data-bundled-from="waveform-viewer.js">
+/* ASIC-Skill v37.0.11 — minimal VCD waveform viewer (no third-party CDN).
+ * Parses bounded server-provided VCD data in the student's browser. */
+(function(root){
+'use strict';
+const clamp=(n,lo,hi)=>Math.min(hi,Math.max(lo,n));
+const $=id=>document.getElementById(id);
+function parseVCD(vcd){
+  if(typeof vcd!=='string'||vcd.length>1800000)throw Error('Unsupported waveform size.');
+  let t=0, inDefs=true, timescale='1ns', scope=[], total=0;
+  const signals=[], ids=new Map(), lines=vcd.split(/\r?\n/);
+  for(let i=0;i<lines.length;i++){
+    const s=lines[i].trim();
+    if(!s)continue;
+    if(inDefs){
+      if(s.startsWith('$timescale')){
+        let combined=s;
+        while(!combined.includes('$end') && i+1<lines.length)combined+=' '+lines[++i].trim();
+        timescale=(combined.replace(/\$timescale|\$end/g,'').trim().replace(/\s+/g,''))||'1ns';
+      }else if(s.startsWith('$scope')){const m=s.match(/^\$scope\s+\S+\s+(\S+)/);if(m)scope.push(m[1]);}
+      else if(s.startsWith('$upscope'))scope.pop();
+      else if(s.startsWith('$var')){
+        const m=s.match(/^\$var\s+\S+\s+(\d+)\s+(\S+)\s+(.+?)\s+\$end/);
+        if(m && signals.length<120){
+          const sig={id:m[2],width:+m[1],name:[...scope,m[3].trim().replace(/\s+/g,'')].join('.'),events:[]};
+          signals.push(sig); if(!ids.has(m[2]))ids.set(m[2],[]);ids.get(m[2]).push(sig);
+        }
+      }else if(s.startsWith('$enddefinitions'))inDefs=false;
+      continue;
+    }
+    if(s[0]==='#'){const v=Number(s.slice(1));if(Number.isFinite(v))t=v;continue;}
+    if(s[0]==='$')continue;
+    let id='',value='';
+    if(/^[01xXzZ]/.test(s)){value=s[0].toLowerCase();id=s.slice(1).trim();}
+    else if(/^[brBR]/.test(s)){const k=s.split(/\s+/);value=k[0].slice(1).toLowerCase();id=k[1]||'';}
+    else continue;
+    for(const sig of ids.get(id)||[]){
+      if(total>160000)break;
+      const prev=sig.events[sig.events.length-1];
+      if(!prev||prev[1]!==value){sig.events.push([t,value]);total++;}
+    }
+  }
+  if(inDefs||!signals.length)throw Error('This VCD has no readable signal declarations.');
+  const latest=Math.max(1,t,...signals.flatMap(sig=>sig.events.length?[sig.events[sig.events.length-1][0]]:[]));
+  return {signals,timescale,end:latest};
+}
+// Only the cocotb VCD viewer enables bus expansion. Bits are derived from actual
+// VCD bus transitions, with the rightmost encoded bit representing the LSB.
+function busIndices(sig){
+  if(sig.width<=1)return [];
+  const range=sig.name.match(/\[(-?\d+):(-?\d+)\]$/);
+  if(range){const msb=Number(range[1]),lsb=Number(range[2]);
+    if(Math.abs(msb-lsb)+1===sig.width)return Array.from({length:sig.width},(_,k)=>lsb+k*(msb>=lsb?1:-1));
+  }
+  return Array.from({length:sig.width},(_,k)=>k);
+}
+function bitFromValue(value,width,offset){
+  // VCD vectors can omit their leading bits. Extend with the leading unknown
+  // or with zero for ordinary binary numbers, then select in LSB-first order.
+  const data=String(value||'?').toLowerCase();
+  const fill=/^[xz]/.test(data)?data[0]:'0';
+  return data.padStart(width,fill).slice(-width).charAt(width-1-offset)||'x';
+}
+function expandBusSignal(sig,bit,offset){
+  const events=[];
+  for(const [t,value] of sig.events){const v=bitFromValue(value,sig.width,offset);
+    if(!events.length||events[events.length-1][1]!==v)events.push([t,v]);
+  }
+  return {name:sig.name.replace(/\[[-\d]+:[-\d]+\]$/, '')+'['+bit+']',width:1,events,
+    parentName:sig.name,bitIndex:bit};
+}
+function binLabel(bits,width){
+  if(/[^01]/.test(bits))return bits;
+  if(width===1)return bits;
+  try{return '0x'+BigInt('0b'+bits).toString(16).toUpperCase();}catch{return bits;}
+}
+class ASICWaveViewer{
+  constructor(prefix='wave-'){this.prefix=prefix;this.data=null;this.raw='';this.zoom=1;this.query='';this.selected=new Set();this.canvas=this.el('canvas');this.host=this.el('scroll');this.signalList=this.el('signal-list');
+    this.cursorTime=null;this.dragging=false;this.objectValues=[];this.expandedBuses=new Set();this.bitSelections=new Set();this.bitCache=new Map();
+    const pointTime=e=>{
+      const rect=this.canvas.getBoundingClientRect();
+      const canvasX=(e.clientX-rect.left)*(this.canvas.width/Math.max(rect.width,1));
+      return clamp((canvasX-this.left)/this.pxPerTick,0,this.data.end);
+    };
+    this.canvas?.addEventListener('pointerdown',e=>{
+      if(!this.data)return;
+      this.dragging=true;this.canvas.setPointerCapture?.(e.pointerId);
+      this.cursorTime=pointTime(e);this.draw();
+    });
+    this.canvas?.addEventListener('pointermove',e=>{
+      if(!this.data)return;
+      if(this.dragging){this.cursorTime=pointTime(e);this.draw();}
+      else if(this.cursorTime===null){this.el('cursor').textContent=`Hover time ${pointTime(e).toFixed(2)} ${this.data.timescale}`;}
+    });
+    this.canvas?.addEventListener('pointerup',()=>{this.dragging=false;});
+    this.canvas?.addEventListener('pointercancel',()=>{this.dragging=false;});
+    this.canvas?.addEventListener('keydown',e=>{
+      if(!this.data||!['ArrowLeft','ArrowRight'].includes(e.key))return;
+      e.preventDefault();this.cursorTime=clamp((this.cursorTime??0)+(e.key==='ArrowRight'?1:-1)*this.data.end/100,0,this.data.end);this.draw();
+    });
+    this.el('zoom-in')?.addEventListener('click',()=>this.setZoom(this.zoom*1.65));
+    this.el('zoom-out')?.addEventListener('click',()=>this.setZoom(this.zoom/1.65));
+    this.el('fit')?.addEventListener('click',()=>this.setZoom(1));
+    this.el('search')?.addEventListener('input',e=>{this.query=e.target.value.toLowerCase();this.renderList();});
+    this.el('download')?.addEventListener('click',()=>this.download());
+    // Keep the pinned signal rows and waveform vertically synchronized when
+    // expanding enough vector bits to require vertical scrolling.
+    this.host?.addEventListener('scroll',()=>{
+      if(this.isCocotb() && this.signalList && this.signalList.scrollTop!==this.host.scrollTop)
+        this.signalList.scrollTop=this.host.scrollTop;
+    });
+    this.signalList?.addEventListener('scroll',()=>{
+      if(this.isCocotb() && this.host && this.host.scrollTop!==this.signalList.scrollTop)
+        this.host.scrollTop=this.signalList.scrollTop;
+    });
+  }
+  el(id){return $(this.prefix+id)}
+  clear(message='Run a test to generate an interactive waveform.'){
+    this.raw='';this.data=null;this.cursorTime=null;this.objectValues=[];this.selected.clear();this.expandedBuses.clear();this.bitSelections.clear();this.bitCache.clear();this.signalList.textContent='';const ctx=this.canvas.getContext('2d');ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+    this.el('empty').hidden=false;this.el('empty').textContent=message;this.el('download').disabled=true;this.el('status').textContent='No waveform loaded';
+  }
+  show(vcd){
+    this.data=parseVCD(vcd);this.raw=vcd;this.expandedBuses.clear();this.bitSelections.clear();this.bitCache.clear();this.selected=new Set(this.data.signals.slice(0,16).map(x=>x.name));this.zoom=1;this.cursorTime=0;this.query='';this.el('search').value='';
+    this.el('empty').hidden=true;this.el('download').disabled=false;
+    this.el('status').textContent=`${this.data.signals.length} signals · ${this.data.timescale} timescale · ${this.data.end} ticks`;
+    this.renderList();this.draw();
+  }
+  isCocotb(){return this.prefix==='wave-';}
+  busChildren(sig){
+    if(!this.isCocotb()||sig.width<=1||sig.width>64)return [];
+    if(!this.bitCache.has(sig.name)){
+      this.bitCache.set(sig.name,busIndices(sig).map((bit,offset)=>expandBusSignal(sig,bit,offset)));
+    }
+    return this.bitCache.get(sig.name);
+  }
+  activeSignals(){
+    if(!this.data)return [];
+    const traces=[];
+    for(const sig of this.data.signals){
+      if(this.selected.has(sig.name))traces.push(sig);
+      if(this.expandedBuses.has(sig.name)){
+        for(const bit of this.busChildren(sig)){
+          if(this.bitSelections.has(bit.name))traces.push(bit);
+        }
+      }
+    }
+    return traces.slice(0,100);
+  }
+  renderOtherSignalList(){
+    if(!this.data)return;
+    this.signalList.replaceChildren();
+    for(const sig of this.data.signals){
+      if(!sig.name.toLowerCase().includes(this.query))continue;
+      const label=document.createElement('label');label.className='wave-signal';
+      const cb=document.createElement('input');cb.type='checkbox';cb.checked=this.selected.has(sig.name);
+      cb.onchange=()=>{if(cb.checked)this.selected.add(sig.name);else this.selected.delete(sig.name);this.draw();};
+      const text=document.createElement('span');text.textContent=sig.name; text.title=sig.name;
+      label.append(cb,text);
+      if(this.prefix.startsWith('ghdl')){
+        const value=document.createElement('strong');value.className='ghdl-signal-value';value.dataset.signal=sig.name;
+        value.textContent=this.valueAt(sig,this.cursorTime??0);label.append(value);
+        label.addEventListener('click',e=>{if(e.target===cb)return;
+          if(e.target===text||e.target===value){this.cursorTime=this.cursorTime??0;this.draw();}});
+      }
+      this.signalList.append(label);
+    }
+  }
+  renderList(){
+    if(!this.isCocotb())return this.renderOtherSignalList();
+    if(!this.data)return;
+    this.signalList.replaceChildren();
+    // Signal row order is identical to the waveform's expanded trace order.
+    // The name pane never scrolls horizontally when its divider is dragged.
+    const appendSignal=(sig,child=false)=>{
+      const row=document.createElement('div');row.className='wave-signal-row'+(child?' wave-bit-row':'');
+      if(!child && this.isCocotb() && sig.width>1 && sig.width<=64){
+        const toggle=document.createElement('button');toggle.type='button';toggle.className='wave-bus-toggle';
+        const expanded=this.expandedBuses.has(sig.name);
+        toggle.textContent=expanded?'▾':'▸';toggle.title=(expanded?'Collapse ':'Expand ')+sig.name;
+        toggle.setAttribute('aria-label',toggle.title);toggle.setAttribute('aria-expanded',String(expanded));
+        toggle.addEventListener('click',()=>{
+          if(expanded)this.expandedBuses.delete(sig.name);
+          else{this.expandedBuses.add(sig.name);for(const bit of this.busChildren(sig))this.bitSelections.add(bit.name);}
+          this.renderList();this.draw();
+        });row.append(toggle);
+      }else if(this.isCocotb()){
+        const spacer=document.createElement('span');spacer.className='wave-bus-spacer';row.append(spacer);
+      }
+      const label=document.createElement('label');label.className='wave-signal';
+      const cb=document.createElement('input');cb.type='checkbox';cb.checked=child?this.bitSelections.has(sig.name):this.selected.has(sig.name);
+      cb.onchange=()=>{const set=child?this.bitSelections:this.selected;
+        if(cb.checked)set.add(sig.name);else set.delete(sig.name);this.draw();};
+      const text=document.createElement('span');text.textContent=sig.name; text.title=sig.name;
+      label.append(cb,text);
+      if(this.prefix.startsWith('ghdl')){
+        const value=document.createElement('strong');value.className='ghdl-signal-value';value.dataset.signal=sig.name;
+        value.textContent=this.valueAt(sig,this.cursorTime??0);label.append(value);
+        label.addEventListener('click',e=>{if(e.target===cb)return;
+          if(e.target===text||e.target===value){this.cursorTime=this.cursorTime??0;this.draw();}});
+      }
+      row.append(label);this.signalList.append(row);
+    };
+    for(const sig of this.data.signals){
+      if(!sig.name.toLowerCase().includes(this.query))continue;
+      appendSignal(sig);
+      if(this.expandedBuses.has(sig.name))for(const bit of this.busChildren(sig))appendSignal(bit,true);
+    }
+  }
+  setZoom(z){this.zoom=clamp(z,0.75,20);this.draw();}
+  valueAt(signal,time){
+    let value='?';for(const [t,v] of signal.events){if(t>time)break;value=v;}
+    return binLabel(value,signal.width);
+  }
+  draw(){
+    if(!this.data)return;
+    const active=this.isCocotb()?this.activeSignals():this.data.signals.filter(sig=>this.selected.has(sig.name)).slice(0,50);
+    const rowH=38, top=38, height=Math.max(100,top+active.length*rowH+12);
+    const available=Math.max(680,this.host.clientWidth-20);
+    this.left=16;this.pxPerTick=(available-this.left-20)/this.data.end*this.zoom;
+    const width=Math.min(16000,Math.max(available, this.left+this.data.end*this.pxPerTick+20));
+    this.pxPerTick=(width-this.left-20)/this.data.end;
+    this.canvas.width=Math.ceil(width);this.canvas.height=height;
+    this.canvas.style.width=`${width}px`;this.canvas.style.height=`${height}px`;
+    const g=this.canvas.getContext('2d');g.clearRect(0,0,width,height);g.fillStyle='#061420';g.fillRect(0,0,width,height);
+    const ticks=10;
+    g.font='11px Consolas,monospace';g.strokeStyle='#254157';g.fillStyle='#aac4d8';g.lineWidth=1;
+    for(let k=0;k<=ticks;k++){const x=this.left+(width-this.left-20)*k/ticks;g.beginPath();g.moveTo(x,top-7);g.lineTo(x,height);g.stroke();g.fillText(`${(this.data.end*k/ticks).toFixed(1)}`,x+3,17);}
+    for(let i=0;i<active.length;i++){
+      const sig=active[i],y=top+i*rowH,events=sig.events;
+      g.fillStyle=i%2?'#0d2234':'#0a1c2b';g.fillRect(0,y,width,rowH);g.fillStyle='#6b8aa0';g.fillText(String(i+1),3,y+23);
+      g.strokeStyle='#2b455a';g.beginPath();g.moveTo(0,y+rowH);g.lineTo(width,y+rowH);g.stroke();
+      if(!events.length)continue;
+      const binary=sig.width===1;g.strokeStyle=binary?'#4fe0b1':'#71bafa';g.lineWidth=1.7;g.beginPath();
+      if(binary){
+        const yp=val=>val==='1'?y+8:val==='0'?y+29:y+19;
+        let prev=events[0][1],cursorX=this.left;
+        g.moveTo(this.left,yp(prev));
+        for(const [time,value] of events){const x=this.left+time*this.pxPerTick;g.lineTo(x,yp(prev));g.lineTo(x,yp(value));prev=value;cursorX=x;}
+        g.lineTo(width-20,yp(prev));g.stroke();
+      }else{
+        for(let k=0;k<events.length;k++){
+          const [time,value]=events[k],x=this.left+time*this.pxPerTick;
+          const next=k+1<events.length?this.left+events[k+1][0]*this.pxPerTick:width-20;
+          const end=Math.max(x,next);
+          g.strokeStyle='#76b8fb';g.strokeRect(x,y+8,Math.max(0,end-x),21);
+          if(end-x>28){g.fillStyle='#d5eaff';g.fillText(binLabel(value,sig.width),x+5,y+23,end-x-8);}
+        }
+      }
+    }
+    if(!active.length){g.fillStyle='#9bb7d3';g.fillText('Select one or more signals on the left.',28,70);}
+    if(this.cursorTime!==null){
+      const x=this.left+this.cursorTime*this.pxPerTick;
+      g.save();g.strokeStyle='#ffba66';g.lineWidth=2;g.setLineDash([6,3]);g.beginPath();g.moveTo(x,top-10);g.lineTo(x,height);g.stroke();g.setLineDash([]);
+      g.fillStyle='#ffba66';g.beginPath();g.moveTo(x-6,top-10);g.lineTo(x+6,top-10);g.lineTo(x,top);g.closePath();g.fill();g.restore();
+      const values=active.slice(0,4).map(sig=>sig.name.split('.').pop()+'='+this.valueAt(sig,this.cursorTime));
+      this.el('cursor').textContent=`Time: ${this.cursorTime.toFixed(this.cursorTime<100?2:0)} ${this.data.timescale} | ${values.join('  ')}`;
+    }else this.el('cursor').textContent='Click/drag waveform to set the time cursor';
+    if(this.prefix.startsWith('ghdl')){
+      for(const el of this.signalList.querySelectorAll('.ghdl-signal-value')){
+        const sig=this.data.signals.find(item=>item.name===el.dataset.signal);
+        if(sig)el.textContent=this.valueAt(sig,this.cursorTime??0);
+      }
+    }
+    this.el('zoom-value').textContent=`${this.zoom.toFixed(1)}×`;
+  }
+  download(){if(!this.raw)return;const blob=new Blob([this.raw],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='asic_skill_waveform.vcd';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+}
+root.ASICWaveViewer=ASICWaveViewer;
+root.ASICParseVCD=parseVCD;
+})(window);
+
+</script><script  data-bundled-from="gtkwave-integration.js">
+/* ASIC-Skill: GTKWave-compatible VCD and .gtkw export (no external dependencies).
+ * Browser waveforms use ASICWaveViewer, not the GTKWave desktop application.
+ */
+(function(root){
+'use strict';
+const encoder=new TextEncoder();
+function inspect(vcd){
+  if(typeof root.ASICParseVCD!=='function')throw new Error('Waveform parser is not available.');
+  return root.ASICParseVCD(vcd);
+}
+function sanitizeSelected(wave,selected){
+  const allow=new Set((wave.signals||[]).map(s=>s.name));
+  const requested=Array.isArray(selected)?selected.filter(x=>allow.has(x)):[];
+  return requested.length?Array.from(new Set(requested)):wave.signals.slice(0,64).map(x=>x.name);
+}
+function createSavefile(vcd,settings={}){
+  const wave=inspect(vcd);
+  const names=sanitizeSelected(wave,settings.selected);
+  const byName=new Map(wave.signals.map(s=>[s.name,s]));
+  const marker=Math.min(wave.end,Math.max(0,Math.floor(Number(settings.marker)||0)));
+  const lines=[
+    '[*] GTKWave Analyzer save file generated by ASIC-Skill',
+    '[dumpfile] wave.vcd',
+    '[timestart] 0',
+    '[size] 1200 720',
+    '[pos] -1 -1',
+    '[sst_width] 290',
+    '[signals_width] 160',
+    '[sst_expanded] 1',
+    '[marker] '+marker
+  ];
+  const scopes=new Set();
+  for(const name of names){
+    const levels=name.split('.');
+    for(let i=1;i<levels.length;i++)scopes.add(levels.slice(0,i).join('.')+'.');
+  }
+  Array.from(scopes).sort().forEach(s=>lines.push('[treeopen] '+s));
+  for(const name of names){
+    // GTKWave trace formats: @28 digital / @22 bit vector.
+    lines.push(byName.get(name).width>1?'@22':'@28');
+    lines.push(name.replace(/[\r\n]/g,''));
+  }
+  return lines.join('\n')+'\n';
+}
+const table=(()=>{const arr=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?0xEDB88320^(c>>>1):c>>>1;arr[n]=c>>>0;}return arr;})();
+function crc32(bytes){let crc=0xFFFFFFFF;for(const b of bytes)crc=(crc>>>8)^table[(crc^b)&255];return (crc^0xFFFFFFFF)>>>0;}
+function createZip(entries){
+  const local=[],central=[];let offset=0;
+  for(const {name,text} of entries){
+    const n=encoder.encode(name),d=encoder.encode(text),crc=crc32(d);
+    if(n.length>65535||d.length>=0xFFFFFFFF)throw Error('Waveform exceeds export limits.');
+    const lh=new Uint8Array(30+n.length),lv=new DataView(lh.buffer);
+    lv.setUint32(0,0x04034b50,true);lv.setUint16(4,20,true);lv.setUint16(6,0x800,true); // UTF-8
+    lv.setUint32(14,crc,true);lv.setUint32(18,d.length,true);lv.setUint32(22,d.length,true);
+    lv.setUint16(26,n.length,true);lh.set(n,30);local.push(lh,d);
+    const ch=new Uint8Array(46+n.length),cv=new DataView(ch.buffer);
+    cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);
+    cv.setUint16(8,0x800,true);cv.setUint32(16,crc,true);cv.setUint32(20,d.length,true);
+    cv.setUint32(24,d.length,true);cv.setUint16(28,n.length,true);cv.setUint32(42,offset,true);
+    ch.set(n,46);central.push(ch);offset+=lh.length+d.length;
+  }
+  const length=central.reduce((sum,b)=>sum+b.length,0),end=new Uint8Array(22),dv=new DataView(end.buffer);
+  dv.setUint32(0,0x06054b50,true);dv.setUint16(8,entries.length,true);dv.setUint16(10,entries.length,true);
+  dv.setUint32(12,length,true);dv.setUint32(16,offset,true);
+  return new Blob([...local,...central,end],{type:'application/zip'});
+}
+function download(blob,name){
+  const href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download=name;
+  document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(href),2000);
+}
+function exportBundle(vcd,settings={}){
+  const savefile=createSavefile(vcd,settings);
+  const readme='ASIC-Skill GTKWave session\n\n1. Extract this ZIP into one folder.\n2. Install GTKWave on your own computer (native desktop application).\n3. Run: gtkwave wave.vcd wave.gtkw\n\nBrowser waveform viewing is available separately in ASIC-Skill.\n';
+  const zip=createZip([{name:'wave.vcd',text:vcd},{name:'wave.gtkw',text:savefile},{name:'README.txt',text:readme}]);
+  if(settings.download!==false)download(zip,'asic-skill-gtkwave-session.zip');
+  return zip;
+}
+function openWorkspace(source){
+  const popup=root.open('gtkwave-workspace.html?source='+encodeURIComponent(source),'_blank');
+  if(!popup)throw new Error('Allow pop-up windows for this site to open the waveform workspace.');
+  return popup;
+}
+root.ASICGTKWave={createSavefile,createZip,exportBundle,openWorkspace,inspect};
+})(window);
+
+</script><script  data-bundled-from="gtkwave-workspace.js">
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const query=new URLSearchParams(location.search),source=query.get('source')==='ghdl'?'ghdl':'cocotb';
+const viewer=new ASICWaveViewer('ghdl-gtkw-');
+function getLiveVCD(){
+  if(!window.opener||window.opener.closed||window.opener.location.origin!==location.origin)return '';
+  return source==='ghdl'?(window.opener.ASICGHDL?.getViewData()?.vcd||''):(window.opener.ASICCOCOTB?.getWaveData?.()||'');
+}
+function load(vcd,origin){
+  try{viewer.show(vcd);$('wave-origin').textContent=origin;$('gtkw-status').textContent='Loaded '+viewer.data.signals.length+' signals';$('gtkw-export').disabled=false;}
+  catch(e){viewer.clear();$('gtkw-export').disabled=true;$('gtkw-status').textContent='Could not read VCD: '+e.message;}
+}
+function refresh(){const vcd=getLiveVCD();if(vcd)load(vcd,'Live '+(source==='ghdl'?'GHDL':'cocotb')+' result');else $('gtkw-status').textContent='No live waveform. Run a simulation in the original lab or open a VCD.';}
+$('refresh-wave').onclick=refresh;
+$('open-vcd').onchange=async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  if(file.size>1_800_000){$('gtkw-status').textContent='Maximum browser VCD size is 1.8 MB.';return;}
+  try{load(await file.text(),file.name);}catch(error){$('gtkw-status').textContent=error.message;}
+};
+$('gtkw-export').onclick=()=>{try{ASICGTKWave.exportBundle(viewer.raw,{selected:[...viewer.selected],marker:viewer.cursorTime||0});$('gtkw-status').textContent='GTKWave ZIP is ready. Extract it and run: gtkwave wave.vcd wave.gtkw';}catch(e){$('gtkw-status').textContent=e.message;}};
+$('return-lab').onclick=()=>{
+  try{if(window.opener&&!window.opener.closed&&window.opener.location.origin===location.origin){window.opener.focus();window.close();return;}}catch{}
+  location.assign('eda-lab.html?tool='+encodeURIComponent(source));
+};
+refresh();
+})();
+
+</script><script  data-bundled-from="asic-wave-resize.js">
+/* Independently resize waveform Objects/Name/Value column. */
+(()=>{'use strict';
+function attach(grip){const sidebar=grip.previousElementSibling,body=grip.parentElement;
+ if(!sidebar||!body||!sidebar.classList.contains('wave-sidebar'))return;
+ let start=0,initial=0;
+ const resize=w=>{const max=Math.max(230,body.getBoundingClientRect().width-220);sidebar.style.width=Math.min(max,Math.max(165,w))+'px';grip.setAttribute('aria-valuenow',String(Math.round(sidebar.getBoundingClientRect().width)));};
+ grip.addEventListener('pointerdown',e=>{start=e.clientX;initial=sidebar.getBoundingClientRect().width;grip.setPointerCapture(e.pointerId);e.preventDefault();});
+ grip.addEventListener('pointermove',e=>{if(grip.hasPointerCapture(e.pointerId))resize(initial+e.clientX-start);});
+ grip.addEventListener('pointerup',e=>{if(grip.hasPointerCapture(e.pointerId))grip.releasePointerCapture(e.pointerId);});
+ grip.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();resize(sidebar.getBoundingClientRect().width+(e.key==='ArrowRight'?28:-28));});
+}
+document.querySelectorAll('.asic-wave-resizer').forEach(attach);
+})();
+
+</script><script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body></html>

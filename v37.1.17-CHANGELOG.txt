@@ -1,0 +1,11 @@
+ASIC-Skill v37.1.17
+Based on the user-uploaded v37.1.16 Full Website archive.
+
+- Removed editorial chapter numbering such as 2.1, 2.1.1 from lesson heading text, wherever present.
+- Removed the same chapter prefixes from sidebar lesson titles in all 19 unit pages. The separate 00/01/02 navigation indexes, lesson IDs, ordering and topic names remain unchanged.
+- Justified lesson paragraphs and list text, without changing table, code and waveform alignment.
+- Improved dark-mode contrast for inline navy text on theme-aware notes and lesson paragraphs.
+- Improved Unit 01 mobile video presentation by adding poster and WebM fallback.
+- Preserved every original asset, lesson, circuit, interactive widget and video file.
+
+Deployment: extract into a fresh folder and open via VS Code Live Server. Keep digital-electronics-assets next to digital-electronics.html. Back up any newer edits first. Older browser drafts can override HTML from disk; export the latest draft before replacing files.

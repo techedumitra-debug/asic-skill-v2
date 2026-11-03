@@ -1,0 +1,652 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenSTA Web Lab | ASIC-Skill</title><style data-bundled-from="opensta-lab.css">
+*{box-sizing:border-box}body{margin:0;background:#06111d;color:#eef6ff;font-family:Inter,system-ui,sans-serif}.topbar{height:72px;background:#061522;border-bottom:1px solid #21445e;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1500px)/2));position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:10px;color:white;text-decoration:none;font-weight:900;font-size:22px}.brand img{width:38px;height:38px;border-radius:8px}.brand span span{color:#28c9ee}.topbar>div{display:flex;gap:22px}.topbar a{color:#aac9e2;text-decoration:none}.shell{max-width:1500px;margin:auto;padding:28px}.hero{display:flex;justify-content:space-between;gap:26px;background:linear-gradient(135deg,#0e2a45,#0a1d30);border:1px solid #245477;border-radius:20px;padding:28px}.eyebrow,.editor small{color:#22d3ee;font-weight:900;letter-spacing:.15em}.hero h1{font-size:36px;margin:8px 0}.hero p{color:#9fc4df;max-width:850px}.hero aside{min-width:330px;background:#071522;border:1px solid #275777;border-radius:14px;padding:16px;display:grid;gap:7px}.hero aside b{color:#65e6ff}.hero aside span{color:#9abbd4}.hero aside code{color:#68f1aa}.session{margin:18px 0;display:flex;align-items:center;gap:12px;background:#0b2033;border:1px solid #214965;border-radius:14px;padding:14px}.session div{margin-right:auto;display:flex;flex-direction:column}.session span{color:#91b5d0}button,.editor label{border:1px solid #2d648a;background:#0c2940;color:#eef6ff;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(90deg,#21c7e7,#3b8df4);color:#04101a;border:0}.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:#071725;border:1px solid #214965;border-radius:14px;padding:8px}.tab{background:transparent;border:0}.tab.active{background:#1a5077}.panel{display:none;margin-top:18px}.panel.active{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.editor,.runbox,.cards article,details{background:#0b2033;border:1px solid #214965;border-radius:15px;overflow:hidden}.editor header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #214965}.editor h2{margin:4px 0 0;font-size:18px}.editor label input{display:none}textarea{width:100%;min-height:430px;background:#020b12;color:#c5ffd8;border:0;padding:18px;outline:none;resize:vertical;font:13px/1.55 ui-monospace,monospace}.sdc{min-height:280px}.hint{color:#8fb5d0;padding:0 18px 14px}.uploads{display:flex;gap:16px;margin-top:14px}.uploads label{flex:1;background:#0b2033;border:1px solid #214965;border-radius:12px;padding:12px}.uploads input{display:block;margin:8px 0}.uploads span{color:#8fb5d0}.runbox{padding:22px}.runbox>div{display:flex;gap:16px}.runbox label{display:flex;flex-direction:column;gap:6px;color:#9dbbd4}.runbox input,.runbox select{background:#071522;color:white;border:1px solid #2b5876;border-radius:8px;padding:9px}.big{font-size:16px;margin-top:18px}.runbox p{color:#78e8aa}.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}.cards article{padding:18px}.cards header{display:flex;justify-content:space-between;border-bottom:1px solid #214965;padding-bottom:12px}.cards header span{color:#22d3ee;font-weight:900}.cards dl{display:grid;grid-template-columns:130px 1fr;gap:9px}.cards dt{color:#7fa6c1}.cards dd{margin:0;font-family:ui-monospace,monospace;overflow-wrap:anywhere}.met{color:#63f39a}.violated{color:#ff7a7a}details{margin-top:14px;padding:0 16px}summary{padding:14px 0;font-weight:850;cursor:pointer}pre{background:#020b12;color:#c5ffd8;padding:18px;border-radius:10px;white-space:pre-wrap;overflow:auto;max-height:650px;font:13px/1.5 ui-monospace,monospace}#console{min-height:560px;border:1px solid #214965}@media(max-width:900px){.hero{display:block}.hero aside{margin-top:16px;min-width:0}.grid,.cards{grid-template-columns:1fr}.tabs{grid-template-columns:1fr 1fr}.uploads{flex-direction:column}.shell{padding:14px}}
+
+.schematic-head{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#0b2033;border:1px solid #214965;border-radius:15px 15px 0 0;padding:18px}.schematic-head h2{margin:5px 0}.schematic-head p{margin:4px 0 0;color:#9dbbd4}.schematic-head>div:last-child{display:flex;gap:10px}.schematic-status{background:#071725;border-left:1px solid #214965;border-right:1px solid #214965;color:#8fc9e8;padding:10px 18px}.schematic-wrap{background:#020b12;border:1px solid #214965;border-radius:0 0 15px 15px;min-height:560px;overflow:auto}.schematic-wrap svg{width:100%;min-width:850px;height:auto;min-height:560px;display:block}
+
+
+.console-panel{padding:0 0 18px}
+.console-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:20px;background:#0b2033;border:1px solid #214965;border-radius:15px 15px 0 0}
+.console-head h2{margin:5px 0}.console-head p{margin:5px 0 0;color:#9dbbd4;max-width:850px}
+.console-presets{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:#071725;border-left:1px solid #214965;border-right:1px solid #214965}
+.console-presets button{padding:8px 11px;font-size:12px}
+.console-panel #console{margin:0 18px;border-radius:10px 10px 0 0;min-height:430px;max-height:560px}
+.console-command-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin:0 18px;background:#06121d;border:1px solid #214965;border-top:0;border-radius:0 0 10px 10px;padding:10px}
+.console-prompt{font:700 14px ui-monospace,monospace;color:#67e8f9}
+.console-command-row input{min-width:0;background:#020b12;color:#d7f5ff;border:1px solid #285b78;border-radius:8px;padding:11px 12px;font:13px ui-monospace,monospace}
+.console-status{color:#8fb5d0;padding:10px 20px 0;font-size:12px}
+@media(max-width:760px){.console-head{display:block}.console-head button{margin-top:12px}.console-command-row{grid-template-columns:auto 1fr}.console-command-row button{grid-column:1 / -1}.console-presets{gap:6px}}
+
+/* Live Run STA timeline, process output and constraint audit */
+.run-progress-area,.run-results{margin-top:18px;padding:16px;background:#061827;border:1px solid #2a5773;border-radius:12px}
+.run-progress-head,.run-log-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.run-progress-head strong,.run-log-head strong{color:#c7eeff}
+.run-progress-head span,.run-log-head span{color:#90b8d5;font-size:12px}
+.run-progress-track{height:10px;background:#133449;border-radius:999px;overflow:hidden}
+#run-progress-bar{width:0;height:100%;background:linear-gradient(90deg,#20c9e8,#61ef9e);transition:width .3s ease}
+.run-progress-track.running #run-progress-bar{background-size:200% 100%;animation:sta-progress 1.5s ease-in-out infinite}
+@keyframes sta-progress{0%,100%{opacity:.6}50%{opacity:1}}
+#run-log{margin:12px 0 0;min-height:230px;max-height:370px;white-space:pre-wrap;overflow-wrap:anywhere}
+.run-results h3{margin:0 0 8px;font-size:15px}
+.run-results pre{margin:0 0 12px;max-height:245px}
+.runbox [hidden]{display:none !important}
+#run-status.error{color:#ff8989}
+
+</style><style data-bundled-from="code-editor.css">
+/* Shared code-editor toolbar for OpenSTA Verilog/Liberty/SDC and Yosys RTL. */
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:9px 11px;background:#10283d;border-bottom:1px solid #28506c}
+.code-toolbar-left,.code-toolbar-right{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.code-toolbar button,.code-toolbar select{background:#071a2a!important;color:#cdeafa!important;border:1px solid #345d79!important;border-radius:7px!important;padding:6px 9px!important;font:600 11px/1.4 Inter,Arial,sans-serif!important;cursor:pointer;max-width:100%}
+.code-toolbar button:hover,.code-toolbar select:hover{border-color:#38bdf8!important;background:#103751!important}
+.code-toolbar button:focus-visible,.code-toolbar select:focus-visible{outline:2px solid #38bdf8;outline-offset:2px}
+.code-cursor{font:11px ui-monospace,Consolas,monospace;color:#96bad3;white-space:nowrap;padding:0 5px}
+.editor textarea[data-code-editor],.editor-card textarea[data-code-editor]{width:100%;font-family:ui-monospace,Consolas,monospace;tab-size:4;line-height:1.6}
+.editor-card .code-toolbar{margin-top:12px;border:1px solid #28506c;border-radius:10px 10px 0 0}
+.editor-card textarea[data-code-editor]{margin-top:0;border-radius:0 0 10px 10px}
+@media(max-width:600px){.code-toolbar{align-items:stretch}.code-toolbar-left,.code-toolbar-right{gap:4px}.code-toolbar button,.code-toolbar select{padding:5px 7px!important}}
+
+</style></head><body>
+<header class="topbar"><a class="brand" href="index.html"><img src="logo.jpeg" alt="ASIC-Skill"><span>ASIC<span>-Skill</span></span></a><div><a href="eda-lab.html">← EDA Cloud Lab</a><a id="auth-state" href="signin.html">Sign In</a></div></header>
+<main class="shell">
+<section class="hero"><div><div class="eyebrow">OPENSTA WEB LAB</div><h1>Static Timing Analysis Lab</h1><p>Edit Verilog, Liberty and SDC inputs, run OpenSTA in the isolated lab environment, and inspect setup/hold timing paths directly in the browser.</p></div></section>
+<section class="session"><div><b>Lab session</b><span id="session-status">Not started</span></div><button id="start-session" class="primary">▶ Start OpenSTA Session</button><button id="end-session" hidden>End Session</button><button id="reset-default">Reset Default Example</button></section>
+<nav class="tabs"><button class="tab active" data-tab="files">Design Files</button><button class="tab" data-tab="constraints">Constraints</button><button class="tab" data-tab="run">Run STA</button><button class="tab" data-tab="paths">Timing Paths</button><button class="tab" data-tab="schematic">Schematic</button><button class="tab" data-tab="console">Console</button></nav>
+<section class="panel active" data-panel="files"><div class="grid"><article class="editor"><header><div><small>VERILOG NETLIST</small><h2>design.v</h2></div><label>Load .v<input id="file-netlist" type="file" accept=".v,.sv,text/plain"></label></header><textarea id="netlist" data-code-editor data-language="verilog" data-filename="design.v" aria-label="Verilog netlist editor"></textarea></article><article class="editor"><header><div><small>LIBERTY</small><h2>design.lib</h2></div><label>Load .lib<input id="file-liberty" type="file" accept=".lib,text/plain"></label></header><textarea id="liberty" data-code-editor data-language="liberty" data-filename="design.lib" aria-label="Liberty cell library editor"></textarea></article></div><div class="uploads"><label>SPEF optional<input id="file-spef" type="file" accept=".spef,text/plain"><span id="spef-name">None</span></label><label>SDF optional<input id="file-sdf" type="file" accept=".sdf,text/plain"><span id="sdf-name">None</span></label></div></section>
+<section class="panel" data-panel="constraints"><article class="editor"><header><div><small>SDC</small><h2>design.sdc</h2></div><label>Load .sdc<input id="file-sdc" type="file" accept=".sdc,.tcl,text/plain"></label></header><textarea id="sdc" class="sdc" data-code-editor data-language="sdc" data-filename="design.sdc" aria-label="SDC timing constraints editor"></textarea><p class="hint">Default example: input transition 0.125 ns and late timing derate 1.10. Edit the SDC to test other values; Reset Default Example restores these defaults. Guided mode allows supported STA constraints only.</p></article></section>
+<section class="panel" data-panel="run"><div class="runbox"><div><label>Top module<input id="top-module" value="top"></label><label>Paths<select id="path-count"><option>1</option><option selected>5</option><option>10</option><option>20</option></select></label></div><button id="run-analysis" class="primary big">▶ Run Detailed Timing Analysis</button>
+<p id="run-status" role="status" aria-live="polite">Start a session, then run the analysis.</p>
+<div id="run-progress-area" class="run-progress-area" hidden>
+  <div class="run-progress-head"><strong id="run-stage">Waiting to start</strong><span id="run-progress-percent">0%</span></div>
+  <div id="run-progress-track" class="run-progress-track" role="progressbar" aria-label="OpenSTA analysis progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="run-progress-bar"></div></div>
+  <div class="run-log-head"><strong>Live OpenSTA execution log</strong><span>Docker stages and STA output</span></div>
+  <pre id="run-log" aria-live="off">Waiting for OpenSTA output...</pre>
+</div>
+<div id="run-results" class="run-results" hidden>
+  <h3>Transition and timing derate constraints</h3>
+  <pre id="run-constraints">Run the analysis to view loaded SDC settings.</pre>
+  <button id="view-paths" type="button" class="primary">View Timing Paths →</button>
+</div></div></section>
+<section class="panel" data-panel="paths"><details open><summary>Applied transition and timing derate settings (from SDC)</summary><pre id="constraint-report">Run STA to inspect your SDC settings.</pre></details><div class="cards"><article><header><span>SETUP / MAX</span><b id="setup-status">—</b></header><dl><dt>Startpoint</dt><dd id="setup-start">—</dd><dt>Endpoint</dt><dd id="setup-end">—</dd><dt>Arrival</dt><dd id="setup-arrival">—</dd><dt>Required</dt><dd id="setup-required">—</dd><dt>Slack</dt><dd id="setup-slack">—</dd><dt>Path group</dt><dd id="setup-group">—</dd></dl></article><article><header><span>HOLD / MIN</span><b id="hold-status">—</b></header><dl><dt>Startpoint</dt><dd id="hold-start">—</dd><dt>Endpoint</dt><dd id="hold-end">—</dd><dt>Arrival</dt><dd id="hold-arrival">—</dd><dt>Required</dt><dd id="hold-required">—</dd><dt>Slack</dt><dd id="hold-slack">—</dd><dt>Path group</dt><dd id="hold-group">—</dd></dl></article></div><details open><summary>Full setup report — Description first</summary><pre id="setup-report"></pre></details><details><summary>Full hold report — Description first</summary><pre id="hold-report"></pre></details><details><summary>Endpoint summary</summary><pre id="endpoint-report"></pre></details></section>
+<section class="panel" data-panel="schematic"><div class="schematic-head"><div><div class="eyebrow">SYNTHESIZED NETLIST VIEW</div><h2>Gate-level schematic</h2><p>The diagram is generated from the exact Verilog netlist used by OpenSTA, using Yosys in the isolated lab backend.</p></div><div><button id="generate-schematic" class="primary">Generate Schematic</button><button id="fit-schematic">Fit View</button></div></div><div id="schematic-status" class="schematic-status">Run timing analysis or click Generate Schematic.</div><div id="schematic-wrap" class="schematic-wrap"><svg id="schematic-svg" viewBox="0 0 1200 560" role="img" aria-label="Synthesized netlist schematic"><text x="600" y="280" text-anchor="middle" fill="#8fb5d0" font-size="18">Schematic will appear here.</text></svg></div></section>
+<section class="panel console-panel" data-panel="console">
+  <div class="console-head">
+    <div>
+      <div class="eyebrow">GUIDED TCL CONSOLE</div>
+      <h2>OpenSTA Console</h2>
+      <p>Run approved OpenSTA report/query commands against the Verilog, Liberty and SDC currently loaded in this lab. Transition is shown as <code>Slew</code>; timing derates affect delays and slack rather than forming a separate path column.</p>
+    </div>
+    <button id="clear-console" type="button">Clear</button>
+  </div>
+  <div class="console-presets" aria-label="OpenSTA console quick commands">
+    <button type="button" data-console-command="report_checks -path_delay max -format full -fields {slew capacitance fanout input_pin} -digits 3">Setup path</button>
+    <button type="button" data-console-command="report_checks -path_delay min -format full -fields {slew capacitance fanout input_pin} -digits 3">Hold path</button>
+    <button type="button" data-console-command="asic_skill_constraints">Transition / Derate</button>
+    <button type="button" data-console-command="report_wns">WNS</button>
+    <button type="button" data-console-command="report_tns">TNS</button>
+    <button type="button" data-console-command="asic_skill_design_area">Design area</button>
+    <button type="button" data-console-command="get_cells *">List cells</button>
+    <button type="button" data-console-command="get_ports *">List ports</button>
+    <button type="button" data-console-command="check_setup -verbose">Check setup</button>
+  </div>
+  <pre id="console">OpenSTA console ready. Start a lab session, then enter a command below.</pre>
+  <div class="console-command-row">
+    <span class="console-prompt">sta&gt;</span>
+    <input id="console-command" type="text" autocomplete="off" spellcheck="false" value="report_checks -path_delay max -format full -digits 3" aria-label="OpenSTA Tcl command">
+    <button id="run-console" type="button">Run Command</button>
+  </div>
+  <div id="console-status" class="console-status">Guided console: approved reporting/query commands only. Current design files are reloaded automatically for every command.</div>
+</section>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script  data-bundled-from="supabase-config.js">
+const SUPABASE_URL = "https://orfmyrbiitpsefnucrxr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_mGkXIP3ZqFnaf42_AmGbEw_XrAcgwlM";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+</script><script  data-bundled-from="eda-lab-config.js">
+// ASIC-Skill v36.0 EDA Cloud Lab configuration.
+// Leave blank on localhost to use http://127.0.0.1:8090 automatically.
+window.ASIC_SKILL_EDA_API = "";
+
+</script><script  data-bundled-from="opensta-lab.js">
+const $=id=>document.getElementById(id),localHost=['localhost','127.0.0.1'].includes(location.hostname),API=String(window.ASIC_SKILL_EDA_API||(localHost?'http://127.0.0.1:8090':'')).replace(/\/$/,'');let authSession=null,sessionId=null,spefText='',sdfText='';
+const DEFAULT_NETLIST=`module top (
+    input  wire a,
+    output wire y
+);
+
+    wire n1;
+    wire n2;
+    wire n3;
+
+    BUF_X1 U1 (.A(a),  .Y(n1));
+    BUF_X1 U2 (.A(n1), .Y(n2));
+    BUF_X1 U3 (.A(n2), .Y(n3));
+    BUF_X1 U4 (.A(n3), .Y(y));
+
+endmodule
+`;
+const DEFAULT_LIBERTY=`library (demo_lib) {
+    delay_model : table_lookup;
+    time_unit : "1ns";
+    voltage_unit : "1V";
+    current_unit : "1mA";
+    capacitive_load_unit (1, pf);
+    nom_process : 1;
+    nom_voltage : 1.0;
+    nom_temperature : 25;
+
+    lu_table_template (delay_template) {
+        variable_1 : input_net_transition;
+        variable_2 : total_output_net_capacitance;
+        index_1 ("0.01, 0.10");
+        index_2 ("0.01, 0.10");
+    }
+
+    cell (BUF_X1) {
+        area : 1.0;
+        pin (A) {
+            direction : input;
+            capacitance : 0.01;
+        }
+        pin (Y) {
+            direction : output;
+            function : "A";
+            timing () {
+                related_pin : "A";
+                timing_sense : positive_unate;
+                cell_rise (delay_template) {
+                    values ("0.05, 0.08", "0.07, 0.10");
+                }
+                cell_fall (delay_template) {
+                    values ("0.05, 0.08", "0.07, 0.10");
+                }
+                rise_transition (delay_template) {
+                    values ("0.02, 0.03", "0.03, 0.04");
+                }
+                fall_transition (delay_template) {
+                    values ("0.02, 0.03", "0.03, 0.04");
+                }
+            }
+        }
+    }
+}
+`;
+const DEFAULT_SDC=`create_clock -name VCLK -period 0.500
+set_input_delay 0.100 -clock VCLK [get_ports a]
+set_output_delay 0.150 -clock VCLK [get_ports y]
+set_input_transition 0.125 [get_ports a]
+set_load 0.040 [get_ports y]
+set_timing_derate -late 1.10
+`;
+function resetDefaultExample(){
+  $('netlist').value=DEFAULT_NETLIST;
+  $('liberty').value=DEFAULT_LIBERTY;
+  $('sdc').value=DEFAULT_SDC;
+  $('top-module').value='top';
+  spefText=''; sdfText='';
+  $('spef-name').textContent='None'; $('sdf-name').textContent='None';
+  $('schematic-status').textContent='Default 4-buffer timing example restored. Generate schematic when ready.';
+}
+resetDefaultExample();
+async function refresh(){try{const {data,error}=await supabaseClient.auth.refreshSession();if(!error&&data?.session){authSession=data.session;return true}}catch{}const {data:{session}}=await supabaseClient.auth.getSession();authSession=session||null;return !!authSession}function hdr(x={}){return {...x,Authorization:`Bearer ${authSession?.access_token||''}`}}async function api(path,opt={},retry=false){let r=await fetch(API+path,{...opt,headers:hdr(opt.headers||{})});if(r.status===401&&!retry&&await refresh())return api(path,opt,true);let b=await r.json().catch(()=>({}));if(!r.ok)throw new Error((b.error||`API ${r.status}`)+(b.output?'\n'+b.output:''));return b}function tab(n){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===n));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.dataset.panel===n))}
+async function start(){try{let b=await api('/api/eda/sessions',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});sessionId=b.session_id;$('session-status').textContent=`${sessionId.slice(0,8)} · isolated workspace`;$('start-session').hidden=true;$('end-session').hidden=false}catch(e){alert(e.message)}}async function end(){if(!sessionId)return;try{await api('/api/eda/sessions/'+sessionId,{method:'DELETE'})}catch{}sessionId=null;$('session-status').textContent='Not started';$('start-session').hidden=false;$('end-session').hidden=true}
+function fill(pfx,p){let map={start:'startpoint',end:'endpoint',arrival:'arrival',required:'required',slack:'slack',group:'path_group'};for(let k in map)$(pfx+'-'+k).textContent=p?.[map[k]]||'—';let e=$(pfx+'-status');e.textContent=p?.status||'—';e.className=p?.status==='MET'?'met':p?.status==='VIOLATED'?'violated':''}
+
+function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function renderNetlistSchematic(data){
+  const svg=$('schematic-svg');
+  const mod=data?.module||{};
+  const cells=Object.entries(mod.cells||{}).map(([name,c])=>({name,type:c.type||'cell',dirs:c.port_directions||{},conns:c.connections||{}}));
+  const ports=Object.entries(mod.ports||{}).map(([name,p])=>({name,direction:p.direction,bits:p.bits||[]}));
+  const inputs=ports.filter(p=>p.direction==='input'), outputs=ports.filter(p=>p.direction==='output');
+
+  // Yosys can preserve library cells as black boxes. Infer common standard-cell
+  // output names so that A/Y-style library cells still get complete connectivity.
+  const outputPin=/^(Y|Q|QN|Z|ZN|O|OUT|X|CO|COUT)$/i;
+  const pinDir=(c,pin)=>c.dirs?.[pin] || (outputPin.test(pin)?'output':'input');
+  const pins=(c,dir)=>Object.keys(c.conns||{}).filter(pin=>pinDir(c,pin)===dir);
+
+  // Keep the originating/sink pin on every net. This lets the SVG draw the
+  // wire from the actual pin position instead of the centre of the cell.
+  const src=new Map(), sinks=new Map();
+  const addSink=(b,n)=>{
+    if(typeof b!=='number')return;
+    if(!sinks.has(b))sinks.set(b,[]);
+    sinks.get(b).push(n);
+  };
+  inputs.forEach(p=>p.bits.forEach(b=>{
+    if(typeof b==='number')src.set(b,{kind:'port',id:'in:'+p.name,name:p.name});
+  }));
+  cells.forEach(c=>Object.entries(c.conns).forEach(([pin,bits])=>{
+    const d=pinDir(c,pin);
+    (bits||[]).forEach(b=>{
+      if(d==='output'&&typeof b==='number')src.set(b,{kind:'cell',id:'cell:'+c.name,cell:c.name,pin});
+      else if(d==='input')addSink(b,{kind:'cell',id:'cell:'+c.name,cell:c.name,pin});
+    });
+  }));
+  outputs.forEach(p=>p.bits.forEach(b=>addSink(b,{kind:'port',id:'out:'+p.name,name:p.name})));
+
+  const preds=new Map(cells.map(c=>[c.name,new Set()]));
+  cells.forEach(c=>Object.entries(c.conns).forEach(([pin,bits])=>{
+    if(pinDir(c,pin)!=='input')return;
+    (bits||[]).forEach(b=>{
+      const q=src.get(b);
+      if(q?.kind==='cell')preds.get(c.name).add(q.cell);
+    });
+  }));
+
+  const depth=new Map();
+  let changed=true, guard=0;
+  while(changed&&guard++<cells.length+5){
+    changed=false;
+    for(const c of cells){
+      let d=1;
+      for(const p of preds.get(c.name)||[])d=Math.max(d,(depth.get(p)||1)+1);
+      if(depth.get(c.name)!==d){depth.set(c.name,d);changed=true}
+    }
+  }
+
+  const maxD=Math.max(1,...[...depth.values()]);
+  const W=Math.max(1250,380+(maxD+1)*230);
+  const H=Math.max(520,Math.max(inputs.length,outputs.length,Math.ceil(cells.length/Math.max(maxD,1)))*125+140);
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+
+  const pos=new Map();
+  const cellByName=new Map(cells.map(c=>[c.name,c]));
+  const spread=(arr,x,prefix)=>{
+    const gap=H/(arr.length+1);
+    arr.forEach((o,i)=>pos.set(prefix+o.name,{x,y:(i+1)*gap}));
+  };
+  spread(inputs,70,'in:');
+  spread(outputs,W-70,'out:');
+
+  for(let d=1;d<=maxD;d++){
+    const arr=cells.filter(c=>(depth.get(c.name)||1)===d);
+    const x=205+d*((W-410)/(maxD+1));
+    const gap=H/(arr.length+1);
+    arr.forEach((c,i)=>pos.set('cell:'+c.name,{x,y:(i+1)*gap}));
+  }
+
+  const cellGeom=c=>{
+    const count=Math.max(pins(c,'input').length,pins(c,'output').length,1);
+    return {w:168,h:Math.max(92,66+count*18)};
+  };
+  const pinPoint=(cellName,pin,dir)=>{
+    const c=cellByName.get(cellName),q=pos.get('cell:'+cellName);
+    if(!c||!q)return null;
+    const list=pins(c,dir),g=cellGeom(c);
+    const idx=Math.max(0,list.indexOf(pin));
+    const n=Math.max(list.length,1);
+    // pin rows live below the type/instance labels and are evenly distributed.
+    const y0=q.y-g.h/2+61;
+    const usable=Math.max(0,g.h-70);
+    const y=n===1?q.y+24:y0+(usable*Math.min(idx,n-1)/Math.max(1,n-1));
+    return {x:q.x+(dir==='output'?g.w/2:-g.w/2),y};
+  };
+  const endpointPoint=o=>{
+    if(o.kind==='cell')return pinPoint(o.cell,o.pin,o.pin?pinDir(cellByName.get(o.cell),o.pin):'input');
+    const q=pos.get(o.id);
+    if(!q)return null;
+    return {x:q.x+(o.id.startsWith('in:')?45:-45),y:q.y};
+  };
+
+  let lines='';
+  for(const [bit,ss] of sinks){
+    const a=src.get(bit);
+    if(!a)continue;
+    const pa=endpointPoint(a);
+    if(!pa)continue;
+    for(const sk of ss){
+      if(sk.id===a.id)continue;
+      const pb=endpointPoint(sk);
+      if(!pb)continue;
+      const mid=(pa.x+pb.x)/2;
+      lines+=`<path d="M${pa.x} ${pa.y} C${mid} ${pa.y},${mid} ${pb.y},${pb.x} ${pb.y}" fill="none" stroke="#38bdf8" stroke-width="3" opacity=".95" marker-end="url(#netArrow)"/>`;
+    }
+  }
+
+  let nodes='';
+  for(const p of inputs){
+    const q=pos.get('in:'+p.name);
+    nodes+=`<g><rect x="${q.x-45}" y="${q.y-22}" width="90" height="44" rx="12" fill="#0e3854" stroke="#34d4f4"/><text x="${q.x}" y="${q.y+5}" text-anchor="middle" fill="#eaf8ff" font-size="16" font-weight="700">${esc(p.name)}</text></g>`;
+  }
+  for(const c of cells){
+    const q=pos.get('cell:'+c.name),g=cellGeom(c),left=q.x-g.w/2,right=q.x+g.w/2,top=q.y-g.h/2;
+    nodes+=`<g><rect x="${left}" y="${top}" width="${g.w}" height="${g.h}" rx="11" fill="#10283c" stroke="#6ae6ff"/>`;
+    nodes+=`<text x="${q.x}" y="${top+23}" text-anchor="middle" fill="#67e8f9" font-size="15" font-weight="800">${esc(c.type)}</text>`;
+    nodes+=`<text x="${q.x}" y="${top+43}" text-anchor="middle" fill="#b7d4e8" font-size="12">${esc(c.name)}</text>`;
+    for(const pin of pins(c,'input')){
+      const pp=pinPoint(c.name,pin,'input');
+      nodes+=`<circle cx="${left}" cy="${pp.y}" r="3.5" fill="#38bdf8"/><text x="${left+10}" y="${pp.y+4}" text-anchor="start" fill="#d7f5ff" font-size="11" font-weight="700">${esc(pin)}</text>`;
+    }
+    for(const pin of pins(c,'output')){
+      const pp=pinPoint(c.name,pin,'output');
+      nodes+=`<circle cx="${right}" cy="${pp.y}" r="3.5" fill="#38bdf8"/><text x="${right-10}" y="${pp.y+4}" text-anchor="end" fill="#d7f5ff" font-size="11" font-weight="700">${esc(pin)}</text>`;
+    }
+    nodes+='</g>';
+  }
+  for(const p of outputs){
+    const q=pos.get('out:'+p.name);
+    nodes+=`<g><rect x="${q.x-45}" y="${q.y-22}" width="90" height="44" rx="12" fill="#16412f" stroke="#62ef9c"/><text x="${q.x}" y="${q.y+5}" text-anchor="middle" fill="#eafff0" font-size="16" font-weight="700">${esc(p.name)}</text></g>`;
+  }
+
+  svg.innerHTML=`<defs><marker id="netArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"/></marker></defs><rect width="100%" height="100%" fill="#020b12"/>${lines}${nodes}`;
+  const connected=[...sinks.entries()].reduce((n,[bit,ss])=>n+(src.has(bit)?ss.length:0),0);
+  $('schematic-status').textContent=`${cells.length} cell${cells.length===1?'':'s'} · ${inputs.length} input${inputs.length===1?'':'s'} · ${outputs.length} output${outputs.length===1?'':'s'} · ${connected} connection${connected===1?'':'s'} · cell pins labelled`;
+}
+async function generateSchematic(){
+  if(!sessionId)return alert('Start an OpenSTA session first.');
+  $('generate-schematic').disabled=true;$('schematic-status').textContent='Generating schematic with Yosys…';
+  try{const body={top:$('top-module').value.trim(),netlist:$('netlist').value};const b=await api(`/api/eda/sessions/${sessionId}/opensta/schematic`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});renderNetlistSchematic(b.netlist);tab('schematic')}catch(e){$('schematic-status').textContent='ERROR: '+e.message;$('console').textContent=e.message;tab('console')}finally{$('generate-schematic').disabled=false}}
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function showStaProgress(stage,percent,log,status='running'){
+  $('run-progress-area').hidden=false;
+  $('run-stage').textContent=stage||'Starting OpenSTA...';
+  percent=Math.max(0,Math.min(100,Number(percent)||0));
+  $('run-progress-percent').textContent=percent+'%';
+  $('run-progress-track').setAttribute('aria-valuenow',String(percent));
+  $('run-progress-track').classList.toggle('running',status==='running'||status==='queued');
+  $('run-progress-bar').style.width=percent+'%';
+  if(log!==undefined&&$('run-log').textContent!==log){
+    const el=$('run-log');
+    const nearEnd=el.scrollHeight-el.scrollTop-el.clientHeight<100;
+    el.textContent=log||'Waiting for OpenSTA output...';
+    if(nearEnd)el.scrollTop=el.scrollHeight;
+  }
+}
+function fillStaResults(result){
+  fill('setup',result.setup);fill('hold',result.hold);
+  $('setup-report').textContent=result.setup_report||'No setup path reported.';
+  $('hold-report').textContent=result.hold_report||'No hold path reported.';
+  $('endpoint-report').textContent=result.endpoint_report||'No endpoint summary reported.';
+  const summary=result.constraints_summary||'No transition/derate settings returned.';
+  $('run-constraints').textContent=summary;
+  $('constraint-report').textContent=summary;
+  $('console').textContent=summary+'\n'+(result.console||'Timing analysis completed; no extra stdout was produced.');
+  $('run-results').hidden=false;
+}
+async function run(){
+  if(!sessionId)return alert('Start an OpenSTA session first.');
+  const currentSession=sessionId;
+  $('run-analysis').disabled=true;
+  $('run-results').hidden=true;
+  $('run-status').classList.remove('error');
+  $('run-status').textContent='Starting detailed timing analysis...';
+  showStaProgress('Submitting analysis',0,'Submitting Verilog, Liberty and SDC to the lab...');
+  // Keep the execution visible in Run STA. Timing Paths is an explicit next step.
+  tab('run');
+  try{
+    const body={top:$('top-module').value.trim(),paths:+$('path-count').value,
+      netlist:$('netlist').value,liberty:$('liberty').value,sdc:$('sdc').value,
+      spef:spefText,sdf:sdfText};
+    const created=await api(`/api/eda/sessions/${currentSession}/opensta/run/start`,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)
+    });
+    let state;
+    do{
+      await sleep(1100);
+      state=await api(`/api/eda/sessions/${currentSession}/opensta/run/jobs/${created.job_id}`);
+      showStaProgress(state.stage,state.progress,state.log,state.status);
+      $('run-status').textContent=state.status==='failed'?'Timing analysis failed.':
+        state.status==='completed'?'Timing reports ready.':state.stage+'...';
+      if(currentSession!==sessionId)throw new Error('The lab session changed during this analysis.');
+    }while(state.status==='queued'||state.status==='running');
+    if(state.status!=='completed')throw new Error(state.error||'STA analysis failed.');
+    fillStaResults(state.result);
+    $('run-status').textContent='Timing analysis complete. Review the actual run log below or open Timing Paths.';
+    // Schematic is a separate optional operation; do not hide or delay STA results.
+    try{
+      const sb=await api(`/api/eda/sessions/${currentSession}/opensta/schematic`,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({top:body.top,netlist:body.netlist})
+      });
+      renderNetlistSchematic(sb.netlist);
+    }catch(e){
+      $('schematic-status').textContent='Schematic unavailable: '+e.message;
+    }
+  }catch(e){
+    $('run-status').textContent='ERROR: '+e.message;
+    $('run-status').classList.add('error');
+    showStaProgress('Analysis failed',Number($('run-progress-track').getAttribute('aria-valuenow'))||0,$('run-log').textContent+'\nERROR: '+e.message,'failed');
+  }finally{$('run-analysis').disabled=false;}
+}
+
+function appendConsole(text){
+  const el=$('console');
+  const current=el.textContent==='OpenSTA console ready. Start a lab session, then enter a command below.'?'':el.textContent;
+  el.textContent=(current?current.replace(/\s+$/,'')+'\n\n':'')+String(text??'');
+  el.scrollTop=el.scrollHeight;
+}
+async function runConsoleCommand(command){
+  command=String(command??$('console-command').value??'').trim();
+  if(!command)return;
+  if(!sessionId)return alert('Start an OpenSTA session first.');
+  $('run-console').disabled=true;
+  $('console-status').textContent='Running OpenSTA command…';
+  appendConsole(`sta> ${command}`);
+  try{
+    const body={
+      top:$('top-module').value.trim(),
+      netlist:$('netlist').value,
+      liberty:$('liberty').value,
+      sdc:$('sdc').value,
+      spef:spefText,
+      sdf:sdfText,
+      command
+    };
+    const b=await api(`/api/eda/sessions/${sessionId}/opensta/console`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    appendConsole(b.output||'(command completed with no output)');
+    $('console-status').textContent='Command completed.';
+  }catch(e){
+    appendConsole('ERROR: '+e.message);
+    $('console-status').textContent='Command failed.';
+  }finally{
+    $('run-console').disabled=false;
+  }
+}
+async function file(inp,target,kind){let f=inp.files?.[0];if(!f)return;let t=await f.text();if(kind==='spef'){spefText=t;$('spef-name').textContent=f.name}else if(kind==='sdf'){sdfText=t;$('sdf-name').textContent=f.name}else $(target).value=t}
+async function init(){const {data:{session}}=await supabaseClient.auth.getSession();authSession=session||null;if(!authSession){location.href='signin.html?next='+encodeURIComponent('opensta-lab.html');return}await refresh();$('auth-state').textContent='Signed In'}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>tab(b.dataset.tab));$('start-session').onclick=start;$('end-session').onclick=end;$('run-analysis').onclick=run;$('view-paths').onclick=()=>tab('paths');$('reset-default').onclick=resetDefaultExample;$('generate-schematic').onclick=generateSchematic;$('fit-schematic').onclick=()=>{$('schematic-svg').setAttribute('preserveAspectRatio','xMidYMid meet')};
+$('run-console').onclick=()=>runConsoleCommand();
+$('clear-console').onclick=()=>{$('console').textContent='';$('console-status').textContent='Console cleared.'};
+$('console-command').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();runConsoleCommand()}});
+document.querySelectorAll('[data-console-command]').forEach(b=>b.onclick=()=>{$('console-command').value=b.dataset.consoleCommand;runConsoleCommand(b.dataset.consoleCommand)});
+$('file-netlist').onchange=e=>file(e.target,'netlist');$('file-liberty').onchange=e=>file(e.target,'liberty');$('file-sdc').onchange=e=>file(e.target,'sdc');$('file-spef').onchange=e=>file(e.target,null,'spef');$('file-sdf').onchange=e=>file(e.target,null,'sdf');init();
+
+</script><script  data-bundled-from="code-editor.js">
+/* ASIC-Skill lightweight offline code editor enhancement. No CDN needed. */
+(function (root) {
+  'use strict';
+  const settings = new WeakMap();
+  const textSnapshot = el => ({text: el.value, start: el.selectionStart || 0, end: el.selectionEnd || 0});
+  function editSelection(el, newText, start, end, caretStart, caretEnd) {
+    el.setRangeText(newText, start, end, 'preserve');
+    el.setSelectionRange(caretStart, caretEnd);
+    el.dispatchEvent(new Event('input', {bubbles:true}));
+  }
+  function lineRange(text, start, end) {
+    const from = text.lastIndexOf('\n', Math.max(0,start-1)) + 1;
+    const lastSelected = end > start && text[end-1] === '\n' ? end-1 : end;
+    const nextBreak = text.indexOf('\n', lastSelected);
+    return {from, to: nextBreak < 0 ? text.length : nextBreak};
+  }
+  function transformLines(el, kind, spaces=2) {
+    const original = el.value, start=el.selectionStart, end=el.selectionEnd;
+    const {from,to} = lineRange(original,start,end);
+    const lines=original.slice(from,to).split('\n');
+    const token=' '.repeat(spaces);
+    const language=el.dataset.language || 'verilog';
+    const prefix=(['sdc','tcl','python'].includes(language))?'#':'//';
+    const nonEmpty=lines.filter(l=>l.trim());
+    const uncomment=kind==='comment' && nonEmpty.length && nonEmpty.every(l=>l.trimStart().startsWith(prefix));
+    let firstDelta=0, totalDelta=0;
+    const result=lines.map((line,i)=>{
+      let updated=line;
+      if(kind==='indent') updated=token+line;
+      else if(kind==='outdent') updated=line.replace(new RegExp(`^(?: {1,${spaces}}|\\t)`),'');
+      else if(kind==='comment' && line.trim()) {
+        const ws=line.match(/^\s*/)[0];
+        const rest=line.slice(ws.length);
+        updated=ws+(uncomment?rest.slice(prefix.length).replace(/^ /,''):prefix+' '+rest);
+      }
+      if(i===0) firstDelta=updated.length-line.length;
+      totalDelta+=updated.length-line.length;
+      return updated;
+    }).join('\n');
+    const selected=end>start;
+    editSelection(el,result,from,to,Math.max(from,selected?start+firstDelta:start+firstDelta),Math.max(from,selected?end+totalDelta:start+firstDelta));
+  }
+  function insertTab(el, spaces) {
+    if(el.selectionStart!==el.selectionEnd) {
+      transformLines(el,'indent',spaces);return;
+    }
+    const at=el.selectionStart;
+    const column=at-(el.value.lastIndexOf('\n',at-1)+1);
+    const count=spaces-(column%spaces);
+    editSelection(el,' '.repeat(count),at,el.selectionEnd,at+count,at+count);
+  }
+  function autoNewline(el) {
+    const start=el.selectionStart;
+    const line=el.value.slice(el.value.lastIndexOf('\n',start-1)+1,start);
+    const indent=(line.match(/^\s*/)||[''])[0];
+    const at=el.selectionEnd;
+    editSelection(el,'\n'+indent,start,at,start+1+indent.length,start+1+indent.length);
+  }
+  function duplicate(el) {
+    const {from,to}=lineRange(el.value,el.selectionStart,el.selectionEnd);
+    const chunk=el.value.slice(from,to);
+    editSelection(el,'\n'+chunk,to,to,to+1,to+1+chunk.length);
+  }
+  function createButton(name,title,callback) {
+    const b=document.createElement('button');b.type='button';b.textContent=name;b.title=title;b.addEventListener('click',callback);return b;
+  }
+  function attach(el) {
+    if(settings.has(el))return;
+    el.spellcheck=false;el.setAttribute('autocomplete','off');el.setAttribute('autocapitalize','off');
+    const wrap=el.closest('.editor, .editor-card');
+    if(!wrap)return;
+    const filename=el.dataset.filename || 'design.txt';
+    const toolbar=document.createElement('div');toolbar.className='code-toolbar';toolbar.setAttribute('role','toolbar');toolbar.setAttribute('aria-label',filename+' editor tools');
+    const left=document.createElement('div');left.className='code-toolbar-left';
+    const right=document.createElement('div');right.className='code-toolbar-right';
+    const sel=document.createElement('select');sel.setAttribute('aria-label','Indent width');sel.title='Spaces per indentation level';
+    [2,4].forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n+' spaces';if(n===4)o.selected=true;sel.append(o)});
+    const stored={indent:4,wrap:false,history:[],index:-1,restoring:false};settings.set(el,stored);
+    sel.addEventListener('change',()=>{stored.indent=Number(sel.value);el.focus()});
+    left.append(createButton('→ Indent','Tab indents selected lines',()=>{transformLines(el,'indent',stored.indent);el.focus()}),createButton('← Outdent','Shift+Tab removes indentation',()=>{transformLines(el,'outdent',stored.indent);el.focus()}),createButton('// Comment','Ctrl+/ toggles comments',()=>{transformLines(el,'comment',stored.indent);el.focus()}),sel);
+    const wrapButton=createButton('Wrap: off','Toggle word wrapping',()=>{stored.wrap=!stored.wrap;el.style.whiteSpace=stored.wrap?'pre-wrap':'pre';el.style.overflowWrap=stored.wrap?'anywhere':'normal';wrapButton.textContent=stored.wrap?'Wrap: on':'Wrap: off';el.focus()});
+    const copyButton=createButton('Copy','Copy editor contents',async()=>{try{await navigator.clipboard.writeText(el.value);copyButton.textContent='Copied ✓';setTimeout(()=>copyButton.textContent='Copy',1400)}catch{el.focus();el.select();document.execCommand('copy')}});
+    const downloadButton=createButton('↓ Save','Download this file to your computer',()=>{const blob=new Blob([el.value],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)});
+    const cursor=document.createElement('span');cursor.className='code-cursor';cursor.setAttribute('aria-live','off');
+    const updateCursor=()=>{const before=el.value.slice(0,el.selectionStart);const ln=before.split('\n');cursor.textContent='Ln '+ln.length+', Col '+(ln[ln.length-1].length+1)+' · '+el.value.split('\n').length+' lines'};
+    const pushHistory=()=>{if(stored.restoring)return;const s=textSnapshot(el);const last=stored.history[stored.index];if(last&&last.text===s.text){updateCursor();return;}stored.history.splice(stored.index+1);stored.history.push(s);if(stored.history.length>120)stored.history.shift();stored.index=stored.history.length-1;updateCursor()};
+    const restore=direction=>{let next=stored.index+direction;if(next<0||next>=stored.history.length)return;const s=stored.history[next];stored.restoring=true;el.value=s.text;el.setSelectionRange(s.start,s.end);stored.index=next;stored.restoring=false;el.dispatchEvent(new Event('input',{bubbles:true}));updateCursor();el.focus()};
+    stored.undo=()=>restore(-1);stored.redo=()=>restore(1);
+    right.append(createButton('↶','Undo: Ctrl+Z',()=>restore(-1)),createButton('↷','Redo: Ctrl+Y / Ctrl+Shift+Z',()=>restore(1)),wrapButton,copyButton,downloadButton,cursor);
+    toolbar.append(left,right);
+    // The cocotb inline workspace is intentionally minimal. Full editor controls
+    // remain available in the separate pop-out windows (no expanded-only marker).
+    if (el.dataset.editorToolbar !== 'expanded-only') el.before(toolbar);
+    el.style.tabSize='4';el.style.whiteSpace='pre';el.style.overflowWrap='normal';el.style.overflowX='auto';
+    el.addEventListener('keydown',event=>{
+      const mod=event.ctrlKey||event.metaKey;
+      if(mod && !event.altKey && event.key.toLowerCase()==='z'){event.preventDefault();restore(event.shiftKey?1:-1);return;}
+      if(mod && !event.altKey && event.key.toLowerCase()==='y'){event.preventDefault();restore(1);return;}
+      if(mod && !event.altKey && event.key==='/'){event.preventDefault();transformLines(el,'comment',stored.indent);return;}
+      if(mod && !event.altKey && event.key.toLowerCase()==='d'){event.preventDefault();duplicate(el);return;}
+      if(event.key==='Tab'&&!mod&&!event.altKey){event.preventDefault();if(event.shiftKey)transformLines(el,'outdent',stored.indent);else if(el.selectionStart!==el.selectionEnd)transformLines(el,'indent',stored.indent);else insertTab(el,stored.indent);return;}
+      if(event.key==='Enter'&&!mod&&!event.altKey){event.preventDefault();autoNewline(el);}
+    });
+    el.addEventListener('input',pushHistory);el.addEventListener('keyup',updateCursor);el.addEventListener('click',updateCursor);el.addEventListener('select',updateCursor);el.addEventListener('mouseup',updateCursor);
+    pushHistory();
+    // External updates to .value (upload/reset) are picked up without replacing user edits.
+    el.addEventListener('focus',pushHistory);
+  }
+  root.ASICCodeEditor={init(scope=document){scope.querySelectorAll('textarea[data-code-editor]').forEach(attach);},attach,
+    undo(el){const state=settings.get(el);if(state?.undo)state.undo();},
+    redo(el){const state=settings.get(el);if(state?.redo)state.redo();}};
+})(window);
+
+</script><script>ASICCodeEditor.init();</script><script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body></html>

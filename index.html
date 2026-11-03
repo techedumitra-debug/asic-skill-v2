@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASIC-Skill | VLSI, ASIC & Physical Design Learning</title>
+  <meta name="description" content="Learn VLSI, ASIC design, RTL, synthesis, physical design, STA, SDC, MMMC, DRC, LVS, DFT and semiconductor engineering with ASIC-Skill.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.asic-skill.com/">
+  <meta name="theme-color" content="#07111d">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ASIC-Skill">
+  <meta property="og:title" content="ASIC-Skill | VLSI, ASIC & Physical Design Learning">
+  <meta property="og:description" content="Practical learning for VLSI, ASIC design, physical design, timing, signoff and semiconductor engineering.">
+  <meta property="og:url" content="https://www.asic-skill.com/">
+  <meta property="og:image" content="https://www.asic-skill.com/logo.jpeg">
+  <meta property="og:image:alt" content="ASIC-Skill VLSI and semiconductor learning platform logo">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ASIC-Skill | VLSI, ASIC & Physical Design Learning">
+  <meta name="twitter:description" content="Practical learning for VLSI, ASIC design, physical design, timing, signoff and semiconductor engineering.">
+  <meta name="twitter:image" content="https://www.asic-skill.com/logo.jpeg">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Organization",
+        "@id":"https://www.asic-skill.com/#organization",
+        "name":"ASIC-Skill",
+        "url":"https://www.asic-skill.com/",
+        "logo":"https://www.asic-skill.com/logo.jpeg",
+        "description":"Educational platform for VLSI, ASIC design, physical design, timing, signoff and semiconductor engineering."
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://www.asic-skill.com/#website",
+        "name":"ASIC-Skill",
+        "url":"https://www.asic-skill.com/",
+        "publisher":{"@id":"https://www.asic-skill.com/#organization"}
+      }
+    ]
+  }
+  </script>
+
+  <style data-bundled-from="styles.css">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root{
+  --bg:#05070b; --panel:#0b111a; --panel2:#101a26; --text:#f5f8ff; --muted:#9aa8ba;
+  --line:rgba(255,255,255,.09); --blue:#1677ff; --cyan:#16c6e8; --blue2:#0a45a0;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:#101722;font-family:Inter,Arial,sans-serif;line-height:1.6}
+a{text-decoration:none;color:inherit}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+.site-header{position:sticky;top:0;z-index:100;background:rgba(5,7,11,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-wrap{height:76px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:900;font-family:"Space Grotesk";font-size:21px;letter-spacing:-.8px}
+.brand img{width:40px;height:40px;object-fit:contain;border-radius:8px}
+.brand span span{color:var(--cyan)}
+.nav{display:flex;align-items:center;gap:26px;color:#c9d2df;font-size:14px;font-weight:600}
+.nav a:hover{color:#fff}.nav-cta{border:1px solid #237df4;padding:10px 15px;border-radius:8px;color:#fff!important}
+.menu-toggle{display:none;background:none;border:0;color:#fff;font-size:25px}
+.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 75% 35%,rgba(0,123,255,.20),transparent 28%),linear-gradient(125deg,#04060a 0%,#07101b 55%,#06172a 100%);color:#fff;min-height:700px;display:flex;align-items:center}
+.hero-grid{position:absolute;inset:0;opacity:.16;background-image:linear-gradient(rgba(0,174,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,174,255,.12) 1px,transparent 1px);background-size:55px 55px;mask-image:linear-gradient(to right,#000,transparent 80%)}
+.hero-content{position:relative;z-index:2;padding:95px 0}
+.eyebrow{color:#20bfe6;font-size:11px;font-weight:800;letter-spacing:2.5px;margin-bottom:15px}
+.hero h1{font-family:"Space Grotesk";font-size:clamp(48px,7vw,82px);line-height:.98;letter-spacing:-4px;margin:0 0 25px;max-width:760px}
+.hero h1 span{background:linear-gradient(90deg,#2685ff,#21d5dd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy{color:#aebbd0;font-size:18px;max-width:680px}
+.hero-actions{display:flex;gap:12px;margin:32px 0 45px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:18px;padding:14px 20px;border-radius:8px;font-weight:800;font-size:14px}
+.btn-primary{background:linear-gradient(100deg,#0d70ff,#12b8dc);color:#fff;box-shadow:0 10px 35px rgba(0,130,255,.22)}
+.btn-ghost{border:1px solid #2c3c51;color:#e8eef8}
+.hero-stats{display:flex;gap:45px}.hero-stats div{display:flex;flex-direction:column}.hero-stats strong{font:700 25px "Space Grotesk"}.hero-stats span{font-size:12px;color:#8190a4}
+.chip-art{position:absolute;right:7%;top:50%;transform:translateY(-50%);width:330px;height:330px;border:1px solid rgba(38,143,255,.18);border-radius:28px;box-shadow:inset 0 0 80px rgba(20,100,255,.07),0 0 100px rgba(0,110,255,.08);display:grid;place-items:center;opacity:.9}
+.chip-core{width:170px;height:170px;border:2px solid #197bff;border-radius:18px;display:grid;place-items:center;color:#19c7e9;font:800 28px "Space Grotesk";box-shadow:0 0 45px rgba(0,128,255,.18)}
+.pin{position:absolute;width:50px;height:3px;background:linear-gradient(90deg,#1677ff,#18c6e9)}.p1{left:-28px;top:70px}.p2{left:-28px;top:110px}.p3{left:-28px;top:150px}.p4{left:-28px;top:190px}.p5{right:-28px;top:90px}.p6{right:-28px;top:130px}.p7{right:-28px;top:170px}.p8{right:-28px;top:210px}
+.ticker{background:#0b1420;color:#b9c7d9;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ticker-inner{height:54px;display:flex;align-items:center;justify-content:center;gap:25px;font-size:11px;letter-spacing:2px;font-weight:800}
+.ticker i{color:#16c6e8;font-style:normal}
+.section{padding:100px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:42px}.section-head h2,.about-section h2,.cta-box h2{font:700 clamp(34px,5vw,54px)/1.05 "Space Grotesk";letter-spacing:-2.5px;margin:0}.section-head>p{max-width:460px;color:#667589;margin:0}
+.track-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.track-card{border:1px solid #e3e8ee;border-radius:16px;padding:28px;min-height:250px;transition:.25s;background:#fff}.track-card:hover{transform:translateY(-4px);border-color:#9cc9ff;box-shadow:0 18px 45px rgba(20,60,100,.08)}.track-card.featured{background:linear-gradient(135deg,#061a36,#0a315e);color:#fff;border-color:#174a82}.track-card .icon{font-size:28px;color:#1585ff;margin-bottom:15px}.card-kicker{font-size:10px;letter-spacing:2px;font-weight:800;color:#6e7e91;margin-bottom:7px}.featured .card-kicker{color:#56cde9}.track-card h3{font:700 23px/1.15 "Space Grotesk";margin:0 0 12px}.track-card p{font-size:13px;color:#667589;margin-bottom:22px}.featured p{color:#a8b8cd}.track-card a{font-size:13px;font-weight:800;color:#0b72e8}
+.dark-section{background:#060a10;color:#fff}.section-head.light>p{color:#8997aa}.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:25px}.filter{border:1px solid #263445;background:#0a111b;color:#9cabbc;padding:9px 14px;border-radius:999px;font-weight:700;font-size:12px;cursor:pointer}.filter.active,.filter:hover{background:#1378ff;color:#fff;border-color:#1378ff}.course-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.course-card{background:linear-gradient(145deg,#0c141f,#0a1018);border:1px solid #1b2a3b;border-radius:14px;padding:22px;min-height:250px;display:flex;flex-direction:column;transition:.2s}.course-card:hover{border-color:#2c87ff;transform:translateY(-3px)}.course-card.hidden{display:none}.course-top{display:flex;justify-content:space-between;color:#16c6e8;font-size:10px;font-weight:800;letter-spacing:1.5px}.course-top b{color:#506174}.course-card h3{font:700 21px/1.2 "Space Grotesk";margin:25px 0 12px}.course-card p{color:#8997aa;font-size:13px}.course-meta{margin-top:auto;padding-top:18px;border-top:1px solid #1a2635;display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#748397}.course-meta a{color:#fff;font-weight:800}
+.resource-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center}.lead{font-size:18px;color:#657488;max-width:650px}.resource-list{margin-top:35px}.resource-list a{display:grid;grid-template-columns:45px 1fr 20px;gap:15px;align-items:center;padding:18px 0;border-top:1px solid #e3e8ee}.resource-list span{font-size:11px;color:#1680ff;font-weight:800}.resource-list strong{display:block;font-size:15px}.resource-list small{display:block;color:#78879a;margin-top:3px}.resource-list b{color:#1680ff}.resource-panel{min-height:450px;border-radius:24px;background:linear-gradient(145deg,#061426,#0a3762);position:relative;overflow:hidden;padding:45px;color:#fff}.panel-glow{position:absolute;width:240px;height:240px;border-radius:50%;background:#0b9ed6;filter:blur(80px);opacity:.3;right:-40px;top:-30px}.mini-chip{position:relative;width:85px;height:85px;border:1px solid #27bfe6;border-radius:12px;display:grid;place-items:center;text-align:center;font:800 12px "Space Grotesk";color:#45d9ef;margin-bottom:120px}.resource-panel h3{position:relative;font:700 42px/1.05 "Space Grotesk";letter-spacing:-2px;margin:0}.resource-panel p{position:relative;color:#9fb0c5;max-width:380px}
+.about-section{background:#f5f8fb}.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px}.about-copy>p{font-size:18px;color:#596a7d}.principles{margin-top:35px;border-top:1px solid #dce3eb}.principles div{display:grid;grid-template-columns:45px 150px 1fr;gap:15px;padding:17px 0;border-bottom:1px solid #dce3eb}.principles b{color:#1780ff}.principles strong{font-size:14px}.principles span{font-size:13px;color:#718094}
+.cta-section{padding:70px 0;background:#05070b;color:#fff}.cta-box{display:flex;justify-content:space-between;align-items:center;gap:40px;border:1px solid #1c2b3d;border-radius:20px;padding:45px;background:radial-gradient(circle at 90% 50%,rgba(0,147,255,.14),transparent 35%),#0a111a}.cta-box p{color:#8797ab;margin-bottom:0}.cta-box .btn{flex-shrink:0}
+.footer{background:#05070b;color:#718096;border-top:1px solid #111c29;padding:28px 0}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:11px}.footer-brand{font-size:17px}.footer-brand img{width:30px;height:30px}
+@media(max-width:950px){.nav{gap:14px}.course-grid{grid-template-columns:repeat(2,1fr)}.chip-art{opacity:.25;right:-60px}.track-grid{grid-template-columns:repeat(2,1fr)}.resource-layout,.about-grid{grid-template-columns:1fr;gap:45px}}
+@media(max-width:720px){.container{width:min(var(--max),calc(100% - 28px))}.menu-toggle{display:block}.nav{display:none;position:absolute;left:14px;right:14px;top:70px;padding:18px;background:#0a111a;border:1px solid #1d2b3b;border-radius:12px;flex-direction:column;align-items:stretch}.nav.open{display:flex}.nav a{padding:8px}.hero{min-height:680px}.hero-content{padding:70px 0}.hero h1{font-size:52px;letter-spacing:-2.5px}.hero-copy{font-size:16px}.hero-stats{gap:20px}.hero-stats strong{font-size:21px}.ticker-inner{overflow:hidden;white-space:nowrap}.section{padding:75px 0}.section-head{display:block}.section-head>p{margin-top:15px}.track-grid,.course-grid{grid-template-columns:1fr}.resource-panel{min-height:380px}.mini-chip{margin-bottom:90px}.about-grid{gap:25px}.principles div{grid-template-columns:35px 1fr}.principles span{grid-column:2}.cta-box{display:block;padding:30px}.cta-box .btn{margin-top:25px}.footer-inner{flex-direction:column;align-items:flex-start}.footer-inner p{margin:0}}
+
+/* ===== ASIC Skill Home V2 ===== */
+.hero-v2{min-height:760px;background:radial-gradient(circle at 76% 42%,rgba(16,126,255,.22),transparent 25%),radial-gradient(circle at 92% 85%,rgba(21,200,224,.12),transparent 22%),linear-gradient(120deg,#030508 0%,#06101b 55%,#071a2c 100%)}
+.hero-v2 .hero-grid{opacity:.12;background-size:48px 48px;mask-image:linear-gradient(90deg,#000 15%,rgba(0,0,0,.6) 58%,transparent 100%)}
+.hero-layout{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(380px,.72fr);gap:80px;align-items:center;padding:90px 0}
+.hero-v2 .hero-content{padding:0;max-width:760px}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(48,157,255,.28);background:rgba(8,25,43,.68);padding:9px 13px;border-radius:999px;color:#65d6ee;font-size:10px;font-weight:800;letter-spacing:1.7px;margin-bottom:25px;box-shadow:0 10px 35px rgba(0,100,255,.08)}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:#16c6e8;box-shadow:0 0 0 5px rgba(22,198,232,.10),0 0 15px rgba(22,198,232,.7)}
+.hero-v2 h1{font-size:clamp(52px,6.7vw,86px);max-width:780px;letter-spacing:-4.8px;margin-bottom:27px}
+.hero-v2 .hero-copy{font-size:18px;line-height:1.75;color:#aab9cb;max-width:700px}
+.hero-v2 .hero-actions{margin:32px 0 35px}
+.hero-proof{display:flex;align-items:center;gap:13px;color:#fff}
+.hero-proof div{display:flex;flex-direction:column;min-width:60px}
+.hero-proof strong{font:700 13px "Space Grotesk";color:#eaf3ff;letter-spacing:.4px}
+.hero-proof span{font-size:9px;color:#708196;margin-top:2px}
+.hero-proof i{font-style:normal;color:#1c9fe8;font-size:16px}
+.hero-visual{position:relative;border:1px solid rgba(73,150,224,.22);background:linear-gradient(145deg,rgba(8,21,35,.94),rgba(5,12,21,.90));border-radius:26px;padding:28px;box-shadow:inset 0 1px rgba(255,255,255,.04),0 35px 100px rgba(0,71,145,.20);overflow:hidden}
+.hero-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(32,139,255,.08),transparent 42%,rgba(22,198,232,.04));pointer-events:none}
+.visual-label{position:relative;color:#4e708d;font-size:9px;letter-spacing:2.2px;font-weight:800;margin-bottom:18px}
+.flow-node{position:relative;display:flex;align-items:center;gap:13px;border:1px solid #1b3045;background:rgba(8,18,29,.84);padding:13px 14px;border-radius:12px;transition:.2s}
+.flow-node.active{border-color:#1677ff;box-shadow:0 0 0 1px rgba(22,119,255,.12),0 12px 30px rgba(0,87,180,.12)}
+.node-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#0d2035;color:#25c5e5;font:700 10px "Space Grotesk";flex-shrink:0}
+.flow-node b{display:block;color:#f4f8ff;font:700 14px "Space Grotesk"}
+.flow-node small{display:block;color:#71849a;font-size:9px;margin-top:3px;line-height:1.45}
+.flow-line{height:18px;width:1px;background:linear-gradient(#176fc8,#16c6e8);margin-left:31px;opacity:.7}
+.visual-chip{margin:23px auto 0;width:112px;height:68px;border:1px solid #1f91dc;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(14,137,230,.16),transparent 65%),#07121f;box-shadow:0 0 45px rgba(0,129,255,.13)}
+.visual-chip span{font:800 20px "Space Grotesk";color:#29c8e6;letter-spacing:1px}.visual-chip small{font-size:7px;letter-spacing:2.5px;color:#5b83a3;margin-top:1px}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}.orb-one{width:180px;height:180px;right:17%;top:15%;background:rgba(0,119,255,.10)}.orb-two{width:150px;height:150px;right:2%;bottom:5%;background:rgba(22,198,232,.08)}
+.brand-strip{background:#08111b;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);color:#8da0b4}
+.brand-strip-inner{height:58px;display:flex;align-items:center;justify-content:center;gap:23px;font-size:9px;letter-spacing:2.5px;font-weight:800;white-space:nowrap;overflow:hidden}.brand-strip-inner b{color:#17bfe2;font-size:12px}
+@media(max-width:1000px){.hero-layout{grid-template-columns:1fr;gap:45px}.hero-visual{max-width:650px}.hero-v2{min-height:auto}.hero-proof{padding-bottom:5px}}
+@media(max-width:720px){.hero-layout{padding:70px 0}.hero-v2 h1{font-size:50px;letter-spacing:-3px}.hero-badge{font-size:8px;letter-spacing:1.2px}.hero-v2 .hero-copy{font-size:16px}.hero-proof{gap:8px}.hero-proof div{min-width:52px}.hero-proof i{font-size:13px}.hero-visual{padding:20px;border-radius:20px}.flow-node small{font-size:8px}.brand-strip-inner{justify-content:flex-start;gap:16px}}
+
+/* ===== ASIC Skill V3: learning + flow sections ===== */
+.hero-copy strong{color:#e9f4ff;font-weight:800}
+.learn-section{background:#fff}
+.learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.learn-card{display:grid;grid-template-columns:42px 1fr 20px;gap:15px;align-items:start;padding:22px;border:1px solid #e2e8ef;border-radius:15px;background:#fff;transition:.22s;min-height:155px}
+.learn-card:hover{transform:translateY(-4px);border-color:#91c5ff;box-shadow:0 18px 45px rgba(20,60,100,.08)}
+.learn-number{color:#1680ff;font-size:10px;font-weight:900;letter-spacing:1px;padding-top:3px}
+.learn-card h3{font:700 20px/1.2 "Space Grotesk";margin:0 0 8px;color:#101722}
+.learn-card p{font-size:12px;color:#718094;margin:0;line-height:1.55}
+.learn-card>b{color:#1680ff;font-size:18px}
+.flow-section{background:#f5f8fb;border-top:1px solid #e5ebf1;border-bottom:1px solid #e5ebf1}
+.full-flow{display:flex;align-items:center;gap:8px;overflow-x:auto;padding:8px 2px 16px;scrollbar-width:thin}
+.full-flow a{min-width:112px;padding:15px 13px;border:1px solid #dbe4ed;border-radius:13px;background:#fff;display:flex;flex-direction:column;gap:3px;transition:.2s}
+.full-flow a:hover{border-color:#1677ff;transform:translateY(-3px);box-shadow:0 12px 30px rgba(20,70,120,.08)}
+.full-flow span{font-size:9px;color:#1680ff;font-weight:900;letter-spacing:1px}
+.full-flow strong{font:700 15px "Space Grotesk";color:#101722}
+.full-flow small{font-size:9px;color:#7b8999}
+.full-flow i{font-style:normal;color:#1680ff;font-weight:800;flex:0 0 auto}
+.flow-node{width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.flow-node:hover{border-color:#2c87ff;transform:translateY(-2px)}
+@media(max-width:950px){.learn-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.learn-grid{grid-template-columns:1fr}.full-flow{justify-content:flex-start}.hero-copy strong{display:inline-block;margin-bottom:3px}}
+
+
+/* Sign-up page */
+.auth-page { min-height: 100vh; background: #050a11; padding: 110px 20px 60px; }
+.auth-shell { max-width: 520px; margin: 0 auto; }
+.auth-card { background: rgba(8,18,30,.94); border: 1px solid rgba(35,154,255,.28); border-radius: 24px; padding: 38px; box-shadow: 0 24px 80px rgba(0,0,0,.35); }
+.auth-kicker { color: #18c9ef; font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
+.auth-card h1 { margin: 0 0 10px; font-size: clamp(2rem,5vw,3.2rem); line-height: 1; }
+.auth-card .auth-intro { color: #a8b9cb; line-height: 1.7; margin: 0 0 28px; }
+.auth-form { display: grid; gap: 17px; }
+.auth-form label { display: grid; gap: 8px; color: #dbe8f5; font-size: .92rem; font-weight: 700; }
+.auth-form input { width: 100%; box-sizing: border-box; border: 1px solid #223b55; background: #07111d; color: #fff; border-radius: 11px; padding: 13px 14px; font: inherit; outline: none; }
+.auth-form input:focus { border-color: #168dff; box-shadow: 0 0 0 3px rgba(22,141,255,.12); }
+.auth-submit { border: 0; cursor: pointer; width: 100%; margin-top: 5px; }
+.auth-note { color: #7f95aa; font-size: .82rem; line-height: 1.5; margin-top: 18px; }
+.auth-success { display:none; margin-top:18px; padding:12px 14px; border:1px solid rgba(30,214,176,.35); border-radius:10px; color:#a8ffe9; background:rgba(30,214,176,.08); }
+.auth-back { display:inline-block; margin-top:22px; color:#8fc9ff; text-decoration:none; }
+.auth-back:hover { color:#fff; }
+@media (max-width: 600px) { .auth-page { padding: 95px 14px 40px; } .auth-card { padding: 26px 20px; } }
+
+
+.contact-email { margin-top: 14px; }
+.contact-email a, .auth-note a { color: #22c7f2; text-decoration: none; }
+.contact-email a:hover, .auth-note a:hover { text-decoration: underline; }
+
+
+/* Authentication page switch link */
+.auth-switch { margin: 14px 0 8px; text-align: center; color: #9fb0c3; }
+.auth-switch a { font-weight: 700; }
+
+
+/* Signed-in user navigation */
+.user-menu{position:relative}.user-menu[hidden]{display:none!important}
+.user-menu-button{display:flex;align-items:center;gap:9px;border:1px solid #237df4;background:#0a1522;color:#fff;padding:7px 11px 7px 7px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+.user-avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#168dff,#18c9ef);color:#fff;font-size:13px}
+.user-chevron{color:#8ca6bf;font-size:11px}.user-dropdown{position:absolute;right:0;top:calc(100% + 10px);width:245px;padding:9px;background:#09131f;border:1px solid #223b55;border-radius:13px;box-shadow:0 18px 50px rgba(0,0,0,.45);z-index:300}
+.user-dropdown[hidden]{display:none!important}.user-dropdown-info{padding:10px 11px 12px;border-bottom:1px solid #1d2b3b;margin-bottom:6px;overflow:hidden}.user-dropdown-info strong,.user-dropdown-info span{display:block}.user-dropdown-info span{color:#8fa5ba;font-size:12px;margin-top:4px;overflow:hidden;text-overflow:ellipsis}
+.nav .user-dropdown a,.user-dropdown button{display:block;width:100%;box-sizing:border-box;padding:10px 11px;border:0;border-radius:8px;background:transparent;color:#c9d2df;text-align:left;font:inherit;font-size:13px;cursor:pointer;text-decoration:none}.nav .user-dropdown a:hover,.user-dropdown button:hover{background:#101f30;color:#fff}
+@media(max-width:720px){.user-menu-button{width:100%;justify-content:flex-start}.user-dropdown{position:static;width:100%;margin-top:8px;box-shadow:none}.nav .user-dropdown a{padding:10px 11px}}
+
+
+/* v36.1 — Homepage EDA Cloud Lab integration */
+.eda-home-section{background:#07111d;color:#fff;position:relative;overflow:hidden}
+.eda-home-section:before{content:"";position:absolute;inset:auto -12% -45% auto;width:560px;height:560px;border-radius:50%;background:rgba(0,160,255,.16);filter:blur(90px);pointer-events:none}
+.eda-home-shell{position:relative;display:grid;grid-template-columns:.95fr 1.05fr;gap:58px;align-items:center;border:1px solid #1c3349;border-radius:24px;padding:48px;background:linear-gradient(135deg,#0a1725,#07101a 55%,#081a2b);box-shadow:0 28px 80px rgba(0,0,0,.28)}
+.eda-home-copy h2{font:700 clamp(34px,4.6vw,54px)/1.05 "Space Grotesk";letter-spacing:-2.4px;margin:12px 0 18px;max-width:720px}
+.eda-home-copy>p{color:#91a7bd;line-height:1.75;max-width:680px;margin:0}
+.eda-tool-row{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0}
+.eda-tool-row span{border:1px solid #274864;background:#0b2032;color:#b8d9f5;border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800;letter-spacing:.4px}
+.eda-home-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.eda-signin-note{font-size:11px;color:#7390aa}
+.eda-home-console{border:1px solid #24425d;border-radius:18px;background:#020a11;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.34)}
+.eda-console-top{height:50px;padding:0 16px;display:flex;gap:7px;align-items:center;background:#102338;border-bottom:1px solid #24425d;color:#a9c7df;font-size:11px}
+.eda-console-top i{width:8px;height:8px;border-radius:50%;background:#49657c}.eda-console-top strong{margin-left:7px;color:#edf7ff}.eda-console-top span{margin-left:auto;color:#48e2a5;font:800 9px "Space Grotesk";letter-spacing:1.2px}
+.eda-console-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:6px;padding:24px 18px;border-bottom:1px solid #163149}
+.eda-console-flow div{min-width:0}.eda-console-flow b{display:block;color:#22bfff;font-size:9px}.eda-console-flow span{display:block;color:#fff;font:700 13px "Space Grotesk";margin:3px 0}.eda-console-flow small{color:#68859f;font-size:9px}.eda-console-flow em{font-style:normal;color:#2f5877}
+.eda-home-console pre{margin:0;padding:22px;color:#7af7be;font:12px/1.75 ui-monospace,SFMono-Regular,Menlo,monospace;min-height:168px;white-space:pre-wrap}.eda-home-console pre span{color:#23bfff}
+@media(max-width:950px){.eda-home-shell{grid-template-columns:1fr;gap:32px;padding:34px}.eda-console-flow{grid-template-columns:1fr 1fr;gap:14px}.eda-console-flow em{display:none}}
+@media(max-width:720px){.eda-home-shell{padding:24px;border-radius:18px}.eda-home-copy h2{letter-spacing:-1.7px}.eda-console-flow{grid-template-columns:1fr}.eda-home-console pre{font-size:11px}}
+
+/* v37.0.9: Homepage EDA explorer — this follows repaired v36 CSS newlines. */
+.eda-home-section{background:radial-gradient(ellipse at 10% 15%,#112a44 0,transparent 46%),linear-gradient(145deg,#07111e 0,#070f1b 70%);color:#f1f8ff}
+.eda-home-intro{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:28px}
+.eda-home-intro h2{font:700 clamp(31px,4.4vw,52px)/1.08 "Space Grotesk",Inter,sans-serif;letter-spacing:-2px;margin:10px 0 16px;max-width:750px}
+.eda-home-intro h2 span{color:#54d7f6}
+.eda-home-intro p{color:#a1b8ca;max-width:720px;line-height:1.7;margin:0}
+.eda-lab-entry{white-space:nowrap;border-radius:10px;background:#146ff5;color:#fff;font-weight:800;padding:14px 18px;font-size:13px;box-shadow:0 14px 35px #106ee533}
+.eda-lab-entry:hover{background:#2494ff}
+.eda-tool-picker{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:18px 0}
+.eda-pick{position:relative;min-width:0;text-align:left;padding:18px 17px 18px;border:1px solid #234862;border-radius:16px;background:linear-gradient(135deg,#102338,#0a1827);color:#f0f8ff;cursor:pointer;transition:border-color .16s,transform .16s,background .16s;display:grid;gap:5px}
+.eda-pick .eda-tool-icon{display:grid;place-items:center;width:35px;height:35px;background:#133858;color:#63d5ff;font-weight:900;font-size:12px;border-radius:10px;margin-bottom:9px}
+.eda-pick strong{font:700 19px "Space Grotesk",Inter,sans-serif}
+.eda-pick small{color:#92b1c9;font-size:12px}
+.eda-pick-arrow{position:absolute;top:16px;right:17px;font-weight:900;color:#598cac}
+.eda-pick:hover,.eda-pick.active{border-color:#2bb7ee;transform:translateY(-2px);background:linear-gradient(135deg,#143e5f,#0a233b)}
+.eda-pick.active .eda-tool-icon{background:#19a8df;color:#02131e}
+.eda-pick:focus-visible{outline:3px solid #67ddff;outline-offset:2px}
+.eda-showcase{display:grid;grid-template-columns:minmax(0,.93fr) minmax(0,1.07fr);border:1px solid #23516e;border-radius:18px;background:linear-gradient(120deg,#0d2539,#081623);overflow:hidden;box-shadow:0 24px 70px #0004}
+.eda-showcase-info{padding:30px 34px}
+.eda-showcase-overline{color:#4ad9f4;font-size:11px;letter-spacing:2px;font-weight:900}
+.eda-showcase-info h3{font:700 clamp(25px,3.5vw,38px)/1.1 "Space Grotesk",Inter,sans-serif;margin:15px 0 14px;letter-spacing:-1px}
+.eda-showcase-info>p:not(.eda-home-caption){color:#a0bdd2;line-height:1.7;max-width:520px}
+.eda-home-tags,.eda-home-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:20px}
+.eda-home-tags span{border:1px solid #2e5873;background:#123149;border-radius:999px;padding:6px 11px;color:#c7e9f8;font-size:11px;font-weight:750}
+.eda-home-links{gap:12px;margin-top:26px}
+.eda-home-links a{display:inline-flex;align-items:center;gap:14px;font-size:12px;font-weight:800;border-radius:9px;padding:12px 14px}
+.eda-launch-main{background:linear-gradient(90deg,#0b83f5,#18c2df);color:#fff}
+.eda-launch-secondary{color:#d0e8f5;border:1px solid #3c6380}
+.eda-home-caption{color:#789aaf;font-size:11px;line-height:1.6;margin:18px 0 0}
+.eda-home-terminal{min-width:0;border-left:1px solid #23516e;background:#030c15;display:flex;flex-direction:column}
+.eda-terminal-chrome{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid #214561;background:#0a1d2e;font-size:12px;color:#cfe6f9}
+.eda-lights{display:flex;gap:6px;margin-right:4px}.eda-lights i{width:8px;height:8px;border-radius:50%;background:#fa7568}.eda-lights i:nth-child(2){background:#f8ca62}.eda-lights i:nth-child(3){background:#45d49c}
+.eda-demo-pill{margin-left:auto;padding:5px 8px;background:#142b3c;border:1px solid #315774;border-radius:999px;font-size:9px;font-weight:800;color:#9fc7da;white-space:nowrap}
+#eda-home-snippet{padding:30px 26px;margin:0;min-height:225px;flex:1;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#7ceab8;font:13px/1.9 ui-monospace,Consolas,monospace}
+.eda-terminal-foot{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #173e53;padding:12px 18px;color:#618da7;font:700 9px Inter,Arial,sans-serif;letter-spacing:1px}
+@media(max-width:1130px){.eda-tool-picker{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:960px){.eda-home-intro{align-items:start;flex-direction:column}.eda-tool-picker{grid-template-columns:repeat(3,1fr)}.eda-showcase{grid-template-columns:1fr}.eda-home-terminal{border-left:0;border-top:1px solid #23516e}}
+@media(max-width:600px){.eda-tool-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.eda-pick{padding:14px}.eda-pick strong{font-size:16px}.eda-showcase-info{padding:23px}.eda-terminal-foot span:last-child{display:none}.eda-lab-entry{white-space:normal}}
+
+/* v37.0.20 — categorized homepage EDA explorer */
+.eda-category-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:22px 0 12px;color:#e9f9ff}
+.eda-category-heading strong{display:block;font-size:15px}
+.eda-category-heading span{display:block;color:#96bad2;font-size:12px;margin-top:4px}
+#eda-category-count{padding:7px 11px;background:#0e3049;border:1px solid #2a5874;color:#8cdbff;border-radius:999px;font-weight:750;white-space:nowrap}
+.eda-category-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.eda-category-tab{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0;min-height:52px;padding:12px 14px;background:#091e31;color:#b4d2e4;border:1px solid #254c67;border-radius:12px;font:750 14px Inter,Arial,sans-serif;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.eda-category-tab-count{display:inline-grid;place-items:center;border-radius:9px;background:#16405c;color:#8ee5ff;padding:3px 7px;font-size:11px;min-width:26px}
+.eda-category-tab.active{color:#fff;background:linear-gradient(120deg,#14527a,#123753);border-color:#3bd3ff;box-shadow:inset 0 -3px #23c5f0}
+.eda-category-tab:hover{border-color:#5bd9ff;color:#fff}
+.eda-category-tab:focus-visible{outline:3px solid #76deff;outline-offset:3px}
+.eda-home-section .eda-tool-picker{grid-template-columns:repeat(4,minmax(0,1fr));margin:12px 0 22px}
+.eda-home-section .eda-pick[hidden]{display:none!important}
+@media(max-width:900px){.eda-home-section .eda-tool-picker{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){.eda-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.eda-home-section .eda-tool-picker{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:390px){.eda-category-tab{font-size:12px;padding:9px 6px;gap:6px}.eda-home-section .eda-tool-picker{grid-template-columns:1fr}}
+
+/* v37.0.21: Six balanced category cards with responsive layout. */
+.eda-category-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:700px){.eda-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.eda-category-tab{font-size:12px;gap:5px;padding:9px}}
+
+/* v37.0.29 — categorized navigation to every lab from the main header. */
+.eda-nav-wrap{position:relative;display:flex;align-items:center}
+.eda-nav-button{font:inherit;font-size:inherit;font-weight:600;background:transparent;border:0;color:inherit;padding:10px;cursor:pointer;white-space:nowrap}
+.eda-nav-button:hover,.eda-nav-button:focus-visible{color:#39c7ed}
+.eda-nav-menu[hidden]{display:none!important}
+.eda-nav-menu{position:absolute;z-index:900;top:calc(100% + 16px);right:-220px;width:min(850px,calc(100vw - 38px));max-height:min(75vh,690px);overflow:auto;background:#0c2235;border:1px solid #3a7594;border-radius:15px;box-shadow:0 22px 70px rgba(0,0,0,.52);padding:18px;color:#ecf7ff;text-align:left}
+.eda-nav-intro{margin:0 0 15px;color:#b2cad9;font-size:13px}
+.eda-nav-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.eda-nav-category{border:1px solid #27495e;background:#091a2b;border-radius:11px;padding:10px;min-width:0}
+.eda-nav-heading{display:block!important;font-weight:750!important;color:#6cdbff!important;margin-bottom:7px;padding:0!important;font-size:13px!important}
+.eda-nav-items{display:grid;gap:1px}
+.eda-nav-items a{font-size:12px!important;padding:6px 8px!important;display:block!important;color:#cbdfee!important;border-radius:6px}
+.eda-nav-items a:hover,.eda-nav-items a:focus-visible{background:#183e5b;color:#fff!important}
+.eda-nav-all{display:block;margin-top:15px;color:#9ce2ff!important;padding:8px}
+@media(max-width:800px){.eda-nav-menu{position:fixed;left:12px;right:12px;top:72px;width:auto}.eda-nav-groups{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.eda-nav-groups{grid-template-columns:1fr}}
+
+/* v37.0.39: compact six-category mega menu, readable without filling the page. */
+.eda-nav-menu{width:min(730px,calc(100vw - 30px));max-height:min(65vh,570px);padding:14px;right:-165px}
+.eda-nav-groups{gap:9px}.eda-nav-category{padding:9px}.eda-nav-items{font-size:12px;line-height:1.25}
+@media(max-width:800px){.eda-nav-menu{right:12px;max-height:66vh}}
+
+/* ASIC-Skill v37.0.41 — topic navigation and expandable learning outlines. */
+.topic-nav-wrap{position:relative;display:flex;align-items:center}
+.topic-nav-trigger{font:inherit;font-weight:600;background:transparent;border:0;color:inherit;padding:10px 3px;white-space:nowrap;cursor:pointer}
+.topic-nav-trigger:hover,.topic-nav-trigger:focus-visible{color:#42c8ee}
+.topic-nav-menu[hidden]{display:none!important}
+.topic-nav-menu{position:absolute;top:calc(100% + 16px);left:0;width:min(370px,calc(100vw - 30px));max-height:min(65vh,550px);overflow:auto;z-index:910;background:#0c2235;color:#e4f7ff;border:1px solid #315f7b;border-radius:13px;padding:14px;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.topic-nav-intro{font-size:12px;color:#a8c5d7;margin:0 0 8px}
+.topic-nav-list{display:grid;gap:3px}
+.topic-nav-list a{display:block!important;padding:9px 10px!important;border-radius:7px;font-size:13px;color:#dbf2ff!important;line-height:1.35}
+.topic-nav-list a:hover,.topic-nav-list a:focus-visible{background:#164669!important;color:#fff!important}
+.topic-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.topic-card{border:1px solid #d4e0ed;border-radius:14px;background:#fff;color:#152e42;min-width:0;overflow:hidden;scroll-margin-top:100px}
+.topic-card[open]{border-color:#2c9adc;box-shadow:0 10px 30px rgba(30,92,138,.1)}
+.topic-card summary{list-style:none;cursor:pointer;padding:18px 16px;display:flex;align-items:start;gap:10px;min-height:112px}
+.topic-card summary::-webkit-details-marker{display:none}
+.topic-card summary:hover{background:#f0f8fe}
+.topic-number{flex:none;border-radius:8px;background:#e8f5ff;color:#0863a1;font-size:12px;font-weight:800;padding:5px 7px}
+.topic-heading{min-width:0;display:grid;gap:7px}
+.topic-heading strong{font:700 17px/1.25 'Space Grotesk',Inter,Arial,sans-serif}
+.topic-heading small{font:400 12px/1.5 Inter,Arial,sans-serif;color:#566e80}
+.topic-chevron{margin-left:auto;color:#2b93c7;font-size:21px;line-height:1}
+.topic-card[open] .topic-chevron{transform:rotate(180deg)}
+.topic-subtopics{border-top:1px solid #dfe8f2;padding:12px 18px 18px;background:#f5faff}
+.topic-subtopics h4{margin:0 0 7px;font-size:12px;color:#235c7a;text-transform:uppercase;letter-spacing:1px}
+.topic-subtopics ul{margin:0;padding-left:19px;color:#294759;font-size:13px;line-height:1.7}
+.asic-topic-grid{margin-bottom:48px}
+.asic-topic-grid .topic-card{background:#0a1d2e;border-color:#294a61;color:#edf7ff}
+.asic-topic-grid .topic-card summary:hover{background:#12324b}
+.asic-topic-grid .topic-heading small{color:#a9c2d3}
+.asic-topic-grid .topic-number{background:#1a425b;color:#7adef5}
+.asic-topic-grid .topic-subtopics{background:#081724;border-color:#28485c}
+.asic-topic-grid .topic-subtopics h4{color:#71d9f2}
+.asic-topic-grid .topic-subtopics ul{color:#c3d9e5}
+.topic-existing-courses{margin:30px 0 17px;padding-top:25px;border-top:1px solid #26374b}
+.topic-existing-courses h3{font:700 23px 'Space Grotesk',Inter,sans-serif;margin:0 0 10px}
+@media(max-width:1050px){.topic-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav{gap:12px}}
+@media(max-width:720px){.topic-card-grid{grid-template-columns:1fr}.topic-card summary{min-height:0}.topic-nav-wrap{width:100%;display:block}.topic-nav-trigger{text-align:left;width:100%;padding:8px}.topic-nav-menu{position:static;width:100%;max-height:45vh;margin:3px 0 9px;box-shadow:none}.nav{max-height:calc(100vh - 90px);overflow:auto}}
+@media(min-width:721px) and (max-width:1250px){.nav{gap:11px;font-size:12px}.topic-nav-trigger{font-size:12px}}
+
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home">
+        <img src="logo.jpeg" alt="ASIC Skill logo">
+        <span>ASIC<span>-Skill</span></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
+      <nav class="nav">
+        <div class="topic-nav-wrap" data-topic-nav="vlsi"><button type="button" class="topic-nav-trigger" aria-expanded="false" aria-controls="vlsi-topics-menu" aria-haspopup="true">VLSI Topics <span aria-hidden="true">▾</span></button><div id="vlsi-topics-menu" class="topic-nav-menu" hidden><p class="topic-nav-intro">Choose a VLSI subject to view its subtopics</p><div class="topic-nav-list" data-topic-links="vlsi"></div></div></div>
+        <div class="topic-nav-wrap" data-topic-nav="asic"><button type="button" class="topic-nav-trigger" aria-expanded="false" aria-controls="asic-topics-menu" aria-haspopup="true">ASIC-Skill Topics <span aria-hidden="true">▾</span></button><div id="asic-topics-menu" class="topic-nav-menu" hidden><p class="topic-nav-intro">Choose an ASIC-Skill subject to view its subtopics</p><div class="topic-nav-list" data-topic-links="asic"></div></div></div>
+        <div class="eda-nav-wrap"><button type="button" class="eda-nav-button" id="eda-nav-trigger" aria-expanded="false" aria-controls="eda-nav-menu" aria-haspopup="true">EDA Lab <span aria-hidden="true">▾</span></button><div id="eda-nav-menu" class="eda-nav-menu" hidden><p class="eda-nav-intro">Explore a learning category or open a specific lab</p><div id="eda-nav-groups" class="eda-nav-groups"></div><a class="eda-nav-all" href="eda-lab.html">Open full EDA workspace →</a></div></div>
+        <a href="#resources">Resources</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" id="auth-signup-link" href="signup.html">Sign Up</a>
+        <div class="user-menu" id="user-menu" hidden>
+          <button class="user-menu-button" id="user-menu-button" type="button" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">A</span>
+            <span id="nav-user-name">Learner</span>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown" hidden>
+            <div class="user-dropdown-info">
+              <strong id="menu-user-name">ASIC-Skill Learner</strong>
+              <span id="menu-user-email"></span>
+            </div>
+            <a href="#tracks">VLSI Topics</a>
+            <a href="#courses">ASIC-Skill Topics</a>
+            <a href="eda-lab.html">EDA Cloud Lab</a>
+            <a href="#resources">Resources</a>
+            <button type="button" id="nav-logout">Log Out</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero hero-v2">
+      <div class="hero-grid"></div>
+      <div class="hero-orb orb-one"></div>
+      <div class="hero-orb orb-two"></div>
+      <div class="container hero-layout">
+        <div class="hero-content">
+          <div class="hero-badge"><span class="pulse-dot"></span> BUILT FOR VLSI • ASIC • SEMICONDUCTOR ENGINEERS</div>
+          <h1>Master the flow.<br><span>Build better silicon.</span></h1>
+          <p class="hero-copy"><strong>Learn VLSI, ASIC Design &amp; Physical Design from RTL to GDSII.</strong><br>
+            ASIC-Skill is a practical learning platform for understanding how modern chips are designed,
+            verified and signed off — from semiconductor fundamentals and RTL to physical design, timing,
+            physical verification and tapeout.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#tracks">Explore VLSI topics <span>→</span></a>
+            <a class="btn btn-ghost" href="eda-lab.html">Launch EDA Cloud Lab <span>↗</span></a>
+            <a class="btn btn-ghost" href="#courses">Browse ASIC-Skill topics</a>
+          </div>
+          <div class="hero-proof">
+            <div><strong>RTL</strong><span>Design</span></div>
+            <i>→</i>
+            <div><strong>PD</strong><span>Implementation</span></div>
+            <i>→</i>
+            <div><strong>STA</strong><span>Timing</span></div>
+            <i>→</i>
+            <div><strong>GDSII</strong><span>Signoff</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="ASIC design flow visualization">
+          <div class="visual-label">ASIC DESIGN FLOW</div>
+          <button class="flow-node active" type="button" data-flow-filter="frontend" aria-label="Explore RTL and frontend courses"><span class="node-icon">01</span><div><b>RTL / Design</b><small>Architecture • Verilog • SystemVerilog</small></div></button>
+          <div class="flow-line"></div>
+          <button class="flow-node" type="button" data-flow-filter="frontend" aria-label="Explore synthesis and frontend courses"><span class="node-icon">02</span><div><b>Synthesis</b><small>Libraries • Constraints • Optimization</small></div></button>
+          <div class="flow-line"></div>
+          <button class="flow-node" type="button" data-flow-filter="backend" aria-label="Explore physical design courses"><span class="node-icon">03</span><div><b>Physical Design</b><small>Floorplan • Placement • CTS • Route</small></div></button>
+          <div class="flow-line"></div>
+          <button class="flow-node" type="button" data-flow-filter="signoff" aria-label="Explore timing and signoff courses"><span class="node-icon">04</span><div><b>Timing &amp; Signoff</b><small>STA • DRC • LVS • EM/IR</small></div></button>
+          <div class="visual-chip"><span>ASIC</span><small>SKILL</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-strip">
+      <div class="container brand-strip-inner">
+        <span>LEARN</span><b>•</b><span>DESIGN</span><b>•</b><span>IMPLEMENT</span><b>•</b><span>ANALYZE</span><b>•</b><span>VERIFY</span><b>•</b><span>SIGN OFF</span>
+      </div>
+    </section>
+
+    <section class="section learn-section" id="learn">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">WHAT YOU CAN LEARN</div>
+            <h2>Build skills across the ASIC flow</h2>
+          </div>
+          <p>Follow focused learning areas from semiconductor fundamentals and RTL through physical implementation, timing and signoff.</p>
+        </div>
+        <div class="learn-grid">
+          <a class="learn-card" href="#tracks"><span class="learn-number">01</span><div><h3>VLSI Fundamentals</h3><p>CMOS, digital logic, libraries, PVT, power, area and performance.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="frontend"><span class="learn-number">02</span><div><h3>RTL Design &amp; Verification</h3><p>Verilog, SystemVerilog, RTL architecture and verification concepts.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="backend"><span class="learn-number">03</span><div><h3>Physical Design</h3><p>Floorplanning, placement, CTS, routing, optimization and closure.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="timing"><span class="learn-number">04</span><div><h3>STA, SDC &amp; MMMC</h3><p>Timing paths, constraints, corners, parasitics and timing closure.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="signoff"><span class="learn-number">05</span><div><h3>ASIC Signoff</h3><p>DRC, LVS, EM/IR, extraction and tapeout readiness.</p></div><b>→</b></a>
+          <a class="learn-card" href="#courses" data-jump-filter="advanced"><span class="learn-number">06</span><div><h3>DFT &amp; Low Power</h3><p>UPF, power intent, scan, ATPG and advanced implementation topics.</p></div><b>→</b></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section topics-section" id="tracks" aria-labelledby="vlsi-topics-heading">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="eyebrow">VLSI KNOWLEDGE AREAS</div><h2 id="vlsi-topics-heading">VLSI Topics</h2></div>
+          <p>Explore ten learning areas. Open a topic to see its organized subtopics; future lessons can be added within each category.</p>
+        </div>
+        <div class="topic-card-grid" data-topic-group="vlsi">
+          <details class="topic-card" id="vlsi-digital-vlsi-design"><summary><span class="topic-number">01</span><span class="topic-heading"><strong>Digital VLSI Design</strong><small>RTL architecture, logic design and ASIC fundamentals</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Number systems &amp; Boolean algebra</li><li>Combinational and sequential circuits</li><li>Verilog / VHDL design</li><li>CMOS digital design</li><li>Synthesis and design optimization</li></ul></div></details>
+          <details class="topic-card" id="vlsi-digital-electronics"><summary><span class="topic-number">02</span><span class="topic-heading"><strong>Digital Electronics</strong><small>Interactive fundamentals, switching logic and digital systems</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Units</h4><ul><li><a href="digital-electronics.html">Unit 01 Introduction to Digital Electronics →</a></li><li><a href="digital-electronics-unit02.html">Unit 02 Number Systems →</a></li><li><a href="digital-electronics-unit03.html">Unit 03 Binary Codes →</a></li><li><a href="digital-electronics-unit04.html">Unit 04 Logic Gates →</a></li><li><a href="digital-electronics-unit05.html">Unit 05 Boolean Algebra →</a></li><li><a href="digital-electronics-unit06.html">Unit 06 Minimization of Switching Functions →</a></li><li><a href="digital-electronics-unit07.html">Unit 07 Combinational Logic Design →</a></li><li><a href="digital-electronics-unit08.html">Unit 08 Programmable Logic Devices →</a></li><li><a href="digital-electronics-unit09.html">Unit 09 Threshold Logic →</a></li><li><a href="digital-electronics-unit10.html">Unit 10 Flip-Flops →</a></li><li><a href="digital-electronics-unit11.html">Unit 11 Shift Registers →</a></li>
+<li><a href="digital-electronics-unit12.html">Unit 12 Counters →</a></li><li><a href="digital-electronics-unit13.html">Unit 13 Sequential Circuits-I →</a></li><li><a href="digital-electronics-unit14.html">Unit 14 Sequential Circuits-II →</a></li><li><a href="digital-electronics-unit15.html">Unit 15 Algorithmic State Machines →</a></li><li><a href="digital-electronics-unit16.html">Unit 16 Logic Families →</a></li><li><a href="digital-electronics-unit17.html">Unit 17 ADC and DAC Converters →</a></li><li><a href="digital-electronics-unit18.html">Unit 18 Memories →</a></li><li><a href="digital-electronics-unit19.html">Unit 19 Timing Circuits and Display Devices →</a></li></ul><h4>Explore this unit</h4><ul><li><a href="digital-electronics.html#analog-digital">Analog versus digital signals</a></li><li><a href="digital-electronics.html#logic-pulses">Logic levels and pulse waveforms</a></li><li><a href="digital-electronics.html#logic-gates">Digital logic and gates</a></li><li><a href="digital-electronics.html#rtl-lab">Verilog and VHDL lab</a></li><li><a href="digital-electronics.html#practice">Knowledge checks</a></li></ul></div></details>
+          <details class="topic-card" id="vlsi-digital-signal-processing"><summary><span class="topic-number">03</span><span class="topic-heading"><strong>Digital Signal Processing</strong><small>Discrete-time signals and hardware realization</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Signals and systems</li><li>Z-transform &amp; DFT/FFT</li><li>FIR &amp; IIR filters</li><li>Fixed-point arithmetic</li><li>DSP hardware architectures</li></ul></div></details>
+          <details class="topic-card" id="vlsi-testing-verification"><summary><span class="topic-number">04</span><span class="topic-heading"><strong>Testing &amp; Verification</strong><small>Functional verification and manufacturing test</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Testbench architecture and simulation</li><li>Assertions and coverage</li><li>SystemVerilog / UVM / cocotb</li><li>Scan, ATPG and fault models</li><li>Formal verification</li></ul></div></details>
+          <details class="topic-card" id="vlsi-semiconductor-fundamental"><summary><span class="topic-number">05</span><span class="topic-heading"><strong>Semiconductor Fundamental</strong><small>Semiconductor devices and electronic materials</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Crystal structure and materials</li><li>Energy bands, carriers and doping</li><li>PN junctions and diodes</li><li>MOSFET device fundamentals</li><li>Process, voltage and temperature effects</li></ul></div></details>
+          <details class="topic-card" id="vlsi-analog-design"><summary><span class="topic-number">06</span><span class="topic-heading"><strong>Analog Design</strong><small>Transistor-level circuits and analog system concepts</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>MOS device operating regions</li><li>Current mirrors and biasing</li><li>Amplifiers and op-amps</li><li>Noise, bandwidth and stability</li><li>ADC/DAC fundamentals</li></ul></div></details>
+          <details class="topic-card" id="vlsi-hardware-software-co-design"><summary><span class="topic-number">07</span><span class="topic-heading"><strong>Hardware-Software Co-Design</strong><small>Embedded architectures and hardware/software integration</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Processor and ISA fundamentals</li><li>Embedded C and peripheral interfaces</li><li>Hardware/software partitioning</li><li>FPGA prototyping</li><li>SoC buses and accelerators</li></ul></div></details>
+          <details class="topic-card" id="vlsi-ic-fabrication-technology"><summary><span class="topic-number">08</span><span class="topic-heading"><strong>IC Fabrication Technology</strong><small>How chips are manufactured</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Lithography and patterning</li><li>Oxidation, deposition and etching</li><li>Doping and ion implantation</li><li>Interconnect and BEOL processes</li><li>Packaging, yield and reliability</li></ul></div></details>
+          <details class="topic-card" id="vlsi-vlsi-signal-processing"><summary><span class="topic-number">09</span><span class="topic-heading"><strong>VLSI Signal Processing</strong><small>Area, power and throughput in DSP architectures</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Pipelining and parallelism</li><li>Systolic architectures</li><li>Arithmetic units and multipliers</li><li>Low-power DSP implementations</li><li>ASIC/FPGA signal-processing accelerators</li></ul></div></details>
+          <details class="topic-card" id="vlsi-miscellaneous"><summary><span class="topic-number">10</span><span class="topic-heading"><strong>Miscellaneous</strong><small>Related semiconductor engineering topics</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>EDA scripting with Tcl, Python and Perl</li><li>Linux engineering workflows</li><li>Emerging semiconductor technologies</li><li>Hardware security concepts</li><li>Career and project development</li></ul></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section flow-section" id="asic-flow">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">RTL → GDSII</div>
+            <h2>Understand the complete ASIC design flow</h2>
+          </div>
+          <p>See how the major stages connect. Each stage will become a dedicated learning area as ASIC-Skill grows.</p>
+        </div>
+        <div class="full-flow" aria-label="RTL to GDSII ASIC design flow">
+          <a href="#courses" data-jump-filter="frontend"><span>01</span><strong>RTL</strong><small>Design</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="frontend"><span>02</span><strong>Synthesis</strong><small>Netlist</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>03</span><strong>Floorplan</strong><small>Power / Area</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>04</span><strong>Placement</strong><small>Optimization</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>05</span><strong>CTS</strong><small>Clocking</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="backend"><span>06</span><strong>Routing</strong><small>Connections</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="timing"><span>07</span><strong>STA</strong><small>Timing</small></a>
+          <i>→</i>
+          <a href="#courses" data-jump-filter="signoff"><span>08</span><strong>Signoff</strong><small>DRC / LVS</small></a>
+          <i>→</i>
+          <a href="#contact"><span>09</span><strong>GDSII</strong><small>Tapeout</small></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-section" id="courses">
+      <div class="container">
+        <div class="section-head light">
+          <div>
+            <div class="eyebrow">ASIC-SKILL LEARNING AREAS</div>
+            <h2>ASIC-Skill Topics</h2>
+          </div>
+          <p>Open any of the six ASIC-Skill subjects for its subtopics. Existing courses remain available underneath.</p>
+        </div>
+        <div class="topic-card-grid asic-topic-grid" data-topic-group="asic">
+          <details class="topic-card" id="asic-asic-design-flow"><summary><span class="topic-number">01</span><span class="topic-heading"><strong>ASIC Design Flow</strong><small>Requirements through RTL, synthesis and tapeout</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Specifications and microarchitecture</li><li>RTL and functional verification</li><li>Logic synthesis and DFT handoff</li><li>Place and route / signoff</li><li>Tapeout deliverables</li></ul></div></details>
+          <details class="topic-card" id="asic-physical-design"><summary><span class="topic-number">02</span><span class="topic-heading"><strong>Physical Design</strong><small>Floorplan to routed and finished layout</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Inputs: netlist, SDC, libraries, LEF/tech</li><li>Floorplanning and power planning</li><li>Placement and optimization</li><li>CTS and routing</li><li>Physical verification and ECO closure</li></ul></div></details>
+          <details class="topic-card" id="asic-static-timing-analysis"><summary><span class="topic-number">03</span><span class="topic-heading"><strong>Static Timing Analysis</strong><small>Timing constraints, paths and signoff</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Clocks and SDC constraints</li><li>Setup and hold analysis</li><li>Timing libraries and PVT corners</li><li>MMMC, derates and on-chip variation</li><li>SI, extraction and timing ECO</li></ul></div></details>
+          <details class="topic-card" id="asic-asic-verification"><summary><span class="topic-number">04</span><span class="topic-heading"><strong>ASIC Verification</strong><small>From RTL checks to pre-silicon confidence</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Verification plans and testbenches</li><li>SystemVerilog/UVM and Python verification</li><li>Assertions and functional coverage</li><li>Formal and equivalence checking</li><li>Regression and debug methodology</li></ul></div></details>
+          <details class="topic-card" id="asic-dft"><summary><span class="topic-number">05</span><span class="topic-heading"><strong>DFT</strong><small>Design for test and scan methodology</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Fault models and test coverage</li><li>Scan chains and compression</li><li>ATPG and test pattern generation</li><li>MBIST/LBIST concepts</li><li>Test-mode timing and physical impact</li></ul></div></details>
+          <details class="topic-card" id="asic-analog"><summary><span class="topic-number">06</span><span class="topic-heading"><strong>Analog</strong><small>Analog blocks in ASIC systems</small></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div class="topic-subtopics"><h4>Subtopics</h4><ul><li>Analog design flow and specifications</li><li>SPICE and device models</li><li>Biasing, amplification and filters</li><li>Mixed-signal interfaces</li><li>Analog layout, matching and verification</li></ul></div></details>
+        </div>
+        <div class="topic-existing-courses"><div class="eyebrow">AVAILABLE COURSES</div><h3>Explore existing learning courses</h3></div>
+        <div class="filter-row">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="frontend">Frontend</button>
+          <button class="filter" data-filter="backend">Backend</button>
+          <button class="filter" data-filter="timing">Timing</button>
+          <button class="filter" data-filter="signoff">Signoff</button>
+          <button class="filter" data-filter="advanced">Advanced</button>
+        </div>
+        <div class="course-grid">
+          <article class="course-card" data-category="backend">
+            <div class="course-top"><span>BACKEND</span><b>01</b></div>
+            <h3>ASIC Physical Design — Complete Flow</h3>
+            <p>From design inputs and floorplan through placement, CTS, routing and chip finishing.</p>
+            <div class="course-meta"><span>Beginner → Advanced</span><a href="course-content.html?course=physical-design">View course</a></div>
+          </article>
+          <article class="course-card" data-category="timing">
+            <div class="course-top"><span>TIMING</span><b>02</b></div>
+            <h3>Static Timing Analysis</h3>
+            <p>Timing paths, setup/hold, slack, libraries, parasitics, OCV, SI and report analysis.</p>
+            <div class="course-meta"><span>Core skill</span><a href="course-content.html?course=static-timing-analysis">View course</a></div>
+          </article>
+          <article class="course-card" data-category="timing">
+            <div class="course-top"><span>TIMING</span><b>03</b></div>
+            <h3>SDC & Timing Constraints</h3>
+            <p>Clocks, I/O delays, clock groups, false paths, multicycle paths and constraint validation.</p>
+            <div class="course-meta"><span>Practical</span><a href="course-content.html?course=sdc-timing-constraints">View course</a></div>
+          </article>
+          <article class="course-card" data-category="timing">
+            <div class="course-top"><span>MMMC</span><b>04</b></div>
+            <h3>MMMC Timing Signoff</h3>
+            <p>Modes, PVT corners, analysis views, parasitic corners and multi-scenario closure.</p>
+            <div class="course-meta"><span>Advanced</span><a href="course-content.html?course=mmmc-timing-signoff">View course</a></div>
+          </article>
+          <article class="course-card" data-category="signoff">
+            <div class="course-top"><span>SIGNOFF</span><b>05</b></div>
+            <h3>DRC, LVS & Physical Verification</h3>
+            <p>Understand physical verification checks, debug methodology and tapeout evidence.</p>
+            <div class="course-meta"><span>Industry flow</span><a href="course-content.html?course=physical-verification">View course</a></div>
+          </article>
+          <article class="course-card" data-category="advanced">
+            <div class="course-top"><span>LOW POWER</span><b>06</b></div>
+            <h3>UPF & Low-Power Design</h3>
+            <p>Power domains, isolation, level shifters, retention, power intent and verification.</p>
+            <div class="course-meta"><span>Specialization</span><a href="course-content.html?course=upf-low-power">View course</a></div>
+          </article>
+          <article class="course-card" data-category="frontend">
+            <div class="course-top"><span>RTL</span><b>07</b></div>
+            <h3>Verilog & SystemVerilog</h3>
+            <p>RTL coding foundations, synthesizable design, testbenches and verification concepts.</p>
+            <div class="course-meta"><span>Beginner</span><a href="course-content.html?course=verilog-systemverilog">View course</a></div>
+          </article>
+          <article class="course-card" data-category="advanced">
+            <div class="course-top"><span>DFT</span><b>08</b></div>
+            <h3>DFT, Scan & ATPG</h3>
+            <p>Test architecture, scan chains, fault models, ATPG concepts and test coverage.</p>
+            <div class="course-meta"><span>Specialization</span><a href="course-content.html?course=dft-scan-atpg">View course</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section eda-home-section" id="eda-lab">
+      <div class="container">
+        <div class="eda-home-intro">
+          <div><div class="eyebrow">ASIC-SKILL • HANDS-ON DESIGN WORKBENCH</div>
+            <h2>Explore the <span>ASIC & FPGA toolchain.</span></h2>
+            <p>Choose a tool to see a sample task, commands and the right lab to launch. Real jobs execute in isolated containers after sign-in—not on this public preview.</p></div>
+          <a class="eda-lab-entry" href="eda-lab.html">Open complete EDA workspace <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="eda-category-heading"><div><strong>Explore by design stage</strong><span id="eda-category-description">RTL design, verification and processor programming</span></div><span id="eda-category-count">8 tools</span></div>
+        <div class="eda-category-tabs" role="tablist" aria-label="EDA design stages">
+          <button type="button" class="eda-category-tab active" role="tab" data-home-category="frontend" aria-selected="true">Front-End<span class="eda-category-tab-count">8</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="synthesis" aria-selected="false">Synthesis<span class="eda-category-tab-count">2</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="physical" aria-selected="false">Physical Design / STA<span class="eda-category-tab-count">6</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="fpga" aria-selected="false">FPGA / Microcontroller<span class="eda-category-tab-count">3</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="linux" aria-selected="false">Linux / Scripting<span class="eda-category-tab-count">3</span></button>
+          <button type="button" class="eda-category-tab" role="tab" data-home-category="analog" aria-selected="false">Analog / CMOS<span class="eda-category-tab-count">3</span></button>
+        </div>
+        <div class="eda-tool-picker" role="tablist" aria-label="Tools in selected EDA stage">
+          <button type="button" role="tab" id="eda-tool-logic-simulation" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="logic-simulation"><span class="eda-tool-icon">LOGIC</span><strong>Logic Simulation</strong><small>Visual circuit builder</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-cocotb" data-eda-category="frontend" aria-selected="true" aria-controls="eda-tool-detail" class="eda-pick active" data-home-tool="cocotb"><span class="eda-tool-icon">01</span><strong>RTL Verification Studio</strong><small>RTL verification</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-yosys" data-eda-category="synthesis" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="yosys"><span class="eda-tool-icon">02</span><strong>Yosys</strong><small>Logic synthesis</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-opensta" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="opensta"><span class="eda-tool-icon">03</span><strong>OpenSTA</strong><small>Static timing</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-openroad" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="openroad"><span class="eda-tool-icon">04</span><strong>OpenROAD</strong><small>Place & route</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-nextpnr" data-eda-category="fpga" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="nextpnr"><span class="eda-tool-icon">05</span><strong>nextpnr</strong><small>FPGA place & route</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-klayout" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="klayout"><span class="eda-tool-icon">06</span><strong>KLayout</strong><small>GDSII layout editor</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-ngspice" data-eda-category="analog" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="ngspice"><span class="eda-tool-icon">07</span><strong>ngspice</strong><small>SPICE simulation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-verilator" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="verilator"><span class="eda-tool-icon">08</span><strong>RTL Performance</strong><small>Lint · Simulation · Coverage</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-ghdl-fpga" data-eda-category="fpga" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="ghdl"><span class="eda-tool-icon">VHDL</span><strong>GHDL</strong><small>VHDL for FPGA design</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-microcontroller-studio" data-eda-category="fpga" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="microcontroller-studio"><span class="eda-tool-icon">MCU</span><strong>Microcontroller Studio</strong><small>Arduino / embedded-board emulator</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-analog-circuit-studio" data-eda-category="analog" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="analog-circuit-studio"><span class="eda-tool-icon">SPICE</span><strong>Analog Circuit Studio</strong><small>Visual SPICE schematic workspace</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-ghdl" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="ghdl"><span class="eda-tool-icon">09</span><strong>GHDL</strong><small>VHDL simulation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-design-roadmap" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="design-roadmap"><span class="eda-tool-icon">FLOW</span><strong>VLSI Design Flow</strong><small>Learning roadmap</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-pd-workshop" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="pd-workshop"><span class="eda-tool-icon">PD</span><strong>PD Workshop</strong><small>Floorplan and implementation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-dft-workshop" data-eda-category="synthesis" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="dft-workshop"><span class="eda-tool-icon">DFT</span><strong>DFT Workshop</strong><small>Scan readiness</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-tcl-workshop" data-eda-category="linux" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="tcl-workshop"><span class="eda-tool-icon">TCL</span><strong>Tcl Workshop</strong><small>EDA scripting</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-openlane-workshop" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="openlane-workshop"><span class="eda-tool-icon">OL</span><strong>OpenLane Workshop</strong><small>Flow preparation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-cmos-workshop" data-eda-category="analog" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="cmos-workshop"><span class="eda-tool-icon">CMOS</span><strong>CMOS Workshop</strong><small>Transistor simulation</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-sta-workshop" data-eda-category="physical" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="sta-workshop"><span class="eda-tool-icon">STA</span><strong>STA Workshop</strong><small>Timing experiments</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-riscv-workshop" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="riscv-workshop"><span class="eda-tool-icon">RV</span><strong>RISC-V Workshop</strong><small>Cross-compile + simulate</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-pyuvm" data-eda-category="frontend" aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="pyuvm"><span class="eda-tool-icon">UVM</span><strong>pyuvm</strong><small>Python UVM verification</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-terminal" data-eda-category="linux" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="terminal"><span class="eda-tool-icon">LINUX</span><strong>Linux Terminal</strong><small>Isolated command practice</small><span class="eda-pick-arrow">↗</span></button>
+          <button type="button" role="tab" id="eda-tool-perl-workshop" data-eda-category="linux" hidden aria-selected="false" aria-controls="eda-tool-detail" class="eda-pick" data-home-tool="perl-workshop"><span class="eda-tool-icon">PERL</span><strong>Perl Workshop</strong><small>Text processing and reports</small><span class="eda-pick-arrow">↗</span></button>
+        </div>
+        <div class="eda-showcase" id="eda-tool-detail" role="tabpanel" aria-labelledby="eda-tool-cocotb">
+          <div class="eda-showcase-info">
+            <div class="eda-showcase-overline" id="eda-home-stage">01 / RTL VERIFICATION</div>
+            <h3 id="eda-home-title">Verify RTL with Python testbenches.</h3>
+            <p id="eda-home-description">Write testbenches and verify your RTL design.</p>
+            <div class="eda-home-tags" id="eda-home-tags"><span>Python</span><span>Assertions</span><span>Simulation</span></div>
+            <div class="eda-home-links">
+              <a id="eda-home-launch" class="eda-launch-main" href="eda-lab.html?tool=cocotb">Launch RTL Verification Studio <span aria-hidden="true">→</span></a>
+              <a id="eda-home-secondary" class="eda-launch-secondary" href="eda-lab.html">View integrated workflow ↗</a>
+            </div>
+            <p class="eda-home-caption">Real EDA runs require sign-in and local Docker images. KLayout uses a local desktop stream; repository links stay in the backend documentation.</p>
+          </div>
+          <div class="eda-home-terminal" aria-label="Selected tool example (illustration, not live output)">
+            <div class="eda-terminal-chrome"><span class="eda-lights"><i></i><i></i><i></i></span><strong id="eda-terminal-name">cocotb / iverilog</strong><span class="eda-demo-pill">EXAMPLE · NOT LIVE</span></div>
+            <pre id="eda-home-snippet">$ make SIM=icarus TOPLEVEL=counter MODULE=test_counter
+# Python coroutine stimulates RTL inputs
+# Assert the expected counter value</pre>
+            <div class="eda-terminal-foot"><span>SELECT A TOOL ABOVE TO PREVIEW ITS WORKFLOW</span><span>ASIC-SKILL LAB</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="container resource-layout">
+        <div>
+          <div class="eyebrow">FREE RESOURCES</div>
+          <h2>Learn something useful today.</h2>
+          <p class="lead">Build a growing knowledge base with interview questions, cheat sheets, flow diagrams, tool guides, glossaries and practical examples.</p>
+          <div class="resource-list">
+            <a href="#contact"><span>01</span><div><strong>VLSI Interview Questions</strong><small>Beginner to expert questions across RTL, PD, STA and signoff.</small></div><b>→</b></a>
+            <a href="#contact"><span>02</span><div><strong>ASIC Flow Cheat Sheets</strong><small>Quick references for the major stages of the chip flow.</small></div><b>→</b></a>
+            <a href="#contact"><span>03</span><div><strong>EDA Tool Learning</strong><small>Tool concepts, commands, reports and workflow notes.</small></div><b>→</b></a>
+          </div>
+        </div>
+        <div class="resource-panel">
+          <div class="panel-glow"></div>
+          <div class="mini-chip">ASIC<br>SKILL</div>
+          <h3>From concept<br>to tapeout.</h3>
+          <p>One place to organize the skills needed across the semiconductor design lifecycle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="container about-grid">
+        <div>
+          <div class="eyebrow">WHY ASIC SKILL</div>
+          <h2>A platform built around the way engineers actually learn.</h2>
+        </div>
+        <div class="about-copy">
+          <p>ASIC Skill is designed to connect theory with implementation. The long-term platform can combine structured courses, practical labs, technical articles, downloadable resources, quizzes, interview preparation and community learning.</p>
+          <div class="principles">
+            <div><b>01</b><strong>Practical</strong><span>Flow-oriented learning and examples.</span></div>
+            <div><b>02</b><strong>Structured</strong><span>Clear paths from fundamentals to signoff.</span></div>
+            <div><b>03</b><strong>Career-focused</strong><span>Interview and industry-readiness resources.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+      <div class="container cta-box">
+        <div>
+          <div class="eyebrow">BUILD WITH ASIC SKILL</div>
+          <h2>Build your ASIC skills from fundamentals to signoff.</h2>
+          <p>Explore VLSI topics, course topics and resources as ASIC-Skill grows into a complete VLSI and semiconductor learning platform.</p>
+          <p class="contact-email"><strong>Email:</strong> <a href="mailto:support@asic-skill.com">support@asic-skill.com</a></p>
+        </div>
+        <a class="btn btn-primary" href="mailto:support@asic-skill.com">Contact ASIC Skill <span>→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand footer-brand"><img src="logo.jpeg" alt="ASIC Skill logo"><span>ASIC<span>-Skill</span></span></div>
+      <p>VLSI • ASIC • Semiconductor Learning</p>
+      <p>© 2026 ASIC Skill. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script  data-bundled-from="supabase-config.js">
+const SUPABASE_URL = "https://orfmyrbiitpsefnucrxr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_mGkXIP3ZqFnaf42_AmGbEw_XrAcgwlM";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+</script>
+  <script  data-bundled-from="auth.js">
+// ASIC-Skill Supabase authentication
+// Requires:
+// 1. @supabase/supabase-js v2
+// 2. supabase-config.js containing `supabaseClient`
+
+function showMessage(text, type = "info") {
+  const box = document.getElementById("auth-message");
+  if (!box) return;
+
+  box.textContent = text;
+  box.className = "auth-message " + type;
+  box.hidden = false;
+}
+
+function pageUrl(filename) {
+  return new URL(filename, window.location.href).href;
+}
+
+// -------------------- SIGN UP --------------------
+async function signUp(event) {
+  event.preventDefault();
+
+  const fullName = document.getElementById("full-name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
+
+  if (password !== confirmPassword) {
+    showMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  showMessage("Creating your ASIC-Skill account...", "info");
+
+  // ?verified=true is intentionally included in the redirect.
+  // After Supabase verifies the email, signin.html uses it to show
+  // the successful verification message.
+  const verificationRedirect =
+    pageUrl("signin.html?verified=true");
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName
+      },
+      emailRedirectTo: verificationRedirect
+    }
+  });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  if (data.session) {
+    showMessage(
+      "Account created successfully. You are already signed in.",
+      "success"
+    );
+    return;
+  }
+
+  showMessage(
+    "Account created! Please check your email and click the verification link.",
+    "success"
+  );
+}
+
+// -------------------- SIGN IN --------------------
+async function signIn(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  showMessage("Signing in...", "info");
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  if (data.session) {
+    showMessage("Signed in successfully. Redirecting...", "success");
+
+    setTimeout(() => {
+      const requestedNext = new URLSearchParams(window.location.search).get("next") || "";
+      const safeNext = /^eda-lab\.html(?:\?.*)?$/.test(requestedNext)
+        ? requestedNext
+        : "index.html";
+      window.location.href = safeNext;
+    }, 700);
+  }
+}
+
+// -------------------- VERIFICATION MESSAGE --------------------
+function checkVerificationMessage() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("verified") === "true") {
+    showMessage(
+      "✓ Email verification done successfully! Your ASIC-Skill account is active. Please sign in.",
+      "success"
+    );
+
+    // Keep the message visible but remove ?verified=true from the address bar.
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+  }
+}
+
+// -------------------- FORGOT PASSWORD --------------------
+async function sendPasswordReset(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    showMessage(
+      "Enter your email address first, then click Forgot password.",
+      "error"
+    );
+    return;
+  }
+
+  showMessage("Sending password reset email...", "info");
+
+  const { error } =
+    await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: pageUrl("reset-password.html")
+    });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  showMessage(
+    "Password reset email sent. Please check your inbox.",
+    "success"
+  );
+}
+
+
+// -------------------- UPDATE PASSWORD --------------------
+async function updatePassword(event) {
+  event.preventDefault();
+
+  const newPassword = document.getElementById("new-password").value;
+  const confirmPassword = document.getElementById("confirm-new-password").value;
+
+  if (newPassword.length < 8) {
+    showMessage("Password must contain at least 8 characters.", "error");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    showMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  showMessage("Updating your password...", "info");
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    showMessage("Unable to update password: " + error.message, "error");
+    return;
+  }
+
+  showMessage("✓ Password changed successfully! Redirecting to Sign In...", "success");
+  await supabaseClient.auth.signOut();
+
+  setTimeout(() => {
+    window.location.href = "signin.html?password_changed=true";
+  }, 1500);
+}
+
+// -------------------- LOG OUT --------------------
+async function signOut() {
+  await supabaseClient.auth.signOut();
+  window.location.href = "signin.html";
+}
+// -------------------- DASHBOARD --------------------
+async function protectDashboard() {
+  const {
+    data: { session },
+    error
+  } = await supabaseClient.auth.getSession();
+
+  // User is not signed in
+  if (error || !session) {
+    window.location.href = "signin.html";
+    return;
+  }
+
+  const user = session.user;
+
+  // Read full name saved during signup
+  const fullName =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    "ASIC-Skill Learner";
+
+  // Show name
+  const nameElement = document.getElementById("user-name");
+  if (nameElement) {
+    nameElement.textContent = fullName;
+  }
+
+  // Show email
+  const emailElement = document.getElementById("user-email");
+  if (emailElement) {
+    emailElement.textContent = user.email || "";
+  }
+}
+
+// -------------------- WEBSITE USER MENU --------------------
+async function initWebsiteUser() {
+  const signupLink = document.getElementById("auth-signup-link");
+  const userMenu = document.getElementById("user-menu");
+  if (!signupLink || !userMenu) return;
+
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (!session) {
+    signupLink.hidden = false;
+    userMenu.hidden = true;
+    return;
+  }
+
+  const user = session.user;
+  const fullName = user.user_metadata?.full_name || user.user_metadata?.name || "ASIC-Skill Learner";
+  const firstName = fullName.split(/\s+/)[0] || "Learner";
+
+  signupLink.hidden = true;
+  userMenu.hidden = false;
+  document.getElementById("nav-user-name").textContent = firstName;
+  document.getElementById("menu-user-name").textContent = fullName;
+  document.getElementById("menu-user-email").textContent = user.email || "";
+  document.getElementById("user-avatar").textContent = firstName.charAt(0).toUpperCase();
+
+  const button = document.getElementById("user-menu-button");
+  const dropdown = document.getElementById("user-dropdown");
+  button?.addEventListener("click", () => {
+    const open = dropdown.hidden;
+    dropdown.hidden = !open;
+    button.setAttribute("aria-expanded", String(open));
+  });
+
+  document.getElementById("nav-logout")?.addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    window.location.href = "index.html";
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!userMenu.contains(event.target)) {
+      dropdown.hidden = true;
+      button?.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initWebsiteUser);
+
+// ============================================================
+// FORGOT PASSWORD UI MODE
+// Add this block to auth.js.
+// Keep your existing signUp/signIn/reset/update/signOut functions.
+// ============================================================
+
+function showForgotPassword() {
+  const passwordSection = document.getElementById("password-section");
+  const password = document.getElementById("password");
+  const signInButton = document.getElementById("signin-button");
+  const forgotSection = document.getElementById("forgot-link-section");
+  const resetActions = document.getElementById("reset-actions");
+  const title = document.getElementById("auth-title");
+  const createAccount = document.getElementById("create-account-section");
+
+  if (passwordSection) passwordSection.hidden = true;
+  if (password) password.required = false;
+  if (signInButton) signInButton.hidden = true;
+  if (forgotSection) forgotSection.hidden = true;
+  if (resetActions) resetActions.hidden = false;
+  if (title) title.textContent = "Forgot password";
+  if (createAccount) createAccount.hidden = true;
+
+  showMessage(
+    "Enter your registered email address and we'll send you a password reset link.",
+    "info"
+  );
+
+  document.getElementById("email")?.focus();
+}
+
+function showSignIn() {
+  const passwordSection = document.getElementById("password-section");
+  const password = document.getElementById("password");
+  const signInButton = document.getElementById("signin-button");
+  const forgotSection = document.getElementById("forgot-link-section");
+  const resetActions = document.getElementById("reset-actions");
+  const title = document.getElementById("auth-title");
+  const createAccount = document.getElementById("create-account-section");
+  const message = document.getElementById("auth-message");
+
+  if (passwordSection) passwordSection.hidden = false;
+  if (password) password.required = true;
+  if (signInButton) signInButton.hidden = false;
+  if (forgotSection) forgotSection.hidden = false;
+  if (resetActions) resetActions.hidden = true;
+  if (title) title.textContent = "Sign in";
+  if (createAccount) createAccount.hidden = false;
+  if (message) message.hidden = true;
+}
+
+
+
+// -------------------- SHOW / HIDE PASSWORD --------------------
+function togglePassword(inputId, button) {
+  const input = document.getElementById(inputId);
+  if (!input || !button) return;
+
+  const showing = input.type === "text";
+  input.type = showing ? "password" : "text";
+  button.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+  button.setAttribute("aria-pressed", String(!showing));
+  button.classList.toggle("is-visible", !showing);
+}
+
+</script>
+  <script  data-bundled-from="script.js">
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".nav");
+menuToggle?.addEventListener("click", () => {
+  nav?.classList.toggle("open");
+  const expanded = nav?.classList.contains("open") ?? false;
+  menuToggle.setAttribute("aria-expanded", String(expanded));
+});
+
+document.querySelectorAll(".nav a").forEach(a => {
+  a.addEventListener("click", () => nav?.classList.remove("open"));
+});
+
+const filters = document.querySelectorAll(".filter");
+const cards = document.querySelectorAll(".course-card");
+
+function applyCourseFilter(value) {
+  filters.forEach(f => f.classList.toggle("active", f.dataset.filter === value));
+  cards.forEach(card => {
+    card.classList.toggle("hidden", value !== "all" && card.dataset.category !== value);
+  });
+}
+
+filters.forEach(filter => {
+  filter.addEventListener("click", () => applyCourseFilter(filter.dataset.filter));
+});
+
+document.querySelectorAll("[data-jump-filter]").forEach(link => {
+  link.addEventListener("click", () => {
+    const value = link.dataset.jumpFilter;
+    if (value) applyCourseFilter(value);
+  });
+});
+
+document.querySelectorAll("[data-flow-filter]").forEach(node => {
+  node.addEventListener("click", () => {
+    const value = node.dataset.flowFilter;
+    if (value) applyCourseFilter(value);
+    document.querySelector("#courses")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+</script>
+  <script  data-bundled-from="eda-tool-categories.js">
+/* ASIC-Skill v37.0.21: one shared six-category tool registry. */
+(function(){
+ const groups = {"frontend": {"label": "Front-End", "description": "RTL design, verification and processor programming", "tools": ["logic-simulation", "cocotb", "pyuvm", "verilator", "ghdl", "riscv-workshop", "design-roadmap"]}, "synthesis": {"label": "Synthesis", "description": "Logic synthesis, cell statistics and DFT readiness", "tools": ["yosys", "dft-workshop"]}, "physical": {"label": "Physical Design / STA", "description": "Timing, ASIC implementation and GDSII layout", "tools": ["opensta", "sta-workshop", "openroad", "pd-workshop", "openlane-workshop", "klayout"]}, "fpga": {"label": "FPGA / Microcontroller", "description": "VHDL simulation, FPGA bitstreams and embedded-board emulation", "tools": ["nextpnr", "ghdl", "microcontroller-studio"]}, "linux": {"label": "Linux / Scripting", "description": "Linux terminal, Tcl automation and Perl scripting", "tools": ["terminal", "tcl-workshop", "perl-workshop"]}, "analog": {"label": "Analog / CMOS", "description": "SPICE circuit simulation, analog schematic work and transistor-level design", "tools": ["ngspice", "cmos-workshop", "analog-circuit-studio"]}};
+ const toolCategory=Object.create(null);
+ Object.entries(groups).forEach(([category,definition])=>definition.tools.forEach(tool=>{toolCategory[tool]=category;}));
+ window.ASIC_EDA_CATEGORIES=Object.freeze(groups);
+ window.ASIC_EDA_CATEGORY_OF=Object.freeze(toolCategory);
+})();
+
+</script>
+  <script  data-bundled-from="eda-home.js">
+/* Public homepage tool explorer: illustrative information, not simulated API status. */
+(() => {
+  const tools={
+    'logic-simulation':{stage:'DIGITAL LOGIC · INTERACTIVE',title:'Build and simulate digital logic circuits.',description:'Place logic gates, connect inputs to outputs, toggle switches, and check live signal values and truth tables in the browser.',tags:['Logic gates','Circuit wiring','Truth tables'],terminal:'Logic Simulation',snippet:'Input A, B → XOR → SUM\nInput A, B → AND → CARRY\n# Try the Half Adder example and toggle A or B',link:'eda-lab.html?tool=logic-simulation',button:'Launch Logic Simulation',secondary:'eda-lab.html?tool=ghdl',other:'Open VHDL lab ↗'},
+    pyuvm:{stage:'PYTHON UVM VERIFICATION',title:'Verify RTL with reusable Python UVM tests.',description:'Run Python UVM-style test classes with cocotb and Icarus, view UVM logs and capture VCD waveforms.',tags:['pyuvm','cocotb','Python UVM'],terminal:'pyuvm + cocotb + Icarus',snippet:'@pyuvm.test()\nclass CounterTest(uvm_test):\n    async def run_phase(self):\n        self.raise_objection()\n        # Drive the DUT and check results\n        self.drop_objection()',link:'eda-lab.html?tool=pyuvm',button:'Launch pyuvm lab',secondary:'eda-lab.html?tool=cocotb',other:'Open RTL Verification Studio ↗'},
+    terminal:{stage:'LINUX / SCRIPTING',title:'Explore safe Linux commands in the EDA workspace.',description:'Practice file inspection and tool version commands in an isolated Linux container, not on your Windows host.',tags:['Linux','Guided shell','Isolation'],terminal:'Isolated EDA Linux shell',snippet:'$ pwd\n/workspace\n$ ls -la\n$ yosys -V',link:'eda-lab.html?tool=terminal',button:'Open Linux Terminal',secondary:'eda-lab.html?tool=tcl-workshop',other:'Open Tcl Workshop ↗'},
+    'perl-workshop':{stage:'LINUX / SCRIPTING',title:'Automate report processing with Perl.',description:'Edit and run Perl scripts in a network-disabled container; practice parsing logs, regex and timing summaries.',tags:['Perl 5','Regex','Report automation'],terminal:'Perl interpreter',snippet:'$ perl lesson.pl\nclk_cpu -0.032 ns VIOLATION\nclk_bus  0.011 ns PASS',link:'eda-lab.html?tool=perl-workshop',button:'Open Perl Workshop',secondary:'eda-lab.html?tool=tcl-workshop',other:'Open Tcl Workshop ↗'},
+    cocotb:{stage:'01 / RTL VERIFICATION',title:'Verify Verilog and SystemVerilog RTL.',description:'Write and simulate .v or .sv designs with Python cocotb or native Verilog/SystemVerilog testbenches.',tags:['.v Examples','.sv Examples','Python + HDL testbenches'],terminal:'RTL Verification Studio',snippet:'$ make SIM=icarus TOPLEVEL=counter MODULE=test_counter\n# Drive clock, reset and enable\n# Check each expected count with Python assertions',link:'eda-lab.html?tool=cocotb',button:'Launch RTL Verification Studio',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'},
+    yosys:{stage:'02 / RTL SYNTHESIS',title:'From Verilog to a gate-level netlist.',description:'Inspect and edit an RTL design, run Yosys synthesis and review mapping and cell statistics.',tags:['Verilog RTL','Logic optimization','Netlist'],terminal:'yosys',snippet:'$ yosys -p "read_verilog design.v; synth; stat"\n# Technology-independent synthesis\n# See mapped cells and hierarchy',link:'eda-lab.html?tool=yosys',button:'Launch Yosys lab',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'},
+    opensta:{stage:'03 / STATIC TIMING',title:'Trace setup and hold paths.',description:'Edit the Liberty library and SDC, run OpenSTA, and inspect slew, delays, derates, WNS, TNS and path reports.',tags:['SDC','Liberty','Setup / hold'],terminal:'OpenSTA',snippet:'sta> report_checks -path_delay max -format full\nsta> report_wns\nsta> report_tns\n# Inspect real timing reports after running STA',link:'opensta-lab.html',button:'Open detailed OpenSTA lab',secondary:'eda-lab.html?tool=opensta',other:'Quick tools in EDA workspace ↗'},
+    openroad:{stage:'04 / PHYSICAL DESIGN',title:'Explore floorplanning and P&R.',description:'Use OpenROAD and ORFS to explore the implementation flow and inspect floorplanning results in the visual lab.',tags:['Floorplan','Placement','Routing'],terminal:'OpenROAD / ORFS',snippet:'$ make floorplan DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk\n# Review floorplan output\n# Explore placement and routing stages',link:'openroad-lab.html',button:'Open visual OpenROAD lab',secondary:'eda-lab.html?tool=openroad',other:'Open EDA workspace ↗'},
+    'microcontroller-studio':{stage:'FPGA / MICROCONTROLLER',title:'Explore embedded-board emulation.',description:'Connect a locally self-hosted microcontroller emulator for Arduino-style programming, virtual boards and simulated components.',tags:['Arduino','ESP32','Board emulation'],terminal:'Optional standalone microcontroller emulator',snippet:'# Start your optional emulator on port 3080\n# Open the Microcontroller Studio tab\n# Connect to the local emulator',link:'eda-lab.html?tool=microcontroller-studio&category=fpga',button:'Open Microcontroller Studio',secondary:'eda-lab.html?tool=ghdl&category=fpga',other:'Open FPGA VHDL lab ↗'},
+    'analog-circuit-studio':{stage:'ANALOG / CMOS',title:'Edit analog circuit schematics visually.',description:'Connect a self-hosted visual SPICE schematic workspace, or use ASIC-Skill’s existing ngspice runner for direct circuit simulation.',tags:['Schematic editor','SPICE','Analog'],terminal:'Visual circuit editor (separate deployment)',snippet:'# Connect the self-hosted circuit editor on port 3081\n# Alternatively, open ngspice to simulate a SPICE netlist',link:'eda-lab.html?tool=analog-circuit-studio',button:'Open Analog Circuit Studio',secondary:'eda-lab.html?tool=ngspice',other:'Use ngspice ↗'},
+    nextpnr:{stage:'05 / FPGA IMPLEMENTATION',title:'FPGA synthesis, place & route.',description:'Use Yosys synth_ice40 and nextpnr to create an iCE40 configuration bitstream. Supports HX1K/HX8K demonstrations.',tags:['FPGA iCE40','Yosys','Bitstream'],terminal:'Yosys → nextpnr-ice40 → icepack',snippet:'$ yosys -p "read_verilog fpga_design.v; synth_ice40 -top blinky -json design.json"\n$ nextpnr-ice40 --hx1k --package tq144 --json design.json --asc design.asc\n$ icepack design.asc design.bin',link:'eda-lab.html?tool=nextpnr',button:'Launch nextpnr FPGA lab',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'},
+    klayout:{stage:'06 / IC LAYOUT',title:'Inspect and edit GDSII layouts.',description:'Open a streamed KLayout desktop, inspect physical layers and create or import cell layouts.',tags:['GDSII','OASIS','Layout editor'],terminal:'KLayout geometry viewer',snippet:'# Open sample cell in KLayout\n# Toggle metal / poly layers and zoom to shapes\n# Import your own GDSII layout',link:'eda-lab.html?tool=klayout',button:'Launch KLayout lab',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'},
+    ngspice:{stage:'07 / CIRCUIT SIMULATION',title:'Explore analog circuit behavior.',description:'Write SPICE netlists and run real ngspice transient or DC simulations in a restricted Docker container.',tags:['SPICE','Transient','Analog'],terminal:'ngspice',snippet:'$ ngspice -b circuit.cir\n# R/C network and transient voltage response',link:'eda-lab.html?tool=ngspice',button:'Launch ngspice lab',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'},
+    verilator:{stage:'08 / RTL VERIFICATION',title:'Check RTL and measure test coverage.',description:'Run coding checks, fast testbench simulation, waveforms, and measurable line coverage.',tags:['SystemVerilog','Simulation','Coverage'],terminal:'RTL verification',snippet:'// Edit design.sv and testbench.sv in the studio\n// Check RTL, run simulation and review measured coverage',link:'eda-lab.html?tool=verilator',button:'Open RTL Performance',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'},
+
+    'design-roadmap':{stage:'LEARNING ROADMAP',title:'Follow the complete VLSI design flow.',description:'Learn what each stage requires and produces, from specification to RTL, implementation, signoff and testing.',tags:['Spec to silicon','Learning roadmap','Lab handoffs'],terminal:'VLSI design flow',snippet:'# Specification → RTL → DFT → synthesis\n# Floorplan → CTS → route → signoff\n# GDSII → package → silicon validation',link:'eda-lab.html?tool=design-roadmap',button:'Explore VLSI Design Flow',secondary:'eda-lab.html',other:'View EDA workspace ↗'},
+    'pd-workshop':{stage:'PHYSICAL DESIGN',title:'Explore a real floorplanning exercise.',description:'Use the existing OpenROAD flow to practice physical implementation and inspect stage output.',tags:['Floorplan','OpenROAD','ORFS'],terminal:'OpenROAD',snippet:'$ make floorplan DESIGN_CONFIG=...\n# Review utilization, core area and cell placement',link:'eda-lab.html?tool=pd-workshop',button:'Open PD Workshop',secondary:'openroad-lab.html',other:'Open visual lab ↗'},
+    'dft-workshop':{stage:'DFT READINESS',title:'Synthesize an FSM and review DFT readiness.',description:'Use Yosys to examine sequential cells. Full Fault scan insertion and ATPG are separate future integrations.',tags:['Yosys','Flip-flops','Testability'],terminal:'Yosys',snippet:'yosys> read_verilog -sv design.v\nyosys> synth -top fsm_controller\nyosys> check; stat',link:'eda-lab.html?tool=dft-workshop',button:'Open DFT Workshop',secondary:'eda-lab.html',other:'View EDA workspace ↗'},
+    'tcl-workshop':{stage:'EDA SCRIPTING',title:'Learn Tcl with safe interactive examples.',description:'Run Tcl loops, procedures and QoR-style reports in a sandboxed interpreter.',tags:['Tcl','Procedures','Automation'],terminal:'Tcl interpreter',snippet:'tcl> foreach item $paths { puts $item }\n# Safe scripting exercises (no host shell access)',link:'eda-lab.html?tool=tcl-workshop',button:'Open Tcl Workshop',secondary:'eda-lab.html',other:'View EDA workspace ↗'},
+    'openlane-workshop':{stage:'RTL TO GDSII',title:'Prepare an OpenLane design configuration.',description:'Create an OpenLane 2 JSON config; a real full flow requires PDK files and a separately provisioned runtime.',tags:['OpenLane 2','Sky130','Config JSON'],terminal:'OpenLane 2',snippet:'$ openlane --dockerized --pdk-root <PDK_ROOT> config.json\n# Requires installed PDK and flow image',link:'eda-lab.html?tool=openlane-workshop',button:'Open OpenLane Workshop',secondary:'eda-lab.html',other:'View EDA workspace ↗'},
+    'cmos-workshop':{stage:'CMOS CIRCUITS',title:'Simulate a transistor-level inverter.',description:'Run a generic educational MOS device model using ngspice, without pretending it is a qualified SKY130 model.',tags:['CMOS','SPICE','Transient'],terminal:'ngspice',snippet:'$ ngspice -b cmos_inverter.cir\n# Simulate inverter rise/fall behavior',link:'eda-lab.html?tool=cmos-workshop',button:'Open CMOS Workshop',secondary:'eda-lab.html',other:'View EDA workspace ↗'},
+    'sta-workshop':{stage:'STA EXPERIMENTS',title:'Compare timing, slew and derate.',description:'Experiment with OpenSTA setup and hold paths using different input transitions and delay derates; inspect the results side by side.',tags:['Setup / Hold','SDC','WNS / TNS'],terminal:'OpenSTA teaching lab',snippet:'sta> report_checks -path_delay max -fields {slew capacitance fanout}\n# Run A: baseline transition / derate\n# Run B: changed SDC; compare actual path slack',link:'eda-lab.html?tool=sta-workshop',button:'Open Timing Workshop',secondary:'opensta-lab.html',other:'Full OpenSTA timing lab ↗'},
+    'riscv-workshop':{stage:'RISC-V PROGRAMMING',title:'Compile C to RV64 and run it.',description:'Use a RISC-V cross-compiler, execute a Linux ELF under QEMU and study the main() function disassembly.',tags:['RV64GC','QEMU','Disassembly'],terminal:'RISC-V cross-GCC + QEMU',snippet:'$ riscv64-linux-gnu-gcc -static -o program.elf main.c\n$ qemu-riscv64 program.elf\nSum from 1 to 9 is 45',link:'eda-lab.html?tool=riscv-workshop',button:'Launch RISC-V Workshop',secondary:'eda-lab.html?tool=cocotb',other:'Open RTL testbench lab ↗'},
+    ghdl:{stage:'09 / VHDL SIMULATION',title:'Analyze and simulate VHDL designs.',description:'Compile VHDL-2008 testbenches with GHDL and export VCD timing traces.',tags:['VHDL','Assertions','VCD'],terminal:'GHDL',snippet:'$ ghdl -a --std=08 design.vhd testbench.vhd\n$ ghdl -e --std=08 tb_counter\n$ ghdl -r --std=08 tb_counter --vcd=wave.vcd',link:'eda-lab.html?tool=ghdl',button:'Launch GHDL lab',secondary:'eda-lab.html?tool=flow',other:'View integrated workflow ↗'}
+  };
+  const groups=window.ASIC_EDA_CATEGORIES;
+  const groupOf=window.ASIC_EDA_CATEGORY_OF;
+  const buttons=[...document.querySelectorAll('[data-home-tool]')];
+  const categoryButtons=[...document.querySelectorAll('[data-home-category]')];
+  if(!buttons.length||!groups)return;
+  const byId=id=>document.getElementById(id);
+  let activeCategory='frontend';
+  let activeTool='cocotb';
+  const lastTool={};
+  function showCategory(category){
+    if(!groups[category])return;
+    activeCategory=category;
+    buttons.forEach(b=>{b.hidden=b.dataset.edaCategory!==category;});
+    categoryButtons.forEach(b=>{
+      const selected=b.dataset.homeCategory===category;
+      b.classList.toggle('active',selected);
+      b.setAttribute('aria-selected',String(selected));
+      b.tabIndex=selected?0:-1;
+    });
+    byId('eda-category-description').textContent=groups[category].description;
+    byId('eda-category-count').textContent=groups[category].tools.length+' tools';
+  }
+  function choose(name,moveFocus=false,categoryOverride=null){
+    const t=tools[name];
+    if(!t||!groupOf[name])return;
+    const chosenCategory=categoryOverride&&groups[categoryOverride]?.tools.includes(name)?categoryOverride:groupOf[name];
+    showCategory(chosenCategory);
+    activeTool=name;
+    lastTool[activeCategory]=name;
+    buttons.forEach(b=>{
+      const selected=b.dataset.homeTool===name;
+      b.classList.toggle('active',selected&&b.dataset.edaCategory===activeCategory);
+      b.setAttribute('aria-selected',String(selected&&b.dataset.edaCategory===activeCategory));
+      b.tabIndex=selected?0:-1;
+      if(selected&&moveFocus&&b.dataset.edaCategory===activeCategory)b.focus();
+    });
+    byId('eda-tool-detail').setAttribute('aria-labelledby',activeCategory==='fpga'&&name==='ghdl'?'eda-tool-ghdl-fpga':'eda-tool-'+name);
+    byId('eda-home-stage').textContent=t.stage;
+    byId('eda-home-title').textContent=t.title;
+    byId('eda-home-description').textContent=t.description;
+    byId('eda-home-tags').replaceChildren(...t.tags.map(label=>{const span=document.createElement('span');span.textContent=label;return span;}));
+    byId('eda-terminal-name').textContent=t.terminal;
+    byId('eda-home-snippet').textContent=t.snippet;
+    const primary=byId('eda-home-launch'),secondary=byId('eda-home-secondary');
+    primary.href=(name==='ghdl'&&activeCategory==='fpga')?'eda-lab.html?tool=ghdl&category=fpga':t.link;primary.firstChild.textContent=t.button+' ';
+    secondary.href=t.secondary;secondary.textContent=t.other;
+  }
+  function switchCategory(category,focus=false){
+    if(!groups[category])return;
+    const target=lastTool[category]||groups[category].tools[0];
+    choose(target,false,category);
+    if(focus)byId('eda-tool-'+target)?.focus();
+  }
+  categoryButtons.forEach((btn,index)=>{
+    btn.addEventListener('click',()=>switchCategory(btn.dataset.homeCategory));
+    btn.addEventListener('keydown',event=>{
+      const delta=event.key==='ArrowRight'?1:event.key==='ArrowLeft'?-1:0;
+      if(!delta&&event.key!=='Home'&&event.key!=='End')return;
+      event.preventDefault();
+      const i=event.key==='Home'?0:event.key==='End'?categoryButtons.length-1:(index+delta+categoryButtons.length)%categoryButtons.length;
+      switchCategory(categoryButtons[i].dataset.homeCategory);
+      categoryButtons[i].focus();
+    });
+  });
+  buttons.forEach(btn=>{
+    btn.addEventListener('click',()=>choose(btn.dataset.homeTool,false,btn.dataset.edaCategory));
+    btn.addEventListener('keydown',event=>{
+      const list=groups[activeCategory].tools;
+      const index=list.indexOf(btn.dataset.homeTool);
+      const delta=event.key==='ArrowRight'?1:event.key==='ArrowLeft'?-1:0;
+      if(!delta&&event.key!=='Home'&&event.key!=='End')return;
+      event.preventDefault();
+      const i=event.key==='Home'?0:event.key==='End'?list.length-1:(index+delta+list.length)%list.length;
+      choose(list[i],true,activeCategory);
+    });
+  });
+  const requested=new URLSearchParams(location.search).get('eda_tool');
+  choose(tools[requested]&&groupOf[requested]?requested:'cocotb');
+})();
+
+</script><script  data-bundled-from="eda-navigation-menu.js">
+/* ASIC-Skill public navigation: direct lab/category links using shared registry. */
+(()=>{'use strict';
+const host=document.getElementById('eda-nav-menu'),btn=document.getElementById('eda-nav-trigger'),wrap=document.querySelector('.eda-nav-wrap'),container=document.getElementById('eda-nav-groups');if(!host||!btn||!container)return;
+const groups=window.ASIC_EDA_CATEGORIES||{};
+const labels={'logic-simulation':'Logic Simulation','design-roadmap':'VLSI Design Flow','riscv-workshop':'RISC-V','sta-workshop':'STA Workshop','pd-workshop':'PD Workshop','dft-workshop':'DFT Workshop','openlane-workshop':'OpenLane','tcl-workshop':'Tcl','perl-workshop':'Perl','cmos-workshop':'CMOS Workshop','terminal':'Linux Terminal','nextpnr':'nextpnr FPGA','pyuvm':'pyuvm','ghdl':'VHDL Simulation','cocotb':'RTL Verification Studio','verilator':'RTL Linting','yosys':'RTL Synthesis','pyuvm':'Python UVM Verification','openroad':'Physical Design','opensta':'Timing Analysis','nextpnr':'FPGA Implementation','klayout':'Layout Viewer','ngspice':'Analog Simulation','openlane-workshop':'Implementation Flow','openlane':'Implementation Flow'};
+for(const [id,g] of Object.entries(groups)){
+ const section=document.createElement('section');section.className='eda-nav-category';const h=document.createElement('a');h.className='eda-nav-heading';h.href='eda-lab.html?category='+encodeURIComponent(id);h.textContent=g.label;section.append(h);
+ const ul=document.createElement('div');ul.className='eda-nav-items';for(const tool of g.tools){const a=document.createElement('a');a.href='eda-lab.html?tool='+encodeURIComponent(tool)+'&category='+encodeURIComponent(id);a.textContent=labels[tool]||tool.charAt(0).toUpperCase()+tool.slice(1);ul.append(a);}section.append(ul);container.append(section);
+}
+function show(value){host.hidden=!value;btn.setAttribute('aria-expanded',String(value));wrap.classList.toggle('open',value);}
+btn.addEventListener('click',()=>show(host.hidden));document.addEventListener('click',e=>{if(!wrap.contains(e.target))show(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!host.hidden){show(false);btn.focus();}});
+})();
+
+</script><script  data-bundled-from="learning-topics.js">
+/* VLSI Topics / ASIC-Skill Topics: accessible deep links and expandable subtopics. */
+(() => { 'use strict';
+  const wrappers=[...document.querySelectorAll('.topic-nav-wrap')];
+  const cards=[...document.querySelectorAll('.topic-card')];
+  function closeMenus(except) {
+    wrappers.forEach(w=>{if(w===except)return;const menu=w.querySelector('.topic-nav-menu');const btn=w.querySelector('.topic-nav-trigger');menu.hidden=true;btn.setAttribute('aria-expanded','false');});
+  }
+  for (const wrap of wrappers) {
+    const key=wrap.dataset.topicNav;
+    const menu=wrap.querySelector('.topic-nav-menu');
+    const btn=wrap.querySelector('.topic-nav-trigger');
+    const links=wrap.querySelector('.topic-nav-list');
+    document.querySelectorAll('[data-topic-group="'+key+'"] .topic-card').forEach(card=>{
+      const a=document.createElement('a');a.href='#'+card.id;
+      a.textContent=card.querySelector('.topic-heading strong')?.textContent||card.id;
+      a.addEventListener('click',()=>{card.open=true;menu.hidden=true;btn.setAttribute('aria-expanded','false');requestAnimationFrame(()=>card.scrollIntoView({block:'start'}));});
+      links.appendChild(a);
+    });
+    btn.addEventListener('click',()=>{const opening=menu.hidden;closeMenus();menu.hidden=!opening;btn.setAttribute('aria-expanded',String(opening));});
+  }
+  document.addEventListener('click',event=>{
+    if (!event.target.closest('.topic-nav-wrap')) closeMenus();
+    // Close the EDA mega menu when a different topic menu is selected.
+    if(event.target.closest('.topic-nav-trigger')){
+      const eda=document.querySelector('#eda-nav-menu');const edaBtn=document.querySelector('#eda-nav-trigger');
+      if(eda&&edaBtn){eda.hidden=true;edaBtn.setAttribute('aria-expanded','false');}
+    }
+  });
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeMenus();}});
+  function activateHash(){
+    let hash='';try{hash=decodeURIComponent(location.hash.slice(1));}catch{return;}
+    if(!hash)return;
+    const card=cards.find(item=>item.id===hash);
+    if(card){card.open=true; requestAnimationFrame(()=>card.scrollIntoView({block:'start',behavior:'auto'}));}
+  }
+  window.addEventListener('hashchange',activateHash);
+  activateHash();
+})();
+
+</script>
+<script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body>
+</html>

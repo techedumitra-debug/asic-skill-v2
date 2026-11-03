@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASIC-Skill VHDL Model Editor</title>
+<style data-bundled-from="ghdl-popup.css">
+*{box-sizing:border-box}body{margin:0;background:#051321;color:#dcefff;font-family:system-ui,Segoe UI,sans-serif}.popup-shell{padding:14px;min-width:0}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #315974;padding:8px 5px 14px}h1{margin:5px 0;font-size:24px}small{color:#44c9eb;letter-spacing:.13em;font-weight:800}button{background:#123c5b;color:#e1f4ff;border:1px solid #3e799a;padding:9px 13px;border-radius:8px;cursor:pointer}button:hover{background:#205c7f}button:disabled{opacity:.5}#pop-status{color:#acd1e5;line-height:1.5;margin:12px 0}.wave-toolbar{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;margin:12px 0}.wave-controls{display:flex;gap:8px;align-items:center}.wave-body{display:flex;min-height:380px;border:1px solid #37617d;border-radius:10px;overflow:hidden;background:#091d2b}.wave-sidebar{min-width:210px;max-width:32%;width:255px;background:#102e45;padding:12px;display:flex;flex-direction:column;gap:8px}.wave-sidebar input{padding:8px;color:inherit;background:#092132;border:1px solid #5385a5}.wave-sidebar label{font-weight:700}.wave-main{flex:1;min-width:0}#ghdl-pop-wave-signal-list{display:flex;flex-direction:column;gap:6px;max-height:70vh;overflow:auto}.wave-signal{display:flex;align-items:center;gap:8px;font:12px ui-monospace,monospace}.wave-signal span{overflow:hidden;text-overflow:ellipsis}#ghdl-pop-wave-scroll{position:relative;overflow:auto;max-height:75vh;min-height:360px}#ghdl-pop-wave-cursor{padding:10px;background:#17374a;font:12px ui-monospace,monospace;color:#ffe1a1;overflow-wrap:anywhere}#ghdl-pop-wave-canvas{display:block;cursor:crosshair;touch-action:none}#ghdl-pop-wave-empty{position:absolute;top:40px;left:15px;color:#adc7dc;pointer-events:none}.popup-schematic-scroll{height:70vh;border:1px solid #2c546e;border-radius:10px;overflow:auto;background:#061522}#pop-schem-svg{display:block;max-width:none}#pop-schem-empty{padding:30px;color:#aed1e4}#pop-schem-details{background:#10283b;border-radius:8px;padding:12px;overflow:auto;max-height:130px;white-space:pre-wrap;color:#bde2f5}@media(max-width:700px){.wave-body{flex-direction:column}.wave-sidebar{min-width:0;max-width:100%;width:100%}#ghdl-pop-wave-signal-list{max-height:140px}}
+
+.ghdl-wave-header{display:flex;justify-content:space-between;font:12px Consolas,monospace;padding:6px;background:#164058}.wave-sidebar{max-width:none;width:var(--ghdl-signals-width,310px);overflow:auto;min-width:145px}.ghdl-pane-grip{width:10px;background:#365975;cursor:col-resize;touch-action:none;flex:0 0 10px}.ghdl-pane-grip:hover{background:#49b7dd}#ghdl-pop-wave-signal-list .wave-signal{display:grid;grid-template-columns:20px minmax(130px,1fr) auto;min-width:100%;width:max-content;gap:6px;padding:5px 3px;border-bottom:1px solid #26475d}#ghdl-pop-wave-signal-list .wave-signal span{overflow:visible;white-space:nowrap;text-overflow:clip}.ghdl-signal-value{color:#a7fac8}
+
+.model-fallback{font-size:12px;color:#adcce2}.model-fallback a{color:#7ddcff;text-decoration:underline}.popup-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}#model-return,#pop-return{border-color:#4a9fc8;background:#165077;font-weight:700}
+
+/* GHDL v37.0.31 colorized independent pop-out */
+.model-theme-select{display:flex;align-items:center;gap:12px;margin:12px 2px;color:#cbe9ff;font-size:13px;font-weight:650}
+.model-theme-select select{padding:8px;border:1px solid #527f9c;background:#10293a;color:inherit;border-radius:7px}
+.model-popup .editor-card{min-width:0;overflow:hidden}
+.ghdl-popup-highlight{position:relative;flex:1;min-height:280px;background:#28282e;overflow:hidden;border:1px solid #57718d;border-radius:9px}
+.model-popup .ghdl-popup-highlight textarea,.model-popup .ghdl-popup-highlight pre{position:absolute;inset:0;box-sizing:border-box;display:block;width:100%;height:100%!important;max-width:none;margin:0!important;padding:15px!important;border:0!important;border-radius:0!important;white-space:pre!important;tab-size:4;font:13px/1.55 ui-monospace,Consolas,monospace!important;letter-spacing:0!important;overflow:auto}
+.model-popup .ghdl-popup-highlight pre{pointer-events:none;color:#e9e6db;z-index:1;scrollbar-width:none;overflow:hidden}
+.model-popup .ghdl-popup-highlight textarea{z-index:2;background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent;caret-color:#f8f4e4;resize:none}
+.model-popup .ghdl-popup-highlight textarea::selection{background:#45708a90;-webkit-text-fill-color:transparent}
+.model-popup .ghdl-popup-highlight .hl-kw{color:#f3be79}.model-popup .ghdl-popup-highlight .hl-num{color:#fba59a}.model-popup .ghdl-popup-highlight .hl-type{color:#9abdf4}.model-popup .ghdl-popup-highlight .hl-comment{color:#a1c799}.model-popup .ghdl-popup-highlight .hl-string{color:#a5e5a3}
+.model-popup.popup-gray .ghdl-popup-highlight{background:#e4e4e7}
+.model-popup.popup-gray .ghdl-popup-highlight pre{color:#202b38}
+.model-popup.popup-gray .ghdl-popup-highlight textarea{caret-color:#222}
+.model-popup.popup-gray .ghdl-popup-highlight .hl-kw{color:#064cba}.model-popup.popup-gray .ghdl-popup-highlight .hl-num{color:#bb375e}.model-popup.popup-gray .ghdl-popup-highlight .hl-type{color:#7144a7}.model-popup.popup-gray .ghdl-popup-highlight .hl-comment{color:#607664}.model-popup.popup-gray .ghdl-popup-highlight .hl-string{color:#087b56}
+
+</style><style data-bundled-from="code-editor.css">
+/* Shared code-editor toolbar for OpenSTA Verilog/Liberty/SDC and Yosys RTL. */
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:9px 11px;background:#10283d;border-bottom:1px solid #28506c}
+.code-toolbar-left,.code-toolbar-right{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.code-toolbar button,.code-toolbar select{background:#071a2a!important;color:#cdeafa!important;border:1px solid #345d79!important;border-radius:7px!important;padding:6px 9px!important;font:600 11px/1.4 Inter,Arial,sans-serif!important;cursor:pointer;max-width:100%}
+.code-toolbar button:hover,.code-toolbar select:hover{border-color:#38bdf8!important;background:#103751!important}
+.code-toolbar button:focus-visible,.code-toolbar select:focus-visible{outline:2px solid #38bdf8;outline-offset:2px}
+.code-cursor{font:11px ui-monospace,Consolas,monospace;color:#96bad3;white-space:nowrap;padding:0 5px}
+.editor textarea[data-code-editor],.editor-card textarea[data-code-editor]{width:100%;font-family:ui-monospace,Consolas,monospace;tab-size:4;line-height:1.6}
+.editor-card .code-toolbar{margin-top:12px;border:1px solid #28506c;border-radius:10px 10px 0 0}
+.editor-card textarea[data-code-editor]{margin-top:0;border-radius:0 0 10px 10px}
+@media(max-width:600px){.code-toolbar{align-items:stretch}.code-toolbar-left,.code-toolbar-right{gap:4px}.code-toolbar button,.code-toolbar select{padding:5px 7px!important}}
+
+</style><style>
+.model-popup{height:100vh;display:flex;flex-direction:column}.model-popup header{flex:0 0 auto}.model-popup textarea{flex:1;min-height:250px;resize:vertical;width:100%;border-radius:12px;border:1px solid #39718e;background:#01111c;color:#c0ffcf;padding:15px;font:13px/1.5 ui-monospace,Consolas,monospace;tab-size:4}.model-popup p{color:#9abdd3;font-size:13px}
+.model-popup .editor-card{display:flex;min-height:300px;flex-direction:column;flex:1}.model-popup .code-editor-toolbar{flex-shrink:0}.vim-lite-bar{display:flex;align-items:center;gap:12px;padding:8px 4px;flex-wrap:wrap;color:#bae7fa;font:13px ui-monospace,monospace}.vim-lite-bar button{padding:8px 12px!important}.vim-hint{font-size:12px!important;margin:3px 4px 6px!important;color:#b2cfe4!important}.vim-lite-bar input{min-width:220px;background:#061a2c;color:#fff;border:1px solid #347493;border-radius:6px;padding:8px}
+</style></head><body><main class="popup-shell model-popup">
+<header><div><small>VHDL DESIGN · INDEPENDENT EDITOR</small><h1 id="model-title">Model Editor</h1></div><div class="popup-actions"><button id="model-sync" type="button">Sync to Lab</button><button id="model-return" type="button">✓ Save &amp; Return to GHDL</button></div></header>
+<div class="vim-lite-bar"><button type="button" id="vim-toggle" aria-pressed="false">Vim Lite: Off</button><button type="button" id="vim-undo" title="Vim undo (u)">↶ Undo</button><button type="button" id="vim-redo" title="Vim redo (Ctrl+R)">↷ Redo</button><button type="button" id="vim-visual" title="Characterwise visual selection (v)">Visual (v)</button><button type="button" id="vim-visual-line" title="Linewise visual selection (V)">Visual line (V)</button><span id="vim-mode" role="status">Standard editing</span><input id="vim-command" type="text" aria-label="Vim command" placeholder=":w, :q, :wq" hidden></div>
+<p class="vim-hint">Vim Lite: <strong>i</strong> insert · <strong>Esc</strong> normal · <strong>u</strong> undo · <strong>Ctrl+R</strong> redo · <strong>v</strong> select · <strong>V</strong> select lines · <strong>y/d/p</strong> yank/delete/paste · <strong>&gt;/&lt;</strong> indent/outdent</p>
+<p id="model-status" role="status">Changes are synchronized to your original GHDL Lab tab as you type. Use Save &amp; Return to go back without losing your place.</p>
+<label class="model-theme-select">Code colors <select id="model-color-theme"><option value="desert">Desert · Dark</option><option value="gray">Gray · Light</option></select></label><article class="editor-card"><textarea id="model-source" data-code-editor data-language="vhdl" data-filename="design.vhd" spellcheck="false"></textarea></article>
+</main><script  data-bundled-from="code-editor.js">
+/* ASIC-Skill lightweight offline code editor enhancement. No CDN needed. */
+(function (root) {
+  'use strict';
+  const settings = new WeakMap();
+  const textSnapshot = el => ({text: el.value, start: el.selectionStart || 0, end: el.selectionEnd || 0});
+  function editSelection(el, newText, start, end, caretStart, caretEnd) {
+    el.setRangeText(newText, start, end, 'preserve');
+    el.setSelectionRange(caretStart, caretEnd);
+    el.dispatchEvent(new Event('input', {bubbles:true}));
+  }
+  function lineRange(text, start, end) {
+    const from = text.lastIndexOf('\n', Math.max(0,start-1)) + 1;
+    const lastSelected = end > start && text[end-1] === '\n' ? end-1 : end;
+    const nextBreak = text.indexOf('\n', lastSelected);
+    return {from, to: nextBreak < 0 ? text.length : nextBreak};
+  }
+  function transformLines(el, kind, spaces=2) {
+    const original = el.value, start=el.selectionStart, end=el.selectionEnd;
+    const {from,to} = lineRange(original,start,end);
+    const lines=original.slice(from,to).split('\n');
+    const token=' '.repeat(spaces);
+    const language=el.dataset.language || 'verilog';
+    const prefix=(['sdc','tcl','python'].includes(language))?'#':'//';
+    const nonEmpty=lines.filter(l=>l.trim());
+    const uncomment=kind==='comment' && nonEmpty.length && nonEmpty.every(l=>l.trimStart().startsWith(prefix));
+    let firstDelta=0, totalDelta=0;
+    const result=lines.map((line,i)=>{
+      let updated=line;
+      if(kind==='indent') updated=token+line;
+      else if(kind==='outdent') updated=line.replace(new RegExp(`^(?: {1,${spaces}}|\\t)`),'');
+      else if(kind==='comment' && line.trim()) {
+        const ws=line.match(/^\s*/)[0];
+        const rest=line.slice(ws.length);
+        updated=ws+(uncomment?rest.slice(prefix.length).replace(/^ /,''):prefix+' '+rest);
+      }
+      if(i===0) firstDelta=updated.length-line.length;
+      totalDelta+=updated.length-line.length;
+      return updated;
+    }).join('\n');
+    const selected=end>start;
+    editSelection(el,result,from,to,Math.max(from,selected?start+firstDelta:start+firstDelta),Math.max(from,selected?end+totalDelta:start+firstDelta));
+  }
+  function insertTab(el, spaces) {
+    if(el.selectionStart!==el.selectionEnd) {
+      transformLines(el,'indent',spaces);return;
+    }
+    const at=el.selectionStart;
+    const column=at-(el.value.lastIndexOf('\n',at-1)+1);
+    const count=spaces-(column%spaces);
+    editSelection(el,' '.repeat(count),at,el.selectionEnd,at+count,at+count);
+  }
+  function autoNewline(el) {
+    const start=el.selectionStart;
+    const line=el.value.slice(el.value.lastIndexOf('\n',start-1)+1,start);
+    const indent=(line.match(/^\s*/)||[''])[0];
+    const at=el.selectionEnd;
+    editSelection(el,'\n'+indent,start,at,start+1+indent.length,start+1+indent.length);
+  }
+  function duplicate(el) {
+    const {from,to}=lineRange(el.value,el.selectionStart,el.selectionEnd);
+    const chunk=el.value.slice(from,to);
+    editSelection(el,'\n'+chunk,to,to,to+1,to+1+chunk.length);
+  }
+  function createButton(name,title,callback) {
+    const b=document.createElement('button');b.type='button';b.textContent=name;b.title=title;b.addEventListener('click',callback);return b;
+  }
+  function attach(el) {
+    if(settings.has(el))return;
+    el.spellcheck=false;el.setAttribute('autocomplete','off');el.setAttribute('autocapitalize','off');
+    const wrap=el.closest('.editor, .editor-card');
+    if(!wrap)return;
+    const filename=el.dataset.filename || 'design.txt';
+    const toolbar=document.createElement('div');toolbar.className='code-toolbar';toolbar.setAttribute('role','toolbar');toolbar.setAttribute('aria-label',filename+' editor tools');
+    const left=document.createElement('div');left.className='code-toolbar-left';
+    const right=document.createElement('div');right.className='code-toolbar-right';
+    const sel=document.createElement('select');sel.setAttribute('aria-label','Indent width');sel.title='Spaces per indentation level';
+    [2,4].forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n+' spaces';if(n===4)o.selected=true;sel.append(o)});
+    const stored={indent:4,wrap:false,history:[],index:-1,restoring:false};settings.set(el,stored);
+    sel.addEventListener('change',()=>{stored.indent=Number(sel.value);el.focus()});
+    left.append(createButton('→ Indent','Tab indents selected lines',()=>{transformLines(el,'indent',stored.indent);el.focus()}),createButton('← Outdent','Shift+Tab removes indentation',()=>{transformLines(el,'outdent',stored.indent);el.focus()}),createButton('// Comment','Ctrl+/ toggles comments',()=>{transformLines(el,'comment',stored.indent);el.focus()}),sel);
+    const wrapButton=createButton('Wrap: off','Toggle word wrapping',()=>{stored.wrap=!stored.wrap;el.style.whiteSpace=stored.wrap?'pre-wrap':'pre';el.style.overflowWrap=stored.wrap?'anywhere':'normal';wrapButton.textContent=stored.wrap?'Wrap: on':'Wrap: off';el.focus()});
+    const copyButton=createButton('Copy','Copy editor contents',async()=>{try{await navigator.clipboard.writeText(el.value);copyButton.textContent='Copied ✓';setTimeout(()=>copyButton.textContent='Copy',1400)}catch{el.focus();el.select();document.execCommand('copy')}});
+    const downloadButton=createButton('↓ Save','Download this file to your computer',()=>{const blob=new Blob([el.value],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)});
+    const cursor=document.createElement('span');cursor.className='code-cursor';cursor.setAttribute('aria-live','off');
+    const updateCursor=()=>{const before=el.value.slice(0,el.selectionStart);const ln=before.split('\n');cursor.textContent='Ln '+ln.length+', Col '+(ln[ln.length-1].length+1)+' · '+el.value.split('\n').length+' lines'};
+    const pushHistory=()=>{if(stored.restoring)return;const s=textSnapshot(el);const last=stored.history[stored.index];if(last&&last.text===s.text){updateCursor();return;}stored.history.splice(stored.index+1);stored.history.push(s);if(stored.history.length>120)stored.history.shift();stored.index=stored.history.length-1;updateCursor()};
+    const restore=direction=>{let next=stored.index+direction;if(next<0||next>=stored.history.length)return;const s=stored.history[next];stored.restoring=true;el.value=s.text;el.setSelectionRange(s.start,s.end);stored.index=next;stored.restoring=false;el.dispatchEvent(new Event('input',{bubbles:true}));updateCursor();el.focus()};
+    stored.undo=()=>restore(-1);stored.redo=()=>restore(1);
+    right.append(createButton('↶','Undo: Ctrl+Z',()=>restore(-1)),createButton('↷','Redo: Ctrl+Y / Ctrl+Shift+Z',()=>restore(1)),wrapButton,copyButton,downloadButton,cursor);
+    toolbar.append(left,right);
+    // The cocotb inline workspace is intentionally minimal. Full editor controls
+    // remain available in the separate pop-out windows (no expanded-only marker).
+    if (el.dataset.editorToolbar !== 'expanded-only') el.before(toolbar);
+    el.style.tabSize='4';el.style.whiteSpace='pre';el.style.overflowWrap='normal';el.style.overflowX='auto';
+    el.addEventListener('keydown',event=>{
+      const mod=event.ctrlKey||event.metaKey;
+      if(mod && !event.altKey && event.key.toLowerCase()==='z'){event.preventDefault();restore(event.shiftKey?1:-1);return;}
+      if(mod && !event.altKey && event.key.toLowerCase()==='y'){event.preventDefault();restore(1);return;}
+      if(mod && !event.altKey && event.key==='/'){event.preventDefault();transformLines(el,'comment',stored.indent);return;}
+      if(mod && !event.altKey && event.key.toLowerCase()==='d'){event.preventDefault();duplicate(el);return;}
+      if(event.key==='Tab'&&!mod&&!event.altKey){event.preventDefault();if(event.shiftKey)transformLines(el,'outdent',stored.indent);else if(el.selectionStart!==el.selectionEnd)transformLines(el,'indent',stored.indent);else insertTab(el,stored.indent);return;}
+      if(event.key==='Enter'&&!mod&&!event.altKey){event.preventDefault();autoNewline(el);}
+    });
+    el.addEventListener('input',pushHistory);el.addEventListener('keyup',updateCursor);el.addEventListener('click',updateCursor);el.addEventListener('select',updateCursor);el.addEventListener('mouseup',updateCursor);
+    pushHistory();
+    // External updates to .value (upload/reset) are picked up without replacing user edits.
+    el.addEventListener('focus',pushHistory);
+  }
+  root.ASICCodeEditor={init(scope=document){scope.querySelectorAll('textarea[data-code-editor]').forEach(attach);},attach,
+    undo(el){const state=settings.get(el);if(state?.undo)state.undo();},
+    redo(el){const state=settings.get(el);if(state?.redo)state.redo();}};
+})(window);
+
+</script><script>
+(()=>{'use strict';
+const style=new URLSearchParams(location.search).get('style')||'dataflow';
+const label={dataflow:'Dataflow',behavioral:'Behavioral',structural:'Structural',testbench:'VHDL Testbench'}[style];
+const t=document.getElementById('model-source'),status=document.getElementById('model-status');
+
+function mainTab(){try{const w=window.opener;if(!w||w.closed||w.location.origin!==location.origin)return null;return w;}catch{return null;}}
+if(!label){status.textContent='Unknown modeling style.';return;}
+document.getElementById('model-title').textContent=label+' Model';
+function lab(){return mainTab()?.ASICGHDL||null;}
+function sync(){const parent=lab();if(!parent){status.textContent='Lab window not available. Keep the main ASIC-Skill tab open.';return;}if(style==='testbench')parent.setTestbenchSource(t.value);else parent.setModelSource(style,t.value);status.textContent=label+' synchronized with the main GHDL lab.';}
+const app=lab();if(app){t.value=(style==='testbench'?app.getTestbenchSource():app.getModelSource(style))||'';}else status.textContent='Open this editor from the main GHDL Lab to synchronize source.';
+t.addEventListener('input',sync);document.getElementById('model-sync').onclick=sync;
+function returnToLab(){
+  const original=mainTab();
+  if(original){
+    sync();
+    try{original.ASICGHDL?.focusEditor?.(style);}catch{}
+    // Browser focus can be restricted, but this is a direct click on Return.
+    try{original.focus();}catch{}
+    window.close();
+    // Some browsers do not let a script close a tab. Keep an accessible fallback.
+    status.textContent='Changes saved. Select the original GHDL Lab tab if this editor stays open.';
+
+  }else{
+    // The lab tab may have been closed or opened with noopener.
+    status.textContent='The original GHDL tab is closed. Your changes remain here; copy them before closing this window.';
+  }
+}
+document.getElementById('model-return').addEventListener('click',returnToLab);
+t.addEventListener('keydown',e=>{if(e.key==='Escape'&&e.ctrlKey){e.preventDefault();returnToLab();}});
+// Keep source synchronized when a user closes the popup using the browser X.
+window.addEventListener('pagehide',()=>{if(mainTab())sync();});
+if(window.ASICCodeEditor)window.ASICCodeEditor.init();
+// Independent colorized editor: keep textarea selectable/editable; overlay displays highlighted tokens.
+const themeChoice=document.getElementById('model-color-theme');
+const shell=document.querySelector('.model-popup');
+const editor=document.createElement('div');editor.className='ghdl-popup-highlight';
+const high=document.createElement('pre');high.setAttribute('aria-hidden','true');
+t.parentNode.insertBefore(editor,t);editor.append(high,t);
+function esc(v){return v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+const kw=/^(library|use|entity|architecture|begin|end|port|generic|signal|variable|constant|process|if|then|else|elsif|case|when|others|loop|for|in|out|downto|to|wait|assert|report|severity|component|map|of|is|function|return|not|and|or|xor|nand|nor|xnor|rising_edge|falling_edge)$/i;
+function renderCode(){
+ const tokens=t.value.match(/--[^\n]*|"(?:""|[^"])*"|'[01XZUWLH-]'|\b\d+\b|\b[A-Za-z_]\w*\b|[\s\S]/g)||[];
+ high.innerHTML=tokens.map(v=>{
+  const kind=v.startsWith('--')?'comment':/^"/.test(v)||/^'[01XZUWLH-]'$/i.test(v)?'string':/^\d+$/.test(v)?'num':kw.test(v)?'kw':/^(std_logic|std_logic_vector|unsigned|signed|integer|boolean)$/i.test(v)?'type':'';
+  return kind?'<span class="hl-'+kind+'">'+esc(v)+'</span>':esc(v);
+ }).join('')+'\n';high.scrollTop=t.scrollTop;high.scrollLeft=t.scrollLeft;
+}
+function setTheme(v){shell.classList.toggle('popup-gray',v==='gray');shell.classList.toggle('popup-desert',v!=='gray');try{localStorage.setItem('asic-ghdl-editor-theme',v);}catch{}}
+try{themeChoice.value=localStorage.getItem('asic-ghdl-editor-theme')||'desert';}catch{themeChoice.value='desert';}
+setTheme(themeChoice.value);themeChoice.onchange=()=>setTheme(themeChoice.value);
+t.addEventListener('input',renderCode);t.addEventListener('scroll',()=>{high.scrollTop=t.scrollTop;high.scrollLeft=t.scrollLeft;});
+renderCode();
+})();
+</script><script  data-bundled-from="ghdl-vim-lite.js">
+/* ASIC-Skill Vim Lite for expanded VHDL editors.
+   Implements normal/insert/character-visual/line-visual editing over a native textarea.
+   Intentionally a learning-oriented subset, not a complete Vim emulator. */
+(()=>{'use strict';
+const t=document.getElementById('model-source');
+const toggle=document.getElementById('vim-toggle');
+const modeEl=document.getElementById('vim-mode');
+const cmd=document.getElementById('vim-command');
+if(!t||!toggle||!modeEl||!cmd)return;
+const byId=id=>document.getElementById(id);
+let enabled=false, mode='INSERT', pending='', anchor=0, head=0, yankText='', yankLine=false;
+const sync=()=>t.dispatchEvent(new Event('input',{bubbles:true}));
+function setMode(m, detail=''){
+  mode=m;
+  modeEl.textContent=enabled?`Vim Lite · ${m}${detail?' · '+detail:''}`:'Standard editing';
+  modeEl.dataset.mode=enabled?m:'STANDARD';
+}
+function line(p=t.selectionStart){
+ const a=t.value.lastIndexOf('\n',Math.max(0,p)-1)+1;
+ const e=t.value.indexOf('\n',p);
+ return {a,e:e<0?t.value.length:e};
+}
+const clamp=p=>Math.max(0,Math.min(t.value.length,p));
+function caret(p){head=clamp(p);t.setSelectionRange(head,head);t.focus();}
+function replace(a,b,value){
+ t.setRangeText(value,a,b,'end');
+ sync();
+ head=t.selectionStart;
+}
+function lineBounds(a,b){
+ const from=line(a).a;
+ const last=line(Math.max(a,b-1));
+ const to=last.e<t.value.length?last.e+1:last.e;
+ return {from,to};
+}
+function selectedRange(){
+ if(mode==='V-LINE')return lineBounds(Math.min(anchor,head),Math.max(anchor,head)+1);
+ const from=Math.min(anchor,head),to=Math.min(t.value.length,Math.max(anchor,head)+1);
+ return {from,to};
+}
+function showSelection(){
+ const {from,to}=selectedRange();
+ t.setSelectionRange(from,to,head<anchor?'backward':'forward');
+ t.focus();
+}
+function exitVisual(){
+ const p=head;
+ pending='';setMode('NORMAL');caret(p);
+}
+function startVisual(kind){
+ if(!enabled)enable();
+ if(mode==='VISUAL'||mode==='V-LINE'){exitVisual();return;}
+ anchor=t.selectionStart;head=anchor;
+ setMode(kind==='line'?'V-LINE':'VISUAL');showSelection();
+}
+function motion(key,p){
+ const pos=clamp(p),inf=line(pos);
+ if(key==='h'||key==='ArrowLeft')return Math.max(0,pos-1);
+ if(key==='l'||key==='ArrowRight')return Math.min(t.value.length,pos+1);
+ if(key==='0')return inf.a;
+ if(key==='$')return inf.e;
+ if(key==='G')return t.value.length;
+ if(key==='j'||key==='k'||key==='ArrowDown'||key==='ArrowUp'){
+  const forward=key==='j'||key==='ArrowDown';
+  const col=pos-inf.a;
+  if(forward){if(inf.e===t.value.length)return pos;const nxt=line(inf.e+1);return nxt.a+Math.min(col,nxt.e-nxt.a);}
+  if(inf.a===0)return pos;
+  const prev=line(inf.a-1);return prev.a+Math.min(col,prev.e-prev.a);
+ }
+ if(key==='w'){
+  const rest=t.value.slice(Math.min(t.value.length,pos+1));
+  const m=/\w+/.exec(rest);return m?Math.min(t.value.length,pos+1+m.index):pos;
+ }
+ if(key==='b'){
+  const left=t.value.slice(0,pos),m=/(?:^|\W)(\w+)(?:\W*)$/.exec(left);
+  return m?left.lastIndexOf(m[1]):0;
+ }
+ return null;
+}
+function indentSelection(outdent){
+ const range=selectedRange(),chunk=t.value.slice(range.from,range.to);
+ const width=4;
+ const updated=chunk.split('\n').map(v=>outdent?v.replace(/^(?: {1,4}|\t)/,''):' '.repeat(width)+v).join('\n');
+ replace(range.from,range.to,updated);
+ setMode('NORMAL');caret(range.from);
+}
+function visualOperation(key){
+ const {from,to}=selectedRange();
+ if(key==='>'){indentSelection(false);return;}
+ if(key==='<'){indentSelection(true);return;}
+ if(key==='y'){
+  yankText=t.value.slice(from,to);yankLine=mode==='V-LINE';exitVisual();setMode('NORMAL','Yanked '+yankText.length+' chars');return;
+ }
+ if(key==='d'||key==='x'||key==='c'){
+  yankText=t.value.slice(from,to);yankLine=mode==='V-LINE';
+  replace(from,to,'');
+  setMode(key==='c'?'INSERT':'NORMAL');caret(from);
+  return;
+ }
+ if(key==='p'){
+  replace(from,to,yankText);setMode('NORMAL');caret(from);return;
+ }
+}
+function undo(){window.ASICCodeEditor?.undo?.(t);head=t.selectionStart;setMode('NORMAL');}
+function redo(){window.ASICCodeEditor?.redo?.(t);head=t.selectionStart;setMode('NORMAL');}
+function yankOrDeleteLine(key){
+ const inf=line(),from=inf.a,to=inf.e<t.value.length?inf.e+1:inf.e;
+ yankText=t.value.slice(from,to);yankLine=true;
+ if(key==='d')replace(from,to,'');
+ caret(Math.min(from,t.value.length));
+ setMode('NORMAL',key==='y'?'Line yanked':'Line deleted');
+}
+function put(){if(!yankText)return;
+ const at=yankLine?(line().e<t.value.length?line().e+1:line().e):Math.min(t.value.length,t.selectionStart+1);
+ const value=yankLine&&at===t.value.length&&t.value.length&&!t.value.endsWith('\n')?'\n'+yankText:yankText;
+ replace(at,at,value);caret(at+value.length);
+}
+function execute(lineText){
+ const v=lineText.trim().replace(/^:/,'');
+ if(v==='w'){sync();setMode('NORMAL','Source synchronized');return;}
+ if(v==='q'||v==='wq'){if(v==='wq')sync();byId('model-return')?.click();return;}
+ if(v==='u'||v==='undo'){undo();return;}
+ if(v==='redo'){redo();return;}
+ if(v==='1'){caret(0);return;}
+ if(v==='$'){caret(t.value.length);return;}
+ setMode('NORMAL','Unsupported command: '+v);
+}
+function enable(){enabled=true;toggle.setAttribute('aria-pressed','true');toggle.textContent='Vim Lite: On';pending='';setMode('NORMAL');caret(t.selectionStart);}
+function disable(){enabled=false;toggle.setAttribute('aria-pressed','false');toggle.textContent='Vim Lite: Off';pending='';cmd.hidden=true;setMode('INSERT');t.setSelectionRange(t.selectionEnd,t.selectionEnd);t.focus();}
+toggle.addEventListener('click',()=>enabled?disable():enable());
+byId('vim-undo')?.addEventListener('click',()=>{if(!enabled)enable();undo();});
+byId('vim-redo')?.addEventListener('click',()=>{if(!enabled)enable();redo();});
+byId('vim-visual')?.addEventListener('click',()=>startVisual('char'));
+byId('vim-visual-line')?.addEventListener('click',()=>startVisual('line'));
+cmd.addEventListener('keydown',e=>{
+ if(e.key==='Enter'){
+  e.preventDefault();execute(cmd.value);cmd.value='';cmd.hidden=true;t.focus();
+ }else if(e.key==='Escape'){
+  e.preventDefault();cmd.value='';cmd.hidden=true;t.focus();
+ }
+});
+t.addEventListener('keydown',e=>{
+ if(!enabled)return;
+ if(e.key==='Escape'){
+  e.preventDefault();pending='';cmd.hidden=true;
+  if(mode==='VISUAL'||mode==='V-LINE')exitVisual();else setMode('NORMAL');
+  return;
+ }
+ if(e.ctrlKey&&!e.altKey&&e.key.toLowerCase()==='r'){
+  e.preventDefault();e.stopImmediatePropagation();redo();return;
+ }
+ if(mode==='INSERT')return;
+ if(e.ctrlKey||e.metaKey||e.altKey)return;
+ if(e.key===':'){
+  e.preventDefault();cmd.hidden=false;cmd.value=':';cmd.focus();return;
+ }
+ if(e.key.length!==1&&!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
+ e.preventDefault();
+ const key=e.key;
+ if(pending==='g'){
+  pending='';if(key==='g'){
+   if(mode==='NORMAL')caret(0);else{head=0;showSelection();}
+   return;
+  }
+ }
+ if(pending==='d'||pending==='y'){
+  const command=pending;pending='';
+  if(key===command&&mode==='NORMAL')yankOrDeleteLine(command);
+  return;
+ }
+ if(key==='g'){pending='g';return;}
+ if(mode==='VISUAL'||mode==='V-LINE'){
+  if(key==='v'){if(mode==='VISUAL')exitVisual();else{setMode('VISUAL');showSelection();}return;}
+  if(key==='V'){if(mode==='V-LINE')exitVisual();else{setMode('V-LINE');showSelection();}return;}
+  if(['y','d','x','c','p','>','<'].includes(key)){visualOperation(key);return;}
+  const next=motion(key,head);if(next!==null){head=next;showSelection();}return;
+ }
+ if(key==='u'){undo();return;}
+ if(key==='v'){startVisual('char');return;}
+ if(key==='V'){startVisual('line');return;}
+ if(key==='i'){setMode('INSERT');return;}
+ if(key==='a'){caret(t.selectionStart+1);setMode('INSERT');return;}
+ if(key==='o'||key==='O'){
+  const inf=line(),at=key==='o'?inf.e:inf.a;
+  replace(at,at,'\n');caret(key==='o'?at+1:at);setMode('INSERT');return;
+ }
+ if(key==='d'||key==='y'){pending=key;return;}
+ if(key==='p'){put();return;}
+ if(key==='x'&&t.selectionStart<t.value.length){const pos=t.selectionStart;replace(pos,pos+1,'');caret(pos);return;}
+ const next=motion(key,t.selectionStart);if(next!==null)caret(next);
+},true);
+window.ASICGHDLVimLite={isEnabled:()=>enabled,mode:()=>mode};
+})();
+
+</script><script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body></html>

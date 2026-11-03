@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In | ASIC-Skill</title>
+  <style data-bundled-from="auth.css">
+body{font-family:Arial,sans-serif;background:#071522;color:#fff;margin:0}.wrap{max-width:560px;margin:60px auto;padding:32px}.card{background:#0b1b2a;border:1px solid #28445c;border-radius:16px;padding:30px}label{display:block;margin:18px 0 8px;font-weight:700}input{width:100%;box-sizing:border-box;padding:15px;border-radius:9px;border:1px solid #38536b;background:#071522;color:#fff;font-size:16px}button{margin-top:22px;padding:14px 20px;border:0;border-radius:9px;background:#1688ff;color:#fff;font-weight:700;cursor:pointer}a{color:#43d9ff}.auth-message{margin-top:20px;padding:14px;border:1px solid #47677e;border-radius:9px}.error{border-color:#d65c5c}.success{border-color:#28b98b}
+.password-wrapper{position:relative;width:100%}.password-wrapper input{padding-right:58px}.password-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);margin:0;padding:8px 10px;border:0;background:transparent;color:#9fb4c8;font-size:20px;line-height:1;cursor:pointer;border-radius:7px}.password-eye:hover,.password-eye:focus{background:rgba(255,255,255,.06);color:#fff;outline:none}.password-eye.is-visible{color:#43d9ff}
+
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="card">
+    <h1 id="auth-title">Sign in</h1>
+
+    <form id="signin-form">
+      <label for="email">Email address</label>
+      <input id="email" type="email" required autocomplete="email">
+
+      <div id="password-section">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input id="password" type="password" required autocomplete="current-password">
+          <button type="button" class="password-eye" onclick="togglePassword('password', this)" aria-label="Show password" aria-pressed="false">
+            <span class="eye-show" aria-hidden="true">◉</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="signin-button" type="submit">Sign In →</button>
+    </form>
+
+    <p id="forgot-link-section">
+      <a href="#" id="forgot-password">Forgot password?</a>
+    </p>
+
+    <div id="reset-actions" hidden>
+      <button type="button" id="send-reset-button">Send Reset Link →</button>
+      <p><a href="#" id="back-to-signin">← Back to Sign In</a></p>
+    </div>
+
+    <div id="auth-message" class="auth-message" hidden></div>
+
+    <p id="create-account-section">
+      Don't have an account? <a href="signup.html">Create one</a>
+    </p>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script  data-bundled-from="supabase-config.js">
+const SUPABASE_URL = "https://orfmyrbiitpsefnucrxr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_mGkXIP3ZqFnaf42_AmGbEw_XrAcgwlM";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+</script>
+<script  data-bundled-from="auth.js">
+// ASIC-Skill Supabase authentication
+// Requires:
+// 1. @supabase/supabase-js v2
+// 2. supabase-config.js containing `supabaseClient`
+
+function showMessage(text, type = "info") {
+  const box = document.getElementById("auth-message");
+  if (!box) return;
+
+  box.textContent = text;
+  box.className = "auth-message " + type;
+  box.hidden = false;
+}
+
+function pageUrl(filename) {
+  return new URL(filename, window.location.href).href;
+}
+
+// -------------------- SIGN UP --------------------
+async function signUp(event) {
+  event.preventDefault();
+
+  const fullName = document.getElementById("full-name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
+
+  if (password !== confirmPassword) {
+    showMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  showMessage("Creating your ASIC-Skill account...", "info");
+
+  // ?verified=true is intentionally included in the redirect.
+  // After Supabase verifies the email, signin.html uses it to show
+  // the successful verification message.
+  const verificationRedirect =
+    pageUrl("signin.html?verified=true");
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName
+      },
+      emailRedirectTo: verificationRedirect
+    }
+  });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  if (data.session) {
+    showMessage(
+      "Account created successfully. You are already signed in.",
+      "success"
+    );
+    return;
+  }
+
+  showMessage(
+    "Account created! Please check your email and click the verification link.",
+    "success"
+  );
+}
+
+// -------------------- SIGN IN --------------------
+async function signIn(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  showMessage("Signing in...", "info");
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  if (data.session) {
+    showMessage("Signed in successfully. Redirecting...", "success");
+
+    setTimeout(() => {
+      const requestedNext = new URLSearchParams(window.location.search).get("next") || "";
+      const safeNext = /^eda-lab\.html(?:\?.*)?$/.test(requestedNext)
+        ? requestedNext
+        : "index.html";
+      window.location.href = safeNext;
+    }, 700);
+  }
+}
+
+// -------------------- VERIFICATION MESSAGE --------------------
+function checkVerificationMessage() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("verified") === "true") {
+    showMessage(
+      "✓ Email verification done successfully! Your ASIC-Skill account is active. Please sign in.",
+      "success"
+    );
+
+    // Keep the message visible but remove ?verified=true from the address bar.
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+  }
+}
+
+// -------------------- FORGOT PASSWORD --------------------
+async function sendPasswordReset(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    showMessage(
+      "Enter your email address first, then click Forgot password.",
+      "error"
+    );
+    return;
+  }
+
+  showMessage("Sending password reset email...", "info");
+
+  const { error } =
+    await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: pageUrl("reset-password.html")
+    });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  showMessage(
+    "Password reset email sent. Please check your inbox.",
+    "success"
+  );
+}
+
+
+// -------------------- UPDATE PASSWORD --------------------
+async function updatePassword(event) {
+  event.preventDefault();
+
+  const newPassword = document.getElementById("new-password").value;
+  const confirmPassword = document.getElementById("confirm-new-password").value;
+
+  if (newPassword.length < 8) {
+    showMessage("Password must contain at least 8 characters.", "error");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    showMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  showMessage("Updating your password...", "info");
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    showMessage("Unable to update password: " + error.message, "error");
+    return;
+  }
+
+  showMessage("✓ Password changed successfully! Redirecting to Sign In...", "success");
+  await supabaseClient.auth.signOut();
+
+  setTimeout(() => {
+    window.location.href = "signin.html?password_changed=true";
+  }, 1500);
+}
+
+// -------------------- LOG OUT --------------------
+async function signOut() {
+  await supabaseClient.auth.signOut();
+  window.location.href = "signin.html";
+}
+// -------------------- DASHBOARD --------------------
+async function protectDashboard() {
+  const {
+    data: { session },
+    error
+  } = await supabaseClient.auth.getSession();
+
+  // User is not signed in
+  if (error || !session) {
+    window.location.href = "signin.html";
+    return;
+  }
+
+  const user = session.user;
+
+  // Read full name saved during signup
+  const fullName =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    "ASIC-Skill Learner";
+
+  // Show name
+  const nameElement = document.getElementById("user-name");
+  if (nameElement) {
+    nameElement.textContent = fullName;
+  }
+
+  // Show email
+  const emailElement = document.getElementById("user-email");
+  if (emailElement) {
+    emailElement.textContent = user.email || "";
+  }
+}
+
+// -------------------- WEBSITE USER MENU --------------------
+async function initWebsiteUser() {
+  const signupLink = document.getElementById("auth-signup-link");
+  const userMenu = document.getElementById("user-menu");
+  if (!signupLink || !userMenu) return;
+
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (!session) {
+    signupLink.hidden = false;
+    userMenu.hidden = true;
+    return;
+  }
+
+  const user = session.user;
+  const fullName = user.user_metadata?.full_name || user.user_metadata?.name || "ASIC-Skill Learner";
+  const firstName = fullName.split(/\s+/)[0] || "Learner";
+
+  signupLink.hidden = true;
+  userMenu.hidden = false;
+  document.getElementById("nav-user-name").textContent = firstName;
+  document.getElementById("menu-user-name").textContent = fullName;
+  document.getElementById("menu-user-email").textContent = user.email || "";
+  document.getElementById("user-avatar").textContent = firstName.charAt(0).toUpperCase();
+
+  const button = document.getElementById("user-menu-button");
+  const dropdown = document.getElementById("user-dropdown");
+  button?.addEventListener("click", () => {
+    const open = dropdown.hidden;
+    dropdown.hidden = !open;
+    button.setAttribute("aria-expanded", String(open));
+  });
+
+  document.getElementById("nav-logout")?.addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    window.location.href = "index.html";
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!userMenu.contains(event.target)) {
+      dropdown.hidden = true;
+      button?.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initWebsiteUser);
+
+// ============================================================
+// FORGOT PASSWORD UI MODE
+// Add this block to auth.js.
+// Keep your existing signUp/signIn/reset/update/signOut functions.
+// ============================================================
+
+function showForgotPassword() {
+  const passwordSection = document.getElementById("password-section");
+  const password = document.getElementById("password");
+  const signInButton = document.getElementById("signin-button");
+  const forgotSection = document.getElementById("forgot-link-section");
+  const resetActions = document.getElementById("reset-actions");
+  const title = document.getElementById("auth-title");
+  const createAccount = document.getElementById("create-account-section");
+
+  if (passwordSection) passwordSection.hidden = true;
+  if (password) password.required = false;
+  if (signInButton) signInButton.hidden = true;
+  if (forgotSection) forgotSection.hidden = true;
+  if (resetActions) resetActions.hidden = false;
+  if (title) title.textContent = "Forgot password";
+  if (createAccount) createAccount.hidden = true;
+
+  showMessage(
+    "Enter your registered email address and we'll send you a password reset link.",
+    "info"
+  );
+
+  document.getElementById("email")?.focus();
+}
+
+function showSignIn() {
+  const passwordSection = document.getElementById("password-section");
+  const password = document.getElementById("password");
+  const signInButton = document.getElementById("signin-button");
+  const forgotSection = document.getElementById("forgot-link-section");
+  const resetActions = document.getElementById("reset-actions");
+  const title = document.getElementById("auth-title");
+  const createAccount = document.getElementById("create-account-section");
+  const message = document.getElementById("auth-message");
+
+  if (passwordSection) passwordSection.hidden = false;
+  if (password) password.required = true;
+  if (signInButton) signInButton.hidden = false;
+  if (forgotSection) forgotSection.hidden = false;
+  if (resetActions) resetActions.hidden = true;
+  if (title) title.textContent = "Sign in";
+  if (createAccount) createAccount.hidden = false;
+  if (message) message.hidden = true;
+}
+
+
+
+// -------------------- SHOW / HIDE PASSWORD --------------------
+function togglePassword(inputId, button) {
+  const input = document.getElementById(inputId);
+  if (!input || !button) return;
+
+  const showing = input.type === "text";
+  input.type = showing ? "password" : "text";
+  button.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+  button.setAttribute("aria-pressed", String(!showing));
+  button.classList.toggle("is-visible", !showing);
+}
+
+</script>
+<script>
+  document.getElementById("signin-form").addEventListener("submit", signIn);
+
+  document.getElementById("forgot-password").addEventListener("click", function (event) {
+    event.preventDefault();
+    showForgotPassword();
+  });
+
+  document.getElementById("send-reset-button").addEventListener("click", sendPasswordReset);
+
+  document.getElementById("back-to-signin").addEventListener("click", function (event) {
+    event.preventDefault();
+    showSignIn();
+  });
+
+  checkVerificationMessage();
+</script>
+<script  data-bundled-from="ui-neutral-labels.js">
+/* ASIC-Skill 37.0.52 - functional names throughout public-facing UI.
+ * Existing internal tool IDs, REST routes, files, code editors and raw logs remain unchanged. */
+(function(){'use strict';
+const terms=[
+ [/\b(?:Icarus\s*\/\s*cocotb|cocotb\s*\/\s*Icarus|cocotb\s*\+\s*Icarus(?:\s+Verilog)?|Icarus\s+Verilog\s*\/\s*cocotb)\b/gi,'RTL Verification Studio'],
+ [/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio'],
+ [/\bPython\s+cocotb(?:\s+test(?:bench)?s?)?\b/gi,'Python verification testbench'],
+ [/\b(?:cocotb|Icarus)\s+(?:tests?|regression|verification)\b/gi,'RTL verification'],
+ [/\bDigitalJS\s+interactive\s+gate(?:s|\s+view)?\b/gi,'interactive circuit diagram'],
+ [/\bYosys\s+(?:wiring|connectivity)\b/gi,'Connection View'],
+ [/\b(?:Yosys\s*→\s*netlistsvg|netlistsvg\s+SVG)\b/gi,'automatic circuit layout'],
+ [/\bGTKWave\s+(?:View|Viewer)\b/gi,'Detailed Waveform Viewer'],
+ [/\bRTL\s+Verification\s+Studio\s*[·/–-]\s*(?:Icarus|cocotb)(?:\s*[·/]\s*(?:Icarus|cocotb))?\b/gi,'RTL Verification Studio'],
+ [/\bcocotb\b/gi,'RTL Verification Studio'],
+ [/\bIcarus\b/gi,'RTL simulator'],
+ [/\bDigitalJS\b/gi,'Interactive Schematic'],
+ [/\bnetlistsvg\b/gi,'Automatic Layout'],
+ [/\bYosys\b/gi,'RTL Synthesis'],
+ [/\bGTKWave\b/gi,'Waveform Viewer'],
+ [/\bGHDL\b/gi,'VHDL Simulation'],
+ [/\bVerilator\b/gi,'RTL Linting'],
+ [/\bpyuvm\b/gi,'Python UVM Verification'],
+ [/\bOpenSTA\b/gi,'Timing Analysis'],
+ [/\bOpenROAD\b/gi,'Physical Design'],
+ [/\bnextpnr\b/gi,'FPGA Implementation'],
+ [/\bKLayout\b/gi,'Layout Viewer'],
+ [/\bngspice\b/gi,'Analog Simulation'],
+ [/\bOpenLane\b/gi,'Implementation Flow'],
+ [/\bQEMU\b/gi,'Processor Emulation'],
+ [/\bORFS\b/gi,'implementation flow'],
+ [/\bCIRCT\b/gi,'RTL lowering'],
+];
+const blocked='script,style,noscript,textarea,pre,code,svg,option[value^="--"],.xterm,.CodeMirror,.monaco-editor,[contenteditable],[data-code-editor],.ace_editor';
+const tech=/\b(cocotb|Icarus|DigitalJS|netlistsvg|Yosys|GTKWave|GHDL|Verilator|pyuvm|OpenSTA|OpenROAD|nextpnr|KLayout|ngspice|OpenLane|QEMU|ORFS|CIRCT)\b/i;
+function safe(node){
+ const e=node.nodeType===1?node:node.parentElement;
+ if(!e||e.closest(blocked))return false;
+ // Schematic signal identifiers and wire labels are part of the design.
+ if(e.closest('.cocotb-digitaljs-paper,.wave-body,#ghdl-wave-scroll,[data-raw-output]'))return false;
+ return true;
+}
+function neutralize(value){
+ let after=value;for(const [pattern,replacement] of terms)after=after.replace(pattern,replacement);
+ return after.replace(/\bRTL Verification Studio(?:\s*[·/–-]\s*RTL Verification Studio)+\b/gi,'RTL Verification Studio');
+}
+function rewrite(node){
+ if(node.nodeType!==3||!tech.test(node.nodeValue||'')||!safe(node))return;
+ const after=neutralize(node.nodeValue);
+ if(node.nodeValue!==after)node.nodeValue=after;
+}
+function rewriteAttrs(element){
+ if(!safe(element))return;
+ for(const name of ['aria-label','title','placeholder','alt']){
+  const before=element.getAttribute?.(name);
+  if(!before||!tech.test(before))continue;
+  const after=neutralize(before);if(before!==after)element.setAttribute(name,after);
+ }
+}
+function scan(node){
+ if(!node)return;
+ if(node.nodeType===3){rewrite(node);return;}
+ if(node.nodeType!==1||!safe(node))return;
+ rewriteAttrs(node);
+ for(const child of node.querySelectorAll?.('[aria-label],[title],[placeholder],[alt]')||[])rewriteAttrs(child);
+ const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
+ while(walk.nextNode())rewrite(walk.currentNode);
+}
+function start(){
+ scan(document.body);
+ const observer=new MutationObserver(records=>{for(const r of records){
+  if(r.type==='characterData')rewrite(r.target);
+  else if(r.type==='attributes')rewriteAttrs(r.target);
+  else for(const node of r.addedNodes)scan(node);
+ }});
+ observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','placeholder','alt'],subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+</script>
+</body>
+</html>
